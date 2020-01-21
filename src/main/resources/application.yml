@@ -1,0 +1,69 @@
+######## Default Configs ##########
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+  freemarker:
+    enabled: false
+    template-loader-path: classPath:/templates/mail-template
+    suffix: .ftl
+  mail:
+    default-encoding: UTF-8
+    host: mail.ishanitech.com
+    username: no-reply@ishanitech.com
+    password: ENC(ykBbW2svEwwW2W4foyFvQtHVGLKzMHH9)
+    port: 587
+    properties:      
+      mail:
+        smtp:
+          auth: true
+        starttls:
+          enabled: true
+    protocol: smtp
+  resources:
+    cache:
+      cachecontrol:
+        max-age: 36000
+
+server:
+  error:
+    whitelabel:
+      enabled: false
+
+webservice:
+  login-url: /login
+  partialRestUrl: /api/v1
+---
+
+###### Development Config Properties #######
+spring:
+  profiles: dev
+server:
+  port: 9191
+webservice:
+  base-url: http://localhost:8888 
+  
+http:
+  port: 9191
+  #base-url: http://103.233.58.121:8888
+---
+
+####### ishani Production Config Properties ########
+spring:
+  profiles: prod
+server:
+  port: 443
+  ssl:
+    key-store-type: PKCS12
+    key-store: /home/ishani/keystore/ipasal.p12
+    key-store-password: ENC(bq4tjhncoATdejotP81VbWgaGMpRouOZ)
+    key-alias: ipasal
+http:
+  port: 9191
+webservice:
+  base-url: http://localhost:8888
