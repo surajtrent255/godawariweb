@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/">
 <head>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -28,11 +28,11 @@
 		 		<img src="assets/images/small.png" alt="logo icon">
 		 	</div>
 		  <div class="card-title text-uppercase text-center py-3">Log In</div>
-		    <form action="index.php" method="Post">
+		    <form th:action="@{/login}" method="POST">
 			  <div class="form-group">
 			  <label for="user-id" class="sr-only">Username</label>
 			   <div class="position-relative has-icon-right">
-				  <input type="text" id="user-id" class="form-control input-shadow" placeholder="Enter Username" name="user-name">
+				  <input type="text" id="user-id" class="form-control input-shadow" placeholder="Enter Username" name="username">
 				  <div class="form-control-position">
 					  <i class="icon-user"></i>
 				  </div>
@@ -41,7 +41,7 @@
 			  <div class="form-group">
 			  <label for="password-id" class="sr-only">Password</label>
 			   <div class="position-relative has-icon-right">
-				  <input type="password" id="password-id" class="form-control input-shadow" name="password-name" placeholder="Enter Password">
+				  <input type="password" id="password-id" class="form-control input-shadow" name="password" placeholder="Enter Password">
 				  <div class="form-control-position">
 					  <i class="icon-lock"></i>
 				  </div>
