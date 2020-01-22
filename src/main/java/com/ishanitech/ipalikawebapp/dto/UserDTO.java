@@ -24,5 +24,4 @@ public class UserDTO implements Serializable {
 	private boolean firstLogin;
 	private boolean expired;
 	private List<String> roles;
-	private Collection<? extends GrantedAuthority> authorities;
 }

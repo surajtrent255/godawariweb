@@ -1,5 +1,7 @@
 package com.ishanitech.ipalikawebapp;
 
+import java.time.Duration;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -13,10 +15,11 @@ public class IpalikaFrontendApplication {
 		SpringApplication.run(IpalikaFrontendApplication.class, args);
 	}
 	
-	 //Create bean for rest template. Using rest template we can call remote rest api.
+	//Create bean for rest template. Using rest template we can call remote rest api.
     @Bean
     RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return builder.build();
+        //return builder.build();
+    	return builder.setConnectTimeout(Duration.ofMinutes(1)).build();
     }
 
 }

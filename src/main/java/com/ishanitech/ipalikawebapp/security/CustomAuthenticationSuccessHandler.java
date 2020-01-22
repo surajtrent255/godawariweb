@@ -16,69 +16,71 @@ import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
-public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler{
-	
+public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-	
+
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) throws IOException, ServletException { 
+			Authentication authentication) throws IOException, ServletException {
 		handleRequest(request, response, authentication);
 		clearAuthenticationAttributes(request);
 	}
 
-	
 	private void clearAuthenticationAttributes(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
-		if(session == null) {
+		if (session == null) {
 			return;
 		}
-		
+
 		session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
 	}
 
-	
-	private void handleRequest(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) throws IOException {
+	private void handleRequest(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+			throws IOException {
 		String targetUrl = determineTargetUrl(authentication);
-		if(response.isCommitted()) {
+		if (response.isCommitted()) {
 			return;
 		}
 		redirectStrategy.sendRedirect(request, response, targetUrl);
 	}
-	
-	
+
 	private String determineTargetUrl(Authentication authentication) {
-		boolean isAdmin = false, isDataAdmin = false;
+		boolean isAdmin = false, isStaff = false;
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-		for(GrantedAuthority authority : authorities) {
-			if(authority.getAuthority().equals("ROLE_ADMIN")) {
+		for (GrantedAuthority authority : authorities) {
+			log.info("AUTHORITY" + authority.getAuthority().toString());
+
+			if (authority.getAuthority().equals("ADMIN")) {
 				isAdmin = true;
 				break;
-				
-			} else if (authority.getAuthority().equals("ROLE_DATA_ADMIN")) {
-				isDataAdmin = true;
+
+			} else if (authority.getAuthority().equals("STAFF")) {
+				isStaff = true;
 				break;
-				
-			} 
+
+			}
+
 		}
-		
-		if(isAdmin) {
+
+		if (isAdmin) {
 			return "/admin/";
-		} else if(isDataAdmin) {
-			return "/admin/"; 
+		} else if (isStaff) {
+			return "/admin/";
 		} else {
 			return "/main/";
 		}
-		
-	}
 
+	}
 
 	public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
 		this.redirectStrategy = redirectStrategy;
 	}
-	
+
 	protected RedirectStrategy getRedirectStrategy() {
 		return redirectStrategy;
 	}

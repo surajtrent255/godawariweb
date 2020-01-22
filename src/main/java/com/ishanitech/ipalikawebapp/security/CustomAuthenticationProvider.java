@@ -1,11 +1,16 @@
 package com.ishanitech.ipalikawebapp.security;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +22,7 @@ import com.ishanitech.ipalikawebapp.dto.UserDTO;
 import com.ishanitech.ipalikawebapp.service.RestClientService;
 
 @Component
-public class CustomAuthenticationProvider implements AuthenticationProvider{
+public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 	@Autowired
 	private RestClientService restClient;
@@ -30,12 +35,17 @@ public class CustomAuthenticationProvider implements AuthenticationProvider{
 		loginDTO.setUsername(username);
 		loginDTO.setPassword(authentication.getCredentials().toString());
 		ObjectMapper mapper = new ObjectMapper();
-		Response<UserDTO> loggedInUser = null;
+		Response<UserDTO> loggedInUserResponse = null;
 		JavaType responseType = mapper.getTypeFactory().constructParametricType(Response.class, UserDTO.class);
-		loggedInUser = (Response<UserDTO>) restClient.login(loginDTO, responseType);
+		loggedInUserResponse = (Response<UserDTO>) restClient.login(loginDTO, responseType);
 		
-		if((loggedInUser != null) && (loggedInUser.getData() != null)){
-			authentication = new UsernamePasswordAuthenticationToken(loggedInUser.getData(), null , loggedInUser.getData().getAuthorities());
+		if((loggedInUserResponse != null) && (loggedInUserResponse.getData() != null)){
+			UserDTO loggedInUser = loggedInUserResponse.getData();
+			Collection<? extends GrantedAuthority> authorities =  loggedInUser.getRoles().stream().map(auth -> {
+				return new SimpleGrantedAuthority(auth);
+			}).collect(Collectors.toList());
+			
+			authentication = new UsernamePasswordAuthenticationToken(loggedInUser, null ,authorities);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			return authentication;
 		} 

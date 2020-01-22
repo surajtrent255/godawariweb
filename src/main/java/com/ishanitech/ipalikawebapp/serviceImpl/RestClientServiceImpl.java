@@ -4,12 +4,13 @@
  */
 package com.ishanitech.ipalikawebapp.serviceImpl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ishanitech.ipalikawebapp.dto.*;
 import com.ishanitech.ipalikawebapp.service.RestClientService;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,10 +36,10 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class RestClientServiceImpl implements RestClientService {
 	
-	private final Logger LOGGER = LoggerFactory.getLogger(RestClientServiceImpl.class);
     private RestTemplate restClient;
     private String partialRestUrl;
     
@@ -81,7 +82,7 @@ public class RestClientServiceImpl implements RestClientService {
         } catch(RestClientException rce) {
 //        	LOGGER.info("INSIDE LOGIN CALL: " + rce.getMessage());
         } catch(IOException ioEx) {
-        	LOGGER.error("INSIDE LOGIN IOEXCEPTION: " + ioEx.getMessage());
+        	log.error("INSIDE LOGIN IOEXCEPTION: " + ioEx.getMessage());
         }
         return response;
     }
