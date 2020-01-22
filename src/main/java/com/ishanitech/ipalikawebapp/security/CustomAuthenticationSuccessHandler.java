@@ -53,8 +53,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		boolean isAdmin = false, isStaff = false;
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		for (GrantedAuthority authority : authorities) {
-			log.info("AUTHORITY" + authority.getAuthority().toString());
-
 			if (authority.getAuthority().equals("ADMIN")) {
 				isAdmin = true;
 				break;
@@ -62,7 +60,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			} else if (authority.getAuthority().equals("STAFF")) {
 				isStaff = true;
 				break;
-
 			}
 
 		}
@@ -70,7 +67,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		if (isAdmin) {
 			return "/admin/";
 		} else if (isStaff) {
-			return "/admin/";
+			return "/staff/";
 		} else {
 			return "/main/";
 		}
