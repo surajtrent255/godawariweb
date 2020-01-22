@@ -44,6 +44,7 @@ public class IpalikaWebSecurityConfiguration extends WebSecurityConfigurerAdapte
 		.and()
 		.formLogin()
 		.loginPage("/")
+		.loginProcessingUrl("/login")
 		.usernameParameter("username")
 		.passwordParameter("password")
 		.successHandler(authenticationSuccessHandler)
