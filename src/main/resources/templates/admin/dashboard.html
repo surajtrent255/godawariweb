@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Lalitpur Metropolitan City 18, Sainbu</title>
+<!--favicon-->
+<link rel="icon" th:href="@{/assets/images/favicon1.ico}"
+	href="assets/images/favicon1.ico" type="image/x-icon" />
+<link th:href="@{/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css}"
+	href="assets/plugins/vectormap/jquery-jvectormap-2.0.2.css"
+	rel="stylesheet" />
+<link th:href="@{/assets/plugins/simplebar/css/simplebar.css}"
+	href="assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+<link th:href="@{/assets/css/bootstrap.min.css}"
+	href="assets/css/bootstrap.min.css" rel="stylesheet" />
+<link th:href="@{/assets/css/animate.css}" href="assets/css/animate.css"
+	rel="stylesheet" type="text/css" />
+<link th:href="@{/assets/css/icons.css}" href="assets/css/icons.css"
+	rel="stylesheet" type="text/css" />
+<link th:href="@{/assets/css/sidebar-menu.css}"
+	href="assets/css/sidebar-menu.css" rel="stylesheet" />
+<link th:href="@{/assets/css/app-style.css}"
+	href="assets/css/app-style.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+	<!-- start loader -->
+	<!--<div id="pageloader-overlay" class="visible incoming"><div class="loader-wrapper-outer"><div class="loader-wrapper-inner"><div class="loader"></div></div></div></div>-->
+	<!-- end loader -->
+
+	<!-- Start wrapper-->
+	<div id="wrapper">
+
+		<!--Start sidebar-wrapper-->
+		<div id="sidebar-wrapper" class="bg-theme bg-theme2" data-simplebar=""
+			data-simplebar-auto-hide="true">
+			<div class="brand-logo">
+				<a th:href="@{/admin}"> <img
+					th:src="@{/assets/images/logopng.png}"
+					src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
+					<h5 class="logo-text">Sainbu</h5>
+				</a>
+			</div>
+			<div class="user-details">
+				<div class="media align-items-center user-pointer collapsed"
+					data-toggle="collapse" data-target="#user-dropdown">
+					<div class="avatar">
+						<img class="mr-3 side-user-img"
+							th:src="@{/assets/images/avatars/avatar-13.png}"
+							src="assets/images/avatars/avatar-13.png" alt="user avatar">
+					</div>
+					<div class="media-body">
+						<h6 class="side-user-name">Dangol Buddhi</h6>
+					</div>
+				</div>
+				<div id="user-dropdown" class="collapse">
+					<ul class="user-setting-menu">
+						<li><a href="javaScript:void();"><i class="icon-user"></i>
+								My Profile</a></li>
+						<li><a href="javaScript:void();"><i class="icon-settings"></i>
+								Setting</a></li>
+						<li><a href="javaScript:void();"><i class="icon-power"></i>
+								Logout</a></li>
+					</ul>
+				</div>
+			</div>
+			<ul class="sidebar-menu do-nicescrol">
+				<li class="sidebar-header">MAIN NAVIGATION</li>
+				<li><a th:href="@{/admin}" href="" class="waves-effect"> <i
+						class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
+				</a></li>
+				<li><a th:href="@{/}" href="data-insert.php"
+					class="waves-effect"> <i class="zmdi zmdi-layers"></i> <span>Data
+							Intert</span>
+				</a></li>
+				<li><a th:href="@{/}" href="#" class="waves-effect"> <i
+						class="zmdi zmdi-card-travel"></i> <span>List</span>
+
+				</a></li>
+
+
+
+
+				<li><a href="javaScript:void();" class="waves-effect"> <i
+						class="zmdi zmdi-lock"></i> <span>User</span> <i
+						class="fa fa-angle-left pull-right"></i>
+				</a>
+					<ul class="sidebar-submenu">
+						<li><a href="form-inputs.html"><i
+								class="zmdi zmdi-long-arrow-right"></i> Create</a></li>
+						<li><a href="form-input-group.html"><i
+								class="zmdi zmdi-long-arrow-right"></i> Change</a></li>
+
+					</ul></li>
+
+			</ul>
+		</div>
+		<!--End sidebar-wrapper-->
+		<!--Start topbar header-->
+		<header class="topbar-nav">
+			<nav class="navbar navbar-expand fixed-top">
+				<ul class="navbar-nav mr-auto align-items-center">
+					<li class="nav-item"><a class="nav-link toggle-menu"
+						href="javascript:void();"> <i class="icon-menu menu-icon"></i>
+					</a></li>
+					<li class="nav-item">
+						<form class="search-bar">
+							<input type="text" class="form-control"
+								placeholder="Enter keywords"> <a
+								href="javascript:void();"><i class="icon-magnifier"></i></a>
+						</form>
+					</li>
+				</ul>
+
+
+			</nav>
+		</header>
+
+
+		<div class="clearfix"></div>
+
+		<div class="content-wrapper">
+			<div class="container-fluid">
+
+				<!--Start Dashboard Content-->
+
+				<div class="row mt-3">
+					<div class="col-12 col-lg-6 col-xl-3">
+						<div class="card gradient-deepblue">
+							<div class="card-body">
+								<h5 class="text-white mb-0">9526</h5>
+								<div class="progress my-3" style="height: 3px;">
+									<div class="progress-bar" style="width: 55%"></div>
+								</div>
+								<p class="mb-0 text-white small-font">
+									Total Population <span class="float-right">100% <i
+										class="zmdi zmdi-long-arrow-up"></i></span>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-6 col-xl-3">
+						<div class="card gradient-orange">
+							<div class="card-body">
+								<h5 class="text-white mb-0">8323</h5>
+								<div class="progress my-3" style="height: 3px;">
+									<div class="progress-bar" style="width: 55%"></div>
+								</div>
+								<p class="mb-0 text-white small-font">
+									Total Children <span class="float-right">55% <i
+										class="zmdi zmdi-long-arrow-up"></i></span>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-6 col-xl-3">
+						<div class="card gradient-ohhappiness">
+							<div class="card-body">
+								<h5 class="text-white mb-0">6200</h5>
+								<div class="progress my-3" style="height: 3px;">
+									<div class="progress-bar" style="width: 55%"></div>
+								</div>
+								<p class="mb-0 text-white small-font">
+									Total Youth <span class="float-right">30% <i
+										class="zmdi zmdi-long-arrow-up"></i></span>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-6 col-xl-3">
+						<div class="card gradient-ibiza">
+							<div class="card-body">
+								<h5 class="text-white mb-0">5630</h5>
+								<div class="progress my-3" style="height: 3px;">
+									<div class="progress-bar" style="width: 55%"></div>
+								</div>
+								<p class="mb-0 text-white small-font">
+									Total Old Age <span class="float-right">15% <i
+										class="zmdi zmdi-long-arrow-up"></i></span>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--End Row-->
+
+
+				<div class="row">
+
+
+					<div class="col-12 col-lg-6 col-xl-6">
+						<div class="card">
+							<div class="card-header">Education</div>
+
+							<div class="table-responsive">
+								<table class="table align-items-center">
+									<tbody>
+										<tr>
+											<td><i class="fa fa-circle text-primary mr-2"></i>
+												Iliterate</td>
+											<td>5856</td>
+											<td>30%</td>
+										</tr>
+										<tr>
+											<td><i class="fa fa-circle text-success mr-2"></i>Literacy</td>
+											<td>2602</td>
+											<td>25%</td>
+										</tr>
+										<tr>
+											<td><i class="fa fa-circle text-secondary mr-2"></i>High</td>
+											<td>1802</td>
+											<td>15%</td>
+										</tr>
+										<tr>
+											<td><i class="fa fa-circle text-warning mr-2"></i>Graduate</td>
+											<td>1105</td>
+											<td>20%</td>
+										</tr>
+										<tr>
+											<td><i class="fa fa-circle text-danger mr-2"></i>Master</td>
+											<td>1105</td>
+											<td>10%</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12 col-lg-6 col-xl-6">
+						<div class="row">
+							<div class="col-12 col-lg-6">
+								<div class="card">
+									<div class="card-body">
+										<p>Page Views</p>
+										<h4 class="mb-0">
+											8,293 <small class="small-font">5.2% <i
+												class="zmdi zmdi-long-arrow-up"></i></small>
+										</h4>
+									</div>
+
+								</div>
+							</div>
+							<div class="col-12 col-lg-6">
+								<div class="card">
+									<div class="card-body">
+										<p>Total Clicks</p>
+										<h4 class="mb-0">
+											7,493 <small class="small-font">1.4% <i
+												class="zmdi zmdi-long-arrow-up"></i></small>
+										</h4>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="col-12 col-lg-6">
+								<div class="card">
+									<div class="card-body">
+										<p>Page Views</p>
+										<h4 class="mb-0">
+											8,293 <small class="small-font">5.2% <i
+												class="zmdi zmdi-long-arrow-up"></i></small>
+										</h4>
+									</div>
+
+								</div>
+							</div>
+							<div class="col-12 col-lg-6">
+								<div class="card">
+									<div class="card-body">
+										<p>Total Clicks</p>
+										<h4 class="mb-0">
+											7,493 <small class="small-font">1.4% <i
+												class="zmdi zmdi-long-arrow-up"></i></small>
+										</h4>
+									</div>
+
+								</div>
+							</div>
+
+
+
+						</div>
+					</div>
+				</div>
+				<!--End Row-->
+
+				<div class="row">
+					<div class="col-12 col-lg-6 col-xl-4">
+						<div class="card">
+							<div class="card-body">
+								<div class="media align-items-center">
+									<div class="w_chart easy-dash-chart1" data-percent="60">
+										<span class="w_percent"></span>
+									</div>
+									<div class="media-body ml-3">
+										<h6 class="mb-0">Male</h6>
+										<small class="mb-0">22.14% <i class="fa fa-arrow-up"></i>
+											Since Last Week
+										</small>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-6 col-xl-4">
+						<div class="card">
+							<div class="card-body">
+								<div class="media align-items-center">
+									<div class="w_chart easy-dash-chart2" data-percent="65">
+										<span class="w_percent"></span>
+									</div>
+									<div class="media-body ml-3">
+										<h6 class="mb-0">Female</h6>
+										<small class="mb-0">32.15% <i class="fa fa-arrow-up"></i>
+											Since Last Week
+										</small>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-12 col-xl-4">
+						<div class="card">
+							<div class="card-body">
+								<div class="media align-items-center">
+									<div class="w_chart easy-dash-chart3" data-percent="75">
+										<span class="w_percent"></span>
+									</div>
+									<div class="media-body ml-3">
+										<h6 class="mb-0">Others</h6>
+										<small class="mb-0">58.24% <i class="fa fa-arrow-up"></i>
+											Since Last Week
+										</small>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--End Row-->
+
+
+
+
+				<div class="row">
+					<div class="col-12 col-lg-12">
+						<div class="card">
+							<div class="card-header border-0">House Hold</div>
+							<div class="table-responsive">
+								<table class="table align-items-center table-flush">
+									<thead>
+										<tr>
+
+											<th>Name</th>
+											<th>Address</th>
+											<th>Contact No.</th>
+											<th>Total Member</th>
+
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+
+											<td>Buddhi</td>
+											<td>Khokana</td>
+											<td>9851282588</td>
+											<td>09</td>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--End Row-->
+
+				<!--End Dashboard Content-->
+
+			</div>
+			<!-- End container-fluid-->
+
+		</div>
+		<!--End content-wrapper-->
+
+
+		<a href="javaScript:void();" class="back-to-top"><i
+			class="fa fa-angle-double-up"></i> </a>
+		<!--End Back To Top Button-->
+
+		<!--Start footer-->
+		<footer class="footer">
+			<div class="container">
+				<div class="text-center">Copyright © 2019 Lalitpur
+					Metropolitan City 18 (Sainbu) | Develop by ArchieSoft Technology</div>
+			</div>
+		</footer>
+
+
+	</div>
+	<!--End wrapper-->
+
+	<!-- Bootstrap core JavaScript-->
+	<script th:src="@{/assets/js/jquery.min.js}" src="assets/js/jquery.min.js"></script>
+	<script th:src="@{/assets/js/popper.min.js}" src="assets/js/popper.min.js"></script>
+	<script th:src="@{/assets/js/bootstrap.min.js}" src="assets/js/bootstrap.min.js"></script>
+
+	<!-- simplebar js -->
+	<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}" src="assets/plugins/simplebar/js/simplebar.js"></script>
+	<!-- sidebar-menu js -->
+	<script th:src="@{/assets/js/sidebar-menu.js}" src="assets/js/sidebar-menu.js"></script>
+	<!-- loader scripts -->
+	<script th:src="@{/assets/js/jquery.loading-indicator.html}" src="assets/js/jquery.loading-indicator.html"></script>
+	<!-- Custom scripts -->
+	<script th:src="@{/assets/js/app-script.js}" src="assets/js/app-script.js"></script>
+	<!-- Chart js -->
+
+	<script th:src="@{/assets/plugins/Chart.js/Chart.min.js}" src="assets/plugins/Chart.js/Chart.min.js"></script>
+	<!-- Vector map JavaScript -->
+	<script th:src="@{/assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js}" src="assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js"></script>
+	<script
+		th:src="@{/assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js}"
+		src="assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
+	<!-- Easy Pie Chart JS -->
+	<script
+		th:src="@{/assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js}"
+		src="assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+	<!-- Sparkline JS -->
+	<script th:src="@{/assets/plugins/sparkline-charts/jquery.sparkline.min.js}" src="assets/plugins/sparkline-charts/jquery.sparkline.min.js"></script>
+	<script th:src="@{/assets/plugins/jquery-knob/excanvas.js}" src="assets/plugins/jquery-knob/excanvas.js"></script>
+	<script th:src="@{/assets/plugins/jquery-knob/jquery.knob.js}" src="assets/plugins/jquery-knob/jquery.knob.js"></script>
+
+	<script>
+        $(function() {
+            $(".knob").knob();
+        });
+    </script>
+	<!-- Index js -->
+	<script th:src="@{/assets/js/index.js}" src="assets/js/index.js"></script>
+
+</body>
+</html>
