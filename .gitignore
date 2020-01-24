@@ -29,3 +29,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Ignoring Applicationw.yml ###
+/src/main/resources/application.yml
+/src/application.yml

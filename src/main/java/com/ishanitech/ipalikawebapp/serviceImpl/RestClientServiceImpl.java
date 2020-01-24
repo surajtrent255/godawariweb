@@ -82,7 +82,7 @@ public class RestClientServiceImpl implements RestClientService {
         } catch(HttpStatusCodeException sce) {
         	throw new BadCredentialsException("Bad Credentials");
         } catch(RestClientException rce) {
-//        	LOGGER.info("INSIDE LOGIN CALL: " + rce.getMessage());
+        	LOGGER.info("INSIDE LOGIN CALL: " + rce.getMessage());
         } catch(IOException ioEx) {
         	log.error("INSIDE LOGIN IOEXCEPTION: " + ioEx.getMessage());
         }
@@ -100,7 +100,7 @@ public class RestClientServiceImpl implements RestClientService {
     @Override
     public Response<?> getData(String url, JavaType responseType) {
         Response<?> response = null;
-        URI completeUrl = URI.create(baseUrl + partialRestUrl + url);
+        URI completeUrl = URI.create(baseUrl + url);
         HttpHeaders headers = new HttpHeaders();
         UserDTO loggedInUser = null;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

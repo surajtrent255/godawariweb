@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
@@ -61,14 +62,14 @@ public class AdminController {
 	public String getResidentDataList(Model model) {
 		Response<List<ResidentDTO>> residentResponse = (Response<List<ResidentDTO>>) residentService.getResidentDataList();
 		
-		if (residentResponse.getData() != null && residentResponse.getData().size() > 0){
+//		if (residentResponse.getData() != null && residentResponse.getData().size() > 0){
 			model.addAttribute("residentList", residentResponse.getData());
-		}
-		return "admin/whole-seller";	
+//		}
+		return "admin/resident-data";	
 	}
 	
-	@GetMapping("/residentMembers")
-	public String getResidentMemberList() {
+	@GetMapping("/residentMembers/{filledFormId}")
+	public String getResidentMemberList(@PathVariable("filledFormId") Integer filledFormId, Model model) {
 		return "admin/resident-members";
 	}
 	
