@@ -38,90 +38,96 @@
 	<!-- Start wrapper-->
 	<div id="wrapper">
 
-		<!--Start sidebar-wrapper-->
-		<div id="sidebar-wrapper" class="bg-theme bg-theme2" data-simplebar=""
-			data-simplebar-auto-hide="true">
-			<div class="brand-logo">
-				<a th:href="@{/admin}"> <img
-					th:src="@{/assets/images/logopng.png}"
-					src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-					<h5 class="logo-text">Sainbu</h5>
-				</a>
-			</div>
-			<div class="user-details">
-				<div class="media align-items-center user-pointer collapsed"
-					data-toggle="collapse" data-target="#user-dropdown">
-					<div class="avatar">
-						<img class="mr-3 side-user-img"
-							th:src="@{/assets/images/avatars/avatar-13.png}"
-							src="assets/images/avatars/avatar-13.png" alt="user avatar">
-					</div>
-					<div class="media-body">
-						<h6 class="side-user-name">Dangol Buddhi</h6>
-					</div>
-				</div>
-				<div id="user-dropdown" class="collapse">
-					<ul class="user-setting-menu">
-						<li><a href="javaScript:void();"><i class="icon-user"></i>
-								My Profile</a></li>
-						<li><a href="javaScript:void();"><i class="icon-settings"></i>
-								Setting</a></li>
-						<li><a href="javaScript:void();"><i class="icon-power"></i>
-								Logout</a></li>
-					</ul>
-				</div>
-			</div>
-			<ul class="sidebar-menu do-nicescrol">
-				<li class="sidebar-header">MAIN NAVIGATION</li>
-				<li><a th:href="@{/admin}" href="" class="waves-effect"> <i
-						class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
-				</a></li>
-				<li><a th:href="@{/}" href="data-insert.php"
-					class="waves-effect"> <i class="zmdi zmdi-layers"></i> <span>Data
-							Intert</span>
-				</a></li>
-				<li><a th:href="@{/}" href="#" class="waves-effect"> <i
-						class="zmdi zmdi-card-travel"></i> <span>List</span>
+		<div th:replace="~{fragments/admin-sidebar}"></div>
+		<header th:replace="~{fragments/header}" class="header1"> </header>
 
-				</a></li>
+		<!-- 		<!--Start sidebar-wrapper-->
+		-->
+		<!-- 		<div id="sidebar-wrapper" class="bg-theme bg-theme2" data-simplebar="" -->
+		<!-- 			data-simplebar-auto-hide="true"> -->
+		<!-- 			<div class="brand-logo"> -->
+		<!-- 				<a th:href="@{/admin}"> <img -->
+		<!-- 					th:src="@{/assets/images/logopng.png}" -->
+		<!-- 					src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon"> -->
+		<!-- 					<h5 class="logo-text">Sainbu</h5> -->
+		<!-- 				</a> -->
+		<!-- 			</div> -->
+		<!-- 			<div class="user-details"> -->
+		<!-- 				<div class="media align-items-center user-pointer collapsed" -->
+		<!-- 					data-toggle="collapse" data-target="#user-dropdown"> -->
+		<!-- 					<div class="avatar"> -->
+		<!-- 						<img class="mr-3 side-user-img" -->
+		<!-- 							th:src="@{/assets/images/avatars/avatar-13.png}" -->
+		<!-- 							src="assets/images/avatars/avatar-13.png" alt="user avatar"> -->
+		<!-- 					</div> -->
+		<!-- 					<div class="media-body"> -->
+		<!-- 						<h6 class="side-user-name">Dangol Buddhi</h6> -->
+		<!-- 					</div> -->
+		<!-- 				</div> -->
+		<!-- 				<div id="user-dropdown" class="collapse"> -->
+		<!-- 					<ul class="user-setting-menu"> -->
+		<!-- 						<li><a href="javaScript:void();"><i class="icon-user"></i> -->
+		<!-- 								My Profile</a></li> -->
+		<!-- 						<li><a href="javaScript:void();"><i class="icon-settings"></i> -->
+		<!-- 								Setting</a></li> -->
+		<!-- 						<li><a href="javaScript:void();"><i class="icon-power"></i> -->
+		<!-- 								Logout</a></li> -->
+		<!-- 					</ul> -->
+		<!-- 				</div> -->
+		<!-- 			</div> -->
+		<!-- 			<ul class="sidebar-menu do-nicescrol"> -->
+		<!-- 				<li class="sidebar-header">MAIN NAVIGATION</li> -->
+		<!-- 				<li><a th:href="@{/admin}" href="" class="waves-effect"> <i -->
+		<!-- 						class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span> -->
+		<!-- 				</a></li> -->
+		<!-- 				<li><a th:href="@{/}" href="data-insert.php" -->
+		<!-- 					class="waves-effect"> <i class="zmdi zmdi-layers"></i> <span>Data -->
+		<!-- 							Intert</span> -->
+		<!-- 				</a></li> -->
+		<!-- 				<li><a th:href="@{/}" href="#" class="waves-effect"> <i -->
+		<!-- 						class="zmdi zmdi-card-travel"></i> <span>List</span> -->
 
-
-
-
-				<li><a href="javaScript:void();" class="waves-effect"> <i
-						class="zmdi zmdi-lock"></i> <span>User</span> <i
-						class="fa fa-angle-left pull-right"></i>
-				</a>
-					<ul class="sidebar-submenu">
-						<li><a href="form-inputs.html"><i
-								class="zmdi zmdi-long-arrow-right"></i> Create</a></li>
-						<li><a href="form-input-group.html"><i
-								class="zmdi zmdi-long-arrow-right"></i> Change</a></li>
-
-					</ul></li>
-
-			</ul>
-		</div>
-		<!--End sidebar-wrapper-->
-		<!--Start topbar header-->
-		<header class="topbar-nav">
-			<nav class="navbar navbar-expand fixed-top">
-				<ul class="navbar-nav mr-auto align-items-center">
-					<li class="nav-item"><a class="nav-link toggle-menu"
-						href="javascript:void();"> <i class="icon-menu menu-icon"></i>
-					</a></li>
-					<li class="nav-item">
-						<form class="search-bar">
-							<input type="text" class="form-control"
-								placeholder="Enter keywords"> <a
-								href="javascript:void();"><i class="icon-magnifier"></i></a>
-						</form>
-					</li>
-				</ul>
+		<!-- 				</a></li> -->
 
 
-			</nav>
-		</header>
+
+
+		<!-- 				<li><a href="javaScript:void();" class="waves-effect"> <i -->
+		<!-- 						class="zmdi zmdi-lock"></i> <span>User</span> <i -->
+		<!-- 						class="fa fa-angle-left pull-right"></i> -->
+		<!-- 				</a> -->
+		<!-- 					<ul class="sidebar-submenu"> -->
+		<!-- 						<li><a href="form-inputs.html"><i -->
+		<!-- 								class="zmdi zmdi-long-arrow-right"></i> Create</a></li> -->
+		<!-- 						<li><a href="form-input-group.html"><i -->
+		<!-- 								class="zmdi zmdi-long-arrow-right"></i> Change</a></li> -->
+
+		<!-- 					</ul></li> -->
+
+		<!-- 			</ul> -->
+		<!-- 		</div> -->
+		<!-- 		<!--End sidebar-wrapper-->
+
+		<!-- 		<!--Start topbar header-->
+		<!-- 		<header class="topbar-nav"> -->
+		<!-- 			<nav class="navbar navbar-expand fixed-top"> -->
+		<!-- 				<ul class="navbar-nav mr-auto align-items-center"> -->
+		<!-- 					<li class="nav-item"><a class="nav-link toggle-menu" -->
+		<!-- 						href="javascript:void();"> <i class="icon-menu menu-icon"></i> -->
+		<!-- 					</a></li> -->
+		<!-- 					<li class="nav-item"> -->
+		<!-- 						<form class="search-bar"> -->
+		<!-- 							<input type="text" class="form-control" -->
+		<!-- 								placeholder="Enter keywords"> <a -->
+		<!-- 								href="javascript:void();"><i class="icon-magnifier"></i></a> -->
+		<!-- 						</form> -->
+		<!-- 					</li> -->
+		<!-- 				</ul> -->
+
+
+		<!-- 			</nav> -->
+		<!-- 		</header> -->
+
 
 
 		<div class="clearfix"></div>
@@ -396,35 +402,39 @@
 		<!--End Back To Top Button-->
 
 		<!--Start footer-->
-		<footer class="footer">
-			<div class="container">
-				<div class="text-center">Copyright © 2019 Lalitpur
-					Metropolitan City 18 (Sainbu) | Develop by ArchieSoft Technology</div>
-			</div>
-		</footer>
-
+		<footer th:replace="~{fragments/footer :: footer}"></footer>
 
 	</div>
 	<!--End wrapper-->
 
 	<!-- Bootstrap core JavaScript-->
-	<script th:src="@{/assets/js/jquery.min.js}" src="assets/js/jquery.min.js"></script>
-	<script th:src="@{/assets/js/popper.min.js}" src="assets/js/popper.min.js"></script>
-	<script th:src="@{/assets/js/bootstrap.min.js}" src="assets/js/bootstrap.min.js"></script>
+	<script th:src="@{/assets/js/jquery.min.js}"
+		src="assets/js/jquery.min.js"></script>
+	<script th:src="@{/assets/js/popper.min.js}"
+		src="assets/js/popper.min.js"></script>
+	<script th:src="@{/assets/js/bootstrap.min.js}"
+		src="assets/js/bootstrap.min.js"></script>
 
 	<!-- simplebar js -->
-	<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}" src="assets/plugins/simplebar/js/simplebar.js"></script>
+	<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}"
+		src="assets/plugins/simplebar/js/simplebar.js"></script>
 	<!-- sidebar-menu js -->
-	<script th:src="@{/assets/js/sidebar-menu.js}" src="assets/js/sidebar-menu.js"></script>
+	<script th:src="@{/assets/js/sidebar-menu.js}"
+		src="assets/js/sidebar-menu.js"></script>
 	<!-- loader scripts -->
-	<script th:src="@{/assets/js/jquery.loading-indicator.html}" src="assets/js/jquery.loading-indicator.html"></script>
+	<script th:src="@{/assets/js/jquery.loading-indicator.html}"
+		src="assets/js/jquery.loading-indicator.html"></script>
 	<!-- Custom scripts -->
-	<script th:src="@{/assets/js/app-script.js}" src="assets/js/app-script.js"></script>
+	<script th:src="@{/assets/js/app-script.js}"
+		src="assets/js/app-script.js"></script>
 	<!-- Chart js -->
 
-	<script th:src="@{/assets/plugins/Chart.js/Chart.min.js}" src="assets/plugins/Chart.js/Chart.min.js"></script>
+	<script th:src="@{/assets/plugins/Chart.js/Chart.min.js}"
+		src="assets/plugins/Chart.js/Chart.min.js"></script>
 	<!-- Vector map JavaScript -->
-	<script th:src="@{/assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js}" src="assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js"></script>
+	<script
+		th:src="@{/assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js}"
+		src="assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js"></script>
 	<script
 		th:src="@{/assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js}"
 		src="assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
@@ -433,15 +443,19 @@
 		th:src="@{/assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js}"
 		src="assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
 	<!-- Sparkline JS -->
-	<script th:src="@{/assets/plugins/sparkline-charts/jquery.sparkline.min.js}" src="assets/plugins/sparkline-charts/jquery.sparkline.min.js"></script>
-	<script th:src="@{/assets/plugins/jquery-knob/excanvas.js}" src="assets/plugins/jquery-knob/excanvas.js"></script>
-	<script th:src="@{/assets/plugins/jquery-knob/jquery.knob.js}" src="assets/plugins/jquery-knob/jquery.knob.js"></script>
+	<script
+		th:src="@{/assets/plugins/sparkline-charts/jquery.sparkline.min.js}"
+		src="assets/plugins/sparkline-charts/jquery.sparkline.min.js"></script>
+	<script th:src="@{/assets/plugins/jquery-knob/excanvas.js}"
+		src="assets/plugins/jquery-knob/excanvas.js"></script>
+	<script th:src="@{/assets/plugins/jquery-knob/jquery.knob.js}"
+		src="assets/plugins/jquery-knob/jquery.knob.js"></script>
 
 	<script>
-        $(function() {
-            $(".knob").knob();
-        });
-    </script>
+		$(function() {
+			$(".knob").knob();
+		});
+	</script>
 	<!-- Index js -->
 	<script th:src="@{/assets/js/index.js}" src="assets/js/index.js"></script>
 

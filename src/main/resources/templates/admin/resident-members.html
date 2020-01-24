@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+        <meta name="csrf-token" content="NFZhk93iWHwVqoeD5qwaufgi4k80OVYXw2fiBTNt" />
+        <title> ललितपुर महानगरपालिका </title>
+        <link rel="icon" href="https://www.lalitpur15.org/datasys/public/images/favicon.ico" type="image/x-icon"/>
+        <link href="https://www.lalitpur15.org/datasys/public/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet"/>
+        <link href="https://www.lalitpur15.org/datasys/public/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
+        <link href="https://www.lalitpur15.org/datasys/public/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="https://www.lalitpur15.org/datasys/public/css/animate.css" rel="stylesheet" type="text/css"/>
+        <link href="https://www.lalitpur15.org/datasys/public/css/icons.css" rel="stylesheet" type="text/css"/>
+        <link href="https://www.lalitpur15.org/datasys/public/css/sidebar-menu.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://www.lalitpur15.org/datasys/public/plugins/nepali-datepicker/nepaliDatePicker.min.css">
+        <link href="https://www.lalitpur15.org/datasys/public/css/app-style.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://www.lalitpur15.org/datasys/public/plugins/datatable/css/datatables.min.css">
+        <link rel="stylesheet" href="https://www.lalitpur15.org/datasys/public/plugins/jquery.steps/css/jquery.steps.css">
+            <link rel="stylesheet" type="text/css" href="https://www.lalitpur15.org/datasys/public/css/print.css" media="print">
+<style type="text/css">
+  .printForm .first_cell {
+  width: 30px;
+  }
+  .printForm td, span {
+  font-size: 13px;
+  position: relative;
+  }
+  .table thead th{
+    font-size: 13px;
+  }
+  .printForm [type="checkbox"]:not(:checked)+span,
+  .printForm [type="radio"]:not(:checked)+span{
+    display: none;
+  }
+  /* Base for span styling */
+  .printForm [type="checkbox"]:not(:checked),
+  .printForm [type="checkbox"]:checked,
+  .printForm [type="radio"]:not(:checked),
+  .printForm [type="radio"]:checked {
+  position: absolute;
+  left: -9999px;
+  }
+  .green{
+    background: green !important;
+    color: #fff;
+  }
+  .red{
+    background: red !important;
+    color: #fff;
+  }
+  .ui.grid{
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%;
+  }
+  .table-borderless td{
+    border: none;
+  }
+</style>
+        <script src="https://www.lalitpur15.org/datasys/public/js/jquery.min.js"></script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="sidebar-wrapper" class="bg-theme bg-theme2" data-simplebar="" data-simplebar-auto-hide="true">
+                <div class="brand-logo" style="background:#FFF;">
+                    <a href="https://buddhi.com.np/demo/dashboard/list">
+                        <img src="https://www.lalitpur15.org/datasys/public/images/logo.png" class="logo-icon" alt="logo icon">
+                        
+                    </a>
+                </div>
+                <div class="user-details">
+                    <div class="media align-items-center user-pointer collapsed" data-toggle="collapse" data-target="#user-dropdown">
+                        <!-- <div class="avatar"><img class="mr-3 side-user-img" src="https://www.lalitpur15.org/datasys/public/images/avatars/avatar-13.png" alt="user avatar"></div> -->
+                        <div class="media-body">
+                            <h6 class="side-user-name">Buddhi</h6>
+                        </div>
+                    </div>
+                    <div id="user-dropdown" class="collapse">
+                        <ul class="user-setting-menu">
+                            <li><a href="https://buddhi.com.np/demo/users/99a56fe1-4988-46fa-93e9-4e694ebcdacb/edit"><i class="icon-user"></i>  My Profile</a></li>
+                            <li><a href="https://buddhi.com.np/demo/users/99a56fe1-4988-46fa-93e9-4e694ebcdacb/reset"><i class="icon-settings"></i> Setting</a></li>
+                            <li><a href="https://buddhi.com.np/demo/logout"><i class="icon-power"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <ul class="sidebar-menu do-nicescrol">
+                    <li class="sidebar-header">MAIN NAVIGATION</li>
+                    <li>
+                        <a href="https://buddhi.com.np/demo/dashboard/list" class="waves-effect">
+                            <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://buddhi.com.np/demo/household" class="waves-effect">
+                        <i class="zmdi zmdi-card-travel"></i>
+                        <span>Data</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://buddhi.com.np/demo/household/create" class="waves-effect">
+                        <i class="zmdi zmdi-layers"></i>
+                        <span>Add Household</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://buddhi.com.np/demo/householdmember/create" class="waves-effect">
+                        <i class="zmdi zmdi-layers"></i>
+                        <span>Add Member</span>
+                        </a>
+                    </li>
+                                    </ul>
+            </div>
+            <header class="topbar-nav">
+                <nav class="navbar navbar-expand fixed-top">
+                    <ul class="navbar-nav mr-auto align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link toggle-menu" href="javascript:void();">
+                            <i class="icon-menu menu-icon"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            <div class="clearfix"></div>
+            <div class="content-wrapper">
+                <div class="container-fluid" id="pjax-container">
+                    <div class="row pt-2 pb-2">
+                        <div class="col-sm-9">
+                            <h4 class="page-title">Data Management System</h4>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>            
+                                <li class="breadcrumb-item active" aria-current="page">Household Members List</li>
+                             </ol>
+                         </div>
+                     </div>
+                                        <div class="saibu-display-form print table-responsive printForm">
+  <div class="data-heading-row">
+    <div class="row">
+      <div class="col-lg-2 col-md-12">
+        
+        <a href="https://www.lalitpur15.org/datasys/public/uploads/5e0eee8e3bacd.jpg" style="display: block" target="_blank" class="no-pjax"><img src="https://www.lalitpur15.org/datasys/public/uploads/5e0eee8e3bacd.jpg" class="media-object house-detail-photo" style="width: 150px; height: 150px;"></a>
+      </div>
+      <div class="col-lg-10 col-md-12">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td><strong>घरमुलीको नाम</strong> :</td>
+              <td>सुदाम राउत</td>
+              <td><strong>टोल</strong> :</td>
+              <td>हात्तीवन</td>
+              <td><strong>घर नं</strong> :</td>
+              <td>९०</td>
+              <td><strong>फोन नं</strong> :</td>
+              <td>९८४९१९३००७</td>
+            </tr>
+            <tr>
+              <td><strong>बुबाको नाम</strong>: </td>
+              <td>दुर्गा बहादुर राउत</td>
+              <td><strong>आमाको नाम</strong>:</td>
+              <td>कान्छी राउत</td>
+              <td><strong>मातृभाषा</strong>:</td>
+              <td>नेपाली</td>
+            <td><strong>जाति</strong>:</td>
+              <td>ब्रहमण/क्षेत्री</td>
+            </tr>
+            <tr>
+              <td><strong>धर्म</strong>:</td>
+              <td>हिन्दू धर्म</td>
+              <td><strong>नागरिकता नं</strong>:</td>
+              <td>१३/१६४१</td>
+              <td><strong>नागरिकता लिएको जिल्ला</strong>:</td>
+              <td>ललितपुर</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+    <div class="table-responsive">
+  <table class="table table-striped table-hover table-member" id="grid">
+    <thead>
+      <tr>
+        <th rowspan="2"><strong>ऋ.स</strong></th>
+        <th><strong>१</strong></th>
+        <th><strong>२</strong></th>
+        <th><strong>३</strong></th>
+        <th><strong>४</strong></th>
+        <th><strong>५</strong></th>
+        <th><strong>६</strong></th>
+        <th><strong>७</strong></th>
+        <th><strong>८</strong></th>
+        <th><strong>९</strong></th>
+        <th><strong>१० </strong></th>
+        <th rowspan="2" class="rm-print"><strong>#</strong></th>
+      </tr>
+      <tr>
+        <th><strong>नाम थर</strong></th>
+        <th><strong>नाता</strong></th>
+        <th><strong>लिङ्ग</strong></th>
+        <th><strong>उमेर</strong></th>
+        <th><strong>वैवाहिक<br> स्थिति</strong></th>
+        <th><strong>सैक्षिक योग्येता</strong></th>
+        <th><strong>पेशा</strong></th>
+        <th><strong>मतदाता<br> परिचयपत्र</strong></th>
+        <th><strong>स्थायी ठेगाना</strong></th>
+        <th><strong>स्वास्थ्य अवस्था</strong></th>
+      </tr>
+    </thead>
+  </table>
+</div>
+</div>
+</div>
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+    <div class="table-responsive">
+  <table class="table table-striped table-member">
+    <tbody>
+      <tr>
+        <td>११. <strong>कित्ता नं</strong>: ७८/६४</td>
+        <td><strong>घर संख्या</strong>: १</td>
+        <td><strong>व्यवसाय</strong>: पनि व्यवसाय</td>
+        <td><strong>व्यवसायी</strong>: ० <strong>फोन नं</strong>: ०</td>
+      </tr>
+      <tr>
+        <td>१२. <strong>घरको तल्ला</strong>:</td>
+        <td>०</td>
+      
+        <td>१३. <strong>पानी</strong>:</td>
+        <td>
+          <span><input type="checkbox"  >धारा, </span>
+        
+          <span><input type="checkbox"  >इनार, </span>
+        
+          <span><input type="checkbox"   checked >अन्य</span>
+           -         </td>
+      </tr>
+      <tr> 
+        <td>१४. <strong>निकासा</strong>:</td>
+        <td>
+          <span><input type="radio"   value="1">ढल</span>
+          <span><input type="radio"  checked value="2">सेफ्टी ट्यांकी</span>
+          <span><input type="radio"   value="3">छैन</span>
+        </td>
+        <td>१५. <strong>सवारी साधन</strong>:</td>
+        <td>
+          <input type="checkbox"   checked ><span>मोटर, </span>
+        
+          <input type="checkbox"  ><span>मो.साईकल, </span>
+        
+          <input type="checkbox"  ><span>साईकल, </span>
+        
+          <input type="checkbox"  ><span>अन्य </span>
+        </td>
+      </tr>
+      <tr>
+        <td>१६. <strong>घरको बनोैट</strong>:</td>
+        <td>
+          <input type="radio"   value="1"><span>पुरानो </span>
+        
+          <input type="radio"   value="2"><span>नयाँ</span>
+        
+          <input type="radio"  checked value="3"><span>आ.सि.सि</span>
+        
+          <input type="radio"   value="4"><span>टहरा </span>
+
+          <input type="radio"   value="5"><span>लोड बेयरिङ्ग  </span>
+        </td>
+        <td>१७. <strong>वर्तमान उपयोग</strong>:</td>
+        <td>
+          <input type="radio"   value="1"><span>आफै</span>
+       
+          <input type="radio"   value="2"><span> सम्पूर्ण भाडा</span>
+       
+          <input type="radio"  checked value="3"><span>आंशिक भाडा</span>
+       
+          <input type="radio"   value="4"><span>सराई</span>
+        </td>
+      </tr>
+      <tr>
+        <td>१८. <strong>सडकको भौतिक अवस्था</strong>:</td>
+        <td>
+          <input type="radio"  checked value="1"><span>कालोपत्र </span>
+        
+          <input type="radio"   value="2"><span>ग्राभेल </span>
+        
+          <input type="radio"   value="3"><span>कच्ची</span>
+        
+          <input type="radio"   value="4"><span>गोरेटो </span>
+
+          <input type="radio"   value="5"><span>ईट्टा वा ढुंगा छपाई </span>
+        </td>
+        <td>१९. <strong>बैदेशिक रोजगार</strong>:</td>
+        <td>
+          <span><input type="checkbox" >गल्फ  ,
+          </span>
+        
+          <span><input type="checkbox" >यूरोप  ,
+          </span>
+        
+          <span><input type="checkbox" >एसिया  ,
+          </span>
+        
+          <span><input type="checkbox"  checked >अन्य  (०)           </span>
+        </td>
+      </tr>
+      <tr>
+        <td>२०. <strong>बैदेशिक अध्ययन</strong>:</td>
+        <td>
+          <span><input type="checkbox"  >अष्ट्रेलिया , </span>
+        
+          <span><input type="checkbox"  >यू.के , </span>
+        
+          <span><input type="checkbox"  >यू.एस.ए , </span>
+        
+          <span><input type="checkbox"  checked  >अन्य  (०)           </span>
+        </td>
+        <td>२१. <strong>१६ वर्ष सम्मका बालबालिका<br>अन्य ठाउँमा काम गर्न गएका छन</strong>:</td>
+        <td>
+          <span><input type="checkbox" >दैनिक ज्यादारी           ,</span>
+        
+          <span><input type="checkbox" >कलकारखाना मजदुर  ,</span>
+        
+          <span><input type="checkbox" >यातायात मजदुर           ,</span>
+        
+          <span><input type="checkbox" >उत्पादन मजदुर  ,</span>
+        
+          <span><input type="checkbox" >घरेलु कामदार           ,</span>
+        
+          <span><input type="checkbox"  checked >अन्य  ० </span>
+        </td>
+      </tr>
+      <tr>
+        <td>२२. <strong>घरबाट उत्पादन भएको <br>पोहोरका व्यवस्था</strong></td>
+        <td>
+          <span><input type="checkbox" >मल बनाउनु,
+          </span>
+        
+          <span><input type="checkbox"  checked >निजि संकलन,
+          </span>
+        
+          <span><input type="checkbox" >महानगरको गाडीमा पठाउने,
+          </span>
+        
+          <span><input type="checkbox" >अन्य           </span>
+        </td>
+        <td>२३. <strong>बती</strong>:</td>
+        <td>
+          <span><input type="checkbox"  checked >बिधुत,
+          </span>
+        
+          <span><input type="checkbox" >जेनिरेटर,
+          </span>
+        
+          <span><input type="checkbox" >गोबर ग्याँस,
+          </span>
+        
+          <span><input type="checkbox" >सोलार,
+          </span>
+        
+          <span><input type="checkbox" >मट्टीतेल,
+          </span>
+        
+          <span><input type="checkbox" >इन्भटर अथवा ब्याट्री,
+          </span>
+        
+          <span><input type="checkbox" >अन्य           </span>
+        </td>
+      </tr>
+      <tr>
+        <td>२४. <strong>खाना पकाउन प्रयोग हुने इन्धन</strong>:</td>
+        <td>
+          <span><input type="checkbox"  checked >LP ग्याँस, 
+          </span>
+        
+          <span><input type="checkbox" >मट्टीतेल, 
+          </span>
+        
+          <span><input type="checkbox" >दाउरा, 
+          </span>
+        
+          <span><input type="checkbox" >अन्य
+                      </span>
+        </td>
+        <td>२५. <strong>संचार सुविधा</strong>:</td>
+        <td>
+              <span>
+                  <input type="checkbox" name="communication_facility[]"  checked >टेलिफोन,
+              </span>
+              <span>
+                  <input type="checkbox" name="communication_facility[]"  checked >इन्टरनेट,
+              </span>
+              <span><input type="checkbox" name="communication_facility[]"  checked >मोबाइल,
+              </span>
+              <span><input type="checkbox" name="communication_facility[]"  checked >टेलिभिजन,
+              </span>
+              <span><input type="checkbox" name="communication_facility[]" >रेडियो,
+              </span>
+              <span><input type="checkbox" name="communication_facility[]" >अन्य 
+                              </span>
+        </td>
+      </tr>
+      <tr>
+        <td>२६. <strong>घर जग्गाको विवरण</strong>: </td>
+        <td>
+          १ रोपनी (७ आनामा घर )
+        </td>
+        <td>२७. <strong>वार्षिक आम्दानी</strong>: </td>
+        <td>
+          <input type="radio"  ><span>१,००,०००/-  भन्दा कम </span>
+          <input type="radio"  ><span>१,००,००१/- देखि २,५०,०००/-</span>
+          <input type="radio"  checked><span>२,५०,००१/- देखि ४,००,०००</span>
+          <input type="radio"  ><span>४,००,००१/- देखि ६,००,००० </span>
+          <input type="radio"  ><span>६,००,०००१/- देखि ८,००,००० </span>
+          <input type="radio"  ><span>८,००,०००१/- भन्दा माथि  </span>
+        </td>
+      </tr>
+      <tr>
+        <td>२८. <strong>वार्षिक खर्च</strong>: </td>
+        <td>
+          <input type="radio"  ><span>१,००,०००/-  भन्दा कम </span>
+          <input type="radio"  ><span>१,००,००१/- देखि २,५०,०००/-</span>
+          <input type="radio"  checked><span>२,५०,००१/- देखि ४,००,०००</span>
+          <input type="radio"  ><span>४,००,००१/- देखि ६,००,००० </span>
+          <input type="radio"  ><span>६,००,०००१/- देखि ८,००,००० </span>
+          <input type="radio"  ><span>८,००,०००१/- भन्दा माथि  </span>
+        </td>
+        <td>२९. <strong>चौपाया तथा पशुपंशी</strong>:</td>
+        <td>
+          <span>
+            <input type="checkbox" >गाई
+            ,
+        </span>
+        <span>
+            <input type="checkbox" >भैसी
+            ,
+        </span>
+         <span>
+            <input type="checkbox" >गोरु
+            ,
+        </span>
+        <span>
+            <input type="checkbox" >बाख्रा
+            ,
+        </span>
+        <span>
+            <input type="checkbox" >बोको
+            ,
+        </span>
+        <span>
+            <input type="checkbox" >भेडा
+            ,
+        </span>
+        <span>
+            <input type="checkbox" >च्याङग्रा
+            ,
+        </span>
+        <span>
+            <input type="checkbox" >कुकुर
+            ,
+        </span>
+        <span>
+            <input type="checkbox" >हाँस
+            ,
+        </span>
+        <span>
+            <input type="checkbox"  checked >कुखुरा
+             (1) ,
+        </span>
+        <span>
+            <input type="checkbox" >अन्य
+            ,
+        </span>
+        <span>
+            <input type="checkbox"  value="12">छैन
+                    </span>
+        </td>
+      </tr>
+      <tr>
+        <td>३०. <strong>आफ्नो उत्पादन तथा आय स्रोतले कति महिना खान पुग्छ?</strong>:</td>
+        <td>
+          <input type="radio"  ><span>३ महिना</span>
+          <input type="radio"  ><span>४-६ महिना </span>
+          <input type="radio"  ><span>७-९ महिना </span>
+          <input type="radio"  checked><span>९ महिना भन्दा बढी</span>
+        </td>
+        <td>३१. <strong>सिप तालिम पहिला लिनुभएको छ?  </strong>:</td>
+        <td>
+          <input type="radio" ><span>छ </span>
+          <input type="radio" checked><span>छैन </span>
+        </td>
+      </tr>
+      <tr>
+        <td>३२. <strong>भविष्यमा कस्तो सिप तालिम गर्नु पर्ला? </strong>:</td>
+        <td colspan="3">-</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+</div>
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+    <div class="table-responsive">
+  <table class="table table-bordered  table-member">
+    <tbody>
+      <tr>
+        <td><strong>कागजातहरू</strong>:</td>
+        <td>नागरिकता:
+          
+           N/A 
+        </td>
+        <td>नाता प्रमाणपत्र:
+           N/A 
+         </td>
+        <td>घरको पास भएको नक्सा:
+           N/A 
+          </td>
+        <td>अन्य:
+           N/A </td>
+      </tr>
+      </tbody>
+      </table>
+      <table class="table table-bordered  table-member">
+    <tbody>
+      <tr>
+        
+        <td><strong>विवरण दिने :</strong> सुदाम</td>
+        <td><strong>मिति :</strong> २०७६-४-१५</td>
+        <td><strong>तथ्यांक संकलन :</strong> गिता</td>
+        
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+</div>
+</div>
+<div class="btn-print">
+  <button id="print"class="btn btn-primary">Print this page</button>
+</div>
+                </div>
+            </div>
+            <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+            <footer class="footer">
+                <div class="container">
+                    <div class="text-center">
+                        Copyright © 2020  ललितपुर महानगरपालिका , Nepal. All Rights Reserved. <br>Develop by <a href="http://www.archiesoft.com.np" target="_blank">ArchieSoft Technology</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <script src="https://www.lalitpur15.org/datasys/public/js/popper.min.js"></script>
+        <script src="https://www.lalitpur15.org/datasys/public/js/bootstrap.min.js"></script>
+        <script src="https://www.lalitpur15.org/datasys/public/plugins/simplebar/js/simplebar.js"></script>
+        <script src="https://www.lalitpur15.org/datasys/public/js/sidebar-menu.js"></script>
+        <script src="https://www.lalitpur15.org/datasys/public/plugins/datatable/js/datatables.min.js"></script>
+        <script src="https://www.lalitpur15.org/datasys/public/plugins/alerts-boxes/js/sweetalert.min.js"></script>
+        <script src="https://www.lalitpur15.org/datasys/public/js/jquery.pjax.js"></script>
+        <script src="https://www.lalitpur15.org/datasys/public/js/sidebar-menu.js"></script>
+        <script src="https://www.lalitpur15.org/datasys/public/plugins/nepali-datepicker/jquery.nepaliDatePicker.min.js"></script>
+        <script src="https://www.lalitpur15.org/datasys/public/js/app-script.js"></script>
+        <script src="https://www.lalitpur15.org/datasys/public/plugins/jquery.steps/js/jquery.steps.min.js"></script>
+        <script src="https://www.lalitpur15.org/datasys/public/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+        <!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script> -->
+        <script src="https://www.lalitpur15.org/datasys/public/js/transliteration.I.js"></script>
+        <script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script>
+        <div id="scripts">
+            <script type="text/javascript" src="https://www.lalitpur15.org/datasys/public/js/printThis.js"></script>
+<script>
+  $(function() {
+    $('#print').click(function(){
+      $('.saibu-display-form').printThis({
+            importCSS: false,
+            loadCSS: "https://www.lalitpur15.org/datasys/public/css/print.css",  
+            removeInline: true,
+          });
+          
+         });
+      window.grid = $('#grid').DataTable({
+          responsive: true,
+          "buttons": [{
+              extend: 'copy',
+          }, {
+              extend: 'excel',
+          }, {
+              extend: 'print',
+          }, ],
+          "bInfo": false,
+          "bLengthChange": false,
+          "bPaginate": false,
+          "bFilter": false,
+          "bProcessing": true,
+          "bServerSide": true,
+          "deferRender": true,
+          "sServerMethod": "POST",
+          "iDisplayLength": 50,
+          ajax: 'https://buddhi.com.np/demo/householdMemberFetchData/5648bcd0-c0e5-4b03-a783-72e0ccd970ba',
+          columns: [{
+              data: 'DT_RowIndex',
+              name: 'DT_RowIndex',
+              orderable: false,
+              searchable: false
+          }, {
+              data: 'name',
+              name: 'name'
+          }, {
+              data: 'relation',
+              name: 'relation'
+          }, {
+              data: 'gender',
+              name: 'gender'
+          }, {
+              data: 'age_year',
+              name: 'age_year'
+          }, {
+              data: 'maritial_status',
+              name: 'maritial_status'
+          }, {
+              data: 'education',
+              name: 'education'
+          }, {
+              data: 'occupation',
+              name: 'occupation'
+          }, {
+              data: 'voter_card',
+              name: 'voter_card'
+          }, {
+              data: 'temporary_address',
+              name: 'temporary_address'
+          }, {
+              data: 'health',
+              name: 'health'
+          }, {
+              data: 'action',
+              name: 'action',
+              orderable: false,
+              searchable: false
+          }]
+      });
+      var _e = $('.printForm [type="checkbox"]:not(:checked), .printForm [type="radio"]:not(:checked)').closest("span");
+      $(_e).each(function(i, t){
+        $(t).closest("span").remove();
+      });
+      var _c = $('.printForm [type="checkbox"]:checked').closest("span");
+      $(_c).each(function(i, t){
+        $(t).closest("span").addClass("checked");
+      });
+  });
+</script>
+        </div>
+    </body>
+</html>
