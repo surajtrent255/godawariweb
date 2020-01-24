@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ishanitech.ipalikawebapp.dto.AnswerDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.service.ResidentService;
@@ -19,12 +20,7 @@ public class ResidentServiceImpl implements ResidentService {
 	@Autowired
 	RestTemplate restTemplate;
 	
-	private final String RESIDENT_BASE_URL = "/resident";
-	
 	private RestClientService restClientService;
-	
-	
-	
 	public ResidentServiceImpl(RestClientService restClientService) {
 		super();
 		this.restClientService = restClientService;
@@ -34,12 +30,16 @@ public class ResidentServiceImpl implements ResidentService {
 
 	@Override
 	public Response<?> getResidentDataList() {
-		ObjectMapper objectMapper = new ObjectMapper();
-		JavaType responseType = objectMapper.getTypeFactory().constructParametricType(Response.class, objectMapper.getTypeFactory().constructCollectionType(List.class, ResidentDTO.class));
-//		Response<?> response = null;
 		Response<List<ResidentDTO>> residents = restTemplate.getForObject("http://localhost:8888/resident", Response.class);
-		
 		return residents;
+	}
+
+
+
+	@Override
+	public Response<?> getResidentFullDetail(String filledId) {
+		Response<AnswerDTO> fullDetail = restTemplate.getForObject("http://localhost:8888/resident/detail/" + filledId, Response.class);
+		return fullDetail;
 	}
 
 }

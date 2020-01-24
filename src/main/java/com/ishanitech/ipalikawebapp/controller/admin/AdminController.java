@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ishanitech.ipalikawebapp.dto.AnswerDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.service.ResidentService;
@@ -58,7 +59,9 @@ public class AdminController {
 	}
 
 	@GetMapping("/residentMember/{filledFormId}")
-	public String getResidentMemberList(@PathVariable("filledFormId") Integer filledFormId, Model model) {
+	public String getResidentMemberList(@PathVariable("filledId") String filledId, Model model) {
+		Response<AnswerDTO> residentResponse = (Response<AnswerDTO>) residentService.getResidentFullDetail(filledId);
+		model.addAttribute("residentFullDetail", residentResponse.getData());
 		return "admin/resident-members";
 	}
 
