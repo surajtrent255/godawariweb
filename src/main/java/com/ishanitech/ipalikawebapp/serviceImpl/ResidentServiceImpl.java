@@ -30,7 +30,7 @@ public class ResidentServiceImpl implements ResidentService {
 
 	@Override
 	public Response<?> getResidentDataList() {
-		Response<List<ResidentDTO>> residents = restTemplate.getForObject("http://localhost:8888/resident", Response.class);
+		Response<List<ResidentDTO>> residents = restTemplate.getForObject("http://192.168.0.101:8888/resident", Response.class);
 		return residents;
 	}
 
@@ -38,7 +38,7 @@ public class ResidentServiceImpl implements ResidentService {
 
 	@Override
 	public Response<?> getResidentFullDetail(String filledId) {
-		Response<AnswerDTO> fullDetail = restTemplate.getForObject("http://localhost:8888/resident/detail/" + filledId, Response.class);
+		Response<AnswerDTO> fullDetail = restTemplate.getForObject("http://192.168.0.101:8888/resident/detail/" + filledId, Response.class);
 		return fullDetail;
 	}
 

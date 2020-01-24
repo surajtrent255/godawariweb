@@ -99,38 +99,38 @@
     <div class="row">
       <div class="col-lg-2 col-md-12">
         
-        <a href="https://www.lalitpur15.org/datasys/public/uploads/5e0eee8e3bacd.jpg" style="display: block" target="_blank" class="no-pjax"><img src="https://www.lalitpur15.org/datasys/public/uploads/5e0eee8e3bacd.jpg" class="media-object house-detail-photo" style="width: 150px; height: 150px;"></a>
+        <a href="https://www.lalitpur15.org/datasys/public/uploads/5e0eee8e3bacd.jpg" style="display: block" target="_blank" class="no-pjax"><img th:src="${residentFullDetail.answer47}" class="media-object house-detail-photo" style="width: 150px; height: 150px;"></a>
       </div>
       <div class="col-lg-10 col-md-12">
         <table class="table">
           <tbody>
             <tr>
               <td><strong>घरमुलीको नाम</strong> :</td>
-              <td>सुदाम राउत</td>
+              <td th:text="${residentFullDetail.answer1}">सुदाम राउत</td>
               <td><strong>टोल</strong> :</td>
-              <td>हात्तीवन</td>
+              <td th:text="${residentFullDetail.answer2}"> हात्तीवन</td>
               <td><strong>घर नं</strong> :</td>
-              <td>९०</td>
+              <td th:text="${residentFullDetail.answer3}">९०</td>
               <td><strong>फोन नं</strong> :</td>
-              <td>९८४९१९३००७</td>
+              <td th:text="${residentFullDetail.answer4}">९८४९१९३००७</td>
             </tr>
             <tr>
               <td><strong>बुबाको नाम</strong>: </td>
-              <td>दुर्गा बहादुर राउत</td>
+              <td th:text="${residentFullDetail.answer5}">दुर्गा बहादुर राउत</td>
               <td><strong>आमाको नाम</strong>:</td>
-              <td>कान्छी राउत</td>
+              <td th:text="${residentFullDetail.answer6}">कान्छी राउत</td>
               <td><strong>मातृभाषा</strong>:</td>
-              <td>नेपाली</td>
+              <td th:text="${residentFullDetail.answer7}">नेपाली</td>
             <td><strong>जाति</strong>:</td>
-              <td>ब्रहमण/क्षेत्री</td>
+              <td th:text="${residentFullDetail.answer8}">ब्रहमण/क्षेत्री</td>
             </tr>
             <tr>
               <td><strong>धर्म</strong>:</td>
-              <td>हिन्दू धर्म</td>
+              <td th:text="${residentFullDetail.answer9}">हिन्दू धर्म</td>
               <td><strong>नागरिकता नं</strong>:</td>
-              <td>१३/१६४१</td>
+              <td th:text="${residentFullDetail.answer10}">१३/१६४१</td>
               <td><strong>नागरिकता लिएको जिल्ला</strong>:</td>
-              <td>ललितपुर</td>
+              <td th:text="${residentFullDetail.answer11}">ललितपुर</td>
               <td></td>
               <td></td>
             </tr>
