@@ -27,6 +27,23 @@
 <link th:href="@{/assets/css/app-style.css}"
 	href="assets/css/app-style.css" rel="stylesheet" />
 
+<link rel="stylesheet" th:href="@{/assets/css/uniform.css}"
+	href="assets/css/uniform.css" />
+<link rel="stylesheet" th:href="@{/assets/css/select2.css}"
+	href="assets/css/select2.css" />
+<link rel="stylesheet" th:href="@{/assets/css/matrix-style.css}"
+	href="assets/css/matrix-style.css" />
+<link rel="stylesheet" th:href="@{/assets/css/matrix-media.css}"
+	href="assets/css/matrix-media.css" />
+
+
+<link th:href="@{/assets/css/custom.css}" href="assets/css/custom.css"
+	rel="stylesheet" />
+<link th:href="@{/assets/css/responsive.css}"
+	href="assets/css/responsive.css" rel="stylesheet" />
+
+
+
 </head>
 <body>
 	<!-- start loader -->
@@ -53,5 +70,52 @@
 			</nav>
 		</header>
 	</div>
+
+
+	<!-- Bootstrap core JavaScript-->
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
+	<script th:src="@{/assets/js/jquery.min.js}" src="assets/js/jquery.min.js"></script>
+	<script th:src="@{/assets/js/bootstrap.min.js}" src="assets/js/bootstrap.min.js"></script>
+	<script th:src="@{/assets/js/bootstrap2.min.js}" src="assets/js/bootstrap2.min.js"></script>
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>-->
+	<script th:src="@{/assets/js/printThis.js}" src="assets/js/printThis.js"></script>
+	<script th:src="@{/assets/js/popper.min.js}" src="assets/js/popper.min.js"></script>
+	<!-- simplebar js -->
+	<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}" src="assets/plugins/simplebar/js/simplebar.js"></script>
+	<!-- sidebar-menu js -->
+	<script th:src="@{/assets/js/sidebar-menu.js}" src="assets/js/sidebar-menu.js"></script>
+	<!-- loader scripts -->
+	<script th:src="@{/assets/js/jquery.loading-indicator.html}" src="assets/js/jquery.loading-indicator.html"></script>
+	<!-- Custom scripts -->
+	<script th:src="@{/assets/js/app-script.js}" src="assets/js/app-script.js"></script>
+	<!-- Chart js -->
+	<script th:src="@{/assets/plugins/Chart.js/Chart.min.js}" src="assets/plugins/Chart.js/Chart.min.js"></script>
+	<!-- Vector map JavaScript -->
+	<script th:src="@{/assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js}" src="assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js"></script>
+	<script th:src="@{/assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js}"
+		src="assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
+	<!-- Easy Pie Chart JS -->
+	<script th:src="@{/assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js}"
+		src="assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+	<!-- Sparkline JS -->
+	<script th:src="@{/assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js}" src="assets/plugins/sparkline-charts/jquery.sparkline.min.js"></script>
+	<script th:src="@{/assets/plugins/jquery-knob/excanvas.js}" src="assets/plugins/jquery-knob/excanvas.js"></script>
+	<script th:src="@{/assets/plugins/jquery-knob/jquery.knob.js}" src="assets/plugins/jquery-knob/jquery.knob.js"></script>
+
+	<script>
+        $(function() {
+            $(".knob").knob();
+        });
+    </script>
+
+
+	<script th:src="@{/assets/js/jquery.ui.custom.js}" src="assets/js/jquery.ui.custom.js"></script>
+
+	<script th:src="@{/assets/js/jquery.uniform.js}" src="assets/js/jquery.uniform.js"></script>
+	<!--<script src="assets/js/select2.min.js"></script> -->
+	<script th:src="@{/assets/js/jquery.dataTables.min.js}" src="assets/js/jquery.dataTables.min.js"></script>
+	<script th:src="@{/assets/js/matrix.js}" src="assets/js/matrix.js"></script>
+	<script th:src="@{/assets/js/matrix.tables.js}" src="assets/js/matrix.tables.js"></script>
+
 </body>
 </html>

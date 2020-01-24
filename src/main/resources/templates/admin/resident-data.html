@@ -45,67 +45,12 @@
 </head>
 <body>
 	<div id="wrapper">
-		<div id="sidebar-wrapper" class="bg-theme bg-theme2" data-simplebar=""
-			data-simplebar-auto-hide="true">
-			<div class="brand-logo" style="background: #FFF;">
-				<a href="https://buddhi.com.np/demo/index.php/dashboard/list"> <img
-					src="https://www.lalitpur15.org/datasys/public/images/logo.png"
-					class="logo-icon" alt="logo icon">
-
-				</a>
-			</div>
-			<div class="user-details">
-				<div class="media align-items-center user-pointer collapsed"
-					data-toggle="collapse" data-target="#user-dropdown">
-					<!-- <div class="avatar"><img class="mr-3 side-user-img" src="https://www.lalitpur15.org/datasys/public/images/avatars/avatar-13.png" alt="user avatar"></div> -->
-					<div class="media-body">
-						<h6 class="side-user-name">Buddhi</h6>
-					</div>
-				</div>
-				<div id="user-dropdown" class="collapse">
-					<ul class="user-setting-menu">
-						<li><a
-							href="https://buddhi.com.np/demo/index.php/users/99a56fe1-4988-46fa-93e9-4e694ebcdacb/edit"><i
-								class="icon-user"></i> My Profile</a></li>
-						<li><a
-							href="https://buddhi.com.np/demo/index.php/users/99a56fe1-4988-46fa-93e9-4e694ebcdacb/reset"><i
-								class="icon-settings"></i> Setting</a></li>
-						<li><a href="https://buddhi.com.np/demo/index.php/logout"><i
-								class="icon-power"></i> Logout</a></li>
-					</ul>
-				</div>
-			</div>
-			<ul class="sidebar-menu do-nicescrol">
-				<li class="sidebar-header">MAIN NAVIGATION</li>
-				<li><a
-					href="https://buddhi.com.np/demo/index.php/dashboard/list"
-					class="waves-effect"> <i class="zmdi zmdi-view-dashboard"></i>
-						<span>Dashboard</span>
-				</a></li>
-				<li><a href="https://buddhi.com.np/demo/index.php/household"
-					class="waves-effect"> <i class="zmdi zmdi-card-travel"></i> <span>Data</span>
-				</a></li>
-				<li><a
-					href="https://buddhi.com.np/demo/index.php/household/create"
-					class="waves-effect"> <i class="zmdi zmdi-layers"></i> <span>Add
-							Household</span>
-				</a></li>
-				<li><a
-					href="https://buddhi.com.np/demo/index.php/householdmember/create"
-					class="waves-effect"> <i class="zmdi zmdi-layers"></i> <span>Add
-							Member</span>
-				</a></li>
-			</ul>
-		</div>
-		<header class="topbar-nav">
-			<nav class="navbar navbar-expand fixed-top">
-				<ul class="navbar-nav mr-auto align-items-center">
-					<li class="nav-item"><a class="nav-link toggle-menu"
-						href="javascript:void();"> <i class="icon-menu menu-icon"></i>
-					</a></li>
-				</ul>
-			</nav>
-		</header>
+	
+		
+		<!--           	Sidebar and header -->
+		<div th:replace="~{fragments/admin-sidebar}"></div>
+		<header th:replace="~{fragments/header}" class="header1"> </header>
+		
 		<div class="clearfix"></div>
 		<div class="content-wrapper">
 			<div class="container-fluid" id="pjax-container">
@@ -146,15 +91,8 @@
 		</div>
 		<a href="javaScript:void();" class="back-to-top"><i
 			class="fa fa-angle-double-up"></i> </a>
-		<footer class="footer">
-			<div class="container">
-				<div class="text-center">
-					Copyright © 2020 ललितपुर महानगरपालिका , Nepal. All Rights Reserved.
-					<br>Develop by <a href="http://www.archiesoft.com.np"
-						target="_blank">ArchieSoft Technology</a>
-				</div>
-			</div>
-		</footer>
+		<!--Start footer-->
+		<footer th:replace="~{fragments/footer :: footer}"></footer>
 	</div>
 	<script
 		src="https://www.lalitpur15.org/datasys/public/js/popper.min.js"></script>

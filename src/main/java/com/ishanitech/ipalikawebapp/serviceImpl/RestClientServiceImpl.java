@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ishanitech.ipalikawebapp.dto.*;
 import com.ishanitech.ipalikawebapp.service.RestClientService;
+import com.ishanitech.ipalikawebapp.utilities.UserDetailsUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,6 +41,7 @@ import java.util.List;
 @Service
 public class RestClientServiceImpl implements RestClientService {
 	
+	private final Logger LOGGER = LoggerFactory.getLogger(RestClientServiceImpl.class);
     private RestTemplate restClient;
     private String partialRestUrl;
     
@@ -94,7 +96,7 @@ public class RestClientServiceImpl implements RestClientService {
      * @return
      */
 
-/*
+
     @Override
     public Response<?> getData(String url, JavaType responseType) {
         Response<?> response = null;
@@ -104,7 +106,7 @@ public class RestClientServiceImpl implements RestClientService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(UserDetailsUtil.isLoggedIn(authentication)) {
             loggedInUser = (UserDTO) authentication.getPrincipal();
-            headers.add("Authorization", "Bearer " + loggedInUser.getToken());
+//            headers.add("Authorization", "Bearer " + loggedInUser.getToken());
         }
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -134,6 +136,8 @@ public class RestClientServiceImpl implements RestClientService {
         
         return response;
     }
+    
+    /*
 
     @Override
     public   Response<?> postData(String url, Object body, JavaType responseType){
