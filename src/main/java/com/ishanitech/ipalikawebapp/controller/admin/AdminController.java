@@ -20,7 +20,6 @@ public class AdminController {
 	private ResidentService residentService;
 
 	public AdminController(ResidentService residentService) {
-		super();
 		this.residentService = residentService;
 	}
 

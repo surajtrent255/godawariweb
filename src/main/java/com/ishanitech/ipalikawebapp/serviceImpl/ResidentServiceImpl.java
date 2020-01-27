@@ -17,20 +17,15 @@ import com.ishanitech.ipalikawebapp.service.RestClientService;
 @Service
 public class ResidentServiceImpl implements ResidentService {
 
-	@Autowired
 	RestTemplate restTemplate;
 	
-	private RestClientService restClientService;
-	public ResidentServiceImpl(RestClientService restClientService) {
-		super();
-		this.restClientService = restClientService;
+	public ResidentServiceImpl(RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
 	}
-
-
 
 	@Override
 	public Response<?> getResidentDataList() {
-		Response<List<ResidentDTO>> residents = restTemplate.getForObject("http://192.168.0.101:8888/resident", Response.class);
+		Response<List<ResidentDTO>> residents = restTemplate.getForObject("http://103.233.58.121:8888/resident", Response.class);
 		return residents;
 	}
 
@@ -38,7 +33,7 @@ public class ResidentServiceImpl implements ResidentService {
 
 	@Override
 	public Response<?> getResidentFullDetail(String filledId) {
-		Response<AnswerDTO> fullDetail = restTemplate.getForObject("http://192.168.0.101:8888/resident/detail/" + filledId, Response.class);
+		Response<AnswerDTO> fullDetail = restTemplate.getForObject("http://103.233.58.121:8888/resident/detail/" + filledId, Response.class);
 		return fullDetail;
 	}
 
