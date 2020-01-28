@@ -83,9 +83,9 @@
 	border: none;
 }
 
-#map {
-	height: 20em;
-	width: 20em;
+#surveyMap {
+	height: 50em;
+	width: 50em;
 }
 </style>
 <script src="https://www.lalitpur15.org/datasys/public/js/jquery.min.js"></script>
@@ -158,8 +158,14 @@
 										</tr>
 									</tbody>
 								</table>
+
+								<!-- Button for showing the modal for Map Location  -->
+								<div>
+									<button id="view-location-btn"
+										class="block2-user-id btn btn-success pull-right">View
+										Location in Map</button>
+								</div>
 							</div>
-							<div id="map"></div>
 						</div>
 					</div>
 					<!-- <div class="row">
@@ -428,7 +434,36 @@
 						</div>
 					</div>
 				</div>
-				=
+
+
+				<!-- Modal View For Map Location Display-->
+				<div class="modal fade" id="map-location-modal"
+					data-keyboard="false" data-backdrop="false" role="dialog"
+					aria-hidden="true">
+					<div class="modal-dialog modal-lg modal-dialog-centered"
+						role="document">
+						<div class="modal-content" style="border-radius: 10px;">
+							<div class="modal-header">
+								<h5 class="modal-title">
+									<b>LOCATION FOR <span th:text=${residentFullDetail.answer1}></span></b>
+								</h5>
+								<button id="cancel-location-btn" class="btn btn-danger pull-right"><b>X</b></button>
+							</div>
+							<div class="modal-content-body">
+								<div class="row" style="margin: 5px 20px;">
+									<div style="width: 100%; margin: 20px auto;">
+										<div id="surveyMap"></div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<b>Location Details: (Lat/Long) => <span th:text=${residentFullDetail.answer46}></span></b>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
 				<div class="btn-print">
 					<button id="print" class="btn btn-primary">Print this page</button>
 				</div>
@@ -472,12 +507,21 @@
 			src="https://www.lalitpur15.org/datasys/public/js/printThis.js"></script>
 		<script th:inline="javascript">
 			/*<![CDATA[*/
-			var geoCoordinates = /*[[${residentFullDetail.answer47}]]*/'0';
+			var geoCoordinates = /*[[${residentFullDetail.answer46}]]*/ '0';
 
 			/*]]>*/
 
-			console.log(geoCordinates);
+			console.log(geoCoordinates);
+			
+			var geoFields = geoCoordinates.split(', ');
 
+			var geoLat = geoFields[0];
+			var geoLong = geoFields[1];
+			
+// 			console.log(geoLat);
+// 			console.log(geoLong);
+			
+			
 			$(function() {
 				$('#print')
 						.click(
@@ -569,23 +613,41 @@
 			
 			
 			
+			
+			
+			//For showing the Map modal	
+			$("#view-location-btn").on("click", function(event){
+				event.preventDefault();
+				$("#map-location-modal").modal("show");
+			});
+			
+			
+			
+			//For canceling and hiding the Map modal
+			$("#cancel-location-btn").on("click", function(event){
+				$("#map-location-modal").modal("hide");
+			});
+
+			
 			//JS function for Maps Display
 			function initMap() {
-				var test = {
-					lat : 27.64759751,
-					lng : 85.33899796
+				
+				var surveyLocation = {
+					lat : parseFloat(geoLat),
+					lng : parseFloat(geoLong)
 				};
-				var map = new google.maps.Map(document.getElementById('map'), {
+				var surveyMap = new google.maps.Map(document.getElementById('surveyMap'), {
 					zoom : 16,
-					center : test,
+					center : surveyLocation,
 				// mapTypeId: 'satellite'
 				});
 				var marker = new google.maps.Marker({
-					position : test,
-					map : map
+					position : surveyLocation,
+					map : surveyMap
 				});
 			}
 		</script>
+		
 		<script async defer
 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyEeeKDRl59P7ylQQ6uIW32YrtgpJ5iIk&callback=initMap">
 			
