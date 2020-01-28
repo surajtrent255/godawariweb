@@ -61,7 +61,7 @@ public class AdminController {
 	public String getResidentMemberList(@PathVariable("filledFormId") String filledId, Model model) {
 		Response<AnswerDTO> residentResponse = (Response<AnswerDTO>) residentService.getResidentFullDetail(filledId);
 		model.addAttribute("residentFullDetail", residentResponse.getData());
-		return "admin/resident-members";
+		return "admin/resident-details";
 	}
 
 }

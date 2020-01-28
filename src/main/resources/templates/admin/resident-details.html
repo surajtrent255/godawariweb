@@ -7,7 +7,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Lalitpur Metropolitan City 18, Sainbu</title>
+<title>Godawari Municipality, Lalitpur</title>
 <!--favicon-->
 <link rel="icon" th:href="@{/assets/images/favicon1.ico}"
 	href="assets/images/favicon1.ico" type="image/x-icon" />
@@ -52,7 +52,7 @@
 }
 
 .printForm [type="checkbox"]:not (:checked )+span, .printForm [type="radio"]:not
-	(:checked )+span {
+	 (:checked )+span {
 	display: none;
 }
 /* Base for span styling */
@@ -81,6 +81,11 @@
 
 .table-borderless td {
 	border: none;
+}
+
+#map {
+	height: 20em;
+	width: 20em;
 }
 </style>
 <script src="https://www.lalitpur15.org/datasys/public/js/jquery.min.js"></script>
@@ -111,8 +116,7 @@
 						<div class="row">
 							<div class="col-lg-2 col-md-12">
 
-								<a
-									href="https://www.lalitpur15.org/datasys/public/uploads/5e0eee8e3bacd.jpg"
+								<a th:href="${residentFullDetail.answer47}"
 									style="display: block" target="_blank" class="no-pjax"><img
 									th:src="${residentFullDetail.answer47}"
 									class="media-object house-detail-photo"
@@ -155,6 +159,7 @@
 									</tbody>
 								</table>
 							</div>
+							<div id="map"></div>
 						</div>
 					</div>
 					<!-- <div class="row">
@@ -216,8 +221,8 @@
 
 											<td>१३. <strong>पानी</strong>:
 											</td>
-											<td><span><input type="checkbox">धारा,
-											</span> <span><input type="checkbox">इनार, </span> <span><input
+											<td><span><input type="checkbox">धारा, </span> <span><input
+													type="checkbox">इनार, </span> <span><input
 													type="checkbox" checked>अन्य</span> -</td>
 										</tr>
 										<tr>
@@ -264,8 +269,8 @@
 													छपाई </span></td>
 											<td>१९. <strong>बैदेशिक रोजगार</strong>:
 											</td>
-											<td><span><input type="checkbox">गल्फ ,
-											</span> <span><input type="checkbox">यूरोप , </span> <span><input
+											<td><span><input type="checkbox">गल्फ , </span>
+												<span><input type="checkbox">यूरोप , </span> <span><input
 													type="checkbox">एसिया , </span> <span><input
 													type="checkbox" checked>अन्य (०) </span></td>
 										</tr>
@@ -423,6 +428,7 @@
 						</div>
 					</div>
 				</div>
+				=
 				<div class="btn-print">
 					<button id="print" class="btn btn-primary">Print this page</button>
 				</div>
@@ -464,87 +470,126 @@
 	<div id="scripts">
 		<script type="text/javascript"
 			src="https://www.lalitpur15.org/datasys/public/js/printThis.js"></script>
-		<script>
-  $(function() {
-    $('#print').click(function(){
-      $('.saibu-display-form').printThis({
-            importCSS: false,
-            loadCSS: "https://www.lalitpur15.org/datasys/public/css/print.css",  
-            removeInline: true,
-          });
-          
-         });
-      window.grid = $('#grid').DataTable({
-          responsive: true,
-          "buttons": [{
-              extend: 'copy',
-          }, {
-              extend: 'excel',
-          }, {
-              extend: 'print',
-          }, ],
-          "bInfo": false,
-          "bLengthChange": false,
-          "bPaginate": false,
-          "bFilter": false,
-          "bProcessing": true,
-          "bServerSide": true,
-          "deferRender": true,
-          "sServerMethod": "POST",
-          "iDisplayLength": 50,
-          ajax: 'https://buddhi.com.np/demo/householdMemberFetchData/5648bcd0-c0e5-4b03-a783-72e0ccd970ba',
-          columns: [{
-              data: 'DT_RowIndex',
-              name: 'DT_RowIndex',
-              orderable: false,
-              searchable: false
-          }, {
-              data: 'name',
-              name: 'name'
-          }, {
-              data: 'relation',
-              name: 'relation'
-          }, {
-              data: 'gender',
-              name: 'gender'
-          }, {
-              data: 'age_year',
-              name: 'age_year'
-          }, {
-              data: 'maritial_status',
-              name: 'maritial_status'
-          }, {
-              data: 'education',
-              name: 'education'
-          }, {
-              data: 'occupation',
-              name: 'occupation'
-          }, {
-              data: 'voter_card',
-              name: 'voter_card'
-          }, {
-              data: 'temporary_address',
-              name: 'temporary_address'
-          }, {
-              data: 'health',
-              name: 'health'
-          }, {
-              data: 'action',
-              name: 'action',
-              orderable: false,
-              searchable: false
-          }]
-      });
-      var _e = $('.printForm [type="checkbox"]:not(:checked), .printForm [type="radio"]:not(:checked)').closest("span");
-      $(_e).each(function(i, t){
-        $(t).closest("span").remove();
-      });
-      var _c = $('.printForm [type="checkbox"]:checked').closest("span");
-      $(_c).each(function(i, t){
-        $(t).closest("span").addClass("checked");
-      });
-  });
-</script>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			var geoCoordinates = /*[[${residentFullDetail.answer47}]]*/'0';
+
+			/*]]>*/
+
+			console.log(geoCordinates);
+
+			$(function() {
+				$('#print')
+						.click(
+								function() {
+									$('.saibu-display-form')
+											.printThis(
+													{
+														importCSS : false,
+														loadCSS : "https://www.lalitpur15.org/datasys/public/css/print.css",
+														removeInline : true,
+													});
+
+								});
+				window.grid = $('#grid')
+						.DataTable(
+								{
+									responsive : true,
+									"buttons" : [ {
+										extend : 'copy',
+									}, {
+										extend : 'excel',
+									}, {
+										extend : 'print',
+									}, ],
+									"bInfo" : false,
+									"bLengthChange" : false,
+									"bPaginate" : false,
+									"bFilter" : false,
+									"bProcessing" : true,
+									"bServerSide" : true,
+									"deferRender" : true,
+									"sServerMethod" : "POST",
+									"iDisplayLength" : 50,
+									ajax : 'https://buddhi.com.np/demo/householdMemberFetchData/5648bcd0-c0e5-4b03-a783-72e0ccd970ba',
+									columns : [ {
+										data : 'DT_RowIndex',
+										name : 'DT_RowIndex',
+										orderable : false,
+										searchable : false
+									}, {
+										data : 'name',
+										name : 'name'
+									}, {
+										data : 'relation',
+										name : 'relation'
+									}, {
+										data : 'gender',
+										name : 'gender'
+									}, {
+										data : 'age_year',
+										name : 'age_year'
+									}, {
+										data : 'maritial_status',
+										name : 'maritial_status'
+									}, {
+										data : 'education',
+										name : 'education'
+									}, {
+										data : 'occupation',
+										name : 'occupation'
+									}, {
+										data : 'voter_card',
+										name : 'voter_card'
+									}, {
+										data : 'temporary_address',
+										name : 'temporary_address'
+									}, {
+										data : 'health',
+										name : 'health'
+									}, {
+										data : 'action',
+										name : 'action',
+										orderable : false,
+										searchable : false
+									} ]
+								});
+				var _e = $(
+						'.printForm [type="checkbox"]:not(:checked), .printForm [type="radio"]:not(:checked)')
+						.closest("span");
+				$(_e).each(function(i, t) {
+					$(t).closest("span").remove();
+				});
+				var _c = $('.printForm [type="checkbox"]:checked').closest(
+						"span");
+				$(_c).each(function(i, t) {
+					$(t).closest("span").addClass("checked");
+				});
+			});
+			
+			
+			
+			//JS function for Maps Display
+			function initMap() {
+				var test = {
+					lat : 27.64759751,
+					lng : 85.33899796
+				};
+				var map = new google.maps.Map(document.getElementById('map'), {
+					zoom : 16,
+					center : test,
+				// mapTypeId: 'satellite'
+				});
+				var marker = new google.maps.Marker({
+					position : test,
+					map : map
+				});
+			}
+		</script>
+		<script async defer
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyEeeKDRl59P7ylQQ6uIW32YrtgpJ5iIk&callback=initMap">
+			
+		</script>
 	</div>
 </body>
 </html>
