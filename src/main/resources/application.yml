@@ -46,7 +46,7 @@ spring:
 server:
   port: 9191
 webservice:
-  base-url: http://localhost:8888 
+  base-url: http://localhost:8888/
   
 http:
   port: 9191

@@ -41,7 +41,6 @@ import java.util.List;
 @Service
 public class RestClientServiceImpl implements RestClientService {
 	
-	private final Logger LOGGER = LoggerFactory.getLogger(RestClientServiceImpl.class);
     private RestTemplate restClient;
     private String partialRestUrl;
     
@@ -82,7 +81,7 @@ public class RestClientServiceImpl implements RestClientService {
         } catch(HttpStatusCodeException sce) {
         	throw new BadCredentialsException("Bad Credentials");
         } catch(RestClientException rce) {
-        	LOGGER.info("INSIDE LOGIN CALL: " + rce.getMessage());
+        	log.info("INSIDE LOGIN CALL: " + rce.getMessage());
         } catch(IOException ioEx) {
         	log.error("INSIDE LOGIN IOEXCEPTION: " + ioEx.getMessage());
         }
@@ -116,7 +115,7 @@ public class RestClientServiceImpl implements RestClientService {
         	responseEntity = restClient.exchange(completeUrl, HttpMethod.GET, entity, String.class);
         	response = objectMapper.readValue(responseEntity.getBody(), responseType);
         } catch(HttpStatusCodeException sce) {
-        	LOGGER.error("ERROR CODE: " + sce.getStatusCode());
+        	log.error("ERROR CODE: " + sce.getStatusCode());
         	try {
                 response = objectMapper.readValue(sce.getResponseBodyAsString(), responseType);
 //        		Response<?> errorResponse = objectMapper.readValue(sce.getResponseBodyAsString(),
@@ -126,12 +125,12 @@ public class RestClientServiceImpl implements RestClientService {
 //        				);
 //        		CustomExceptionThrowerUtil.throwException(response.getStatus(), response.getMessage());
             } catch (IOException e) {
-                LOGGER.error("ERROR: " + e.getMessage());
+                log.error("ERROR: " + e.getMessage());
             }
         } catch(RestClientException rce) {
-        	LOGGER.error("ERROR MSG: " + rce.getMessage());
+        	log.error("ERROR MSG: " + rce.getMessage());
         } catch(IOException ioEx) {
-        	LOGGER.error("ERROR: " + ioEx.getMessage());
+        	log.error("ERROR: " + ioEx.getMessage());
         }
         
         return response;

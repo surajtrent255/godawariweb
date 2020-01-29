@@ -87,7 +87,7 @@
                 <div class="container-fluid" id="pjax-container">
                     <div class="row pt-2 pb-2">
                         <div class="col-sm-9">
-                            <h4 class="page-title">Data Management System</h4>
+                            <h4 class="page-title">Godawari Nagarpalika Full Detail</h4>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>            
                                 <li class="breadcrumb-item active" aria-current="page">Household Members List</li>
@@ -99,7 +99,7 @@
     <div class="row">
       <div class="col-lg-2 col-md-12">
         
-        <a href="https://www.lalitpur15.org/datasys/public/uploads/5e0eee8e3bacd.jpg" style="display: block" target="_blank" class="no-pjax"><img th:src="${residentFullDetail.answer47}" class="media-object house-detail-photo" style="width: 150px; height: 150px;"></a>
+        <a  th:href="${residentFullDetail.answer47}"style="display: block" target="_blank" class="no-pjax"><img th:src="${residentFullDetail.answer47}" class="media-object house-detail-photo" style="width: 150px; height: 150px;"></a>
       </div>
       <div class="col-lg-10 col-md-12">
         <table class="table">
@@ -181,282 +181,116 @@
   <table class="table table-striped table-member">
     <tbody>
       <tr>
-        <td>११. <strong>कित्ता नं</strong>: ७८/६४</td>
-        <td><strong>घर संख्या</strong>: १</td>
-        <td><strong>व्यवसाय</strong>: पनि व्यवसाय</td>
-        <td><strong>व्यवसायी</strong>: ० <strong>फोन नं</strong>: ०</td>
+        <td>११. <strong>कित्ता  </strong>: <strong th:text="${residentFullDetail.answer12}"></strong></td>
+        <td><strong >घर संख्या</strong>: <strong th:text="${residentFullDetail.answer13}"></strong></td>
+        <td><strong>व्यवसाय</strong>: <strong th:text="${residentFullDetail.answer14}"></strong></td>
+        <td><strong>व्यवसायी</strong>: <strong th:text="${residentFullDetail.answer15}"> </strong>
+        <strong>फोन नं</strong>: <strong th:text="${residentFullDetail.answer16}"> </strong></td>
       </tr>
       <tr>
         <td>१२. <strong>घरको तल्ला</strong>:</td>
-        <td>०</td>
+        <td th:text="${residentFullDetail.answer17}">०</td>
       
         <td>१३. <strong>पानी</strong>:</td>
         <td>
-          <span><input type="checkbox"  >धारा, </span>
-        
-          <span><input type="checkbox"  >इनार, </span>
-        
-          <span><input type="checkbox"   checked >अन्य</span>
-           -         </td>
+          <span th:text="${residentFullDetail.answer18}"></span>
+         </td>
       </tr>
       <tr> 
         <td>१४. <strong>निकासा</strong>:</td>
         <td>
-          <span><input type="radio"   value="1">ढल</span>
-          <span><input type="radio"  checked value="2">सेफ्टी ट्यांकी</span>
-          <span><input type="radio"   value="3">छैन</span>
+          <span th:text="${residentFullDetail.answer19}"></span>
         </td>
         <td>१५. <strong>सवारी साधन</strong>:</td>
         <td>
-          <input type="checkbox"   checked ><span>मोटर, </span>
-        
-          <input type="checkbox"  ><span>मो.साईकल, </span>
-        
-          <input type="checkbox"  ><span>साईकल, </span>
-        
-          <input type="checkbox"  ><span>अन्य </span>
+        	<span th:text="${residentFullDetail.answer20}"> </span>
         </td>
       </tr>
       <tr>
         <td>१६. <strong>घरको बनोैट</strong>:</td>
         <td>
-          <input type="radio"   value="1"><span>पुरानो </span>
-        
-          <input type="radio"   value="2"><span>नयाँ</span>
-        
-          <input type="radio"  checked value="3"><span>आ.सि.सि</span>
-        
-          <input type="radio"   value="4"><span>टहरा </span>
-
-          <input type="radio"   value="5"><span>लोड बेयरिङ्ग  </span>
+          <span th:text="${residentFullDetail.answer21}"> </span>
         </td>
-        <td>१७. <strong>वर्तमान उपयोग</strong>:</td>
+        <td>१७. <strong>घरको जगको प्रकार</strong>:</td>
         <td>
-          <input type="radio"   value="1"><span>आफै</span>
-       
-          <input type="radio"   value="2"><span> सम्पूर्ण भाडा</span>
-       
-          <input type="radio"  checked value="3"><span>आंशिक भाडा</span>
-       
-          <input type="radio"   value="4"><span>सराई</span>
+          <span th:text="${residentFullDetail.answer22}"> </span>
         </td>
       </tr>
       <tr>
         <td>१८. <strong>सडकको भौतिक अवस्था</strong>:</td>
         <td>
-          <input type="radio"  checked value="1"><span>कालोपत्र </span>
-        
-          <input type="radio"   value="2"><span>ग्राभेल </span>
-        
-          <input type="radio"   value="3"><span>कच्ची</span>
-        
-          <input type="radio"   value="4"><span>गोरेटो </span>
-
-          <input type="radio"   value="5"><span>ईट्टा वा ढुंगा छपाई </span>
+          <span th:text="${residentFullDetail.answer23}"></span>
         </td>
         <td>१९. <strong>बैदेशिक रोजगार</strong>:</td>
         <td>
-          <span><input type="checkbox" >गल्फ  ,
-          </span>
-        
-          <span><input type="checkbox" >यूरोप  ,
-          </span>
-        
-          <span><input type="checkbox" >एसिया  ,
-          </span>
-        
-          <span><input type="checkbox"  checked >अन्य  (०)           </span>
+        	<span th:text="${residentFullDetail.answer31}"> </span>
         </td>
       </tr>
       <tr>
         <td>२०. <strong>बैदेशिक अध्ययन</strong>:</td>
         <td>
-          <span><input type="checkbox"  >अष्ट्रेलिया , </span>
-        
-          <span><input type="checkbox"  >यू.के , </span>
-        
-          <span><input type="checkbox"  >यू.एस.ए , </span>
-        
-          <span><input type="checkbox"  checked  >अन्य  (०)           </span>
+          <span th:text="${residentFullDetail.answer32}"></span>
         </td>
         <td>२१. <strong>१६ वर्ष सम्मका बालबालिका<br>अन्य ठाउँमा काम गर्न गएका छन</strong>:</td>
         <td>
-          <span><input type="checkbox" >दैनिक ज्यादारी           ,</span>
-        
-          <span><input type="checkbox" >कलकारखाना मजदुर  ,</span>
-        
-          <span><input type="checkbox" >यातायात मजदुर           ,</span>
-        
-          <span><input type="checkbox" >उत्पादन मजदुर  ,</span>
-        
-          <span><input type="checkbox" >घरेलु कामदार           ,</span>
-        
-          <span><input type="checkbox"  checked >अन्य  ० </span>
+          <span th:text="${residentFullDetail.answer33}"> </span>
         </td>
       </tr>
       <tr>
         <td>२२. <strong>घरबाट उत्पादन भएको <br>पोहोरका व्यवस्था</strong></td>
         <td>
-          <span><input type="checkbox" >मल बनाउनु,
-          </span>
-        
-          <span><input type="checkbox"  checked >निजि संकलन,
-          </span>
-        
-          <span><input type="checkbox" >महानगरको गाडीमा पठाउने,
-          </span>
-        
-          <span><input type="checkbox" >अन्य           </span>
+        	<span th:text="${residentFullDetail.answer34}"> </span>
         </td>
         <td>२३. <strong>बती</strong>:</td>
         <td>
-          <span><input type="checkbox"  checked >बिधुत,
-          </span>
-        
-          <span><input type="checkbox" >जेनिरेटर,
-          </span>
-        
-          <span><input type="checkbox" >गोबर ग्याँस,
-          </span>
-        
-          <span><input type="checkbox" >सोलार,
-          </span>
-        
-          <span><input type="checkbox" >मट्टीतेल,
-          </span>
-        
-          <span><input type="checkbox" >इन्भटर अथवा ब्याट्री,
-          </span>
-        
-          <span><input type="checkbox" >अन्य           </span>
+          <span th:text="${residentFullDetail.answer35}"></span>
         </td>
       </tr>
       <tr>
         <td>२४. <strong>खाना पकाउन प्रयोग हुने इन्धन</strong>:</td>
         <td>
-          <span><input type="checkbox"  checked >LP ग्याँस, 
-          </span>
-        
-          <span><input type="checkbox" >मट्टीतेल, 
-          </span>
-        
-          <span><input type="checkbox" >दाउरा, 
-          </span>
-        
-          <span><input type="checkbox" >अन्य
-                      </span>
+            <span th:text="${residentFullDetail.answer36}"> </span>
         </td>
         <td>२५. <strong>संचार सुविधा</strong>:</td>
         <td>
-              <span>
-                  <input type="checkbox" name="communication_facility[]"  checked >टेलिफोन,
-              </span>
-              <span>
-                  <input type="checkbox" name="communication_facility[]"  checked >इन्टरनेट,
-              </span>
-              <span><input type="checkbox" name="communication_facility[]"  checked >मोबाइल,
-              </span>
-              <span><input type="checkbox" name="communication_facility[]"  checked >टेलिभिजन,
-              </span>
-              <span><input type="checkbox" name="communication_facility[]" >रेडियो,
-              </span>
-              <span><input type="checkbox" name="communication_facility[]" >अन्य 
-                              </span>
+          <span th:text="${residentFullDetail.answer37}"></span>
         </td>
       </tr>
       <tr>
         <td>२६. <strong>घर जग्गाको विवरण</strong>: </td>
         <td>
-          १ रोपनी (७ आनामा घर )
+        	<span th:text="${residentFullDetail.answer38}"></span>
         </td>
         <td>२७. <strong>वार्षिक आम्दानी</strong>: </td>
         <td>
-          <input type="radio"  ><span>१,००,०००/-  भन्दा कम </span>
-          <input type="radio"  ><span>१,००,००१/- देखि २,५०,०००/-</span>
-          <input type="radio"  checked><span>२,५०,००१/- देखि ४,००,०००</span>
-          <input type="radio"  ><span>४,००,००१/- देखि ६,००,००० </span>
-          <input type="radio"  ><span>६,००,०००१/- देखि ८,००,००० </span>
-          <input type="radio"  ><span>८,००,०००१/- भन्दा माथि  </span>
+          <input type="radio" checked><span th:text="${residentFullDetail.answer39}">१,००,०००/-  भन्दा कम </span>
         </td>
       </tr>
       <tr>
         <td>२८. <strong>वार्षिक खर्च</strong>: </td>
         <td>
-          <input type="radio"  ><span>१,००,०००/-  भन्दा कम </span>
-          <input type="radio"  ><span>१,००,००१/- देखि २,५०,०००/-</span>
-          <input type="radio"  checked><span>२,५०,००१/- देखि ४,००,०००</span>
-          <input type="radio"  ><span>४,००,००१/- देखि ६,००,००० </span>
-          <input type="radio"  ><span>६,००,०००१/- देखि ८,००,००० </span>
-          <input type="radio"  ><span>८,००,०००१/- भन्दा माथि  </span>
+          <input type="radio" checked ><span th:text="${residentFullDetail.answer40}">१,००,०००/-  भन्दा कम </span>
         </td>
         <td>२९. <strong>चौपाया तथा पशुपंशी</strong>:</td>
         <td>
           <span>
-            <input type="checkbox" >गाई
-            ,
+            <input type="checkbox" th:value="${residentFullDetail.answer41}"/> <span th:text="${residentFullDetail.answer41}"></span>
         </span>
-        <span>
-            <input type="checkbox" >भैसी
-            ,
-        </span>
-         <span>
-            <input type="checkbox" >गोरु
-            ,
-        </span>
-        <span>
-            <input type="checkbox" >बाख्रा
-            ,
-        </span>
-        <span>
-            <input type="checkbox" >बोको
-            ,
-        </span>
-        <span>
-            <input type="checkbox" >भेडा
-            ,
-        </span>
-        <span>
-            <input type="checkbox" >च्याङग्रा
-            ,
-        </span>
-        <span>
-            <input type="checkbox" >कुकुर
-            ,
-        </span>
-        <span>
-            <input type="checkbox" >हाँस
-            ,
-        </span>
-        <span>
-            <input type="checkbox"  checked >कुखुरा
-             (1) ,
-        </span>
-        <span>
-            <input type="checkbox" >अन्य
-            ,
-        </span>
-        <span>
-            <input type="checkbox"  value="12">छैन
-                    </span>
         </td>
       </tr>
       <tr>
         <td>३०. <strong>आफ्नो उत्पादन तथा आय स्रोतले कति महिना खान पुग्छ?</strong>:</td>
         <td>
-          <input type="radio"  ><span>३ महिना</span>
-          <input type="radio"  ><span>४-६ महिना </span>
-          <input type="radio"  ><span>७-९ महिना </span>
-          <input type="radio"  checked><span>९ महिना भन्दा बढी</span>
+          <input type="radio"  checked><span th:text="${residentFullDetail.answer42}">३ महिना</span>
         </td>
         <td>३१. <strong>सिप तालिम पहिला लिनुभएको छ?  </strong>:</td>
         <td>
-          <input type="radio" ><span>छ </span>
-          <input type="radio" checked><span>छैन </span>
+          <input type="radio" checked><span th:text="${residentFullDetail.answer43}">छ </span>
         </td>
       </tr>
       <tr>
         <td>३२. <strong>भविष्यमा कस्तो सिप तालिम गर्नु पर्ला? </strong>:</td>
-        <td colspan="3">-</td>
+        <td colspan="3"> <span th:text="${residentFullDetail.answer44}"></span></td>
       </tr>
     </tbody>
   </table>
@@ -470,18 +304,7 @@
     <tbody>
       <tr>
         <td><strong>कागजातहरू</strong>:</td>
-        <td>नागरिकता:
-          
-           N/A 
-        </td>
-        <td>नाता प्रमाणपत्र:
-           N/A 
-         </td>
-        <td>घरको पास भएको नक्सा:
-           N/A 
-          </td>
-        <td>अन्य:
-           N/A </td>
+        <td th:text="${residentFullDetail.answer45}"></td>
       </tr>
       </tbody>
       </table>
