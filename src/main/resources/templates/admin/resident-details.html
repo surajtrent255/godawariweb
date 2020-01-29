@@ -26,410 +26,464 @@
 	href="assets/css/sidebar-menu.css" rel="stylesheet" />
 <link th:href="@{/assets/css/app-style.css}"
 	href="assets/css/app-style.css" rel="stylesheet" />
-        
-        
-        <link rel="stylesheet" href="https://www.lalitpur15.org/datasys/public/plugins/nepali-datepicker/nepaliDatePicker.min.css">
-        <link rel="stylesheet" href="https://www.lalitpur15.org/datasys/public/plugins/datatable/css/datatables.min.css">
-        <link rel="stylesheet" href="https://www.lalitpur15.org/datasys/public/plugins/jquery.steps/css/jquery.steps.css">
-            <link rel="stylesheet" type="text/css" href="https://www.lalitpur15.org/datasys/public/css/print.css" media="print">
+
+
+<link rel="stylesheet"
+	href="https://www.lalitpur15.org/datasys/public/plugins/nepali-datepicker/nepaliDatePicker.min.css">
+<link rel="stylesheet"
+	href="https://www.lalitpur15.org/datasys/public/plugins/datatable/css/datatables.min.css">
+<link rel="stylesheet"
+	href="https://www.lalitpur15.org/datasys/public/plugins/jquery.steps/css/jquery.steps.css">
+<link rel="stylesheet" type="text/css"
+	href="https://www.lalitpur15.org/datasys/public/css/print.css"
+	media="print">
 <style type="text/css">
-  .printForm .first_cell {
-  width: 30px;
-  }
-  .printForm td, span {
-  font-size: 13px;
-  position: relative;
-  }
-  .table thead th{
-    font-size: 13px;
-  }
-  .printForm [type="checkbox"]:not(:checked)+span,
-  .printForm [type="radio"]:not(:checked)+span{
-    display: none;
-  }
-  /* Base for span styling */
-  .printForm [type="checkbox"]:not(:checked),
-  .printForm [type="checkbox"]:checked,
-  .printForm [type="radio"]:not(:checked),
-  .printForm [type="radio"]:checked {
-  position: absolute;
-  left: -9999px;
-  }
-  .green{
-    background: green !important;
-    color: #fff;
-  }
-  .red{
-    background: red !important;
-    color: #fff;
-  }
-  .ui.grid{
-    margin-right: 0;
-    margin-left: 0;
-    width: 100%;
-  }
-  .table-borderless td{
-    border: none;
-  }
+.printForm .first_cell {
+	width: 30px;
+}
+
+.printForm td, span {
+	font-size: 13px;
+	position: relative;
+}
+
+.table thead th {
+	font-size: 13px;
+}
+
+.printForm [type="checkbox"]:not (:checked )+span, .printForm [type="radio"]:not
+	(:checked )+span {
+	display: none;
+}
+/* Base for span styling */
+.printForm [type="checkbox"]:not (:checked ), .printForm [type="checkbox"]:checked,
+	.printForm [type="radio"]:not (:checked ), .printForm [type="radio"]:checked
+	{
+	position: absolute;
+	left: -9999px;
+}
+
+.green {
+	background: green !important;
+	color: #fff;
+}
+
+.red {
+	background: red !important;
+	color: #fff;
+}
+
+.ui.grid {
+	margin-right: 0;
+	margin-left: 0;
+	width: 100%;
+}
+
+.table-borderless td {
+	border: none;
+}
+
+#surveyMap {
+	height: 50em;
+	width: 50em;
+}
 </style>
-        <script src="https://www.lalitpur15.org/datasys/public/js/jquery.min.js"></script>
-    </head>
-    <body>
-        <div id="wrapper">
-        
+<script src="https://www.lalitpur15.org/datasys/public/js/jquery.min.js"></script>
+</head>
+<body>
+	<div id="wrapper">
+
 		<!--           	Sidebar and header -->
 		<div th:replace="~{fragments/admin-sidebar}"></div>
 		<header th:replace="~{fragments/header}" class="header1"> </header>
-		
-		
-            <div class="clearfix"></div>
-            <div class="content-wrapper">
-                <div class="container-fluid" id="pjax-container">
-                    <div class="row pt-2 pb-2">
-                        <div class="col-sm-9">
-                            <h4 class="page-title">Godawari Nagarpalika Full Detail</h4>
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>            
-                                <li class="breadcrumb-item active" aria-current="page">Household Members List</li>
-                             </ol>
-                         </div>
-                     </div>
-                                        <div class="saibu-display-form print table-responsive printForm">
-  <div class="data-heading-row">
-    <div class="row">
-      <div class="col-lg-2 col-md-12">
-        
-        <a  th:href="${residentFullDetail.answer47}"style="display: block" target="_blank" class="no-pjax"><img th:src="${residentFullDetail.answer47}" class="media-object house-detail-photo" style="width: 150px; height: 150px;"></a>
-      </div>
-      <div class="col-lg-10 col-md-12">
-        <table class="table">
-          <tbody>
-            <tr>
-              <td><strong>घरमुलीको नाम</strong> :</td>
-              <td th:text="${residentFullDetail.answer1}">सुदाम राउत</td>
-              <td><strong>टोल</strong> :</td>
-              <td th:text="${residentFullDetail.answer2}"> हात्तीवन</td>
-              <td><strong>घर नं</strong> :</td>
-              <td th:text="${residentFullDetail.answer3}">९०</td>
-              <td><strong>फोन नं</strong> :</td>
-              <td th:text="${residentFullDetail.answer4}">९८४९१९३००७</td>
-            </tr>
-            <tr>
-              <td><strong>बुबाको नाम</strong>: </td>
-              <td th:text="${residentFullDetail.answer5}">दुर्गा बहादुर राउत</td>
-              <td><strong>आमाको नाम</strong>:</td>
-              <td th:text="${residentFullDetail.answer6}">कान्छी राउत</td>
-              <td><strong>मातृभाषा</strong>:</td>
-              <td th:text="${residentFullDetail.answer7}">नेपाली</td>
-            <td><strong>जाति</strong>:</td>
-              <td th:text="${residentFullDetail.answer8}">ब्रहमण/क्षेत्री</td>
-            </tr>
-            <tr>
-              <td><strong>धर्म</strong>:</td>
-              <td th:text="${residentFullDetail.answer9}">हिन्दू धर्म</td>
-              <td><strong>नागरिकता नं</strong>:</td>
-              <td th:text="${residentFullDetail.answer10}">१३/१६४१</td>
-              <td><strong>नागरिकता लिएको जिल्ला</strong>:</td>
-              <td th:text="${residentFullDetail.answer11}">ललितपुर</td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-<div class="row">
-  <div class="col-lg-12 col-md-12">
-    <div class="table-responsive">
-  <table class="table table-striped table-hover table-member" id="grid">
-    <thead>
-      <tr>
-        <th rowspan="2"><strong>ऋ.स</strong></th>
-        <th><strong>१</strong></th>
-        <th><strong>२</strong></th>
-        <th><strong>३</strong></th>
-        <th><strong>४</strong></th>
-        <th><strong>५</strong></th>
-        <th><strong>६</strong></th>
-        <th><strong>७</strong></th>
-        <th><strong>८</strong></th>
-        <th><strong>९</strong></th>
-        <th><strong>१० </strong></th>
-        <th rowspan="2" class="rm-print"><strong>#</strong></th>
-      </tr>
-      <tr>
-        <th><strong>नाम थर</strong></th>
-        <th><strong>नाता</strong></th>
-        <th><strong>लिङ्ग</strong></th>
-        <th><strong>उमेर</strong></th>
-        <th><strong>वैवाहिक<br> स्थिति</strong></th>
-        <th><strong>सैक्षिक योग्येता</strong></th>
-        <th><strong>पेशा</strong></th>
-        <th><strong>मतदाता<br> परिचयपत्र</strong></th>
-        <th><strong>स्थायी ठेगाना</strong></th>
-        <th><strong>स्वास्थ्य अवस्था</strong></th>
-      </tr>
-    </thead>
-  </table>
-</div>
-</div>
-</div>
-<div class="row">
-  <div class="col-lg-12 col-md-12">
-    <div class="table-responsive">
-  <table class="table table-striped table-member">
-    <tbody>
-      <tr>
-        <td>११. <strong>कित्ता  </strong>: <strong th:text="${residentFullDetail.answer12}"></strong></td>
-        <td><strong >घर संख्या</strong>: <strong th:text="${residentFullDetail.answer13}"></strong></td>
-        <td><strong>व्यवसाय</strong>: <strong th:text="${residentFullDetail.answer14}"></strong></td>
-        <td><strong>व्यवसायी</strong>: <strong th:text="${residentFullDetail.answer15}"> </strong>
-        <strong>फोन नं</strong>: <strong th:text="${residentFullDetail.answer16}"> </strong></td>
-      </tr>
-      <tr>
-        <td>१२. <strong>घरको तल्ला</strong>:</td>
-        <td th:text="${residentFullDetail.answer17}">०</td>
-      
-        <td>१३. <strong>पानी</strong>:</td>
-        <td>
-          <span th:text="${residentFullDetail.answer18}"></span>
-         </td>
-      </tr>
-      <tr> 
-        <td>१४. <strong>निकासा</strong>:</td>
-        <td>
-          <span th:text="${residentFullDetail.answer19}"></span>
-        </td>
-        <td>१५. <strong>सवारी साधन</strong>:</td>
-        <td>
-        	<span th:text="${residentFullDetail.answer20}"> </span>
-        </td>
-      </tr>
-      <tr>
-        <td>१६. <strong>घरको बनोैट</strong>:</td>
-        <td>
-          <span th:text="${residentFullDetail.answer21}"> </span>
-        </td>
-        <td>१७. <strong>घरको जगको प्रकार</strong>:</td>
-        <td>
-          <span th:text="${residentFullDetail.answer22}"> </span>
-        </td>
-      </tr>
-      <tr>
-        <td>१८. <strong>सडकको भौतिक अवस्था</strong>:</td>
-        <td>
-          <span th:text="${residentFullDetail.answer23}"></span>
-        </td>
-        <td>१९. <strong>बैदेशिक रोजगार</strong>:</td>
-        <td>
-        	<span th:text="${residentFullDetail.answer31}"> </span>
-        </td>
-      </tr>
-      <tr>
-        <td>२०. <strong>बैदेशिक अध्ययन</strong>:</td>
-        <td>
-          <span th:text="${residentFullDetail.answer32}"></span>
-        </td>
-        <td>२१. <strong>१६ वर्ष सम्मका बालबालिका<br>अन्य ठाउँमा काम गर्न गएका छन</strong>:</td>
-        <td>
-          <span th:text="${residentFullDetail.answer33}"> </span>
-        </td>
-      </tr>
-      <tr>
-        <td>२२. <strong>घरबाट उत्पादन भएको <br>पोहोरका व्यवस्था</strong></td>
-        <td>
-        	<span th:text="${residentFullDetail.answer34}"> </span>
-        </td>
-        <td>२३. <strong>बती</strong>:</td>
-        <td>
-          <span th:text="${residentFullDetail.answer35}"></span>
-        </td>
-      </tr>
-      <tr>
-        <td>२४. <strong>खाना पकाउन प्रयोग हुने इन्धन</strong>:</td>
-        <td>
-            <span th:text="${residentFullDetail.answer36}"> </span>
-        </td>
-        <td>२५. <strong>संचार सुविधा</strong>:</td>
-        <td>
-          <span th:text="${residentFullDetail.answer37}"></span>
-        </td>
-      </tr>
-      <tr>
-        <td>२६. <strong>घर जग्गाको विवरण</strong>: </td>
-        <td>
-        	<span th:text="${residentFullDetail.answer38}"></span>
-        </td>
-        <td>२७. <strong>वार्षिक आम्दानी</strong>: </td>
-        <td>
-          <input type="radio" checked><span th:text="${residentFullDetail.answer39}">१,००,०००/-  भन्दा कम </span>
-        </td>
-      </tr>
-      <tr>
-        <td>२८. <strong>वार्षिक खर्च</strong>: </td>
-        <td>
-          <input type="radio" checked ><span th:text="${residentFullDetail.answer40}">१,००,०००/-  भन्दा कम </span>
-        </td>
-        <td>२९. <strong>चौपाया तथा पशुपंशी</strong>:</td>
-        <td>
-          <span>
-            <input type="checkbox" th:value="${residentFullDetail.answer41}"/> <span th:text="${residentFullDetail.answer41}"></span>
-        </span>
-        </td>
-      </tr>
-      <tr>
-        <td>३०. <strong>आफ्नो उत्पादन तथा आय स्रोतले कति महिना खान पुग्छ?</strong>:</td>
-        <td>
-          <input type="radio"  checked><span th:text="${residentFullDetail.answer42}">३ महिना</span>
-        </td>
-        <td>३१. <strong>सिप तालिम पहिला लिनुभएको छ?  </strong>:</td>
-        <td>
-          <input type="radio" checked><span th:text="${residentFullDetail.answer43}">छ </span>
-        </td>
-      </tr>
-      <tr>
-        <td>३२. <strong>भविष्यमा कस्तो सिप तालिम गर्नु पर्ला? </strong>:</td>
-        <td colspan="3"> <span th:text="${residentFullDetail.answer44}"></span></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-</div>
-<div class="row">
-  <div class="col-lg-12 col-md-12">
-    <div class="table-responsive">
-  <table class="table table-bordered  table-member">
-    <tbody>
-      <tr>
-        <td><strong>कागजातहरू</strong>:</td>
-        <td th:text="${residentFullDetail.answer45}"></td>
-      </tr>
-      </tbody>
-      </table>
-      <table class="table table-bordered  table-member">
-    <tbody>
-      <tr>
-        
-        <td><strong>विवरण दिने :</strong> सुदाम</td>
-        <td><strong>मिति :</strong> २०७६-४-१५</td>
-        <td><strong>तथ्यांक संकलन :</strong> गिता</td>
-        
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-</div>
-</div>
-<div class="btn-print">
-  <button id="print"class="btn btn-primary">Print this page</button>
-</div>
-                </div>
-            </div>
-            <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
-            	<!--Start footer-->
+
+
+		<div class="clearfix"></div>
+		<div class="content-wrapper">
+			<div class="container-fluid" id="pjax-container">
+				<div class="row pt-2 pb-2">
+					<div class="col-sm-9">
+						<h4 class="page-title">Godawari Nagarpalika Full Detail</h4>
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Household
+								Members List</li>
+						</ol>
+					</div>
+				</div>
+				<div class="saibu-display-form print table-responsive printForm">
+					<div class="data-heading-row">
+						<div class="row">
+							<div class="col-lg-2 col-md-12">
+
+								<a th:href="${residentFullDetail.answer47}"
+									style="display: block" target="_blank" class="no-pjax"><img
+									th:src="${residentFullDetail.answer47}"
+									class="media-object house-detail-photo"
+									style="width: 150px; height: 150px;"></a>
+							</div>
+							<div class="col-lg-10 col-md-12">
+								<table class="table">
+									<tbody>
+										<tr>
+											<td><strong>घरमुलीको नाम</strong> :</td>
+											<td th:text="${residentFullDetail.answer1}">सुदाम राउत</td>
+											<td><strong>टोल</strong> :</td>
+											<td th:text="${residentFullDetail.answer2}">हात्तीवन</td>
+											<td><strong>घर नं</strong> :</td>
+											<td th:text="${residentFullDetail.answer3}">९०</td>
+											<td><strong>फोन नं</strong> :</td>
+											<td th:text="${residentFullDetail.answer4}">९८४९१९३००७</td>
+										</tr>
+										<tr>
+											<td><strong>बुबाको नाम</strong>:</td>
+											<td th:text="${residentFullDetail.answer5}">दुर्गा
+												बहादुर राउत</td>
+											<td><strong>आमाको नाम</strong>:</td>
+											<td th:text="${residentFullDetail.answer6}">कान्छी राउत</td>
+											<td><strong>मातृभाषा</strong>:</td>
+											<td th:text="${residentFullDetail.answer7}">नेपाली</td>
+											<td><strong>जाति</strong>:</td>
+											<td th:text="${residentFullDetail.answer8}">ब्रहमण/क्षेत्री</td>
+										</tr>
+										<tr>
+											<td><strong>धर्म</strong>:</td>
+											<td th:text="${residentFullDetail.answer9}">हिन्दू धर्म</td>
+											<td><strong>नागरिकता नं</strong>:</td>
+											<td th:text="${residentFullDetail.answer10}">१३/१६४१</td>
+											<td><strong>नागरिकता लिएको जिल्ला</strong>:</td>
+											<td th:text="${residentFullDetail.answer11}">ललितपुर</td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+								<div>
+									<button id="view-location-btn"
+										class="block2-user-id btn btn-success pull-right">View
+										Location on Map</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12 col-md-12">
+							<div class="table-responsive">
+								<table class="table table-striped table-hover table-member"
+									id="grid">
+									<thead>
+										<tr>
+											<th rowspan="2"><strong>ऋ.स</strong></th>
+											<th><strong>१</strong></th>
+											<th><strong>२</strong></th>
+											<th><strong>३</strong></th>
+											<th><strong>४</strong></th>
+											<th><strong>५</strong></th>
+											<th><strong>६</strong></th>
+											<th><strong>७</strong></th>
+											<th><strong>८</strong></th>
+											<th><strong>९</strong></th>
+											<th><strong>१० </strong></th>
+											<th rowspan="2" class="rm-print"><strong>#</strong></th>
+										</tr>
+										<tr>
+											<th><strong>नाम थर</strong></th>
+											<th><strong>नाता</strong></th>
+											<th><strong>लिङ्ग</strong></th>
+											<th><strong>उमेर</strong></th>
+											<th><strong>वैवाहिक<br> स्थिति
+											</strong></th>
+											<th><strong>सैक्षिक योग्येता</strong></th>
+											<th><strong>पेशा</strong></th>
+											<th><strong>मतदाता<br> परिचयपत्र
+											</strong></th>
+											<th><strong>स्थायी ठेगाना</strong></th>
+											<th><strong>स्वास्थ्य अवस्था</strong></th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12 col-md-12">
+							<div class="table-responsive">
+								<table class="table table-striped table-member">
+									<tbody>
+										<tr>
+											<td>११. <strong>कित्ता </strong>: <strong
+												th:text="${residentFullDetail.answer12}"></strong></td>
+											<td><strong>घर संख्या</strong>: <strong
+												th:text="${residentFullDetail.answer13}"></strong></td>
+											<td><strong>व्यवसाय</strong>: <strong
+												th:text="${residentFullDetail.answer14}"></strong></td>
+											<td><strong>व्यवसायी</strong>: <strong
+												th:text="${residentFullDetail.answer15}"> </strong> <strong>फोन
+													नं</strong>: <strong th:text="${residentFullDetail.answer16}">
+											</strong></td>
+										</tr>
+										<tr>
+											<td>१२. <strong>घरको तल्ला</strong>:
+											</td>
+											<td th:text="${residentFullDetail.answer17}">०</td>
+
+											<td>१३. <strong>पानी</strong>:
+											</td>
+											<td><span th:text="${residentFullDetail.answer18}"></span>
+											</td>
+										</tr>
+										<tr>
+											<td>१४. <strong>निकासा</strong>:
+											</td>
+											<td><span th:text="${residentFullDetail.answer19}"></span>
+											</td>
+											<td>१५. <strong>सवारी साधन</strong>:
+											</td>
+											<td><span th:text="${residentFullDetail.answer20}">
+											</span></td>
+										</tr>
+										<tr>
+											<td>१६. <strong>घरको बनोैट</strong>:
+											</td>
+											<td><span th:text="${residentFullDetail.answer21}">
+											</span></td>
+											<td>१७. <strong>घरको जगको प्रकार</strong>:
+											</td>
+											<td><span th:text="${residentFullDetail.answer22}">
+											</span></td>
+										</tr>
+										<tr>
+											<td>१८. <strong>सडकको भौतिक अवस्था</strong>:
+											</td>
+											<td><span th:text="${residentFullDetail.answer23}"></span>
+											</td>
+											<td>१९. <strong>बैदेशिक रोजगार</strong>:
+											</td>
+											<td><span th:text="${residentFullDetail.answer31}">
+											</span></td>
+										</tr>
+										<tr>
+											<td>२०. <strong>बैदेशिक अध्ययन</strong>:
+											</td>
+											<td><span th:text="${residentFullDetail.answer32}"></span>
+											</td>
+											<td>२१. <strong>१६ वर्ष सम्मका बालबालिका<br>अन्य
+													ठाउँमा काम गर्न गएका छन
+											</strong>:
+											</td>
+											<td><span th:text="${residentFullDetail.answer33}">
+											</span></td>
+										</tr>
+										<tr>
+											<td>२२. <strong>घरबाट उत्पादन भएको <br>पोहोरका
+													व्यवस्था
+											</strong></td>
+											<td><span th:text="${residentFullDetail.answer34}">
+											</span></td>
+											<td>२३. <strong>बती</strong>:
+											</td>
+											<td><span th:text="${residentFullDetail.answer35}"></span>
+											</td>
+										</tr>
+										<tr>
+											<td>२४. <strong>खाना पकाउन प्रयोग हुने इन्धन</strong>:
+											</td>
+											<td><span th:text="${residentFullDetail.answer36}">
+											</span></td>
+											<td>२५. <strong>संचार सुविधा</strong>:
+											</td>
+											<td><span th:text="${residentFullDetail.answer37}"></span>
+											</td>
+										</tr>
+										<tr>
+											<td>२६. <strong>घर जग्गाको विवरण</strong>:
+											</td>
+											<td><span th:text="${residentFullDetail.answer38}"></span>
+											</td>
+											<td>२७. <strong>वार्षिक आम्दानी</strong>:
+											</td>
+											<td><input type="radio" checked><span
+												th:text="${residentFullDetail.answer39}">१,००,०००/-
+													भन्दा कम </span></td>
+										</tr>
+										<tr>
+											<td>२८. <strong>वार्षिक खर्च</strong>:
+											</td>
+											<td><input type="radio" checked><span
+												th:text="${residentFullDetail.answer40}">१,००,०००/-
+													भन्दा कम </span></td>
+											<td>२९. <strong>चौपाया तथा पशुपंशी</strong>:
+											</td>
+											<td><span> <input type="checkbox"
+													th:value="${residentFullDetail.answer41}" /> <span
+													th:text="${residentFullDetail.answer41}"></span>
+											</span></td>
+										</tr>
+										<tr>
+											<td>३०. <strong>आफ्नो उत्पादन तथा आय स्रोतले
+													कति महिना खान पुग्छ?</strong>:
+											</td>
+											<td><input type="radio" checked><span
+												th:text="${residentFullDetail.answer42}">३ महिना</span></td>
+											<td>३१. <strong>सिप तालिम पहिला लिनुभएको छ? </strong>:
+											</td>
+											<td><input type="radio" checked><span
+												th:text="${residentFullDetail.answer43}">छ </span></td>
+										</tr>
+										<tr>
+											<td>३२. <strong>भविष्यमा कस्तो सिप तालिम गर्नु
+													पर्ला? </strong>:
+											</td>
+											<td colspan="3"><span
+												th:text="${residentFullDetail.answer44}"></span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12 col-md-12">
+							<div class="table-responsive">
+								<table class="table table-bordered  table-member">
+									<tbody>
+										<tr>
+											<td><strong>कागजातहरू</strong>:</td>
+											<td th:text="${residentFullDetail.answer45}"></td>
+										</tr>
+									</tbody>
+								</table>
+								<table class="table table-bordered  table-member">
+									<tbody>
+										<tr>
+
+											<td><strong>विवरण दिने :</strong> सुदाम</td>
+											<td><strong>मिति :</strong> २०७६-४-१५</td>
+											<td><strong>तथ्यांक संकलन :</strong> गिता</td>
+
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="btn-print">
+					<button id="print" class="btn btn-primary">Print this page</button>
+				</div>
+				
+				<!-- Modal View For Map Location Display-->
+				<div class="modal fade" id="map-location-modal"
+					data-keyboard="false" data-backdrop="false" role="dialog"
+					aria-hidden="true">
+					<div class="modal-dialog modal-lg modal-dialog-centered"
+						role="document">
+						<div class="modal-content" style="border-radius: 10px;">
+							<div class="modal-header">
+								<h5 class="modal-title">
+									<b>LOCATION FOR <span th:text=${residentFullDetail.answer1}></span></b>
+								</h5>
+								<button id="cancel-location-btn" class="btn btn-danger pull-right"><b>X</b></button>
+							</div>
+							<div class="modal-content-body">
+								<div class="row" style="margin: 5px 20px;">
+									<div style="width: 100%; margin: 20px auto;">
+										<div id="surveyMap"></div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<b>Location Details: (Lat/Long) => <span th:text=${residentFullDetail.answer46}></span></b>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a href="javaScript:void();" class="back-to-top"><i
+			class="fa fa-angle-double-up"></i> </a>
+		<!--Start footer-->
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
-        </div>
-        <script src="https://www.lalitpur15.org/datasys/public/js/popper.min.js"></script>
-        <script src="https://www.lalitpur15.org/datasys/public/js/bootstrap.min.js"></script>
-        <script src="https://www.lalitpur15.org/datasys/public/plugins/simplebar/js/simplebar.js"></script>
-        <script src="https://www.lalitpur15.org/datasys/public/js/sidebar-menu.js"></script>
-        <script src="https://www.lalitpur15.org/datasys/public/plugins/datatable/js/datatables.min.js"></script>
-        <script src="https://www.lalitpur15.org/datasys/public/plugins/alerts-boxes/js/sweetalert.min.js"></script>
-        <script src="https://www.lalitpur15.org/datasys/public/js/jquery.pjax.js"></script>
-        <script src="https://www.lalitpur15.org/datasys/public/js/sidebar-menu.js"></script>
-        <script src="https://www.lalitpur15.org/datasys/public/plugins/nepali-datepicker/jquery.nepaliDatePicker.min.js"></script>
-        <script src="https://www.lalitpur15.org/datasys/public/js/app-script.js"></script>
-        <script src="https://www.lalitpur15.org/datasys/public/plugins/jquery.steps/js/jquery.steps.min.js"></script>
-        <script src="https://www.lalitpur15.org/datasys/public/plugins/jquery-validation/js/jquery.validate.min.js"></script>
-        <!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script> -->
-        <script src="https://www.lalitpur15.org/datasys/public/js/transliteration.I.js"></script>
-        <script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script>
-        <div id="scripts">
-            <script type="text/javascript" src="https://www.lalitpur15.org/datasys/public/js/printThis.js"></script>
-<script>
-  $(function() {
-    $('#print').click(function(){
-      $('.saibu-display-form').printThis({
-            importCSS: false,
-            loadCSS: "https://www.lalitpur15.org/datasys/public/css/print.css",  
-            removeInline: true,
-          });
-          
-         });
-      window.grid = $('#grid').DataTable({
-          responsive: true,
-          "buttons": [{
-              extend: 'copy',
-          }, {
-              extend: 'excel',
-          }, {
-              extend: 'print',
-          }, ],
-          "bInfo": false,
-          "bLengthChange": false,
-          "bPaginate": false,
-          "bFilter": false,
-          "bProcessing": true,
-          "bServerSide": true,
-          "deferRender": true,
-          "sServerMethod": "POST",
-          "iDisplayLength": 50,
-          ajax: 'https://buddhi.com.np/demo/householdMemberFetchData/5648bcd0-c0e5-4b03-a783-72e0ccd970ba',
-          columns: [{
-              data: 'DT_RowIndex',
-              name: 'DT_RowIndex',
-              orderable: false,
-              searchable: false
-          }, {
-              data: 'name',
-              name: 'name'
-          }, {
-              data: 'relation',
-              name: 'relation'
-          }, {
-              data: 'gender',
-              name: 'gender'
-          }, {
-              data: 'age_year',
-              name: 'age_year'
-          }, {
-              data: 'maritial_status',
-              name: 'maritial_status'
-          }, {
-              data: 'education',
-              name: 'education'
-          }, {
-              data: 'occupation',
-              name: 'occupation'
-          }, {
-              data: 'voter_card',
-              name: 'voter_card'
-          }, {
-              data: 'temporary_address',
-              name: 'temporary_address'
-          }, {
-              data: 'health',
-              name: 'health'
-          }, {
-              data: 'action',
-              name: 'action',
-              orderable: false,
-              searchable: false
-          }]
-      });
-      var _e = $('.printForm [type="checkbox"]:not(:checked), .printForm [type="radio"]:not(:checked)').closest("span");
-      $(_e).each(function(i, t){
-        $(t).closest("span").remove();
-      });
-      var _c = $('.printForm [type="checkbox"]:checked').closest("span");
-      $(_c).each(function(i, t){
-        $(t).closest("span").addClass("checked");
-      });
-  });
-</script>
-        </div>
-    </body>
+	</div>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/js/popper.min.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/js/bootstrap.min.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/plugins/simplebar/js/simplebar.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/js/sidebar-menu.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/plugins/datatable/js/datatables.min.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/plugins/alerts-boxes/js/sweetalert.min.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/js/jquery.pjax.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/js/sidebar-menu.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/plugins/nepali-datepicker/jquery.nepaliDatePicker.min.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/js/app-script.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/plugins/jquery.steps/js/jquery.steps.min.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+	<!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script> -->
+	<script
+		src="https://www.lalitpur15.org/datasys/public/js/transliteration.I.js"></script>
+	<script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script>
+	<div id="scripts">
+		<script type="text/javascript"
+			src="https://www.lalitpur15.org/datasys/public/js/printThis.js"></script>
+			
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			var geoCoordinates = /*[[${residentFullDetail.answer46}]]*/ '0';
+			/*]]>*/
+	
+			
+			
+			//Splitting the location coordinates into latitude and longitude
+			var geoFields = geoCoordinates.split(', ');
+	
+			var geoLat = geoFields[0];		//Gets the latitude
+			var geoLong = geoFields[1];		//Gets the longitude
+			//For showing the Map modal	
+			$("#view-location-btn").on("click", function(event){
+				event.preventDefault();
+				$("#map-location-modal").modal("show");
+			});
+			
+			
+			
+			//For canceling and hiding the Map modal
+			$("#cancel-location-btn").on("click", function(event){
+				$("#map-location-modal").modal("hide");
+			});
+	
+			
+			//JS function for Maps Display
+			function initMap() {
+				
+				var surveyLocation = {
+					lat : parseFloat(geoLat),
+					lng : parseFloat(geoLong)
+				};
+				var surveyMap = new google.maps.Map(document.getElementById('surveyMap'), {
+					zoom : 16,
+					center : surveyLocation,
+				// mapTypeId: 'satellite'
+				});
+				var marker = new google.maps.Marker({
+					position : surveyLocation,
+					map : surveyMap
+				});
+			}
+		</script>
+		<script async defer
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyEeeKDRl59P7ylQQ6uIW32YrtgpJ5iIk&callback=initMap">
+		</script>
+	</div>
+</body>
 </html>
