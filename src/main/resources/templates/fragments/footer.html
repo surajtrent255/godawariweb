@@ -22,27 +22,53 @@
 
 </head>
 <body>
-
-	<!-- start loader -->
-	<!--<div id="pageloader-overlay" class="visible incoming"><div class="loader-wrapper-outer"><div class="loader-wrapper-inner"><div class="loader"></div></div></div></div>-->
-	<!-- end loader -->
-
-	<!-- Start wrapper-->
-	<div id="wrapper">
-		<!--Start topbar header-->
-		<a href="javaScript:void();" class="back-to-top"><i
-			class="fa fa-angle-double-up"></i> </a>
-		<!--End Back To Top Button-->
-
 		<!--Start footer-->
-		<footer class="footer">
+		<footer th:fragment="footer" class="footer">
 			<div class="container">
 				<div class="text-center">Copyright © 2019 Godawari Nagarpalika, Lalitpur.</div>
 			</div>
+			<div class="scripts">
+				<!-- Bootstrap core JavaScript-->
+				<script th:src="@{/assets/js/jquery.min.js}" src="assets/js/jquery.min.js"></script>
+				<script th:src="@{/assets/js/bootstrap.min.js}" src="assets/js/bootstrap.min.js"></script>
+				<script th:src="@{/assets/js/bootstrap2.min.js}" src="assets/js/bootstrap2.min.js"></script>
+				<script th:src="@{/assets/js/printThis.js}" src="assets/js/printThis.js"></script>
+				<script th:src="@{/assets/js/popper.min.js}" src="assets/js/popper.min.js"></script>
+				<!-- simplebar js -->
+				<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}" src="assets/plugins/simplebar/js/simplebar.js"></script>
+				<!-- sidebar-menu js -->
+				<script th:src="@{/assets/js/sidebar-menu.js}" src="assets/js/sidebar-menu.js"></script>
+				<!-- loader scripts -->
+				<!-- Custom scripts -->
+				<script th:src="@{/assets/js/app-script.js}" src="assets/js/app-script.js"></script>
+				<!-- Chart js -->
+				<script th:src="@{/assets/plugins/Chart.js/Chart.min.js}" src="assets/plugins/Chart.js/Chart.min.js"></script>
+				<!-- Vector map JavaScript -->
+				<script th:src="@{/assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js}" src="assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js"></script>
+				<script th:src="@{/assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js}"
+					src="assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
+				<!-- Easy Pie Chart JS -->
+				<script th:src="@{/assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js}"
+					src="assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+				<!-- Sparkline JS -->
+				<script th:src="@{/assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js}" src="assets/plugins/sparkline-charts/jquery.sparkline.min.js"></script>
+				<script th:src="@{/assets/plugins/jquery-knob/excanvas.js}" src="assets/plugins/jquery-knob/excanvas.js"></script>
+				<script th:src="@{/assets/plugins/jquery-knob/jquery.knob.js}" src="assets/plugins/jquery-knob/jquery.knob.js"></script>
+			
+				<script>
+			        $(function() {
+			            $(".knob").knob();
+			        });
+			    </script>
+			
+			
+				<script th:src="@{/assets/js/jquery.ui.custom.js}" src="assets/js/jquery.ui.custom.js"></script>
+				<script th:src="@{/assets/js/jquery.uniform.js}" src="assets/js/jquery.uniform.js"></script>
+				<script th:src="@{/assets/js/select2.min.js}" src="assets/js/select2.min.js"></script>
+				<script th:src="@{/assets/js/matrix.js}" src="assets/js/matrix.js"></script>
+				<script th:src="@{/assets/js/matrix.tables.js}" src="assets/js/matrix.tables.js"></script>
+			</div>
 		</footer>
-
-
-	</div>
 	<!--End wrapper-->
 </body>
 </html>
