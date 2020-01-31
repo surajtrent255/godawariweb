@@ -104,6 +104,9 @@
 								</tbody>
 								
 							</table>
+							<table th:if="${residentList == null || #lists.isEmpty(residentList)}">
+								<h2>माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण भेटीएन|</h2>
+							</table>
 						</div>
 					</div>
 				</div>
