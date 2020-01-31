@@ -200,8 +200,8 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="member: ${residentFullDetail.familyMembers}">
-											<td>1</td>
+										<tr th:each="member,iteration: ${residentFullDetail.familyMembers}">
+											<td th:text="${iteration.index + 1}">1</td>
 											<td th:text="${member.name}"></td>
 											<td th:text="${member.relation}"></td>
 											<td th:text="${member.gender}"></td>

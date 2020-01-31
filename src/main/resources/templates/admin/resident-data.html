@@ -86,8 +86,8 @@
 								</thead>
 								
 								<tbody id="resident-body">
-									<tr class="" th:each="resident : ${residentList}">
-										<td th:text="1"></td>
+									<tr class="" th:each="resident,iteration : ${residentList}">
+										<td th:text="${iteration.index + 1}"></td>
 										<td th:text="${resident.houseOwner}"></td>
 										<td th:text="${resident.houseNo}"></td>
 										<td th:text="${resident.tole}"></td>
@@ -95,7 +95,12 @@
 										<td th:text="${resident.kittaNo}"></td>
 										<td> <img th:src="${resident.imageUrl}" width="50px" height="50px"/></td>
 										<td th:text="${resident.totalFamilyMembers}"></td>
-										<td><a href="#" th:href="@{/admin/residentMember/} + ${resident.filledId}" class="btn btn-xs btn-info">Show Details</a></td>
+										<td>
+											<a href="#" th:href="@{/}" class="btn btn-xs btn-info">Edit</a>
+											<a href="#" th:href="@{/}" class="btn btn-xs btn-warning">Delete </a>
+											<a href="#" th:href="@{/}" class="btn btn-xs btn-danger">Add Member</a>
+											<a href="#" th:href="@{/admin/residentMember/} + ${resident.filledId}" class="btn btn-xs btn-success">Show Details</a>
+										</td>
 									</tr>
 								</tbody>
 								
