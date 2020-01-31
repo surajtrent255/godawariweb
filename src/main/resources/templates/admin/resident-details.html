@@ -98,15 +98,14 @@
 
 
 		<div class="clearfix"></div>
-		<div class="content-wrapper">
+		<div class="content-wrapper" th:if="${residentFullDetail != null && residentFullDetail.residentDetail != null}">
 			<div class="container-fluid" id="pjax-container">
 				<div class="row pt-2 pb-2">
 					<div class="col-sm-9">
-						<h4 class="page-title">Godawari Nagarpalika Full Detail</h4>
+						<h4 class="page-title" th:text="${residentFullDetail.residentDetail.answer1} + '\'s full detail'">Godawari Nagarpalika Full Detail</h4>
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
-							<li class="breadcrumb-item active" aria-current="page">Household
-								Members List</li>
+							<li class="breadcrumb-item active" aria-current="page">Household Members List</li>
 						</ol>
 					</div>
 				</div>
@@ -125,13 +124,13 @@
 									<tbody>
 										<tr>
 											<td><strong>घरमुलीको नाम</strong> :</td>
-											<td th:text="${residentFullDetail.residentDetail.answer1}">सुदाम राउत</td>
+											<td th:text="${residentFullDetail.residentDetail.answer1}"></td>
 											<td><strong>टोल</strong> :</td>
-											<td th:text="${residentFullDetail.residentDetail.answer2}">हात्तीवन</td>
+											<td th:text="${residentFullDetail.residentDetail.answer2}"></td>
 											<td><strong>घर नं</strong> :</td>
-											<td th:text="${residentFullDetail.residentDetail.answer3}">९०</td>
+											<td th:text="${residentFullDetail.residentDetail.answer3}"></td>
 											<td><strong>फोन नं</strong> :</td>
-											<td th:text="${residentFullDetail.residentDetail.answer4}">९८४९१९३००७</td>
+											<td th:text="${residentFullDetail.residentDetail.answer4}"></td>
 										</tr>
 										<tr>
 											<td><strong>बुबाको नाम</strong>:</td>
@@ -237,119 +236,92 @@
 											</strong></td>
 										</tr>
 										<tr>
-											<td>१२. <strong>घरको तल्ला</strong>:
-											</td>
-											<td th:text="${residentFullDetail.residentDetail.answer17}">०</td>
-
-											<td>१३. <strong>पानी</strong>:
-											</td>
-											<td><span th:text="${residentFullDetail.residentDetail.answer18}"></span>
-											</td>
+											<td>१२. <strong>घरको तल्ला</strong>:</td>
+											<td th:text="${residentFullDetail.residentDetail.answer17}"></td>
+											<td>१३. <strong>पानी</strong>:</td>
+											<td th:text="${residentFullDetail.residentDetail.answer18}"></td>
 										</tr>
 										<tr>
 											<td>१४. <strong>निकासा</strong>:
 											</td>
-											<td><span th:text="${residentFullDetail.residentDetail.answer19}"></span>
-											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer19}"></td>
 											<td>१५. <strong>सवारी साधन</strong>:
 											</td>
-											<td><span th:text="${residentFullDetail.residentDetail.answer20}">
-											</span></td>
+											<td th:text="${residentFullDetail.residentDetail.answer20}"></td>
 										</tr>
 										<tr>
 											<td>१६. <strong>घरको बनोैट</strong>:
 											</td>
-											<td><span th:text="${residentFullDetail.residentDetail.answer21}">
-											</span></td>
+											<td th:text="${residentFullDetail.residentDetail.answer21}"></td>
 											<td>१७. <strong>घरको जगको प्रकार</strong>:
 											</td>
-											<td><span th:text="${residentFullDetail.residentDetail.answer22}">
-											</span></td>
+											<td th:text="${residentFullDetail.residentDetail.answer22}"></td>
 										</tr>
 										<tr>
 											<td>१८. <strong>सडकको भौतिक अवस्था</strong>:
 											</td>
-											<td><span th:text="${residentFullDetail.residentDetail.answer23}"></span>
-											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer23}"></td>
 											<td>१९. <strong>बैदेशिक रोजगार</strong>:
 											</td>
-											<td><span th:text="${residentFullDetail.residentDetail.answer31}">
-											</span></td>
+											<td th:text="${residentFullDetail.residentDetail.answer31}"></td>
 										</tr>
 										<tr>
 											<td>२०. <strong>बैदेशिक अध्ययन</strong>:
 											</td>
-											<td><span th:text="${residentFullDetail.residentDetail.answer32}"></span>
-											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer32}"></td>
 											<td>२१. <strong>१६ वर्ष सम्मका बालबालिका<br>अन्य
 													ठाउँमा काम गर्न गएका छन
 											</strong>:
 											</td>
-											<td><span th:text="${residentFullDetail.residentDetail.answer33}">
-											</span></td>
+											<td th:text="${residentFullDetail.residentDetail.answer33}"></td>
 										</tr>
 										<tr>
 											<td>२२. <strong>घरबाट उत्पादन भएको <br>पोहोरका
 													व्यवस्था
 											</strong></td>
-											<td><span th:text="${residentFullDetail.residentDetail.answer34}">
-											</span></td>
+											<td th:text="${residentFullDetail.residentDetail.answer34}"></td>
 											<td>२३. <strong>बती</strong>:
 											</td>
-											<td><span th:text="${residentFullDetail.residentDetail.answer35}"></span>
-											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer35}"></td>
 										</tr>
 										<tr>
 											<td>२४. <strong>खाना पकाउन प्रयोग हुने इन्धन</strong>:
 											</td>
-											<td><span th:text="${residentFullDetail.residentDetail.answer36}">
-											</span></td>
+											<td th:text="${residentFullDetail.residentDetail.answer36}"></td>
 											<td>२५. <strong>संचार सुविधा</strong>:
 											</td>
-											<td><span th:text="${residentFullDetail.residentDetail.answer37}"></span>
-											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer37}"></td>
 										</tr>
 										<tr>
 											<td>२६. <strong>घर जग्गाको विवरण</strong>:
 											</td>
-											<td><span th:text="${residentFullDetail.residentDetail.answer38}"></span>
-											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer38}"></td>
 											<td>२७. <strong>वार्षिक आम्दानी</strong>:
 											</td>
-											<td><input type="radio" checked><span
-												th:text="${residentFullDetail.residentDetail.answer39}">१,००,०००/-
-													भन्दा कम </span></td>
+											<td th:text="${residentFullDetail.residentDetail.answer39}"></td>
 										</tr>
 										<tr>
 											<td>२८. <strong>वार्षिक खर्च</strong>:
 											</td>
-											<td><input type="radio" checked><span
-												th:text="${residentFullDetail.residentDetail.answer40}">१,००,०००/-
-													भन्दा कम </span></td>
+											<td th:text="${residentFullDetail.residentDetail.answer40}"></td>
 											<td>२९. <strong>चौपाया तथा पशुपंशी</strong>:
 											</td>
-											<td><span> <input type="checkbox"
-													th:value="${residentFullDetail.residentDetail.answer41}" /> <span
-													th:text="${residentFullDetail.residentDetail.answer41}"></span>
-											</span></td>
+											<td	th:text="${residentFullDetail.residentDetail.answer41}"></td>
 										</tr>
 										<tr>
 											<td>३०. <strong>आफ्नो उत्पादन तथा आय स्रोतले
 													कति महिना खान पुग्छ?</strong>:
 											</td>
-											<td><input type="radio" checked><span
-												th:text="${residentFullDetail.residentDetail.answer42}">३ महिना</span></td>
+											<td th:text="${residentFullDetail.residentDetail.answer42}"></td>
 											<td>३१. <strong>सिप तालिम पहिला लिनुभएको छ? </strong>:
 											</td>
-											<td><input type="radio" checked><span
-												th:text="${residentFullDetail.residentDetail.answer43}">छ </span></td>
+											<td th:text="${residentFullDetail.residentDetail.answer43}"></td>
 										</tr>
 										<tr>
 											<td>३२. <strong>भविष्यमा कस्तो सिप तालिम गर्नु
 													पर्ला? </strong>:
 											</td>
-											<td colspan="3"><span
-												th:text="${residentFullDetail.residentDetail.answer44}"></span></td>
+											<td colspan="3" th:text="${residentFullDetail.residentDetail.answer44}"></td>
 										</tr>
 									</tbody>
 								</table>
@@ -371,9 +343,9 @@
 									<tbody>
 										<tr>
 
-											<td><strong>विवरण दिने :</strong> <span th:text="${residentFullDetail.residentDetail.answer1}"> </span></td>
-											<td><strong>मिति :</strong><span th:text="${residentFullDetail.residentDetail.entryDate}"></span></td>
-											<td><strong>तथ्यांक संकलन :</strong> <span th:text="${residentFullDetail.surveyor}"></span></td>
+											<td><strong>विवरण दिने : </strong> <span th:text="${residentFullDetail.residentDetail.answer1}"> </span></td>
+											<td><strong>मिति : </strong><span th:text="${residentFullDetail.residentDetail.entryDate}"></span></td>
+											<td><strong>तथ्यांक संकलन : </strong> <span th:text="${residentFullDetail.surveyor}"></span></td>
 
 										</tr>
 									</tbody>
@@ -401,9 +373,6 @@
 										<div id="surveyMap"></div>
 									</div>
 								</div>
-							</div>
-							<div class="modal-footer">
-								<b>Location Details: (Lat/Long) => <span th:text=${residentFullDetail.residentDetail.answer46}></span></b>
 							</div>
 						</div>
 					</div>
