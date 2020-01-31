@@ -102,7 +102,7 @@
 			<div class="container-fluid" id="pjax-container">
 				<div class="row pt-2 pb-2">
 					<div class="col-sm-9">
-						<h4 class="page-title" th:text="${residentFullDetail.residentDetail.answer1} + '\'s full detail'">Godawari Nagarpalika Full Detail</h4>
+						<h4 class="page-title" th:text="${residentFullDetail.residentDetail.answer1} + ' को पूर्ण विवरण'">Godawari Nagarpalika Full Detail</h4>
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
 							<li class="breadcrumb-item active" aria-current="page">Household Members List</li>
@@ -158,8 +158,7 @@
 								<!-- Button for showing the modal for Map Location  -->
 								<div>
 									<button id="view-location-btn"
-										class="block2-user-id btn btn-success pull-right">View
-										Location on Map</button>
+										class="block2-user-id btn btn-success pull-right">यस स्थान मानचित्रमा हेर्नुहोस </button>
 								</div>
 							</div>
 						</div>
@@ -168,7 +167,7 @@
 						<div class="col-lg-12 col-md-12">
 							<div class="table-responsive">
 								<table class="table table-striped table-hover table-member"
-									id="grid">
+									id="grid" th:if="${residentFullDetail.familyMembers != null && #lists.size(residentFullDetail.familyMembers) > 0}">
 									<thead>
 										<tr>
 											<th rowspan="2"><strong>ऋ.स</strong></th>
@@ -214,6 +213,9 @@
 											<td th:text="${member.healthCondition}"></td>
 										</tr>
 									</tbody>
+								</table>
+								<table th:if="${residentFullDetail.familyMembers == null || #lists.isEmpty(residentFullDetail.familyMembers)}">
+									<h2> माफ गर्नुहोला | परिवारको कुनै पनि सदस्य भेटीएन वा प्रणालीमा बिवरण राखिएको छैन |</h2>
 								</table>
 							</div>
 						</div>
@@ -363,7 +365,7 @@
 						<div class="modal-content" style="border-radius: 10px;">
 							<div class="modal-header">
 								<h5 class="modal-title">
-									<b>LOCATION FOR <span th:text=${residentFullDetail.residentDetail.answer1}></span></b>
+									<b><span th:text=${residentFullDetail.residentDetail.answer1}></span> को बासस्थान|</b>
 								</h5>
 								<button id="cancel-location-btn" class="btn btn-danger pull-right"><b>X</b></button>
 							</div>
