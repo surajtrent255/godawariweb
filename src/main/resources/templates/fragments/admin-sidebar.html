@@ -64,11 +64,11 @@
 				<div class="media align-items-center user-pointer collapsed"
 					data-toggle="collapse" data-target="#user-dropdown">
 					<div class="avatar">
-						<img class="mr-3 side-user-img"
-							th:src="@{/assets/images/avatars/avatar-1.png}" alt="user avatar">
+						<!-- <img class="mr-3 side-user-img"
+							th:src="@{/assets/images/avatars/avatar-1.png}" alt="user avatar"> -->
 					</div>
 					<div class="media-body">
-						<h6 class="side-user-name">Dangol Buddhi</h6>
+						<h6 class="side-user-name" th:text="${#authentication.principal.fullName}">Dangol Buddhi</h6>
 					</div>
 				</div>
 				<div id="user-dropdown" class="collapse">

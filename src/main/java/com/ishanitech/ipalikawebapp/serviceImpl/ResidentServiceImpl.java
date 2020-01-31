@@ -7,6 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.ishanitech.ipalikawebapp.dto.AnswerDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
+import com.ishanitech.ipalikawebapp.dto.ResidentDetailDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.service.ResidentService;
 
@@ -29,7 +30,7 @@ public class ResidentServiceImpl implements ResidentService {
 
 	@Override
 	public Response<?> getResidentFullDetail(String filledId) {
-		Response<AnswerDTO> fullDetail = restTemplate.getForObject("http://localhost:8888/resident/detail/" + filledId, Response.class);
+		Response<ResidentDetailDTO> fullDetail = restTemplate.getForObject("http://localhost:8888/resident/detail/" + filledId, Response.class);
 		return fullDetail;
 	}
 
