@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ishanitech.ipalikawebapp.dto.AnswerDTO;
+import com.ishanitech.ipalikawebapp.dto.FavouritePlaceDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDetailDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.service.FormService;
+import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
 import com.ishanitech.ipalikawebapp.service.ResidentService;
 
 @RequestMapping("/admin")
@@ -21,9 +23,13 @@ public class AdminController {
 
 	private final ResidentService residentService;
 	private final FormService formService;
+	private final FavouritePlacesService favouritePlacesService;
 
-	public AdminController(ResidentService residentService, FormService formService) {
+	
+	
+	public AdminController(ResidentService residentService, FavouritePlacesService favouritePlacesService, FormService formService) {
 		this.residentService = residentService;
+		this.favouritePlacesService = favouritePlacesService;
 		this.formService = formService;
 	}
 
@@ -68,6 +74,13 @@ public class AdminController {
 		Response<ResidentDetailDTO> residentResponse = (Response<ResidentDetailDTO>) residentService.getResidentFullDetail(filledId);
 		model.addAttribute("residentFullDetail", residentResponse.getData());
 		return "admin/resident-details";
+	}
+	
+	@GetMapping("/favouritePlaceView")
+	public String getFavouritePlaeView(Model model) {
+		Response<List<FavouritePlaceDTO>> favouritePlaceResponse = favouritePlacesService.getAllFavouritePlaces();
+		model.addAttribute("favouritePlaceList", favouritePlaceResponse.getData());
+		return "admin/favourite-place";
 	}
 
 }
