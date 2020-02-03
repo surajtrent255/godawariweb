@@ -12,16 +12,19 @@ import com.ishanitech.ipalikawebapp.dto.AnswerDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDetailDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
+import com.ishanitech.ipalikawebapp.service.FormService;
 import com.ishanitech.ipalikawebapp.service.ResidentService;
 
 @RequestMapping("/admin")
 @Controller
 public class AdminController {
 
-	private ResidentService residentService;
+	private final ResidentService residentService;
+	private final FormService formService;
 
-	public AdminController(ResidentService residentService) {
+	public AdminController(ResidentService residentService, FormService formService) {
 		this.residentService = residentService;
+		this.formService = formService;
 	}
 
 	@GetMapping
@@ -30,7 +33,9 @@ public class AdminController {
 	}
 
 	@GetMapping("/addHouseholdForm")
-	public String getHouseholdEntryForm() {
+	public String getHouseholdEntryForm(Model model) {
+		model.addAttribute("answer", new AnswerDTO());
+		model.addAttribute("questionAndOptions", formService.getFullFormDetailById(1));
 		return "admin/add-household";
 	}
 

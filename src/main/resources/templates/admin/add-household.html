@@ -8,7 +8,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Godawari Municipality, Lalitpur</title>
+<title>गोदावरी नगरपालिका, ललितपुर</title>
 <link rel="icon" th:href="@{/assets/images/favicon1.ico}"
 	href="assets/images/favicon1.ico" type="image/x-icon" />
 <link th:href="@{/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css}"
@@ -71,7 +71,7 @@
 			<div class="container-fluid" id="pjax-container">
 				<div class="row pt-2 pb-2">
 					<div class="col-sm-9">
-						<h4 class="page-title">Data Management System</h4>
+						<h4 class="page-title">नगरबासी बिवरण  कम्प्युटर प्रणाली</h4>
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
 							<li class="breadcrumb-item active" aria-current="page">Add
@@ -79,12 +79,13 @@
 						</ol>
 					</div>
 				</div>
-				<div class="card">
+				<div class="card" th:if="${questionAndOptions != null && #lists.size(questionAndOptions) > 0}">
 					<div class="card-body">
 						<div class="card-title">Fill up information about house.</div>
 						<form method="POST" action="javascript:void(0)" data-ajax="true"
 							data-action="https://buddhi.com.np/demo/household"
-							enctype="multipart/form-data" class="unicode householdForm">
+							enctype="multipart/form-data" class="unicode householdForm"
+							th:object="${answer}">
 							<input type="hidden" name="_token"
 								value="8c82ziy1cyPf0NeyqhEeRv0dAIMt2CyuvpgsRMOu"> <input
 								type="hidden" name="_method" value="post">
@@ -92,55 +93,55 @@
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
 										<label for="househead_name">
-											<h4>घरमुलीको नाम :</h4>
+											<h4 th:text="${questionAndOptions.get(0).desc}"></h4>
 										</label> <input type="text" class="form-control  " id="househead_name"
 											name="househead_name" value="">
 									</div>
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="tole"><h4>टोल :</h4></label> <input type="text"
+										<label for="tole"><h4 th:text="${questionAndOptions.get(1).desc}"> टोल :</h4></label> <input type="text"
 											class="form-control  " id="tole" name="tole" value="">
 									</div>
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="house_number"><h4>घर नं :</h4></label> <input
+										<label for="house_number"><h4 th:text="${questionAndOptions.get(2).desc}">घर नं :</h4></label> <input
 											type="text" class="form-control  " id="house_number"
 											name="house_number" value="">
 									</div>
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="phone_number"><h4>फोन नं :</h4></label> <input
+										<label for="phone_number"><h4 th:text="${questionAndOptions.get(3).desc}">फोन नं :</h4></label> <input
 											type="text" class="form-control numeric  " id="phone_number"
 											name="phone_number" value="">
 									</div>
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="father_name"><h4>बुबाको नाम :</h4></label> <input
+										<label for="father_name"><h4 th:text="${questionAndOptions.get(4).desc}">बुबाको नाम :</h4></label> <input
 											type="text" class="form-control  " id="father_name"
 											name="father_name" value="">
 									</div>
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="mother_name"><h4>आमाको नाम :</h4></label> <input
+										<label for="mother_name"><h4 th:text="${questionAndOptions.get(5).desc}">आमाको नाम :</h4></label> <input
 											type="text" class="form-control  " id="mother_name"
 											name="mother_name" value="">
 									</div>
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="language"><h4>मातृभाषा :</h4></label> <input
+										<label for="language"><h4 th:text="${questionAndOptions.get(6).desc}">मातृभाषा :</h4></label> <input
 											type="text" class="form-control  " id="language"
 											name="language" value="">
 									</div>
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="caste"><h4>जाति :</h4></label> <select
+										<label for="caste"><h4 th:text="${questionAndOptions.get(7).desc}">जाति :</h4></label> <select
 											class="form-control" name="caste" id="caste">
 											<option value=""></option>
 											<option value="1">दलित</option>
@@ -153,7 +154,7 @@
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="religion"><h4>धर्म :</h4></label> <select
+										<label for="religion"><h4 th:text="${questionAndOptions.get(8).desc}">धर्म :</h4></label> <select
 											class="form-control" name="religion" id="religion">
 											<option value=""></option>
 											<option value="1">हिन्दू धर्म</option>
@@ -167,14 +168,14 @@
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="citizenship_number"><h4>नागरिकता नं :</h4></label>
+										<label for="citizenship_number"><h4 th:text="${questionAndOptions.get(9).desc}">नागरिकता नं :</h4></label>
 										<input type="text" class="form-control  "
 											id="citizenship_number" name="citizenship_number" value="">
 									</div>
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="citizenship_issue_district"><h4>नागरिकता
+										<label for="citizenship_issue_district"><h4 th:text="${questionAndOptions.get(10).desc}">नागरिकता
 												लिएको जिल्ला :</h4></label> <select class="form-control"
 											name="citizenship_issue_district"
 											id="citizenship_issue_district">
@@ -261,7 +262,7 @@
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="photo"><h4>फोटो :</h4></label> <input type="file"
+										<label for="photo"><h4 th:text="${questionAndOptions.get(46).desc}">फोटो :</h4></label> <input type="file"
 											class="form-control  " id="photo" name="photo" value=""
 											data-event="change" data-target="photo" accept="image/*">
 
@@ -272,49 +273,49 @@
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="kita_number"><h4>कित्ता नं :</h4></label> <input
+										<label for="kita_number"><h4 th:text="${questionAndOptions.get(11).desc}">कित्ता नं :</h4></label> <input
 											type="text" class="form-control  " id="kita_number"
 											name="kita_number" value="">
 									</div>
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="house_numbers"><h4>घर संख्या :</h4></label> <input
+										<label for="house_numbers"><h4 th:text="${questionAndOptions.get(12).desc}">घर संख्या :</h4></label> <input
 											type="text" class="form-control  " id="house_numbers"
 											name="house_numbers" value="">
 									</div>
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="shop_name"><h4>व्यवसाय :</h4></label> <input
+										<label for="shop_name"><h4 th:text="${questionAndOptions.get(13).desc}">व्यवसाय :</h4></label> <input
 											type="text" class="form-control  " id="shop_name"
 											name="shop_name" value="">
 									</div>
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="shop_pan"><h4>व्यवसायी :</h4></label> <input
+										<label for="shop_pan"><h4 th:text="${questionAndOptions.get(14).desc}">व्यवसायी :</h4></label> <input
 											type="text" class="form-control  " id="shop_pan"
 											name="shop_pan" value="">
 									</div>
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="shop_phone_number"><h4>फोन नं :</h4></label> <input
+										<label for="shop_phone_number"><h4 th:text="${questionAndOptions.get(15).desc}">फोन नं :</h4></label> <input
 											type="text" class="form-control  " id="shop_phone_number"
 											name="shop_phone_number" value="">
 									</div>
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="house_floor"><h4>घरको तल्ला :</h4></label> <input
+										<label for="house_floor"><h4 th:text="${questionAndOptions.get(16).desc}">घरको तल्ला :</h4></label> <input
 											type="text" class="form-control numeric  " id="house_floor"
 											name="house_floor" value="">
 									</div>
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label water_source">
-										<label for="house_floor"><h4>पानी :</h4></label>
+										<label for="house_floor"><h4 th:text="${questionAndOptions.get(17).desc}">पानी :</h4></label>
 										<div class="form-group form-radio  ">
 											<label><input type="checkbox" name="water_source[]"
 												value="1" data-event="toggle"
@@ -335,7 +336,7 @@
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="house_floor"><h4>निकासा :</h4></label> <select
+										<label for="house_floor"><h4 th:text="${questionAndOptions.get(18).desc}">निकासा :</h4></label> <select
 											name="drainage" id="drainage" class="form-control  ">
 											<option value=""></option>
 											<option value="1">ढल</option>
@@ -346,7 +347,7 @@
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label vehicle">
-										<label for="house_floor"><h4>सवारी साधन :</h4></label>
+										<label for="house_floor"><h4 th:text="${questionAndOptions.get(19).desc}">सवारी साधन :</h4></label>
 										<div class="form-group form-radio  ">
 											<label><input type="checkbox" name="vehicle[]"
 												value="1" data-event="toggle" data-target="vehicle_other"
@@ -369,7 +370,7 @@
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="house_structure"><h4>घरको बनोैट :</h4> </label> <select
+										<label for="house_structure"><h4 th:text="${questionAndOptions.get(20).desc}">घरको बनोैट :</h4> </label> <select
 											class="form-control" name="house_structure"
 											id="house_structure">
 											<option value=""></option>
@@ -383,7 +384,7 @@
 								</div>
 								<div class="col-lg-3 col-md-4">
 									<div class="form-group form-label">
-										<label for="house_current_use"><h4>वर्तमान उपयोग
+										<label for="house_current_use"><h4 th:text="${questionAndOptions.get(21).desc}">वर्तमान उपयोग
 												:</h4></label> <select name="house_current_use" id="house_current_use"
 											class="form-control">
 											<option value=""></option>
