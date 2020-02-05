@@ -9,4 +9,6 @@ public interface FavouritePlacesService {
 
 	Response<List<FavouritePlaceDTO>> getAllFavouritePlaces();
 
+	Response<FavouritePlaceDTO> getFavouritePlaceByPlaceId(String placeId);
+
 }

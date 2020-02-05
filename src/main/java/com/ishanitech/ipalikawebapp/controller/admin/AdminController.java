@@ -45,8 +45,9 @@ public class AdminController {
 		return "admin/add-household";
 	}
 
-	@GetMapping("/addMemberForm")
-	public String getMemberEntryForm() {
+	@GetMapping("/addMemberForm/{residentFilledId}")
+	public String getMemberEntryForm(@PathVariable ("residentFilledId") String residentFilledId, Model model) {
+		model.addAttribute("residentFilledId", residentFilledId);
 		return "admin/add-member";
 	}
 
@@ -77,10 +78,22 @@ public class AdminController {
 	}
 	
 	@GetMapping("/favouritePlaceView")
-	public String getFavouritePlaeView(Model model) {
+	public String getFavouritePlaceView(Model model) {
 		Response<List<FavouritePlaceDTO>> favouritePlaceResponse = favouritePlacesService.getAllFavouritePlaces();
 		model.addAttribute("favouritePlaceList", favouritePlaceResponse.getData());
 		return "admin/favourite-place";
+	}
+	
+	@GetMapping("/favouritePlaceDetails/{placeId}")
+	public String getFavouritePlaceByPlaceId(Model model, @PathVariable("placeId") String placeId) {
+		Response<FavouritePlaceDTO> favouritePlaceResponse = (Response<FavouritePlaceDTO>) favouritePlacesService.getFavouritePlaceByPlaceId(placeId);
+		model.addAttribute("favouritePlaceInfo", favouritePlaceResponse.getData());
+		return "admin/favourite-place-details";
+	}
+	
+	@GetMapping("/favouritePlaceAdd")
+	public String getFavouritePlaceEntryView() {
+		return "admin/add-favourite-place";
 	}
 
 }

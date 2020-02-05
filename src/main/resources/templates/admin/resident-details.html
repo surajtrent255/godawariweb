@@ -37,6 +37,13 @@
 <link rel="stylesheet" type="text/css"
 	href="https://www.lalitpur15.org/datasys/public/css/print.css"
 	media="print">
+	
+		
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" 
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  crossorigin=""/>
+	
+	
 <style type="text/css">
 .printForm .first_cell {
 	width: 30px;
@@ -386,6 +393,9 @@
 			</div>
 		</div>
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
+			<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+		integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+		crossorigin=""></script>
 		<script th:inline="javascript">
 			/*<![CDATA[*/
 			var geoCoordinates = /*[[${residentFullDetail.residentDetail.answer46}]]*/ '0';
@@ -399,6 +409,25 @@
 
 			var geoLat = geoFields[0];		//Gets the latitude
 			var geoLong = geoFields[1];		//Gets the longitude
+			
+			
+			//JS function for displaying the location of the household using leafletjs
+			const mymap = L.map('surveyMap').setView([geoLat, geoLong], 15);
+			var marker;
+// 			var layerGroup = L.layerGroup().addTo(mymap);
+	
+			const attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors';
+	
+			
+			const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+			const tiles = L.tileLayer(tileUrl, {attribution});
+			tiles.addTo(mymap);
+			
+			marker = L.marker([geoLat, geoLong]).addTo(mymap);	
+			
+			
+			
+			
 			
 			
 			$(function() {
@@ -508,29 +537,29 @@
 			});
 
 			
-			//JS function for Maps Display
-			function initMap() {
+// 			//JS function for Maps Display
+// 			function initMap() {
 				
-				var surveyLocation = {
-					lat : parseFloat(geoLat),
-					lng : parseFloat(geoLong)
-				};
-				var surveyMap = new google.maps.Map(document.getElementById('surveyMap'), {
-					zoom : 16,
-					center : surveyLocation,
-				// mapTypeId: 'satellite'
-				});
-				var marker = new google.maps.Marker({
-					position : surveyLocation,
-					map : surveyMap
-				});
-			}
+// 				var surveyLocation = {
+// 					lat : parseFloat(geoLat),
+// 					lng : parseFloat(geoLong)
+// 				};
+// 				var surveyMap = new google.maps.Map(document.getElementById('surveyMap'), {
+// 					zoom : 16,
+// 					center : surveyLocation,
+// 				// mapTypeId: 'satellite'
+// 				});
+// 				var marker = new google.maps.Marker({
+// 					position : surveyLocation,
+// 					map : surveyMap
+// 				});
+// 			}
 		</script>
 		
-		<script async defer
-			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyEeeKDRl59P7ylQQ6uIW32YrtgpJ5iIk&callback=initMap">
+<!-- 		<script async defer -->
+<!-- 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyEeeKDRl59P7ylQQ6uIW32YrtgpJ5iIk&callback=initMap"> -->
 			
-		</script>
+<!-- 		</script> -->
 	</div>
 </body>
 </html>

@@ -27,4 +27,12 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		return favouritePlaces;
 	}
 
+
+
+	@Override
+	public Response<FavouritePlaceDTO> getFavouritePlaceByPlaceId(String placeId) {
+		Response<FavouritePlaceDTO> favouritePlaceInfo = restTemplate.getForObject("http://localhost:8888/favourite-place/detail/" + placeId, Response.class);
+		return favouritePlaceInfo;
+	}
+
 }
