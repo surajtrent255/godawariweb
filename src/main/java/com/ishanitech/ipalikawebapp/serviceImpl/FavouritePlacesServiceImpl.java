@@ -35,4 +35,11 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		return favouritePlaceInfo;
 	}
 
+
+
+	@Override
+	public void deleteFavouritePlacebyPlaceId(String favPlaceId) {
+		restTemplate.delete("http://localhost:8888/favourite-place/" + favPlaceId);
+	}
+
 }

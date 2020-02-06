@@ -11,4 +11,6 @@ public interface FavouritePlacesService {
 
 	Response<FavouritePlaceDTO> getFavouritePlaceByPlaceId(String placeId);
 
+	void deleteFavouritePlacebyPlaceId(String favPlaceId);
+
 }

@@ -92,8 +92,13 @@
 <!-- 										<td th:text="${resident.totalFamilyMembers}"></td> -->
 										<td>
 											<a href="#" th:href="@{/}" class="btn btn-xs btn-info">Edit</a>
-											<a href="#" th:href="@{/}" class="btn btn-xs btn-warning">Delete </a>
-									
+<!-- 											<a href="#" th:href="@{/}" th:onclick="|deleteFavouritePlace(${favPlace.filledId})|" class="btn btn-xs btn-warning">Delete </a> -->
+													<button
+														class="btn btn-xs btn-warning" th:attr="onclick=|deleteFavouritePlace('${favPlace.filledId}')|" >Delete
+													</button>
+<!-- 														th:onclick="|deleteFavouritePlace(${favPlace.filledId})|" -->
+													
+													
 											<a href="#" th:href="@{/admin/favouritePlaceDetails/} + ${favPlace.filledId}" class="btn btn-xs btn-success">Show Details</a>
 										</td>
 									</tr>
@@ -142,12 +147,96 @@
 	<script
 		src="https://www.lalitpur15.org/datasys/public/js/transliteration.I.js"></script>
 	<script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<div id="scripts">
 
 
-
-
-
 	</div>
+	<script th:inline="javascript">
+	//Gets the current page url
+	let contextPath = /*[[${#request.contextPath}]]*/ '/admin'; 
+	
+	console.log(contextPath);
+	
+// 	Swal.fire({
+// 		  title: 'Are you sure?',
+// 		  text: "You won't be able to revert this!",
+// 		  icon: 'warning',
+// 		  showCancelButton: true,
+// 		  confirmButtonColor: '#3085d6',
+// 		  cancelButtonColor: '#d33',
+// 		  confirmButtonText: 'Yes, delete it!'
+// 		}).then((result) => {
+// 		  if (result.value) {
+// 		    Swal.fire(
+// 		      'Deleted!',
+// 		      'Your file has been deleted.',
+// 		      'success'
+// 		    )
+// 		  }
+// 		})
+	
+
+	
+	// For deleting favPlace
+	function deleteFavouritePlace(favPlaceId) {
+		swal.fire({
+			title: 'Are you sure you want to delete this place?',
+			  text: "You won't be able to revert this!",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: 'Yes, delete it!'
+		})
+			.then(function(clickedOk) {
+				if (clickedOk) {
+					$.ajax({
+						url : contextPath + "/favourite/" + favPlaceId,
+						method : "DELETE",
+						success : function() {
+							swal.fire({
+								icon : "success",
+								text : "The favourite place has been deleted"
+							})
+								.then(function(clickedOk) {
+									 location.reload(true);
+								});
+						}
+					});
+				}
+			});
+		}
+	
+	function deleteFavouritePlace(favPlaceId) {
+		Swal.fire({
+			  title: 'Are you sure?',
+			  text: "You won't be able to revert this!",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: 'Yes, delete it!'
+			}).then((result) => {
+			  if (result.value) {
+				  $.ajax({
+						url : contextPath + "/favourite/" + favPlaceId,
+						method : "DELETE",
+						success : function() {
+				  Swal.fire({
+			      title: 'Deleted!',
+			      text: 'Your file has been deleted.',
+			      icon: 'success'
+				  }).then((result) => {
+						 location.reload(true);
+					});
+			  }
+			})
+			  }
+			})
+	}
+	
+	</script>
 </body>
 </html>

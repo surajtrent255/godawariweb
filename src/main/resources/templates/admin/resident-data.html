@@ -96,7 +96,7 @@
 										<td th:text="${resident.totalFamilyMembers}"></td>
 										<td>
 											<a href="#" th:href="@{/}" class="btn btn-xs btn-info">Edit</a>
-											<a href="#" th:href="@{}" class="btn btn-xs btn-warning">Delete </a>
+											<a href="#" th:href="@{/}" class="btn btn-xs btn-warning">Delete </a>
 											<a href="#" th:href="@{/admin/addMemberForm/} + ${resident.filledId}" class="btn btn-xs btn-danger">Add Member</a>
 											<a href="#" th:href="@{/admin/residentMember/} + ${resident.filledId}" class="btn btn-xs btn-success">Show Details</a>
 										</td>
