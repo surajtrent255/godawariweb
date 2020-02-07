@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * {@code WebViewConfig} is a configuration class that implements {@code WebMvcConfigurer} interface. 
- * This configuration class is useful in those cases where controller class returns only one view.
+ * This configuration class is useful in those cases where controller class returns only view.
  * For example: About controller returning only about us view to the user.
  * @author <b> Umesh Bhujel
  * @since 1.0

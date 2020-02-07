@@ -6,7 +6,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/resident")
 @Controller
 public class ResidentController {
-	
-	
-
 }

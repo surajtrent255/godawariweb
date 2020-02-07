@@ -28,6 +28,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		handleRequest(request, response, authentication);
+		HttpSession session = request.getSession(false);
+		session.setAttribute("token", response.getHeader("Authorization"));
 		clearAuthenticationAttributes(request);
 	}
 
@@ -50,26 +52,33 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	}
 
 	private String determineTargetUrl(Authentication authentication) {
-		boolean isAdmin = false, isStaff = false;
+		boolean isSuperAdmin = false, isCentralAdmin = false, isWardAdmin = false, isSurveyor = false;
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		for (GrantedAuthority authority : authorities) {
-			if (authority.getAuthority().equals("ADMIN")) {
-				isAdmin = true;
+			if (authority.getAuthority().equals("SUPER_ADMIN")) {
+				isSuperAdmin = true;
 				break;
 
-			} else if (authority.getAuthority().equals("STAFF")) {
-				isStaff = true;
+			} else if (authority.getAuthority().equals("CENTRAL_ADMIN")) {
+				isCentralAdmin = true;
+				break;
+			} else if(authority.getAuthority().equals("WARD_ADMIN")) {
+				isWardAdmin = true;
+				break;
+			} else {
+				isSurveyor = true;
 				break;
 			}
-
 		}
 
-		if (isAdmin) {
-			return "/admin/";
-		} else if (isStaff) {
-			return "/staff/";
+		if (isSuperAdmin) {
+			return "/super-admin";
+		} else if (isCentralAdmin) {
+			return "/central-admin";
+		} else if(isWardAdmin) {
+			return "/ward-admin";
 		} else {
-			return "/main/";
+			return "/surveyor";
 		}
 
 	}

@@ -14,27 +14,38 @@ import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDetailDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.service.FormService;
+import com.ishanitech.ipalikawebapp.service.ReportService;
 import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
 import com.ishanitech.ipalikawebapp.service.ResidentService;
 
-@RequestMapping("/admin")
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RequestMapping("/super-admin")
 @Controller
-public class AdminController {
+public class SuperAdminController {
 
 	private final ResidentService residentService;
 	private final FormService formService;
 	private final FavouritePlacesService favouritePlacesService;
+	private final ReportService reportService;
 
 	
 	
-	public AdminController(ResidentService residentService, FavouritePlacesService favouritePlacesService, FormService formService) {
+	public SuperAdminController(ResidentService residentService, 
+			FavouritePlacesService favouritePlacesService, 
+			FormService formService,
+			ReportService reportService) {
 		this.residentService = residentService;
 		this.favouritePlacesService = favouritePlacesService;
 		this.formService = formService;
+		this.reportService = reportService;
 	}
 
 	@GetMapping
-	public String getDashboardView() {
+	public String getDashboardView(Model model) {
+		model.addAttribute("populationReport", reportService.getPopulationReport());
+		model.addAttribute("questionReport", reportService.getQuestionReport());
 		return "admin/dashboard";
 	}
 
