@@ -28,27 +28,19 @@
 	href="assets/css/app-style.css" rel="stylesheet" />
 
 </head>
-
 <body>
-
-	<!-- start loader -->
-	<!--<div id="pageloader-overlay" class="visible incoming"><div class="loader-wrapper-outer"><div class="loader-wrapper-inner"><div class="loader"></div></div></div></div>-->
-	<!-- end loader -->
 
 	<!-- Start wrapper-->
 	<div id="wrapper">
-
-		<div th:replace="~{fragments/admin-sidebar}"></div>
 		<header th:replace="~{fragments/header}" class="header1"> </header>
-
+		<div th:replace="~{fragments/admin-sidebar}"></div>
 		<div class="clearfix"></div>
-
 		<div class="content-wrapper">
 			<div class="container-fluid">
 
 				<!--Start Dashboard Content-->
 
-				<div class="row mt-3">
+				<div th:if="${populationReport != null && populationReport.get(0) != null}" class="row mt-3">
 					<div class="col-12 col-lg-6 col-xl-3">
 						<div class="card gradient-deepblue">
 							<div class="card-body">
@@ -68,7 +60,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-6 col-xl-3">
+					<div class="col-12 col-lg-6 col-xl-3" >
 						<div class="card gradient-orange">
 							<div class="card-body">
 								<h5 class="text-white mb-0"
@@ -171,7 +163,7 @@
 						</div>
 					</div>
 
-					<div class="col-12 col-lg-4">
+					<div class="col-12 col-lg-4" th:if="${populationReport != null && populationReport.get(0) != null}">
 						<div class="card bg-warning">
 							<div class="card-body">
 								<p class="text-white">जम्मा जनसंख्या</p>
@@ -213,7 +205,7 @@
 
 				</div>
 
-				<div class="row">
+				<div class="row" th:if="${populationReport != null && populationReport.get(1) != null}">
 					<div class="col-12 col-lg-6 col-xl-6">
 						<canvas id="population-chart" width="100%" height="60%">
 						</canvas>
@@ -225,8 +217,8 @@
 				</div>
 
 				<!-- Start Row -->
-				<div class="row">
-					<div class="col-12 col-lg-6 col-xl-6">
+				<div class="row" th:if="${populationReport != null}">
+					<div class="col-12 col-lg-6 col-xl-6" th:if="${populationReport.get(2) != null}">
 						<div class="card">
 							<div class="card-header">शिक्षाको अवस्था</div>
 
@@ -293,8 +285,8 @@
 						</div>
 					</div>
 
-					<div class="col-12 col-lg-6 col-xl-6">
-						<div class="card">
+					<div class="col-12 col-lg-6 col-xl-6" th:if="${questionReport != null}">
+						<div class="card" th:if="${questionReport.get(2) != null}">
 							<div class="card-header">बैदेशिक अध्ययन</div>
 							<div class="table-responsive">
 								<table class="table align-items-center">
@@ -328,7 +320,7 @@
 							</div>
 						</div>
 
-						<div class="card">
+						<div class="card" th:if="${questionReport.get(1) != null}">
 							<div class="card-header">बैदेशिक रोजगारी</div>
 							<div class="table-responsive">
 								<table class="table align-items-center">
@@ -365,8 +357,8 @@
 				</div>
 				<!--End Row-->
 
-				<div class="row">
-					<div class="col-12 col-lg-6 col-xl-6">
+				<div class="row" th:if="${questionReport != null}">
+					<div class="col-12 col-lg-6 col-xl-6" th:if="${questionReport.get(4) != null}">
 						<h4>खाना पकाउन प्रयोग गरिने इन्धन</h4>
 						<div class="row">
 							<div class="col-12 col-lg-6">
@@ -432,7 +424,7 @@
 						</div>
 					</div>
 
-					<div class="col-12 col-lg-6 col-xl-6">
+					<div class="col-12 col-lg-6 col-xl-6" th:if="${questionReport.get(3) != null}">
 						<h4>फोहरमैला व्यवस्थापन</h4>
 						<div class="row">
 							<div class="col-12 col-lg-6">
@@ -496,7 +488,7 @@
 				</div>
 
 				<h4>सवारी साधन</h4>
-				<div class="row mt-3">
+				<div class="row mt-3" th:if="${questionReport != null && questionReport.get(0) != null}">
 					<div class="col-12 col-lg-6 col-xl-3">
 						<div class="card">
 							<div class="card-body">
@@ -599,8 +591,8 @@
 					</div>
 				</div>
 
-				<div class="row income-panel">
-					<div class="col-12 col-lg-6 col-xl-6">
+				<div class="row income-panel" th:if="${questionReport != null}">
+					<div class="col-12 col-lg-6 col-xl-6" th:if="${questionReport.get(5) != null}">
 						<h4>वार्षिक आम्दानी</h4>
 						<div class="row mt-3">
 							<div class="col-12 col-lg-6 col-xl-6">
@@ -768,7 +760,7 @@
 						</div>
 					</div>
 
-					<div class="col-12 col-lg-6 col-xl-6">
+					<div class="col-12 col-lg-6 col-xl-6" th:if="${questionReport.get(6) != null}">
 						<h4>वार्षिक खर्च</h4>
 						<div class="row mt-3">
 							<div class="col-12 col-lg-6 col-xl-6">

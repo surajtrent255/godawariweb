@@ -27,10 +27,6 @@ public class FormServiceImpl implements FormService {
 	
 	@Override
 	public List<FormDetail> getFullFormDetailById(int id) {
-		
-		//HttpHeaders header = new HttpHeaders();
-		//header.set("Authorization", );
-		System.out.println(user.toString());
 		Response<List<FormDetail>> formDetail = restTemplate.getForObject("http://localhost:8888/form-detail/1", Response.class);
 		return formDetail.getData();
 	}
