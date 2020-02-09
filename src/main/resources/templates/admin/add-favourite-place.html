@@ -36,13 +36,14 @@
 	href="https://www.lalitpur15.org/datasys/public/plugins/datatable/css/datatables.min.css">
 <link rel="stylesheet"
 	href="https://www.lalitpur15.org/datasys/public/plugins/jquery.steps/css/jquery.steps.css">
-	
-	
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" 
-  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-  crossorigin=""/>
 
-	
+
+<link rel="stylesheet"
+	href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+	integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+	crossorigin="" />
+
+
 <style>
 .form-group {
 	width: 100%;
@@ -68,7 +69,11 @@
 	margin-left: 0;
 }
 
-#mapid { height: 500px; }
+
+#mapid {
+	height: 50em;
+	width: 50em;
+}
 </style>
 <script src="https://www.lalitpur15.org/datasys/public/js/jquery.min.js"></script>
 </head>
@@ -99,11 +104,10 @@
 						<a href="javascript:void(0)"
 							class="add-member btn btn-primary mb-2" style="margin-left: 8px;">Add
 							Place</a>
-						<form method="POST" action="" data-ajax="true"
-							data-action=""
-							enctype="multipart/form-data" class="unicode" id="favourite-entry">
-							<input
-								type="hidden" name="_method" value="post">
+						<form method="POST" action="" data-ajax="true" data-action=""
+							enctype="multipart/form-data" class="unicode"
+							id="favourite-entry">
+							<input type="hidden" name="_method" value="post">
 							<h2>Favourite Place</h2>
 							<fieldset>
 								<div class="row member-panel" style="display: flex;">
@@ -123,25 +127,26 @@
 									</div>
 									<div class="col-lg-4 col-md-4 mb-2">
 										<div class="padding">
-											<label for="favDesc"><h4>Description</h4></label> 
-<!-- 											<input -->
-<!-- 												type="text" id="favDesc" name="favDesc" -->
-<!-- 												class="form-control required"> -->
-											<textarea name="favDesc" form="favourite-entry" class="form-control required" rows="20">Write description</textarea>
+											<label for="favDesc"><h4>Description</h4></label>
+											<!-- 											<input -->
+											<!-- 												type="text" id="favDesc" name="favDesc" -->
+											<!-- 												class="form-control required"> -->
+											<textarea name="favDesc" form="favourite-entry"
+												class="form-control required" rows="20">Write description</textarea>
 										</div>
 									</div>
-									
-									
-<!-- 									<div class="col-lg-3 col-md-4"> -->
-<!-- 										<div class="form-group form-label"> -->
-<!-- 											<label for="favPhoto"><h4>Photo of the Place: </h4></label> <input -->
-<!-- 												type="file" class="form-control  " id="favPhoto" name="favPhoto" -->
-<!-- 												value="" data-event="change" data-target="favPhoto" -->
-<!-- 												accept="image/*"> <a href="" style="display: none" -->
-<!-- 												target="_blank" class="no-pjax"><img src="" -->
-<!-- 												style="display: none" class="img-thumbnail photo"></a> -->
-<!-- 										</div> -->
-<!-- 									</div> -->
+
+
+									<!-- 									<div class="col-lg-3 col-md-4"> -->
+									<!-- 										<div class="form-group form-label"> -->
+									<!-- 											<label for="favPhoto"><h4>Photo of the Place: </h4></label> <input -->
+									<!-- 												type="file" class="form-control  " id="favPhoto" name="favPhoto" -->
+									<!-- 												value="" data-event="change" data-target="favPhoto" -->
+									<!-- 												accept="image/*"> <a href="" style="display: none" -->
+									<!-- 												target="_blank" class="no-pjax"><img src="" -->
+									<!-- 												style="display: none" class="img-thumbnail photo"></a> -->
+									<!-- 										</div> -->
+									<!-- 									</div> -->
 
 
 
@@ -160,25 +165,61 @@
 									<div class="col-lg-4 col-md-4 mb-2">
 										<div class="padding">
 											<label for="favLocation"><h4>Place Location</h4></label> <input
-												type="text" id="favLocation" name="favLocation"
-												class="form-control required">
+												type="text" id="favLocation" name="favLocation" placeholder="Click to add location"
+												class="form-control required" readonly>
 										</div>
-										 <div id="mapid"></div>
 									</div>
+
+
+
+
 
 
 								</div>
 							</fieldset>
 						</form>
+						
+															<!-- Modal View For Map Location Entry-->
+									<div class="modal fade" id="map-location-modal"
+										data-keyboard="false" data-backdrop="false" role="dialog"
+										aria-hidden="true">
+										<div class="modal-dialog modal-lg modal-dialog-centered"
+											role="document">
+											<div class="modal-content" style="border-radius: 10px;">
+												<div class="modal-header">
+													<h5 class="modal-title">
+														<b><span>Please Select the Location On Map</span></b>
+													</h5>
+										
+													<button id="cancel-location-btn"
+														class="btn btn-danger pull-right">
+														<b>✘</b>
+													</button>
+												</div>
+												<div class="modal-content-body">
+													<div class="row" style="margin: 5px;">
+														<div style="margin: 20px auto;">
+															<div id="mapid"></div>
+														</div>
+													
+													</div>
+												</div>
+												<button id="submit-location-btn"
+														class="btn btn-success pull-right">
+														<b>✔</b>
+													</button>
+											</div>
+										</div>
+									</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-<!-- 	<a href="javaScript:void();" class="back-to-top"><i -->
-<!-- 		class="fa fa-angle-double-up"></i> </a> -->
-<!-- 	<!--Start footer-->
-<!-- 		<footer th:replace="~{fragments/footer :: footer}"></footer> -->
+	<!-- 	<a href="javaScript:void();" class="back-to-top"><i -->
+	<!-- 		class="fa fa-angle-double-up"></i> </a> -->
+	<!-- 	<!--Start footer-->
+	<!-- 		<footer th:replace="~{fragments/footer :: footer}"></footer> -->
 	<script
 		src="https://www.lalitpur15.org/datasys/public/js/popper.min.js"></script>
 	<script
@@ -213,89 +254,108 @@
 		crossorigin=""></script>
 
 
-	<div id="scripts">
-		
-	</div>
-	
-		<script th:inline="javascript">
-		
-	const mymap = L.map('mapid').setView([27.700769, 85.300140], 17);
-	
-	var layerGroup = L.layerGroup().addTo(mymap);
-	
-	
-	var marker;
-	var popup = L.popup();
-	
-	const attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors';
-	
-	
-	L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
-	    maxZoom: 20,
-	    subdomains:['mt0','mt1','mt2','mt3']
-	}).addTo(mymap);
-	
-// 	const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-// 	const tiles = L.tileLayer(tileUrl, {attribution});
-// 	tiles.addTo(mymap);
-	
-	
-	function onMapClick(e) {
-		layerGroup.clearLayers();
-		 popup
-	        .setLatLng(e.latlng)
-	        .setContent("You clicked the map at " + e.latlng.toString())
-	        .openOn(mymap);
-	    marker = L.marker(e.latlng).addTo(layerGroup);	
-	    console.log(e.latlng);
-// 	    var marker = L.marker([27.700769, 85.300140]).addTo(mymap);	
-	}
+	<script th:inline="javascript">
+		//For showing the Map modal	
+		$("#favLocation").on("click", function(event) {
+			event.preventDefault();
+			$("#map-location-modal").modal("show");
+			  setTimeout(function() {
+				    mymap.invalidateSize();
+				  }, 17)
+		});
 
-	mymap.on('click', onMapClick);
-	
-	
+		//For canceling and hiding the Map modal
+		$("#cancel-location-btn").on("click", function(event) {
+			$("#map-location-modal").modal("hide");
+			marker = L.marker(geoLocationTemp).addTo(layerGroup);
+		});
 		
-    $(function(){
-        var _t,_n,_d,_v;
-        $("input[data-event='change']").on("change", function(){
-            _t = this;
-            _c = $(this).data("target");
-            if (_t.files && _t.files[0]) {
-                var reader = new FileReader(); 
-                reader.onload = function(e) {
-                  $('img.'+_c).attr('src', e.target.result).show();
-                  $('img.'+_c).parent().show();
-                }
-                reader.readAsDataURL(_t.files[0]);
-              }
-        });
-        $("#documents_copy").on("change", function(){
-            _v = $(this).val();
-            $(".documents_hide").hide();
-            $("div."+_v).show();
+		//For selecting the current marker and hiding the Map modal
+		$("#submit-location-btn").on("click", function(event) {
+			$("#map-location-modal").modal("hide");
+			$("#favLocation").val(geoLat + ', ' + geoLng);
+		});
 
-        });
-        $("[data-event='toggle']").on("change", function(){
-            _t = $(this);
-            _n = $(this).attr("name");
-            _d = $("[name='"+_n+"']").serializeArray();
-            _c = _t.data("target");
-            if(_d.length > 0 && _t.is(':checked')){
-                $.each(_d, function(i, fd) {
-                    if(fd.value == _t.data("value")){
-                        $("."+_c).show();
-                    }
-                });
-            }
-            else{
-                $("."+_c).hide();   
-            }
-        });
-        $("#survey_date").nepaliDatePicker({
-            dateFormat: "%y-%m-%d",
-            closeOnDateSelect: true
-        });
-            });
-</script>
+		const mymap = L.map('mapid').setView([ 27.6034101, 85.3219255 ], 17);
+
+		var layerGroup = L.layerGroup().addTo(mymap);
+	
+		var marker;
+		var popup = L.popup();
+
+		const attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors';
+
+		
+		var geoLocation;
+		var geoLocationTemp;
+		var geoLat
+		var geoLng
+		
+		
+		L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+			maxZoom : 20,
+			subdomains : [ 'mt0', 'mt1', 'mt2', 'mt3' ]
+		}).addTo(mymap);
+
+		// 	const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+		// 	const tiles = L.tileLayer(tileUrl, {attribution});
+		// 	tiles.addTo(mymap);
+
+		function onMapClick(e) {
+			layerGroup.clearLayers();
+			popup.setLatLng(e.latlng).setContent(
+					"The selected location is " + e.latlng.toString()).openOn(
+					mymap);
+			geoLocation = e.latlng;
+			geoLat = geoLocation.lat;
+			geoLng = geoLocation.lng;
+			marker = L.marker(geoLocation).addTo(layerGroup);
+			
+			// 	    var marker = L.marker([27.700769, 85.300140]).addTo(mymap);	
+		}
+
+		mymap.on('click', onMapClick);
+
+		$(function() {
+			var _t, _n, _d, _v;
+			$("input[data-event='change']").on("change", function() {
+				_t = this;
+				_c = $(this).data("target");
+				if (_t.files && _t.files[0]) {
+					var reader = new FileReader();
+					reader.onload = function(e) {
+						$('img.' + _c).attr('src', e.target.result).show();
+						$('img.' + _c).parent().show();
+					}
+					reader.readAsDataURL(_t.files[0]);
+				}
+			});
+			$("#documents_copy").on("change", function() {
+				_v = $(this).val();
+				$(".documents_hide").hide();
+				$("div." + _v).show();
+
+			});
+			$("[data-event='toggle']").on("change", function() {
+				_t = $(this);
+				_n = $(this).attr("name");
+				_d = $("[name='" + _n + "']").serializeArray();
+				_c = _t.data("target");
+				if (_d.length > 0 && _t.is(':checked')) {
+					$.each(_d, function(i, fd) {
+						if (fd.value == _t.data("value")) {
+							$("." + _c).show();
+						}
+					});
+				} else {
+					$("." + _c).hide();
+				}
+			});
+			$("#survey_date").nepaliDatePicker({
+				dateFormat : "%y-%m-%d",
+				closeOnDateSelect : true
+			});
+		});
+	</script>
 </body>
 </html>
