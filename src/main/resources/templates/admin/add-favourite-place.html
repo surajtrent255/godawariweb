@@ -104,9 +104,8 @@
 						<a href="javascript:void(0)"
 							class="add-member btn btn-primary mb-2" style="margin-left: 8px;">Add
 							Place</a>
-						<form method="POST" action="" data-ajax="true" data-action=""
-							enctype="multipart/form-data" class="unicode"
-							id="favourite-entry">
+						<form name="favPlaceForm" id="favPlaceForm" method="POST" action="" th:action="@{/favourite}" th:object="${favPlaceObj}" data-ajax="true" data-action=""
+							enctype="multipart/form-data" class="unicode">
 							<input type="hidden" name="_method" value="post">
 							<h2>Favourite Place</h2>
 							<fieldset>
@@ -114,14 +113,14 @@
 									<div class="col-lg-4 col-md-4 mb-2">
 										<div class="padding">
 											<label for="favName"><h4>Name of the Place</h4></label> <input
-												type="text" id="favName" name="favName"
+												type="text" id="placeName" name="favName" th:field="*{placeName}"
 												class="form-control required" value="">
 										</div>
 									</div>
 									<div class="col-lg-4 col-md-4 mb-2">
 										<div class="padding">
 											<label for="favWard"><h4>Ward Number:</h4></label> <input
-												type="number" id="favWard" name="favWard"
+												type="number" id="placeWard" name="favWard" th:field="*{placeWard}"
 												class="form-control required" value="">
 										</div>
 									</div>
@@ -131,8 +130,7 @@
 											<!-- 											<input -->
 											<!-- 												type="text" id="favDesc" name="favDesc" -->
 											<!-- 												class="form-control required"> -->
-											<textarea name="favDesc" form="favourite-entry"
-												class="form-control required" rows="20">Write description</textarea>
+											<textarea name="favDesc" id="placeDescription" th:field="*{placeDescription}" class="form-control required" rows="20">Write description</textarea>
 										</div>
 									</div>
 
@@ -153,7 +151,7 @@
 									<div class="col-lg-3 col-md-4">
 										<div class="form-group form-label">
 											<label for="favPhoto"><h4>Photo of the Place</h4></label> <input
-												type="file" class="form-control" id="favPhoto"
+												type="file" class="form-control" id="placeImage"
 												name="favPhoto" value="" data-event="change"
 												data-target="favPhoto" accept="image/*"> <a href=""
 												style="display: none" target="_blank" class="no-pjax"><img
@@ -165,17 +163,12 @@
 									<div class="col-lg-4 col-md-4 mb-2">
 										<div class="padding">
 											<label for="favLocation"><h4>Place Location</h4></label> <input
-												type="text" id="favLocation" name="favLocation" placeholder="Click to add location"
+												type="text" id="placeGPS" name="favLocation" th:field="*{placeGPS}" placeholder="Click to add location" value=""
 												class="form-control required" readonly>
 										</div>
 									</div>
-
-
-
-
-
-
 								</div>
+								<input type="submit" value="Submit" />
 							</fieldset>
 						</form>
 						
@@ -253,10 +246,13 @@
 		integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
 		crossorigin=""></script>
 
+<!-- 	<script src="https://code.jquery.com/jquery-3.4.1.min.js" -->
+<!-- 		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" -->
+<!-- 		crossorigin="anonymous"></script> -->
 
 	<script th:inline="javascript">
 		//For showing the Map modal	
-		$("#favLocation").on("click", function(event) {
+		$("#placeGPS").on("click", function(event) {
 			event.preventDefault();
 			$("#map-location-modal").modal("show");
 			  setTimeout(function() {
@@ -273,10 +269,12 @@
 		//For selecting the current marker and hiding the Map modal
 		$("#submit-location-btn").on("click", function(event) {
 			$("#map-location-modal").modal("hide");
-			$("#favLocation").val(geoLat + ', ' + geoLng);
+			if(geoLat != null && geoLng != null) {
+			$("#placeGPS").val(geoLat + ', ' + geoLng);
+			}
 		});
 
-		const mymap = L.map('mapid').setView([ 27.6034101, 85.3219255 ], 17);
+		const mymap = L.map('mapid').setView([ 27.614979, 85.363180 ], 17);
 
 		var layerGroup = L.layerGroup().addTo(mymap);
 	
@@ -292,11 +290,27 @@
 		var geoLng
 		
 		
-		L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-			maxZoom : 20,
-			subdomains : [ 'mt0', 'mt1', 'mt2', 'mt3' ]
-		}).addTo(mymap);
+// 		L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+// 			maxZoom : 20,
+// 			subdomains : [ 'mt0', 'mt1', 'mt2', 'mt3' ]
+// 		}).addTo(mymap);
 
+		  var mapLink = '<a href="http://www.esri.com/">Esri</a>';
+	    var wholink = 'i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
+
+		
+	    L.tileLayer(
+	            'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	            attribution: '&copy; '+mapLink+', '+wholink,
+	            maxZoom: 19,
+	            }).addTo(mymap);
+		
+		
+// 		L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+// 		    maxZoom: 20,
+// 		    subdomains:['mt0','mt1','mt2','mt3']
+// 		}).addTo(mymap);
+		
 		// 	const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 		// 	const tiles = L.tileLayer(tileUrl, {attribution});
 		// 	tiles.addTo(mymap);
@@ -356,6 +370,14 @@
 				closeOnDateSelect : true
 			});
 		});
+		
+		
+		
+		
+		
+		
+		
+		
 	</script>
 </body>
 </html>

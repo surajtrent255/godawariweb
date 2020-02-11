@@ -11,5 +11,6 @@ public class FavouritePlaceDTO {
     private String placeImage;
     private String placeWard;
     private String placeGPS;
+    private String placeType;
     private Boolean submitStatus;
 }
