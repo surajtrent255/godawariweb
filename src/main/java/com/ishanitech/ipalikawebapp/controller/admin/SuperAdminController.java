@@ -103,7 +103,8 @@ public class SuperAdminController {
 	}
 	
 	@GetMapping("/favouritePlaceAdd")
-	public String getFavouritePlaceEntryView() {
+	public String getFavouritePlaceEntryView(Model model) {
+		model.addAttribute("favPlaceObj", new FavouritePlaceDTO());
 		return "admin/add-favourite-place";
 	}
 

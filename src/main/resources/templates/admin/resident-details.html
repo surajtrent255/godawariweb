@@ -378,7 +378,7 @@
 							</div>
 							<div class="modal-content-body">
 								<div class="row" style="margin: 5px 20px;">
-									<div style="width: 100%; margin: 20px auto;">
+									<div style="margin: 20px auto;">
 										<div id="surveyMap"></div>
 									</div>
 								</div>
@@ -412,7 +412,7 @@
 			
 			
 			//JS function for displaying the location of the household using leafletjs
-			const mymap = L.map('surveyMap').setView([geoLat, geoLong], 15);
+			const mymap = L.map('surveyMap').setView([geoLat, geoLong], 18);
 			var marker;
 // 			var layerGroup = L.layerGroup().addTo(mymap);
 	
@@ -527,6 +527,9 @@
 			$("#view-location-btn").on("click", function(event){
 				event.preventDefault();
 				$("#map-location-modal").modal("show");
+				 setTimeout(function() {
+					    mymap.invalidateSize();
+					  }, 17)
 			});
 			
 			

@@ -85,35 +85,39 @@
 				</div>
 				<div class="card">
 					<div class="card-body">
-						<div class="card-title">Fill up information about family members.</div>
+						<div class="card-title">Fill up information about family
+							members.</div>
 						<a href="javascript:void(0)"
 							class="add-member btn btn-primary mb-2" style="margin-left: 8px;">Add
 							Member</a>
-						<form method="POST" action="javascript:void(0)" data-ajax="true"
-							data-action="https://buddhi.com.np/demo/householdmember"
-							enctype="multipart/form-data" class="unicode" id="members-wizard">
-							<input type="hidden" name="_token"
-								value="8c82ziy1cyPf0NeyqhEeRv0dAIMt2CyuvpgsRMOu"> <input
-								type="hidden" name="_method" value="post">
-<!-- 							<h2>Member 1</h2> -->
+						<th:form:form method="POST" th:action="@{/resident/add}"
+							modelAttribute="member" enctype="multipart/form-data">
+							
+
+							<!-- 						<form method="POST" action="javascript:void(0)" data-ajax="true" -->
+							<!-- 							th:action="@{/resident/add}" -->
+							<!-- 							enctype="multipart/form-data"> -->
+<!-- 							<input type="hidden" name="mainId" th:value="${residentFilledId}"> -->
+<!-- 							<input type="hidden" name="_method" value="post"> -->
+							<!-- 							<h2>Member 1</h2> -->
 							<fieldset>
 								<div class="row member-panel" style="display: flex;">
-									
-									
-<!-- 									<div class="col-lg-4 col-md-4 mb-2"> -->
-<!-- 										<div class="padding"> -->
-<!-- 											<label for="household_id"><h4>कित्ता नं :</h4></label> <select -->
-<!-- 												name="household_id[]" id="household_id" -->
-<!-- 												class="form-control required"> -->
+
+
+									<!-- 									<div class="col-lg-4 col-md-4 mb-2"> -->
+									<!-- 										<div class="padding"> -->
+									<!-- 											<label for="household_id"><h4>कित्ता नं :</h4></label> <select -->
+									<!-- 												name="household_id[]" id="household_id" -->
+									<!-- 												class="form-control required"> -->
 
 
 
 
-<!-- 											</select> -->
-<!-- 										</div> -->
-<!-- 									</div> -->
-									
-									
+									<!-- 											</select> -->
+									<!-- 										</div> -->
+									<!-- 									</div> -->
+
+
 									<div class="col-lg-4 col-md-4 mb-2">
 										<div class="padding">
 											<label for="name"><h4>नाम थर :</h4></label> <input
@@ -124,9 +128,8 @@
 									<div class="col-lg-4 col-md-4 mb-2">
 										<div class="padding">
 											<label for="relation"><h4>नाता :</h4></label> <select
-												id="relation" name="relation"
-												class="form-control required">
-												<option value="1">  हजुरआमा   </option>
+												id="relation" name="relation" class="form-control required">
+												<option value="1">हजुरआमा</option>
 												<option value="2">हजुरबुवा</option>
 												<option value="3">बुवा</option>
 												<option value="4">आमा</option>
@@ -167,9 +170,15 @@
 									<div class="col-md-4 col-lg-4 mb-2">
 										<div class="padding">
 											<label for="age"><h4>उमेर :</h4></label> <input type="text"
-												name="age" class="form-control age required" value="">
-											<input type="hidden" name="age_eng" class="age_eng"
-												value="">
+												id="age" name="age" class="form-control age required" value="">
+											<input type="hidden" name="age" class="age" value="">
+										</div>
+									</div>
+									<div class="col-lg-4 col-md-4 mb-2">
+										<div class="padding">
+											<label for="date_of_birth"><h4>जन्म मिति</h4></label> <input
+												type="text" id="date_of_birth" name="date_of_birth"
+												class="form-control required" value="">
 										</div>
 									</div>
 									<div class="col-md-4 col-lg-4 mb-2">
@@ -222,8 +231,8 @@
 										<div class="padding">
 											<label><h4>स्थायी ठेगाना :</h4></label> <select
 												class="form-control required" name="migration"
-												id="migration">
-1												<option value=""></option>
+												id="migration"> 
+												<option value=""></option>
 												<option value="1">स्थायी जन्म</option>
 												<option value="0">बसाई सराई</option>
 											</select>
@@ -238,7 +247,11 @@
 									</div>
 								</div>
 							</fieldset>
-						</form>
+<!-- 								<input type="submit" value="Submit"/> -->
+							<button type="submit"
+								class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4"
+								id="member-entry-submit">Add Member</button>
+							</th:form:form>
 					</div>
 				</div>
 			</div>
@@ -247,7 +260,7 @@
 	<a href="javaScript:void();" class="back-to-top"><i
 		class="fa fa-angle-double-up"></i> </a>
 	<!--Start footer-->
-		<footer th:replace="~{fragments/footer :: footer}"></footer>
+<!-- 		<footer th:replace="~{fragments/footer :: footer}"></footer> -->
 	<script
 		src="https://www.lalitpur15.org/datasys/public/js/popper.min.js"></script>
 	<script
@@ -276,7 +289,90 @@
 	<script
 		src="https://www.lalitpur15.org/datasys/public/js/transliteration.I.js"></script>
 	<script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script>
+	
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<div id="scripts">
+	
+	
+	
+	<script th:inline="javascript">
+
+	/*<![CDATA[*/
+	var mainId = /*[[${residentFilledId}]]*/ '0';
+
+	/*]]>*/
+	
+	
+	let contextPath = /*[[${#request.contextPath}]]*/ '/admin'; 
+	
+	
+	
+	$(function() {$("#member-entry-submit").click(function(event) {
+		alert(mainId);
+		alert("clicked");
+		
+		//Getting the data from the formm	
+		let memberName = $("#name").val();
+		let relation = $("#relation").val();
+		let gender = $("#gender").val();
+		let age = $("#age").val();
+		let dateOfBirth = $("#date_of_birth").val();
+		let maritalStatus = $("#marital_status").val();
+		let education = $("#education").val();
+		let occupation = $("#occupation").val();
+		let voterCard = $("#voter_card").val();
+		let migration = $("#migration").val();
+		let healthStatus = $("#health").val();
+		let familyId = mainId;
+		
+		alert(familyId);
+	
+		
+		let memberInfo = {};
+		memberInfo.name = memberName;
+		memberInfo.relation = relation;
+		memberInfo.gender = gender;
+		memberInfo.age = age;
+		memberInfo.dateOfBirth = dateOfBirth;
+		memberInfo.maritalStatus = maritalStatus;
+		memberInfo.education = education;
+		memberInfo.occupation = occupation;
+		memberInfo.voterCard = voterCard;
+		memberInfo.address = migration;
+		memberInfo.healthCondition = healthStatus;
+		memberInfo.mainId = familyId;
+	
+		// Now create an ajax request to send member details to the server
+		$.ajax({
+			method: "POST",
+			url: contextPath + "/resident/add",
+			data: JSON.stringify(memberInfo),
+			contentType: "Application/Json",
+			success: function(result) {
+				swal.fire({
+					text: "Member added successfully!",
+					icon: "success",
+					closeOnClickOutside: false,
+					closeOnEsc: false
+				}).then(function () {
+// 							window.location = contextPath+"/admin";
+							alert("added");
+						});
+			},
+			error: function(error) {
+// 				alert(error);
+			}
+		});
+	});
+	
+	});
+	
+	
+	
+	
+ 	</script>
+	
+	
 		<script type="text/javascript">
 //     $(function(){
 //         var d, year, month, day;
@@ -475,7 +571,7 @@
 //             })
 //         });
 //     });
-</script>
+  </script>
 	</div>
 </body>
 </html>

@@ -1,8 +1,10 @@
 package com.ishanitech.ipalikawebapp.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class FamilyMemberDTO {
 	private String memberId;
     private String mainId;			//family Id (Form field id)
