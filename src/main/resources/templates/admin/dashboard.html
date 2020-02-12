@@ -28,51 +28,54 @@
 	href="assets/css/app-style.css" rel="stylesheet" />
 
 </head>
-
 <body>
-
-	<!-- start loader -->
-	<!--<div id="pageloader-overlay" class="visible incoming"><div class="loader-wrapper-outer"><div class="loader-wrapper-inner"><div class="loader"></div></div></div></div>-->
-	<!-- end loader -->
 
 	<!-- Start wrapper-->
 	<div id="wrapper">
-
-		<div th:replace="~{fragments/admin-sidebar}"></div>
 		<header th:replace="~{fragments/header}" class="header1"> </header>
-
+		<div th:replace="~{fragments/admin-sidebar}"></div>
 		<div class="clearfix"></div>
-
 		<div class="content-wrapper">
 			<div class="container-fluid">
 
 				<!--Start Dashboard Content-->
 
-				<div class="row mt-3">
+				<div th:if="${!#lists.isEmpty(populationReport) && populationReport != null && populationReport.get(0) != null}" class="row mt-3">
 					<div class="col-12 col-lg-6 col-xl-3">
 						<div class="card gradient-deepblue">
 							<div class="card-body">
-								<h5 class="text-white mb-0">9526</h5>
+								<h5 class="text-white mb-0"
+									th:text="${populationReport.get(0).option1}">9526</h5>
 								<div class="progress my-3" style="height: 3px;">
-									<div class="progress-bar" style="width: 55%"></div>
+									<div class="progress-bar" 
+										th:style="${'width:' + (populationReport.get(0).option1/populationReport.get(0).total)*100 + '%;'}"
+										style="width: 55%">
+									</div>
 								</div>
 								<p class="mb-0 text-white small-font">
-									Total Population <span class="float-right">100% <i
-										class="zmdi zmdi-long-arrow-up"></i></span>
+									शिशु <span class="float-right">
+										<span th:text="${(populationReport.get(0).option1/populationReport.get(0).total)*100 + '%'}"> </span>
+										<i class="zmdi zmdi-long-arrow-up"></i></span>
 								</p>
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-6 col-xl-3">
+					<div class="col-12 col-lg-6 col-xl-3" >
 						<div class="card gradient-orange">
 							<div class="card-body">
-								<h5 class="text-white mb-0">8323</h5>
+								<h5 class="text-white mb-0"
+									th:text="${populationReport.get(0).option2}">8323</h5>
 								<div class="progress my-3" style="height: 3px;">
-									<div class="progress-bar" style="width: 55%"></div>
+									<div class="progress-bar" 
+										th:style="${'width:' + (populationReport.get(0).option2/populationReport.get(0).total)*100 + '%;'}"
+										style="width: 55%">
+									</div>
 								</div>
 								<p class="mb-0 text-white small-font">
-									Total Children <span class="float-right">55% <i
-										class="zmdi zmdi-long-arrow-up"></i></span>
+									बालबालिका <span class="float-right"
+										th:text="${((populationReport.get(0).option2/populationReport.get(0).total)*100) +'%'}">55%
+										<i class="zmdi zmdi-long-arrow-up"></i>
+									</span>
 								</p>
 							</div>
 						</div>
@@ -80,13 +83,19 @@
 					<div class="col-12 col-lg-6 col-xl-3">
 						<div class="card gradient-ohhappiness">
 							<div class="card-body">
-								<h5 class="text-white mb-0">6200</h5>
+								<h5 class="text-white mb-0"
+									th:text="${populationReport.get(0).option3}">6200</h5>
 								<div class="progress my-3" style="height: 3px;">
-									<div class="progress-bar" style="width: 55%"></div>
+									<div class="progress-bar" 
+										th:style="${'width:' + (populationReport.get(0).option3/populationReport.get(0).total)*100 + '%;'}"
+										style="width: 55%">
+									</div>
 								</div>
 								<p class="mb-0 text-white small-font">
-									Total Youth <span class="float-right">30% <i
-										class="zmdi zmdi-long-arrow-up"></i></span>
+									युवा <span class="float-right"
+										th:text="${((populationReport.get(0).option3/populationReport.get(0).total)*100) +'%'}">30%
+										<i class="zmdi zmdi-long-arrow-up"></i>
+									</span>
 								</p>
 							</div>
 						</div>
@@ -94,13 +103,19 @@
 					<div class="col-12 col-lg-6 col-xl-3">
 						<div class="card gradient-ibiza">
 							<div class="card-body">
-								<h5 class="text-white mb-0">5630</h5>
+								<h5 class="text-white mb-0"
+									th:text="${populationReport.get(0).option4}">5630</h5>
 								<div class="progress my-3" style="height: 3px;">
-									<div class="progress-bar" style="width: 55%"></div>
+									<div class="progress-bar" 
+										th:style="${'width:' + (populationReport.get(0).option4/populationReport.get(0).total)*100 + '%;'}"
+										style="width: 55%">
+									</div>
 								</div>
 								<p class="mb-0 text-white small-font">
-									Total Old Age <span class="float-right">15% <i
-										class="zmdi zmdi-long-arrow-up"></i></span>
+									बृद्ध <span class="float-right"
+										th:text="${((populationReport.get(0).option4/populationReport.get(0).total)*100) +'%'}">15%
+										<i class="zmdi zmdi-long-arrow-up"></i>
+									</span>
 								</p>
 							</div>
 						</div>
@@ -108,7 +123,90 @@
 				</div>
 				<!--End Row-->
 
+				<div class="row" th:if="${!#lists.isEmpty(populationReport) && populationReport != null}">
+					<div class="col-12 col-lg-4">
+						<div class="card">
+							<div class="card-body">
+								<p>महिला</p>
+								<h4 class="mb-0">
+									<span th:text="${populationReport.get(1).option2}">1968 </span> <small class="small-font" th:text="${((populationReport.get(1).option2/populationReport.get(1).total)*100) +'%'}">49.22% <i
+										class="zmdi zmdi-long-arrow-up"></i></small>
+								</h4>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-12 col-lg-4">
+						<div class="card">
+							<div class="card-body">
+								<p>पुरुष</p>
+								<h4 class="mb-0">
+									<span th:text="${populationReport.get(1).option1}">2029</span>
+									 <small class="small-font" th:text="${((populationReport.get(1).option2/populationReport.get(1).total)*100) +'%'}">50.75% <i
+										class="zmdi zmdi-long-arrow-up"></i></small>
+								</h4>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-12 col-lg-4">
+						<div class="card">
+							<div class="card-body">
+								<p>अन्य</p>
+								<h4 class="mb-0">
+									<span th:text="${populationReport.get(1).option3}"> 1 </span>
+									<small class="small-font" th:text="${((populationReport.get(1).option3/populationReport.get(1).total)*100) +'%'}">0.03% <i
+										class="zmdi zmdi-long-arrow-up"></i></small>
+								</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<div class="row">
+					<div class="col-12 col-lg-4" th:if="${!#lists.isEmpty(populationReport) && populationReport != null && populationReport.get(0) != null}">
+						<div class="card bg-warning">
+							<div class="card-body">
+								<p class="text-white">जम्मा जनसंख्या</p>
+								<h4 class="mb-0 text-white">
+									<span th:text="${populationReport.get(0).total}">3998</span>
+									 <small class="small-font text-white">100% <i
+										class="zmdi zmdi-long-arrow-up"></i></small>
+								</h4>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-12 col-lg-4" th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
+						<div class="card gradient-violet">
+							<div class="card-body">
+								<p class="text-white">जम्मा घरधुरी</p>
+								<h4 class="mb-0 text-white">
+									899 <small class="small-font text-white">100% <i
+										class="zmdi zmdi-long-arrow-up"></i></small>
+								</h4>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-12 col-lg-4" th:if="${!#lists.isEmpty(populationReport) && populationReport != null}">
+						<div class="card gradient-orange">
+							<div class="card-body">
+								<p class="text-white">मृत्यु संख्या</p>
+								<h4 class="mb-0 text-white">
+									0 <small class="small-font text-white">0% <i
+										class="zmdi zmdi-long-arrow-up"></i></small>
+								</h4>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				
+				<div class="row" th:if="${!#lists.isEmpty(populationReport) && populationReport != null && populationReport.get(1) != null}">
 					<div class="col-12 col-lg-6 col-xl-6">
 						<canvas id="population-chart" width="100%" height="60%">
 						</canvas>
@@ -119,39 +217,68 @@
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="col-12 col-lg-6 col-xl-6">
+				<!-- Start Row -->
+				<div class="row" th:if="${!#lists.isEmpty(populationReport) && populationReport != null}">
+					<div class="col-12 col-lg-6 col-xl-6" th:if="${populationReport.get(2) != null}">
 						<div class="card">
-							<div class="card-header">शिक्षा</div>
+							<div class="card-header">शिक्षाको अवस्था</div>
 
 							<div class="table-responsive">
 								<table class="table align-items-center">
 									<tbody>
 										<tr>
 											<td><i class="fa fa-circle text-primary mr-2"></i>
-												Iliterate</td>
-											<td>5856</td>
-											<td>30%</td>
+												पिएचडि</td>
+											<td th:text="${populationReport.get(2).option1}">45</td>
+											<td th:text="${(populationReport.get(2).option1/populationReport.get(2).total)*100 + '%'}">1.13%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-success mr-2"></i>Literacy</td>
-											<td>2602</td>
-											<td>25%</td>
+											<td><i class="fa fa-circle text-success mr-2"></i> एमफिल
+											</td>
+											<td th:text="${populationReport.get(2).option2}">45</td>
+											<td th:text="${(populationReport.get(2).option2/populationReport.get(2).total)*100 + '%'}">1.13%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-secondary mr-2"></i>High</td>
-											<td>1802</td>
-											<td>15%</td>
+											<td><i class="fa fa-circle text-secondary mr-2"></i>
+												मास्टर डिग्री(स्नातकोत्तर)</td>
+											<td th:text="${populationReport.get(2).option3}">45</td>
+											<td th:text="${(populationReport.get(2).option3/populationReport.get(2).total)*100 + '%'}">1.13%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-warning mr-2"></i>Graduate</td>
-											<td>1105</td>
-											<td>20%</td>
+											<td><i class="fa fa-circle text-warning mr-2"></i>
+												स्नाताक</td>
+											<td th:text="${populationReport.get(2).option4}">45</td>
+											<td th:text="${(populationReport.get(2).option4/populationReport.get(2).total)*100 + '%'}">1.13%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-danger mr-2"></i>Master</td>
-											<td>1105</td>
-											<td>10%</td>
+											<td><i class="fa fa-circle text-danger mr-2"></i> उच्च
+												विद्यालय</td>
+											<td th:text="${populationReport.get(2).option5}">45</td>
+											<td th:text="${(populationReport.get(2).option5/populationReport.get(2).total)*100 + '%'}">1.13%</td>
+										</tr>
+										<tr>
+											<td><i class="fa fa-circle text-primary mr-2"></i>
+												माध्यमिक</td>
+											<td th:text="${populationReport.get(2).option6}">45</td>
+											<td th:text="${(populationReport.get(2).option6/populationReport.get(2).total)*100 + '%'}">1.13%</td>
+										</tr>
+										<tr>
+											<td><i class="fa fa-circle text-secondary mr-2"></i>
+												तल्लो माध्यमिक</td>
+											<td th:text="${populationReport.get(2).option7}">45</td>
+											<td th:text="${(populationReport.get(2).option7/populationReport.get(2).total)*100 + '%'}">1.13%</td>
+										</tr>
+										<tr>
+											<td><i class="fa fa-circle text-success mr-2"></i>
+												प्राथमिक</td>
+											<td th:text="${populationReport.get(2).option8}">45</td>
+											<td th:text="${(populationReport.get(2).option8/populationReport.get(2).total)*100 + '%'}">1.13%</td>
+										</tr>
+										<tr>
+											<td><i class="fa fa-circle text-dark mr-2"></i> सामान्य
+												शिक्षा</td>
+											<td th:text="${populationReport.get(2).option9}">45</td>
+											<td th:text="${(populationReport.get(2).option9/populationReport.get(2).total)*100 + '%'}">1.13%</td>
 										</tr>
 									</tbody>
 								</table>
@@ -159,74 +286,69 @@
 						</div>
 					</div>
 
-					<div class="col-12 col-lg-6 col-xl-6">
-						<div class="card">
-							<div class="card-header">बैदेशिक रोजगार</div>
-
+					<div class="col-12 col-lg-6 col-xl-6" th:if="${questionReport != null}">
+						<div class="card" th:if="${questionReport.get(2) != null}">
+							<div class="card-header">बैदेशिक अध्ययन</div>
 							<div class="table-responsive">
 								<table class="table align-items-center">
 									<tbody>
 										<tr>
 											<td><i class="fa fa-circle text-primary mr-2"></i>
-												Iliterate</td>
-											<td>5856</td>
-											<td>30%</td>
+												अष्ट्रेलिया</td>
+											<td th:text="${questionReport.get(2).option1}">25</td>
+											<td th:text="${(questionReport.get(2).option1/questionReport.get(2).total)*100 + '%'}">20.49%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-success mr-2"></i>Literacy</td>
-											<td>2602</td>
-											<td>25%</td>
+											<td><i class="fa fa-circle text-success mr-2"></i> यू.के
+											</td>
+											<td th:text="${questionReport.get(2).option2}">25</td>
+											<td th:text="${(questionReport.get(2).option2/questionReport.get(2).total)*100 + '%'}">20.49%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-secondary mr-2"></i>High</td>
-											<td>1802</td>
-											<td>15%</td>
+											<td><i class="fa fa-circle text-secondary mr-2"></i>
+												यू.एस.ए</td>
+											<td th:text="${questionReport.get(2).option3}">25</td>
+											<td th:text="${(questionReport.get(2).option3/questionReport.get(2).total)*100 + '%'}">20.49%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-warning mr-2"></i>Graduate</td>
-											<td>1105</td>
-											<td>20%</td>
-										</tr>
-										<tr>
-											<td><i class="fa fa-circle text-danger mr-2"></i>Master</td>
-											<td>1105</td>
-											<td>10%</td>
+											<td><i class="fa fa-circle text-warning mr-2"></i> अन्य
+											</td>
+											<td th:text="${questionReport.get(2).option4}">25</td>
+											<td th:text="${(questionReport.get(2).option4/questionReport.get(2).total)*100 + '%'}">20.49%</td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
 						</div>
-						<div class="card">
-							<div class="card-header">बैदेशिक अध्ययन</div>
 
+						<div class="card" th:if="${questionReport.get(1) != null}">
+							<div class="card-header">बैदेशिक रोजगारी</div>
 							<div class="table-responsive">
 								<table class="table align-items-center">
 									<tbody>
 										<tr>
-											<td><i class="fa fa-circle text-primary mr-2"></i>
-												Iliterate</td>
-											<td>5856</td>
-											<td>30%</td>
+											<td><i class="fa fa-circle text-primary mr-2"></i> गल्फ
+											</td>
+											<td th:text="${questionReport.get(1).option1}">25</td>
+											<td th:text="${(questionReport.get(1).option1/questionReport.get(1).total)*100 + '%'}">20.49%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-success mr-2"></i>Literacy</td>
-											<td>2602</td>
-											<td>25%</td>
+											<td><i class="fa fa-circle text-success mr-2"></i> यूरोप
+											</td>
+											<td th:text="${questionReport.get(1).option2}">25</td>
+											<td th:text="${(questionReport.get(1).option2/questionReport.get(1).total)*100 + '%'}">20.49%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-secondary mr-2"></i>High</td>
-											<td>1802</td>
-											<td>15%</td>
+											<td><i class="fa fa-circle text-secondary mr-2"></i>
+												एसिया</td>
+											<td th:text="${questionReport.get(1).option3}">25</td>
+											<td th:text="${(questionReport.get(1).option3/questionReport.get(1).total)*100 + '%'}">20.49%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-warning mr-2"></i>Graduate</td>
-											<td>1105</td>
-											<td>20%</td>
-										</tr>
-										<tr>
-											<td><i class="fa fa-circle text-danger mr-2"></i>Master</td>
-											<td>1105</td>
-											<td>10%</td>
+											<td><i class="fa fa-circle text-warning mr-2"></i> अन्य
+											</td>
+											<td th:text="${questionReport.get(1).option4}">25</td>
+											<td th:text="${(questionReport.get(1).option4/questionReport.get(1).total)*100 + '%'}">20.49%</td>
 										</tr>
 									</tbody>
 								</table>
@@ -236,8 +358,8 @@
 				</div>
 				<!--End Row-->
 
-				<div class="row">
-					<div class="col-12 col-lg-6 col-xl-6">
+				<div class="row" th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
+					<div class="col-12 col-lg-6 col-xl-6" th:if="${questionReport.get(4) != null}">
 						<h4>खाना पकाउन प्रयोग गरिने इन्धन</h4>
 						<div class="row">
 							<div class="col-12 col-lg-6">
@@ -245,8 +367,11 @@
 									<div class="card-body">
 										<p class="text-white">LP ग्याँस</p>
 										<h4 class="mb-0 text-white">
-											848 <small class="small-font text-white">94.12% <i
-												class="zmdi zmdi-long-arrow-up"></i></small>
+											<span th:text="${questionReport.get(4).option1}">848</span> 
+											<small class="small-font text-white">
+												<span th:text="${(questionReport.get(4).option1/questionReport.get(4).total) * 100 + '%'}">94.12%</span>
+												<i class="zmdi zmdi-long-arrow-up"></i>
+											</small>
 										</h4>
 									</div>
 
@@ -257,8 +382,11 @@
 									<div class="card-body">
 										<p class="text-white">मट्टीतेल</p>
 										<h4 class="mb-0 text-white">
-											0 <small class="small-font text-white">0% <i
-												class="zmdi zmdi-long-arrow-up"></i></small>
+											<span th:text="${questionReport.get(4).option2}">848</span> 
+											<small class="small-font text-white">
+												<span th:text="${(questionReport.get(4).option2/questionReport.get(4).total) * 100 + '%'}">94.12%</span>
+												<i class="zmdi zmdi-long-arrow-up"></i>
+											</small>
 										</h4>
 									</div>
 
@@ -269,8 +397,11 @@
 									<div class="card-body">
 										<p class="text-white">दाउरा</p>
 										<h4 class="mb-0 text-white">
-											1 <small class="small-font text-white">0.11% <i
-												class="zmdi zmdi-long-arrow-up"></i></small>
+											<span th:text="${questionReport.get(4).option3}">848</span> 
+											<small class="small-font text-white">
+												<span th:text="${(questionReport.get(4).option3/questionReport.get(4).total) * 100 + '%'}">94.12%</span>
+												<i class="zmdi zmdi-long-arrow-up"></i>
+											</small>
 										</h4>
 									</div>
 
@@ -281,8 +412,11 @@
 									<div class="card-body">
 										<p class="text-white">अन्य</p>
 										<h4 class="mb-0 text-white">
-											52 <small class="small-font text-white">5.77% <i
-												class="zmdi zmdi-long-arrow-up"></i></small>
+											<span th:text="${questionReport.get(4).option4}">848</span> 
+											<small class="small-font text-white">
+												<span th:text="${(questionReport.get(4).option4/questionReport.get(4).total) * 100 + '%'}">94.12%</span>
+												<i class="zmdi zmdi-long-arrow-up"></i>
+											</small>
 										</h4>
 									</div>
 
@@ -291,7 +425,7 @@
 						</div>
 					</div>
 
-					<div class="col-12 col-lg-6 col-xl-6">
+					<div class="col-12 col-lg-6 col-xl-6" th:if="${questionReport.get(3) != null}">
 						<h4>फोहरमैला व्यवस्थापन</h4>
 						<div class="row">
 							<div class="col-12 col-lg-6">
@@ -299,8 +433,11 @@
 									<div class="card-body">
 										<p class="text-white">मल बनाउनु</p>
 										<h4 class="mb-0 text-white">
-											38 <small class="small-font text-white">4.14% <i
-												class="zmdi zmdi-long-arrow-up"></i></small>
+											<span th:text="${questionReport.get(3).option1}">848</span> 
+											<small class="small-font text-white">
+												<span th:text="${(questionReport.get(3).option1/questionReport.get(3).total) * 100 + '%'}">94.12%</span>
+												<i class="zmdi zmdi-long-arrow-up"></i>
+											</small>
 										</h4>
 									</div>
 								</div>
@@ -310,8 +447,11 @@
 									<div class="card-body">
 										<p class="text-white">निजि संकलन</p>
 										<h4 class="mb-0 text-white">
-											590 <small class="small-font text-white">64.34% <i
-												class="zmdi zmdi-long-arrow-up"></i></small>
+											<span th:text="${questionReport.get(3).option2}">848</span> 
+											<small class="small-font text-white">
+												<span th:text="${(questionReport.get(3).option2/questionReport.get(3).total) * 100 + '%'}">94.12%</span>
+												<i class="zmdi zmdi-long-arrow-up"></i>
+											</small>
 										</h4>
 									</div>
 								</div>
@@ -321,8 +461,11 @@
 									<div class="card-body">
 										<p class="text-white">महानगरको गाडीमा पठाउने</p>
 										<h4 class="mb-0 text-white">
-											185 <small class="small-font text-white">20.17% <i
-												class="zmdi zmdi-long-arrow-up"></i></small>
+											<span th:text="${questionReport.get(3).option3}">848</span> 
+											<small class="small-font text-white">
+												<span th:text="${(questionReport.get(3).option3/questionReport.get(3).total) * 100 + '%'}">94.12%</span>
+												<i class="zmdi zmdi-long-arrow-up"></i>
+											</small>
 										</h4>
 									</div>
 								</div>
@@ -332,8 +475,11 @@
 									<div class="card-body">
 										<p class="text-white">अन्य</p>
 										<h4 class="mb-0 text-white">
-											104 <small class="small-font text-white">11.34% <i
-												class="zmdi zmdi-long-arrow-up"></i></small>
+											<span th:text="${questionReport.get(3).option4}">848</span> 
+											<small class="small-font text-white">
+												<span th:text="${(questionReport.get(3).option4/questionReport.get(3).total) * 100 + '%'}">94.12%</span>
+												<i class="zmdi zmdi-long-arrow-up"></i>
+											</small>
 										</h4>
 									</div>
 								</div>
@@ -343,24 +489,28 @@
 				</div>
 
 				<h4>सवारी साधन</h4>
-				<div class="row mt-3">
+				<div class="row mt-3" th:if="${!#lists.isEmpty(questionReport) && questionReport != null && questionReport.get(0) != null}">
 					<div class="col-12 col-lg-6 col-xl-3">
 						<div class="card">
 							<div class="card-body">
 								<p class="mb-0 text-primary">मोटर</p>
 								<div class="">
 									<h4 class="mb-0 py-3 text-primary">
-										203 <span class="float-right"><i class="zmdi zmdi-car"></i></span>
+										<span th:text="${questionReport.get(0).option1}">203 </span><span class="float-right"><i class="zmdi zmdi-car"></i></span>
 									</h4>
 								</div>
 								<div class="progress-wrapper">
 									<div class="progress" style="height: 5px;">
-										<div class="progress-bar bg-primary" style="width: 18.71%"></div>
+										<div class="progress-bar bg-primary" 
+											th:style="${'width:' + (questionReport.get(0).option1/questionReport.get(0).total)*100 +'%'}" 
+											style="width: 18.71%"></div>
 									</div>
 								</div>
 								<p class="mb-0 mt-2 small-font">
-									<span class="float-right">+18.71% <i
-										class="fa fa-long-arrow-up"></i></span>
+									<span class="float-right">
+										<span th:text="${(questionReport.get(0).option1/questionReport.get(0).total)*100 + '%'}"></span>
+										<i class="fa fa-long-arrow-up"></i>
+									</span>
 								</p>
 							</div>
 						</div>
@@ -371,18 +521,22 @@
 								<p class="mb-0 text-success">मो.साईकल</p>
 								<div class="">
 									<h4 class="mb-0 py-3 text-success">
-										598 <span class="float-right"><i
+										<span th:text="${questionReport.get(0).option2}">203 </span><span class="float-right"><i
 											class="fa fa-motorcycle"></i></span>
 									</h4>
 								</div>
 								<div class="progress-wrapper">
 									<div class="progress" style="height: 5px;">
-										<div class="progress-bar bg-success" style="width: 55.12%"></div>
+										<div class="progress-bar bg-success" 
+											th:style="${'width:' + (questionReport.get(0).option2/questionReport.get(0).total)*100 +'%'}" 
+											style="width: 55.12%"></div>
 									</div>
 								</div>
 								<p class="mb-0 mt-2 small-font">
-									<span class="float-right">+55.12% <i
-										class="fa fa-long-arrow-up"></i></span>
+									<span class="float-right">
+										<span th:text="${(questionReport.get(0).option2/questionReport.get(0).total)*100 + '%'}"></span>
+										<i class="fa fa-long-arrow-up"></i>
+									</span>
 								</p>
 							</div>
 						</div>
@@ -393,16 +547,18 @@
 								<p class="mb-0 text-danger">साईकल</p>
 								<div class="">
 									<h4 class="mb-0 py-3 text-danger">
-										79 <span class="float-right"><i class="zmdi zmdi-bike"></i></span>
+										<span th:text="${questionReport.get(0).option3}">203 </span> <span class="float-right"><i class="zmdi zmdi-bike"></i></span>
 									</h4>
 								</div>
 								<div class="progress-wrapper">
 									<div class="progress" style="height: 5px;">
-										<div class="progress-bar bg-danger" style="width: 7.28%"></div>
+										<div class="progress-bar bg-danger" 
+											th:style="${'width:' + (questionReport.get(0).option3/questionReport.get(0).total)*100 +'%'}" 
+											style="width: 7.28%"></div>
 									</div>
 								</div>
 								<p class="mb-0 mt-2 small-font">
-									<span class="float-right">+7.28% <i
+									<span class="float-right"><span th:text="${(questionReport.get(0).option3/questionReport.get(0).total)*100 + '%'}"></span> <i
 										class="fa fa-long-arrow-up"></i></span>
 								</p>
 							</div>
@@ -414,26 +570,30 @@
 								<p class="mb-0 text-warning">अन्य</p>
 								<div class="">
 									<h4 class="mb-0 py-3 text-warning">
-										205 <span class="float-right"><i
+										<span th:text="${questionReport.get(0).option4}">203 </span> <span class="float-right"><i
 											class="zmdi zmdi-airplane"></i></span>
 									</h4>
 								</div>
 								<div class="progress-wrapper">
 									<div class="progress" style="height: 5px;">
-										<div class="progress-bar bg-warning" style="width: 18.89%"></div>
+										<div class="progress-bar bg-warning"
+											th:style="${'width:' + (questionReport.get(0).option4/questionReport.get(0).total)*100 +'%'}" 
+											style="width: 18.89%"></div>
 									</div>
 								</div>
 								<p class="mb-0 mt-2 small-font">
-									<span class="float-right">+18.89% <i
-										class="fa fa-long-arrow-up"></i></span>
+									<span class="float-right">
+										<span th:text="${(questionReport.get(0).option4/questionReport.get(0).total)*100 + '%'}"></span>
+										<i class="fa fa-long-arrow-up"></i>
+									</span>
 								</p>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<div class="row income-panel">
-					<div class="col-12 col-lg-6 col-xl-6">
+				<div class="row income-panel" th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
+					<div class="col-12 col-lg-6 col-xl-6" th:if="${questionReport.get(5) != null}">
 						<h4>वार्षिक आम्दानी</h4>
 						<div class="row mt-3">
 							<div class="col-12 col-lg-6 col-xl-6">
@@ -442,17 +602,23 @@
 										<p class="mb-0 text-white">१,००,०००/- भन्दा कम</p>
 										<div class="">
 											<h4 class="mb-0 py-3 text-white">
-												0 <span class="float-right"><i class="fa fa-money"></i></span>
+												<span th:text="${questionReport.get(5).option1}"> </span> 
+												<span class="float-right"><i class="fa fa-money"></i></span>
 											</h4>
 										</div>
 										<div class="progress-wrapper">
 											<div class="progress" style="height: 5px;">
-												<div class="progress-bar" style="width: 0%"></div>
+												<div class="progress-bar" 
+													th:style="${'width:' + (questionReport.get(5).option1/questionReport.get(5).total)*100 +'%;'}"
+													style="width: 0%">
+												</div>
 											</div>
 										</div>
 										<p class="mb-0 mt-2 small-font text-white">
-											<span class="float-right">+0% <i
-												class="fa fa-long-arrow-up"></i></span>
+											<span class="float-right">
+												<span th:text="${(questionReport.get(5).option1/questionReport.get(5).total)*100 + '%'}"></span>
+												<i class="fa fa-long-arrow-up"></i>
+											</span>
 										</p>
 									</div>
 								</div>
@@ -463,17 +629,23 @@
 										<p class="mb-0 text-white">१,००,००१/- देखि २,५०,०००/-</p>
 										<div class="">
 											<h4 class="mb-0 py-3 text-white">
-												392 <span class="float-right"><i class="fa fa-money"></i></span>
+												<span th:text="${questionReport.get(5).option2}"> </span> 
+												<span class="float-right"><i class="fa fa-money"></i></span>
 											</h4>
 										</div>
 										<div class="progress-wrapper">
 											<div class="progress" style="height: 5px;">
-												<div class="progress-bar" style="width: 43.6%"></div>
+												<div class="progress-bar" 
+													th:style="${'width:' + (questionReport.get(5).option2/questionReport.get(5).total)*100 +'%;'}"
+													style="width: 0%">
+												</div>
 											</div>
 										</div>
 										<p class="mb-0 mt-2 small-font text-white">
-											<span class="float-right">+43.6% <i
-												class="fa fa-long-arrow-up"></i></span>
+											<span class="float-right">
+												<span th:text="${(questionReport.get(5).option2/questionReport.get(5).total)*100 + '%'}"></span>
+												<i class="fa fa-long-arrow-up"></i>
+											</span>
 										</p>
 									</div>
 								</div>
@@ -484,17 +656,23 @@
 										<p class="mb-0 text-white">२,५०,००१/- देखि ४,००,०००</p>
 										<div class="">
 											<h4 class="mb-0 py-3 text-white">
-												211 <span class="float-right"><i class="fa fa-money"></i></span>
+												<span th:text="${questionReport.get(5).option3}"> </span> 
+												<span class="float-right"><i class="fa fa-money"></i></span>
 											</h4>
 										</div>
 										<div class="progress-wrapper">
 											<div class="progress" style="height: 5px;">
-												<div class="progress-bar" style="width: 23.47%"></div>
+												<div class="progress-bar" 
+													th:style="${'width:' + (questionReport.get(5).option3/questionReport.get(5).total)*100 +'%;'}"
+													style="width: 0%">
+												</div>
 											</div>
 										</div>
 										<p class="mb-0 mt-2 small-font text-white">
-											<span class="float-right">+23.47% <i
-												class="fa fa-long-arrow-up"></i></span>
+											<span class="float-right">
+												<span th:text="${(questionReport.get(5).option3/questionReport.get(5).total)*100 + '%'}"></span>
+												<i class="fa fa-long-arrow-up"></i>
+											</span>
 										</p>
 									</div>
 								</div>
@@ -505,17 +683,23 @@
 										<p class="mb-0 text-white">४,००,००१/- देखि ६,००,०००</p>
 										<div class="">
 											<h4 class="mb-0 py-3 text-white">
-												98 <span class="float-right"><i class="fa fa-money"></i></span>
+												<span th:text="${questionReport.get(5).option4}"> </span> 
+												<span class="float-right"><i class="fa fa-money"></i></span>
 											</h4>
 										</div>
 										<div class="progress-wrapper">
 											<div class="progress" style="height: 5px;">
-												<div class="progress-bar" style="width: 10.9%"></div>
+												<div class="progress-bar" 
+													th:style="${'width:' + (questionReport.get(5).option4/questionReport.get(5).total)*100 +'%;'}"
+													style="width: 0%">
+												</div>
 											</div>
 										</div>
 										<p class="mb-0 mt-2 small-font text-white">
-											<span class="float-right">+10.9% <i
-												class="fa fa-long-arrow-up"></i></span>
+											<span class="float-right">
+												<span th:text="${(questionReport.get(5).option4/questionReport.get(5).total)*100 + '%'}"></span>
+												<i class="fa fa-long-arrow-up"></i>
+											</span>
 										</p>
 									</div>
 								</div>
@@ -526,17 +710,23 @@
 										<p class="mb-0 text-white">६,००,०००१/- देखि ८,००,०००</p>
 										<div class="">
 											<h4 class="mb-0 py-3 text-white">
-												30 <span class="float-right"><i class="fa fa-money"></i></span>
+												<span th:text="${questionReport.get(5).option5}"> </span> 
+												<span class="float-right"><i class="fa fa-money"></i></span>
 											</h4>
 										</div>
 										<div class="progress-wrapper">
 											<div class="progress" style="height: 5px;">
-												<div class="progress-bar" style="width: 3.34%"></div>
+												<div class="progress-bar" 
+													th:style="${'width:' + (questionReport.get(5).option5/questionReport.get(5).total)*100 +'%;'}"
+													style="width: 0%">
+												</div>
 											</div>
 										</div>
 										<p class="mb-0 mt-2 small-font text-white">
-											<span class="float-right">+3.34% <i
-												class="fa fa-long-arrow-up"></i></span>
+											<span class="float-right">
+												<span th:text="${(questionReport.get(5).option5/questionReport.get(5).total)*100 + '%'}"></span>
+												<i class="fa fa-long-arrow-up"></i>
+											</span>
 										</p>
 									</div>
 								</div>
@@ -547,17 +737,23 @@
 										<p class="mb-0 text-white">८,००,०००१/- भन्दा माथि</p>
 										<div class="">
 											<h4 class="mb-0 py-3 text-white">
-												48 <span class="float-right"><i class="fa fa-money"></i></span>
+												<span th:text="${questionReport.get(5).option6}"> </span> 
+												<span class="float-right"><i class="fa fa-money"></i></span>
 											</h4>
 										</div>
 										<div class="progress-wrapper">
 											<div class="progress" style="height: 5px;">
-												<div class="progress-bar" style="width: 5.34%"></div>
+												<div class="progress-bar" 
+													th:style="${'width:' + (questionReport.get(5).option6/questionReport.get(5).total)*100 +'%;'}"
+													style="width: 0%">
+												</div>
 											</div>
 										</div>
 										<p class="mb-0 mt-2 small-font text-white">
-											<span class="float-right">+5.34% <i
-												class="fa fa-long-arrow-up"></i></span>
+											<span class="float-right">
+												<span th:text="${(questionReport.get(5).option6/questionReport.get(5).total)*100 + '%'}"></span>
+												<i class="fa fa-long-arrow-up"></i>
+											</span>
 										</p>
 									</div>
 								</div>
@@ -565,7 +761,7 @@
 						</div>
 					</div>
 
-					<div class="col-12 col-lg-6 col-xl-6">
+					<div class="col-12 col-lg-6 col-xl-6" th:if="${questionReport.get(6) != null}">
 						<h4>वार्षिक खर्च</h4>
 						<div class="row mt-3">
 							<div class="col-12 col-lg-6 col-xl-6">
@@ -574,17 +770,23 @@
 										<p class="mb-0 text-white">१,००,०००/- भन्दा कम</p>
 										<div class="">
 											<h4 class="mb-0 py-3 text-white">
-												0 <span class="float-right"><i class="fa fa-money"></i></span>
+												<span th:text="${questionReport.get(6).option1}"> </span> 
+												<span class="float-right"><i class="fa fa-money"></i></span>
 											</h4>
 										</div>
 										<div class="progress-wrapper">
 											<div class="progress" style="height: 5px;">
-												<div class="progress-bar" style="width: 0%"></div>
+												<div class="progress-bar" 
+													th:style="${'width:' + (questionReport.get(6).option1/questionReport.get(5).total)*100 +'%;'}"
+													style="width: 0%">
+												</div>
 											</div>
 										</div>
 										<p class="mb-0 mt-2 small-font text-white">
-											<span class="float-right">+0% <i
-												class="fa fa-long-arrow-up"></i></span>
+											<span class="float-right">
+												<span th:text="${(questionReport.get(6).option1/questionReport.get(5).total)*100 + '%'}"></span>
+												<i class="fa fa-long-arrow-up"></i>
+											</span>
 										</p>
 									</div>
 								</div>
@@ -595,17 +797,23 @@
 										<p class="mb-0 text-white">१,००,००१/- देखि २,५०,०००/-</p>
 										<div class="">
 											<h4 class="mb-0 py-3 text-white">
-												414 <span class="float-right"><i class="fa fa-money"></i></span>
+												<span th:text="${questionReport.get(6).option2}"> </span> 
+												<span class="float-right"><i class="fa fa-money"></i></span>
 											</h4>
 										</div>
 										<div class="progress-wrapper">
 											<div class="progress" style="height: 5px;">
-												<div class="progress-bar" style="width: 46.05%"></div>
+												<div class="progress-bar" 
+													th:style="${'width:' + (questionReport.get(6).option2/questionReport.get(5).total)*100 +'%;'}"
+													style="width: 0%">
+												</div>
 											</div>
 										</div>
 										<p class="mb-0 mt-2 small-font text-white">
-											<span class="float-right">+46.05% <i
-												class="fa fa-long-arrow-up"></i></span>
+											<span class="float-right">
+												<span th:text="${(questionReport.get(6).option2/questionReport.get(5).total)*100 + '%'}"></span>
+												<i class="fa fa-long-arrow-up"></i>
+											</span>
 										</p>
 									</div>
 								</div>
@@ -616,17 +824,23 @@
 										<p class="mb-0 text-white">२,५०,००१/- देखि ४,००,०००</p>
 										<div class="">
 											<h4 class="mb-0 py-3 text-white">
-												217 <span class="float-right"><i class="fa fa-money"></i></span>
+												<span th:text="${questionReport.get(6).option3}"> </span> 
+												<span class="float-right"><i class="fa fa-money"></i></span>
 											</h4>
 										</div>
 										<div class="progress-wrapper">
 											<div class="progress" style="height: 5px;">
-												<div class="progress-bar" style="width: 24.14%"></div>
+												<div class="progress-bar" 
+													th:style="${'width:' + (questionReport.get(6).option3/questionReport.get(5).total)*100 +'%;'}"
+													style="width: 0%">
+												</div>
 											</div>
 										</div>
 										<p class="mb-0 mt-2 small-font text-white">
-											<span class="float-right">+24.14% <i
-												class="fa fa-long-arrow-up"></i></span>
+											<span class="float-right">
+												<span th:text="${(questionReport.get(6).option3/questionReport.get(5).total)*100 + '%'}"></span>
+												<i class="fa fa-long-arrow-up"></i>
+											</span>
 										</p>
 									</div>
 								</div>
@@ -637,17 +851,23 @@
 										<p class="mb-0 text-white">४,००,००१/- देखि ६,००,०००</p>
 										<div class="">
 											<h4 class="mb-0 py-3 text-white">
-												82 <span class="float-right"><i class="fa fa-money"></i></span>
+												<span th:text="${questionReport.get(6).option4}"> </span> 
+												<span class="float-right"><i class="fa fa-money"></i></span>
 											</h4>
 										</div>
 										<div class="progress-wrapper">
 											<div class="progress" style="height: 5px;">
-												<div class="progress-bar" style="width: 9.12%"></div>
+												<div class="progress-bar" 
+													th:style="${'width:' + (questionReport.get(6).option4/questionReport.get(5).total)*100 +'%;'}"
+													style="width: 0%">
+												</div>
 											</div>
 										</div>
 										<p class="mb-0 mt-2 small-font text-white">
-											<span class="float-right">+9.12% <i
-												class="fa fa-long-arrow-up"></i></span>
+											<span class="float-right">
+												<span th:text="${(questionReport.get(6).option4/questionReport.get(5).total)*100 + '%'}"></span>
+												<i class="fa fa-long-arrow-up"></i>
+											</span>
 										</p>
 									</div>
 								</div>
@@ -658,17 +878,23 @@
 										<p class="mb-0 text-white">६,००,०००१/- देखि ८,००,०००</p>
 										<div class="">
 											<h4 class="mb-0 py-3 text-white">
-												37 <span class="float-right"><i class="fa fa-money"></i></span>
+												<span th:text="${questionReport.get(6).option5}"> </span> 
+												<span class="float-right"><i class="fa fa-money"></i></span>
 											</h4>
 										</div>
 										<div class="progress-wrapper">
 											<div class="progress" style="height: 5px;">
-												<div class="progress-bar" style="width: 4.12%"></div>
+												<div class="progress-bar" 
+													th:style="${'width:' + (questionReport.get(6).option5/questionReport.get(5).total)*100 +'%;'}"
+													style="width: 0%">
+												</div>
 											</div>
 										</div>
 										<p class="mb-0 mt-2 small-font text-white">
-											<span class="float-right">+4.12% <i
-												class="fa fa-long-arrow-up"></i></span>
+											<span class="float-right">
+												<span th:text="${(questionReport.get(6).option5/questionReport.get(5).total)*100 + '%'}"></span>
+												<i class="fa fa-long-arrow-up"></i>
+											</span>
 										</p>
 									</div>
 								</div>
@@ -679,17 +905,23 @@
 										<p class="mb-0 text-white">८,००,०००१/- भन्दा माथि</p>
 										<div class="">
 											<h4 class="mb-0 py-3 text-white">
-												27 <span class="float-right"><i class="fa fa-money"></i></span>
+												<span th:text="${questionReport.get(6).option6}"> </span> 
+												<span class="float-right"><i class="fa fa-money"></i></span>
 											</h4>
 										</div>
 										<div class="progress-wrapper">
 											<div class="progress" style="height: 5px;">
-												<div class="progress-bar" style="width: 3%"></div>
+												<div class="progress-bar" 
+													th:style="${'width:' + (questionReport.get(6).option6/questionReport.get(5).total)*100 +'%;'}"
+													style="width: 0%">
+												</div>
 											</div>
 										</div>
 										<p class="mb-0 mt-2 small-font text-white">
-											<span class="float-right">+3% <i
-												class="fa fa-long-arrow-up"></i></span>
+											<span class="float-right">
+												<span th:text="${(questionReport.get(6).option6/questionReport.get(5).total)*100 + '%'}"></span>
+												<i class="fa fa-long-arrow-up"></i>
+											</span>
 										</p>
 									</div>
 								</div>
@@ -772,46 +1004,55 @@
 	<!-- Index js -->
 	<script th:src="@{/assets/js/index.js}" src="assets/js/index.js"></script>
 
-	<script>
+	<script th:inline="javascript">
 		$(function() {
-			new Chart(document.getElementById("population-chart"), {
-			    type: 'bar',
-			    data: {
-			      labels: ["Total Children", "Total Youths", "Total Old Age"],
-			      datasets: [
-			        {
-			          label: "Population (Municipality)",
-			          backgroundColor: ["#fa7925", "#40ba72","#f53047"],
-			          data: [2478,5267,734]
-			        }
-			      ]
-			    },
-			    options: {
-			      legend: { display: false },
-			      title: {
-			        display: true,
-			        text: 'Total Population Detail'
-			      }
-			    }
-			});
-			
-			new Chart(document.getElementById("gender-chart"), {
-			    type: 'pie',
-			    data: {
-			      labels: ["Male", "Female", "Others"],
-			      datasets: [{
-			        label: "Population (millions)",
-			        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
-			        data: [2478,5267,734]
-			      }]
-			    },
-			    options: {
-			      title: {
-			        display: true,
-			        text: 'Total Population'
-			      }
-			    }
-			});
+			let populationReportExists = /*[[${#lists.isEmpty(populationReport)}]]*/;
+			if(!populationReportExists) {
+				let totalYouths = /*[[${populationReport.get(0).option3}]]*/ '0';
+				let totalInfants = /*[[${populationReport.get(0).option1}]]*/ '0';
+				let totalChildrens = /*[[${populationReport.get(0).option2}]]*/ '0';
+				let totalOldage = /*[[${populationReport.get(0).option4}]]*/ '0';
+				let totalMale = /*[[${populationReport.get(1).option1}]]*/ '0';
+				let totalFemale = /*[[${populationReport.get(1).option2}]]*/ '0';
+				let totalOthers = /*[[${populationReport.get(1).option3}]]*/ '0';
+				new Chart(document.getElementById("population-chart"), {
+				    type: 'bar',
+				    data: {
+				      labels: ["जम्मा शिसु", "जम्मा बालबालिका", "जम्मा युवा","जम्मा बृद्ध"],
+				      datasets: [
+				        {
+				          label: "नगरपालिकाको जनसंख्या",
+				          backgroundColor: ["#4547e6", "#f98026","#50be69", "#f53343"],
+				          data: [totalInfants, totalChildrens, totalYouths, totalOldage]
+				        }
+				      ]
+				    },
+				    options: {
+				      title: {
+				        display: true,
+				        text: 'उमेर समूह अनुसारको तथ्यांक'
+				      }
+				    }
+				});
+				
+				new Chart(document.getElementById("gender-chart"), {
+				    type: 'pie',
+				    data: {
+				      labels: ["पुरुष", "महिला", "अन्य"],
+				      datasets: [{
+				        label: "Population (millions)",
+				        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
+				        data: [totalMale, totalFemale, totalOthers]
+				      }]
+				    },
+				    options: {
+				      title: {
+				        display: true,
+				        text: 'लिङ्ग अनुसारको तथ्यांक'
+				      }
+				    }
+				});
+			}
 		});
 		
 	</script>

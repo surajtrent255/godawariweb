@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>गोदावरी नगरपालिका, ललितपुर</title>
+<link rel="icon"
+	href="https://www.lalitpur15.org/datasys/public/images/favicon.ico"
+	type="image/x-icon" />
+<link
+	href="https://www.lalitpur15.org/datasys/public/plugins/vectormap/jquery-jvectormap-2.0.2.css"
+	rel="stylesheet" />
+<link
+	href="https://www.lalitpur15.org/datasys/public/plugins/simplebar/css/simplebar.css"
+	rel="stylesheet" />
+<link
+	href="https://www.lalitpur15.org/datasys/public/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link href="https://www.lalitpur15.org/datasys/public/css/animate.css"
+	rel="stylesheet" type="text/css" />
+<link href="https://www.lalitpur15.org/datasys/public/css/icons.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="https://www.lalitpur15.org/datasys/public/css/sidebar-menu.css"
+	rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://www.lalitpur15.org/datasys/public/plugins/nepali-datepicker/nepaliDatePicker.min.css">
+<link href="https://www.lalitpur15.org/datasys/public/css/app-style.css"
+	rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://www.lalitpur15.org/datasys/public/plugins/datatable/css/datatables.min.css">
+<link rel="stylesheet"
+	href="https://www.lalitpur15.org/datasys/public/plugins/jquery.steps/css/jquery.steps.css">
+
+
+<link rel="stylesheet"
+	href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+	integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+	crossorigin="" />
+
+
+<style>
+.form-group {
+	width: 100%;
+}
+
+.wizard>.content {
+	background: #fff;
+	min-height: 430px;
+	margin: 0;
+}
+
+.wizard>.content>.body {
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.member-panel .padding, .member-panel-submit .padding {
+	padding: 10px;
+}
+
+.wizard>.content>.body label.error {
+	margin-left: 0;
+}
+
+
+#mapid {
+	height: 50em;
+	width: 50em;
+}
+</style>
+<script src="https://www.lalitpur15.org/datasys/public/js/jquery.min.js"></script>
+</head>
+<body>
+	<div id="wrapper">
+
+		<!--           	Sidebar and header -->
+		<div th:replace="~{fragments/admin-sidebar}"></div>
+		<header th:replace="~{fragments/header}" class="header1"> </header>
+
+
+		<div class="clearfix"></div>
+		<div class="content-wrapper">
+			<div class="container-fluid" id="pjax-container">
+				<div class="row pt-2 pb-2">
+					<div class="col-sm-9">
+						<h4 class="page-title">Data Management System</h4>
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Add
+								Favourite Place</li>
+						</ol>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-body">
+						<div class="card-title">Fill up information about the place.</div>
+						<a href="javascript:void(0)"
+							class="add-member btn btn-primary mb-2" style="margin-left: 8px;">Add
+							Place</a>
+						<form name="favPlaceForm" id="favPlaceForm" method="POST" action="" th:action="@{/favourite}" th:object="${favPlaceObj}" data-ajax="true" data-action=""
+							enctype="multipart/form-data" class="unicode">
+							<input type="hidden" name="_method" value="post">
+							<h2>Favourite Place</h2>
+							<fieldset>
+								<div class="row member-panel" style="display: flex;">
+									<div class="col-lg-4 col-md-4 mb-2">
+										<div class="padding">
+											<label for="favName"><h4>Name of the Place</h4></label> <input
+												type="text" id="placeName" name="favName" th:field="*{placeName}"
+												class="form-control required" value="">
+										</div>
+									</div>
+									<div class="col-lg-4 col-md-4 mb-2">
+										<div class="padding">
+											<label for="favWard"><h4>Ward Number:</h4></label> <input
+												type="number" id="placeWard" name="favWard" th:field="*{placeWard}"
+												class="form-control required" value="">
+										</div>
+									</div>
+									<div class="col-lg-4 col-md-4 mb-2">
+										<div class="padding">
+											<label for="favDesc"><h4>Description</h4></label>
+											<!-- 											<input -->
+											<!-- 												type="text" id="favDesc" name="favDesc" -->
+											<!-- 												class="form-control required"> -->
+											<textarea name="favDesc" id="placeDescription" th:field="*{placeDescription}" class="form-control required" rows="20">Write description</textarea>
+										</div>
+									</div>
+
+
+									<!-- 									<div class="col-lg-3 col-md-4"> -->
+									<!-- 										<div class="form-group form-label"> -->
+									<!-- 											<label for="favPhoto"><h4>Photo of the Place: </h4></label> <input -->
+									<!-- 												type="file" class="form-control  " id="favPhoto" name="favPhoto" -->
+									<!-- 												value="" data-event="change" data-target="favPhoto" -->
+									<!-- 												accept="image/*"> <a href="" style="display: none" -->
+									<!-- 												target="_blank" class="no-pjax"><img src="" -->
+									<!-- 												style="display: none" class="img-thumbnail photo"></a> -->
+									<!-- 										</div> -->
+									<!-- 									</div> -->
+
+
+
+									<div class="col-lg-3 col-md-4">
+										<div class="form-group form-label">
+											<label for="favPhoto"><h4>Photo of the Place</h4></label> <input
+												type="file" class="form-control" id="placeImage"
+												name="favPhoto" value="" data-event="change"
+												data-target="favPhoto" accept="image/*"> <a href=""
+												style="display: none" target="_blank" class="no-pjax"><img
+												src="" style="display: none" class="img-thumbnail favPhoto"></a>
+										</div>
+									</div>
+
+
+									<div class="col-lg-4 col-md-4 mb-2">
+										<div class="padding">
+											<label for="favLocation"><h4>Place Location</h4></label> <input
+												type="text" id="placeGPS" name="favLocation" th:field="*{placeGPS}" placeholder="Click to add location" value=""
+												class="form-control required" readonly>
+										</div>
+									</div>
+								</div>
+								<input type="submit" value="Submit" />
+							</fieldset>
+						</form>
+						
+															<!-- Modal View For Map Location Entry-->
+									<div class="modal fade" id="map-location-modal"
+										data-keyboard="false" data-backdrop="false" role="dialog"
+										aria-hidden="true">
+										<div class="modal-dialog modal-lg modal-dialog-centered"
+											role="document">
+											<div class="modal-content" style="border-radius: 10px;">
+												<div class="modal-header">
+													<h5 class="modal-title">
+														<b><span>Please Select the Location On Map</span></b>
+													</h5>
+										
+													<button id="cancel-location-btn"
+														class="btn btn-danger pull-right">
+														<b>✘</b>
+													</button>
+												</div>
+												<div class="modal-content-body">
+													<div class="row" style="margin: 5px;">
+														<div style="margin: 20px auto;">
+															<div id="mapid"></div>
+														</div>
+													
+													</div>
+												</div>
+												<button id="submit-location-btn"
+														class="btn btn-success pull-right">
+														<b>✔</b>
+													</button>
+											</div>
+										</div>
+									</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 	<a href="javaScript:void();" class="back-to-top"><i -->
+	<!-- 		class="fa fa-angle-double-up"></i> </a> -->
+	<!-- 	<!--Start footer-->
+	<!-- 		<footer th:replace="~{fragments/footer :: footer}"></footer> -->
+	<script
+		src="https://www.lalitpur15.org/datasys/public/js/popper.min.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/js/bootstrap.min.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/plugins/simplebar/js/simplebar.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/js/sidebar-menu.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/plugins/datatable/js/datatables.min.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/plugins/alerts-boxes/js/sweetalert.min.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/js/jquery.pjax.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/js/sidebar-menu.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/plugins/nepali-datepicker/jquery.nepaliDatePicker.min.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/js/app-script.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/plugins/jquery.steps/js/jquery.steps.min.js"></script>
+	<script
+		src="https://www.lalitpur15.org/datasys/public/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+	<!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script> -->
+	<script
+		src="https://www.lalitpur15.org/datasys/public/js/transliteration.I.js"></script>
+	<script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script>
+
+	<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+		integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+		crossorigin=""></script>
+
+<!-- 	<script src="https://code.jquery.com/jquery-3.4.1.min.js" -->
+<!-- 		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" -->
+<!-- 		crossorigin="anonymous"></script> -->
+
+	<script th:inline="javascript">
+		//For showing the Map modal	
+		$("#placeGPS").on("click", function(event) {
+			event.preventDefault();
+			$("#map-location-modal").modal("show");
+			  setTimeout(function() {
+				    mymap.invalidateSize();
+				  }, 17)
+		});
+
+		//For canceling and hiding the Map modal
+		$("#cancel-location-btn").on("click", function(event) {
+			$("#map-location-modal").modal("hide");
+			marker = L.marker(geoLocationTemp).addTo(layerGroup);
+		});
+		
+		//For selecting the current marker and hiding the Map modal
+		$("#submit-location-btn").on("click", function(event) {
+			$("#map-location-modal").modal("hide");
+			if(geoLat != null && geoLng != null) {
+			$("#placeGPS").val(geoLat + ', ' + geoLng);
+			}
+		});
+
+		const mymap = L.map('mapid').setView([ 27.614979, 85.363180 ], 17);
+
+		var layerGroup = L.layerGroup().addTo(mymap);
+	
+		var marker;
+		var popup = L.popup();
+
+		const attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors';
+
+		
+		var geoLocation;
+		var geoLocationTemp;
+		var geoLat
+		var geoLng
+		
+		
+// 		L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+// 			maxZoom : 20,
+// 			subdomains : [ 'mt0', 'mt1', 'mt2', 'mt3' ]
+// 		}).addTo(mymap);
+
+		  var mapLink = '<a href="http://www.esri.com/">Esri</a>';
+	    var wholink = 'i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
+
+		
+	    L.tileLayer(
+	            'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	            attribution: '&copy; '+mapLink+', '+wholink,
+	            maxZoom: 19,
+	            }).addTo(mymap);
+		
+		
+// 		L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+// 		    maxZoom: 20,
+// 		    subdomains:['mt0','mt1','mt2','mt3']
+// 		}).addTo(mymap);
+		
+		// 	const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+		// 	const tiles = L.tileLayer(tileUrl, {attribution});
+		// 	tiles.addTo(mymap);
+
+		function onMapClick(e) {
+			layerGroup.clearLayers();
+			popup.setLatLng(e.latlng).setContent(
+					"The selected location is " + e.latlng.toString()).openOn(
+					mymap);
+			geoLocation = e.latlng;
+			geoLat = geoLocation.lat;
+			geoLng = geoLocation.lng;
+			marker = L.marker(geoLocation).addTo(layerGroup);
+			
+			// 	    var marker = L.marker([27.700769, 85.300140]).addTo(mymap);	
+		}
+
+		mymap.on('click', onMapClick);
+
+		$(function() {
+			var _t, _n, _d, _v;
+			$("input[data-event='change']").on("change", function() {
+				_t = this;
+				_c = $(this).data("target");
+				if (_t.files && _t.files[0]) {
+					var reader = new FileReader();
+					reader.onload = function(e) {
+						$('img.' + _c).attr('src', e.target.result).show();
+						$('img.' + _c).parent().show();
+					}
+					reader.readAsDataURL(_t.files[0]);
+				}
+			});
+			$("#documents_copy").on("change", function() {
+				_v = $(this).val();
+				$(".documents_hide").hide();
+				$("div." + _v).show();
+
+			});
+			$("[data-event='toggle']").on("change", function() {
+				_t = $(this);
+				_n = $(this).attr("name");
+				_d = $("[name='" + _n + "']").serializeArray();
+				_c = _t.data("target");
+				if (_d.length > 0 && _t.is(':checked')) {
+					$.each(_d, function(i, fd) {
+						if (fd.value == _t.data("value")) {
+							$("." + _c).show();
+						}
+					});
+				} else {
+					$("." + _c).hide();
+				}
+			});
+			$("#survey_date").nepaliDatePicker({
+				dateFormat : "%y-%m-%d",
+				closeOnDateSelect : true
+			});
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+	</script>
+</body>
+</html>

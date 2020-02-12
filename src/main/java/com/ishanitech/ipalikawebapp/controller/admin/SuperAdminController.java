@@ -9,26 +9,43 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ishanitech.ipalikawebapp.dto.AnswerDTO;
+import com.ishanitech.ipalikawebapp.dto.FavouritePlaceDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDetailDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.service.FormService;
+import com.ishanitech.ipalikawebapp.service.ReportService;
+import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
 import com.ishanitech.ipalikawebapp.service.ResidentService;
 
-@RequestMapping("/admin")
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RequestMapping("/super-admin")
 @Controller
-public class AdminController {
+public class SuperAdminController {
 
 	private final ResidentService residentService;
 	private final FormService formService;
+	private final FavouritePlacesService favouritePlacesService;
+	private final ReportService reportService;
 
-	public AdminController(ResidentService residentService, FormService formService) {
+	
+	
+	public SuperAdminController(ResidentService residentService, 
+			FavouritePlacesService favouritePlacesService, 
+			FormService formService,
+			ReportService reportService) {
 		this.residentService = residentService;
+		this.favouritePlacesService = favouritePlacesService;
 		this.formService = formService;
+		this.reportService = reportService;
 	}
 
 	@GetMapping
-	public String getDashboardView() {
+	public String getDashboardView(Model model) {
+		model.addAttribute("populationReport", reportService.getPopulationReport());
+		model.addAttribute("questionReport", reportService.getQuestionReport());
 		return "admin/dashboard";
 	}
 
@@ -39,8 +56,9 @@ public class AdminController {
 		return "admin/add-household";
 	}
 
-	@GetMapping("/addMemberForm")
-	public String getMemberEntryForm() {
+	@GetMapping("/addMemberForm/{residentFilledId}")
+	public String getMemberEntryForm(@PathVariable ("residentFilledId") String residentFilledId, Model model) {
+		model.addAttribute("residentFilledId", residentFilledId);
 		return "admin/add-member";
 	}
 
@@ -68,6 +86,26 @@ public class AdminController {
 		Response<ResidentDetailDTO> residentResponse = (Response<ResidentDetailDTO>) residentService.getResidentFullDetail(filledId);
 		model.addAttribute("residentFullDetail", residentResponse.getData());
 		return "admin/resident-details";
+	}
+	
+	@GetMapping("/favouritePlaceView")
+	public String getFavouritePlaceView(Model model) {
+		Response<List<FavouritePlaceDTO>> favouritePlaceResponse = favouritePlacesService.getAllFavouritePlaces();
+		model.addAttribute("favouritePlaceList", favouritePlaceResponse.getData());
+		return "admin/favourite-place";
+	}
+	
+	@GetMapping("/favouritePlaceDetails/{placeId}")
+	public String getFavouritePlaceByPlaceId(Model model, @PathVariable("placeId") String placeId) {
+		Response<FavouritePlaceDTO> favouritePlaceResponse = (Response<FavouritePlaceDTO>) favouritePlacesService.getFavouritePlaceByPlaceId(placeId);
+		model.addAttribute("favouritePlaceInfo", favouritePlaceResponse.getData());
+		return "admin/favourite-place-details";
+	}
+	
+	@GetMapping("/favouritePlaceAdd")
+	public String getFavouritePlaceEntryView(Model model) {
+		model.addAttribute("favPlaceObj", new FavouritePlaceDTO());
+		return "admin/add-favourite-place";
 	}
 
 }
