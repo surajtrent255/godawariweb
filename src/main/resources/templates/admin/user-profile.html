@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
 <title>गोदावरी नगरपालिका, ललितपुर</title>
 <!--favicon-->
 <link rel="icon" th:href="@{/assets/images/favicon1.ico}"
@@ -40,50 +40,52 @@
 			<div class="container-fluid" id="pjax-container">
 				<div class="row pt-2 pb-2">
 					<div class="col-sm-9">
-						<h4 class="page-title">Data Management System</h4>
+						<h4 class="page-title">नगरबासी बिवरण कम्प्युटर प्रणाली</h4>
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
-							<li class="breadcrumb-item active" aria-current="page">User
-								Update</li>
+							<li class="breadcrumb-item"><a href="javaScript:void();">गृह</a></li>
+							<li class="breadcrumb-item active" aria-current="page">प्रयोगकर्ता  बिवरण परिवर्तन</li>
 						</ol>
 					</div>
 				</div>
 				<div class="card">
 					<div class="card-body">
-						<div class="card-title">User Update</div>
-						<form method="POST" action="javascript:void(0)" data-ajax="true"
-							data-action="https://buddhi.com.np/demo/users/99a56fe1-4988-46fa-93e9-4e694ebcdacb">
-							<input type="hidden" name="_token"
-								value="AuazwK3bRX4bCA8DJGdhylHYmEYU0yXs9L4hzgS5"> <input
-								type="hidden" name="_method" value="patch"> <input
-								type="hidden" name="id"
-								value="99a56fe1-4988-46fa-93e9-4e694ebcdacb">
+						<div class="card-title">प्रयोगकर्ता  बिवरण </div>
+						<form id="profile-update-form">
+							<input type="hidden" name="userId" id="userId" th:value="${#authentication.principal.userId}">
 							<div class="form-group row">
 								<div class="col-md-4">
-									<label for="input-1">Name</label> <input id="name" type="text"
-										class="form-control " name="name" value="Buddhi" required
+									<label for="input-1">नाम</label> <input id="name" type="text"
+										class="form-control " name="name" th:value="${#authentication.principal.fullName}" required
 										autocomplete="name" autofocus placeholder="Enter Your Name">
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
-									<label for="email">E-Mail Address</label> <input id="email"
-										type="email" class="form-control " name="email"
-										value="info@archiesoft.com.np" required autocomplete="email"
-										placeholder="Enter Your Email Address" disabled="">
+									<label for="username">युसर नाम</label> <input id="username"
+										type="text" class="form-control " name="username"
+										th:value="${#authentication.principal.username}" required 
+										placeholder="Enter your username">
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
-									<label for="mobile">Mobile</label> <input id="mobile"
+									<label for="email">इमेल</label> <input id="email"
+										type="email" class="form-control " name="email"
+										th:value="${#authentication.principal.email}" required 
+										placeholder="Enter Your Email Address" disabled>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="mobile">मोबाईल नम्बर</label> <input id="mobile"
 										type="text" class="form-control " name="mobile"
-										value="9851282588" autocomplete="mobile"
+										th:value="${#authentication.principal.mobileNumber}"
 										placeholder="Enter Your Mobile Number" required>
 								</div>
 							</div>
 							<div class="form-group">
 								<button type="submit" class="btn btn-primary px-5">
-									<i class="icon-lock"></i> Update
+									<i class="icon-lock"></i> परिवर्तन गर्नुहोस
 								</button>
 							</div>
 						</form>
@@ -95,36 +97,43 @@
 			class="fa fa-angle-double-up"></i> </a>
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
 	</div>
-	
-	
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/popper.min.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/bootstrap.min.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/plugins/simplebar/js/simplebar.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/sidebar-menu.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/plugins/datatable/js/datatables.min.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/plugins/alerts-boxes/js/sweetalert.min.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/jquery.pjax.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/sidebar-menu.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/plugins/nepali-datepicker/jquery.nepaliDatePicker.min.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/app-script.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/plugins/jquery.steps/js/jquery.steps.min.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/plugins/jquery-validation/js/jquery.validate.min.js"></script>
-	<!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script> -->
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/transliteration.I.js"></script>
-	<script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script>
-	<div id="scripts"></div>
+	<div>
+		<script>
+			$(function () {
+	    	    var token = $("meta[name='_csrf']").attr("content");
+	    	    var header = $("meta[name='_csrf_header']").attr("content");
+	    	    $(document).ajaxSend(function(e, xhr, options) {
+	    	        xhr.setRequestHeader(header, token);
+	    	    });
+	    	});
+		
+			$(function() {
+				 $("#profile-update-form").on("submit", function(event) {
+					event.preventDefault();
+					let userId = $("#userId").val();
+					let username = $("#username").val();
+					let mobileNumber = $("#mobile").val();
+					let fullName = $("#name").val();
+					let userInfo = {
+						"username": username,
+						"mobileNumber": mobileNumber,
+						"fullName": fullName
+					};
+					console.log(JSON.stringify(userInfo));
+					$.ajax({
+						url : "http://localhost:9191/user/" + userId,
+						method : "PATCH",
+						contentType: "application/json",
+						data: JSON.stringify(userInfo),
+					}).done(function(data) {
+						alert(data.data);
+					}).fail(function(data) {
+						alert(JSON.stringify(data));
+					});
+				});
+				
+			});
+		</script>
+	</div>
 </body>
 </html>

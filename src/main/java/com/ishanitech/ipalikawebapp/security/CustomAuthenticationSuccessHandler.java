@@ -16,9 +16,7 @@ import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
@@ -28,8 +26,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		handleRequest(request, response, authentication);
-		HttpSession session = request.getSession(false);
-		session.setAttribute("token", response.getHeader("Authorization"));
 		clearAuthenticationAttributes(request);
 	}
 
@@ -55,14 +51,14 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		boolean isSuperAdmin = false, isCentralAdmin = false, isWardAdmin = false, isSurveyor = false;
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		for (GrantedAuthority authority : authorities) {
-			if (authority.getAuthority().equals("SUPER_ADMIN")) {
+			if (authority.getAuthority().equals("ROLE_SUPER_ADMIN")) {
 				isSuperAdmin = true;
 				break;
 
-			} else if (authority.getAuthority().equals("CENTRAL_ADMIN")) {
+			} else if (authority.getAuthority().equals("ROLE_CENTRAL_ADMIN")) {
 				isCentralAdmin = true;
 				break;
-			} else if(authority.getAuthority().equals("WARD_ADMIN")) {
+			} else if(authority.getAuthority().equals("ROLE_WARD_ADMIN")) {
 				isWardAdmin = true;
 				break;
 			} else {
@@ -72,7 +68,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		}
 
 		if (isSuperAdmin) {
-			return "/super-admin";
+			return "/super-admin/residentData";
 		} else if (isCentralAdmin) {
 			return "/central-admin";
 		} else if(isWardAdmin) {

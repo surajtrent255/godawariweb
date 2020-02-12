@@ -21,6 +21,9 @@ import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
 import com.ishanitech.ipalikawebapp.service.RestClientService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
@@ -34,15 +37,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String username = authentication.getName();
 		loginDTO.setUsername(username);
 		loginDTO.setPassword(authentication.getCredentials().toString());
-		ObjectMapper mapper = new ObjectMapper();
 		Response<UserDTO> loggedInUserResponse = null;
-		JavaType responseType = mapper.getTypeFactory().constructParametricType(Response.class, UserDTO.class);
-		loggedInUserResponse = (Response<UserDTO>) restClient.login(loginDTO, responseType);
+		loggedInUserResponse = (Response<UserDTO>) restClient.login(loginDTO);
 		
 		if((loggedInUserResponse != null) && (loggedInUserResponse.getData() != null)){
 			UserDTO loggedInUser = loggedInUserResponse.getData();
+			System.out.println("Token: " + loggedInUser.getToken());
 			Collection<? extends GrantedAuthority> authorities =  loggedInUser.getRoles().stream().map(auth -> {
-				return new SimpleGrantedAuthority(auth);
+				return new SimpleGrantedAuthority(String.format("ROLE_%s", auth));
 			}).collect(Collectors.toList());
 			
 			authentication = new UsernamePasswordAuthenticationToken(loggedInUser, null ,authorities);

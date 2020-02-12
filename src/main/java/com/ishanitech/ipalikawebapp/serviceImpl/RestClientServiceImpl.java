@@ -4,35 +4,36 @@
  */
 package com.ishanitech.ipalikawebapp.serviceImpl;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ishanitech.ipalikawebapp.dto.*;
-import com.ishanitech.ipalikawebapp.service.RestClientService;
-import com.ishanitech.ipalikawebapp.utilities.UserDetailsUtil;
+import java.io.IOException;
+import java.net.URI;
 
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ishanitech.ipalikawebapp.dto.LoginDTO;
+import com.ishanitech.ipalikawebapp.dto.Response;
+import com.ishanitech.ipalikawebapp.dto.UserDTO;
+import com.ishanitech.ipalikawebapp.service.RestClientService;
+import com.ishanitech.ipalikawebapp.utilities.UserDetailsUtil;
 
-import java.io.IOException;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -64,24 +65,22 @@ public class RestClientServiceImpl implements RestClientService {
 
 
     @Override
-    public Response<?> login(Object requestObject, JavaType responseType) {
+    public Response<UserDTO> login(LoginDTO requestObject) {
         Response<UserDTO> response = null;
         HttpHeaders headers = new HttpHeaders();
-        LoginDTO loginData = (LoginDTO) requestObject;
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Object> entity = new HttpEntity<>(loginData, headers);
-        ResponseEntity<String> result = null; 
+        HttpEntity<LoginDTO> entity = new HttpEntity<>(requestObject, headers);
+        ResponseEntity<Response> result = null; 
         try {
-        	result = restClient.exchange(baseUrl + loginUrl, HttpMethod.POST, entity, String.class);
-        	response = objectMapper.readValue(result.getBody(), responseType);
-        	
+        	result = (ResponseEntity<Response>) restClient.postForEntity(baseUrl + loginUrl, entity, Response.class);
+        	response = objectMapper.convertValue(result.getBody(), new TypeReference<Response<UserDTO>>() {
+			});
+        	response.getData().setToken(result.getHeaders().getFirst("Authorization"));
         } catch(HttpStatusCodeException sce) {
         	throw new BadCredentialsException("Bad Credentials");
         } catch(RestClientException rce) {
         	log.info("INSIDE LOGIN CALL: " + rce.getMessage());
-        } catch(IOException ioEx) {
-        	log.error("INSIDE LOGIN IOEXCEPTION: " + ioEx.getMessage());
-        }
+        } 
         return response;
     }
 

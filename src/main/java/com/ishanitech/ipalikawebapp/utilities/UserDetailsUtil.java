@@ -13,5 +13,8 @@ public class UserDetailsUtil {
     public static boolean isLoggedIn(Authentication auth) {
         return !(auth instanceof AnonymousAuthenticationToken);
     }
-
+    
+    public static String getToken(UserDTO user) {
+    	return user.getToken();
+    }
 }

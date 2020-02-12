@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.ishanitech.ipalikawebapp.security.CustomAuthenticationProvider;
 import com.ishanitech.ipalikawebapp.security.CustomAuthenticationSuccessHandler;
@@ -37,11 +38,12 @@ public class IpalikaWebSecurityConfiguration extends WebSecurityConfigurerAdapte
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 		.authorizeRequests()
+		.antMatchers("/assets/**").permitAll()
 		.antMatchers("/home", "/", "/index").permitAll()
-		.antMatchers("/super-admin/**").hasAuthority("SUPER_ADMIN")
-		.antMatchers("/central-admin/**").hasAuthority("CENTRAL_ADMIN")
-		.antMatchers("/ward-admin/**").hasAuthority("WARD_ADMIN")
-		.antMatchers("/surveyor/**").hasAuthority("SURVEYOR")
+		.antMatchers("/super-admin/**").hasRole("SUPER_ADMIN")
+		.antMatchers("/central-admin/**").hasRole("CENTRAL_ADMIN")
+		.antMatchers("/ward-admin/**").hasRole("WARD_ADMIN")
+		.antMatchers("/surveyor/**").hasRole("SURVEYOR")
 		.anyRequest()
 		.authenticated()
 		.and()
@@ -53,11 +55,10 @@ public class IpalikaWebSecurityConfiguration extends WebSecurityConfigurerAdapte
 		.successHandler(authenticationSuccessHandler)
 		.failureUrl("/?error=true")
 		.and()
-		.logout()
-		.permitAll()
-		.and()
-		.csrf()
-		.disable();
+		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		.invalidateHttpSession(true)
+		.deleteCookies("JSESSIONID")
+		.permitAll();
 	}
 
 }
