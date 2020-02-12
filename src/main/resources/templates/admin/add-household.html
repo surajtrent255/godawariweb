@@ -90,804 +90,90 @@
 								value="8c82ziy1cyPf0NeyqhEeRv0dAIMt2CyuvpgsRMOu"> <input
 								type="hidden" name="_method" value="post">
 							<div class="row">
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
+							<!-- dynamic code begins -->
+							
+							<div class="col-lg-3 col-md-4" th:each="questionAndOption, i : ${questionAndOptions}">
+									
+									<div class="form-group form-label" th:if="${questionAndOption.type == 'TEXT' || questionAndOption.type == 'MULTI_TEXT'}">
 										<label for="househead_name">
-											<h4 th:text="${questionAndOptions.get(0).desc}"></h4>
-										</label> <input type="text" class="form-control  " id="househead_name"
+											<h4 th:text="${questionAndOption.desc}"></h4>
+										</label> <input type="text" class="form-control  " th:id="${questionAndOption.id}"
 											name="househead_name" value="">
 									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="tole"><h4 th:text="${questionAndOptions.get(1).desc}"> टोल :</h4></label> <input type="text"
-											class="form-control  " id="tole" name="tole" value="">
+									<div class="form-group form-label" th:if="${questionAndOption.type} == 'NUMBER'">
+										<label for="househead_name">
+											<h4 th:text="${questionAndOption.desc}"></h4>
+										</label> <input type="number" class="form-control  " th:id="${questionAndOption.id}"
+											name="househead_name" value="">
 									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="house_number"><h4 th:text="${questionAndOptions.get(2).desc}">घर नं :</h4></label> <input
-											type="text" class="form-control  " id="house_number"
-											name="house_number" value="">
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="phone_number"><h4 th:text="${questionAndOptions.get(3).desc}">फोन नं :</h4></label> <input
-											type="text" class="form-control numeric  " id="phone_number"
-											name="phone_number" value="">
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="father_name"><h4 th:text="${questionAndOptions.get(4).desc}">बुबाको नाम :</h4></label> <input
-											type="text" class="form-control  " id="father_name"
-											name="father_name" value="">
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="mother_name"><h4 th:text="${questionAndOptions.get(5).desc}">आमाको नाम :</h4></label> <input
-											type="text" class="form-control  " id="mother_name"
-											name="mother_name" value="">
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="language"><h4 th:text="${questionAndOptions.get(6).desc}">मातृभाषा :</h4></label> <input
-											type="text" class="form-control  " id="language"
-											name="language" value="">
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="caste"><h4 th:text="${questionAndOptions.get(7).desc}">जाति :</h4></label> <select
+									<div class="form-group form-label" th:if="${questionAndOption.type== 'RADIO' || questionAndOption.type == 'RADIO_D'}">
+										<label for="caste"><h4 th:text="${questionAndOption.desc}"></h4></label> <select
 											class="form-control" name="caste" id="caste">
 											<option value=""></option>
-											<option value="1">दलित</option>
-											<option value="2">जनजाती</option>
-											<option value="3">ब्रहमण/क्षेत्री</option>
-											<option value="4">अन्य मधेशी</option>
-											<option value="5">मुस्लिम</option>
+											<option th:value="${indx.index}" th:each="option, indx : ${questionAndOption.options}" th:text="${option}"></option>
 										</select>
 									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="religion"><h4 th:text="${questionAndOptions.get(8).desc}">धर्म :</h4></label> <select
-											class="form-control" name="religion" id="religion">
-											<option value=""></option>
-											<option value="1">हिन्दू धर्म</option>
-											<option value="2">बौद्ध धर्म</option>
-											<option value="3">इस्लाम</option>
-											<option value="4">किराट</option>
-											<option value="5">ईसाई धर्म</option>
-											<option value="6">अन्य / निर्दिष्ट</option>
-										</select>
+									<div class="form-group form-label water_source" th:if="${questionAndOption.type} == 'CHECKBOX'">
+										<label for="house_floor"><h4 th:text="${questionAndOption.desc}">पानी :</h4></label>
+										<div class="form-group form-radio  ">
+											<label th:each="option, indx : ${questionAndOption.options}"><input type="checkbox" name="water_source[]"
+												th:value="${indx.index}" data-event="toggle"
+												data-target="water_source_other" data-value="3"><span th:text="${option}"></span></label>
+										</div>
 									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="citizenship_number"><h4 th:text="${questionAndOptions.get(9).desc}">नागरिकता नं :</h4></label>
-										<input type="text" class="form-control  "
-											id="citizenship_number" name="citizenship_number" value="">
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="citizenship_issue_district"><h4 th:text="${questionAndOptions.get(10).desc}">नागरिकता
-												लिएको जिल्ला :</h4></label> <select class="form-control"
-											name="citizenship_issue_district"
-											id="citizenship_issue_district">
-											<option value=""></option>
-											<option value="1">अछाम</option>
-											<option value="2">अर्घाखाँची</option>
-											<option value="3">बागलुङ</option>
-											<option value="4">बैतडी</option>
-											<option value="5">बझाङ</option>
-											<option value="6">बाजुरा</option>
-											<option value="7">बाँके</option>
-											<option value="8">बारा</option>
-											<option value="9">बर्दिया</option>
-											<option value="10">भक्तपुर</option>
-											<option value="11">भोजपुर</option>
-											<option value="12">चितवन</option>
-											<option value="13">डडेलधुरा</option>
-											<option value="14">दैलेख</option>
-											<option value="15">दाङ</option>
-											<option value="16">दार्चुला</option>
-											<option value="17">धादिङ</option>
-											<option value="18">धनकुटा</option>
-											<option value="19">धनुषा</option>
-											<option value="20">दोलखा</option>
-											<option value="21">डोल्पा</option>
-											<option value="22">डोटी</option>
-											<option value="23">गोरखा</option>
-											<option value="24">गुल्मी</option>
-											<option value="25">हुम्ला</option>
-											<option value="26">इलाम</option>
-											<option value="27">जाजरकोट</option>
-											<option value="28">झापा</option>
-											<option value="29">जुम्ला</option>
-											<option value="30">कैलाली</option>
-											<option value="31">कालिकोट</option>
-											<option value="32">कंचनपुर</option>
-											<option value="33">कपिलवस्तु</option>
-											<option value="34">कास्की</option>
-											<option value="35">काठमाडौँ</option>
-											<option value="36">काभ्रेकाभ्रेपलान्चोक</option>
-											<option value="37">खोटाँग</option>
-											<option value="38">ललितपुर</option>
-											<option value="39">लमजुङ</option>
-											<option value="40">महोत्तरी</option>
-											<option value="41">मकवानपुर</option>
-											<option value="42">मनाङ</option>
-											<option value="43">मोरंग</option>
-											<option value="44">मुगु</option>
-											<option value="45">मुस्ताङ</option>
-											<option value="46">म्याग्दी</option>
-											<option value="47">नवलपरासी_पूर्व</option>
-											<option value="48">नवलपरासी_ पश्चिम</option>
-											<option value="49">नुवाकोट</option>
-											<option value="50">ओखलढुंगा</option>
-											<option value="51">पाल्पा</option>
-											<option value="52">पांचथर</option>
-											<option value="53">पर्वत</option>
-											<option value="54">पर्सा</option>
-											<option value="55">प्युठान</option>
-											<option value="56">रामेछाप</option>
-											<option value="57">रसुवा</option>
-											<option value="58">रौतहट</option>
-											<option value="59">रोल्पा</option>
-											<option value="60">रूकुम_पूर्वी</option>
-											<option value="61">रूकुम_पश्चिम</option>
-											<option value="62">रुपन्देही</option>
-											<option value="63">सल्यान</option>
-											<option value="64">संखुवासभा</option>
-											<option value="65">सप्तरी</option>
-											<option value="66">सर्लाही</option>
-											<option value="67">सिन्धुली</option>
-											<option value="68">सिन्धुपाल्चोक</option>
-											<option value="69">सिराहा</option>
-											<option value="70">सोलुखुम्बू</option>
-											<option value="71">सुनसरी</option>
-											<option value="72">सुर्खेत</option>
-											<option value="73">स्याङग्जा</option>
-											<option value="74">तनहुँ</option>
-											<option value="75">ताप्लेजुंग</option>
-											<option value="76">तेह्रथुम</option>
-											<option value="77">उदयपुर</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="photo"><h4 th:text="${questionAndOptions.get(46).desc}">फोटो :</h4></label> <input type="file"
-											class="form-control  " id="photo" name="photo" value=""
+									<div class="form-group form-label" th:if="${questionAndOption.type} == 'IMAGE'">
+										<label for="photo"><h4 th:text="${questionAndOption.desc}">फोटो :</h4></label> <input type="file"
+											class="form-control  " th:id="'photo' + ${questionAndOption.id}" th:name="'photo' + ${questionAndOption.id}" value=""
 											data-event="change" data-target="photo" accept="image/*">
 
 										<a href="" style="display: none" target="_blank"
 											class="no-pjax"><img src="" style="display: none"
 											class="img-thumbnail photo"></a>
 									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="kita_number"><h4 th:text="${questionAndOptions.get(11).desc}">कित्ता नं :</h4></label> <input
-											type="text" class="form-control  " id="kita_number"
-											name="kita_number" value="">
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="house_numbers"><h4 th:text="${questionAndOptions.get(12).desc}">घर संख्या :</h4></label> <input
-											type="text" class="form-control  " id="house_numbers"
-											name="house_numbers" value="">
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="shop_name"><h4 th:text="${questionAndOptions.get(13).desc}">व्यवसाय :</h4></label> <input
-											type="text" class="form-control  " id="shop_name"
-											name="shop_name" value="">
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="shop_pan"><h4 th:text="${questionAndOptions.get(14).desc}">व्यवसायी :</h4></label> <input
-											type="text" class="form-control  " id="shop_pan"
-											name="shop_pan" value="">
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="shop_phone_number"><h4 th:text="${questionAndOptions.get(15).desc}">फोन नं :</h4></label> <input
-											type="text" class="form-control  " id="shop_phone_number"
-											name="shop_phone_number" value="">
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="house_floor"><h4 th:text="${questionAndOptions.get(16).desc}">घरको तल्ला :</h4></label> <input
-											type="text" class="form-control numeric  " id="house_floor"
-											name="house_floor" value="">
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label water_source">
-										<label for="house_floor"><h4 th:text="${questionAndOptions.get(17).desc}">पानी :</h4></label>
+									
+									<div class="form-group form-label foreign_study" th:if="${questionAndOption.type} == 'CHECKBOX_N'">
+										<label for="house_floor"><h4  th:text="${questionAndOption.desc}"> बैदेशिक अध्ययन :</h4> </label>
 										<div class="form-group form-radio  ">
-											<label><input type="checkbox" name="water_source[]"
-												value="1" data-event="toggle"
-												data-target="water_source_other" data-value="3">धारा</label>
-											<label><input type="checkbox" name="water_source[]"
-												value="2" data-event="toggle"
-												data-target="water_source_other" data-value="3">इनार</label>
-											<label><input type="checkbox" name="water_source[]"
-												value="3" data-event="toggle"
-												data-target="water_source_other" data-value="3">अन्य</label>
-										</div>
-										<div class="col-md-6 row water_source_other"
-											style="display: none;">
-											<input type="text" name="water_source_other"
-												class="form-control " placeholder="खुलाउनु होस्" value="">
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="house_floor"><h4 th:text="${questionAndOptions.get(18).desc}">निकासा :</h4></label> <select
-											name="drainage" id="drainage" class="form-control  ">
-											<option value=""></option>
-											<option value="1">ढल</option>
-											<option value="2">सेफ्टी ट्यांकी</option>
-											<option value="3">छैन</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label vehicle">
-										<label for="house_floor"><h4 th:text="${questionAndOptions.get(19).desc}">सवारी साधन :</h4></label>
-										<div class="form-group form-radio  ">
-											<label><input type="checkbox" name="vehicle[]"
-												value="1" data-event="toggle" data-target="vehicle_other"
-												data-value="4">मोटर</label> <label><input
-												type="checkbox" name="vehicle[]" value="2"
-												data-event="toggle" data-target="vehicle_other"
-												data-value="4">मो.साईकल</label> <label><input
-												type="checkbox" name="vehicle[]" value="3"
-												data-event="toggle" data-target="vehicle_other"
-												data-value="4">साईकल</label> <label><input
-												type="checkbox" name="vehicle[]" value="4"
-												data-event="toggle" data-target="vehicle_other"
-												data-value="4">अन्य</label>
-										</div>
-										<div class="col-md-6 row vehicle_other" style="display: none;">
-											<input type="text" name="vehicle_other" class="form-control "
-												placeholder="खुलाउनु होस्" value="">
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="house_structure"><h4 th:text="${questionAndOptions.get(20).desc}">घरको बनोैट :</h4> </label> <select
-											class="form-control" name="house_structure"
-											id="house_structure">
-											<option value=""></option>
-											<option value="1">पुरानो</option>
-											<option value="2">नयाँ</option>
-											<option value="3">आ.सि.सि</option>
-											<option value="4">टहरा</option>
-											<option value="5">लोड बेयरिङ्ग</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="house_current_use"><h4 th:text="${questionAndOptions.get(21).desc}">वर्तमान उपयोग
-												:</h4></label> <select name="house_current_use" id="house_current_use"
-											class="form-control">
-											<option value=""></option>
-											<option value="1">आफै</option>
-											<option value="2">सम्पूर्ण भाडा</option>
-											<option value="3">आंशिक भाडा</option>
-											<option value="4">सराई</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="house_road_situation"><h4>सडकको भौतिक
-												अवस्था :</h4></label> <select class="form-control"
-											name="house_road_situation" id="house_road_situation">
-											<option value=""></option>
-											<option value="1">कालोपत्र</option>
-											<option value="2">ग्राभेल</option>
-											<option value="3">कच्ची</option>
-											<option value="4">गोरेटो</option>
-											<option value="5">ईट्टा वा ढुंगा छपाई</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label foreign_employment">
-										<label for="house_floor"><h4>बैदेशिक रोजगार :</h4> </label>
-										<div class="form-group form-radio  ">
-											<label> <input type="checkbox"
-												name="foreign_employment[0]" value="1" data-event="toggle"
-												data-target="foreign_employment_source_first" data-value="1">गल्फ
-												<input type="text" name="foreign_employment_source_count[0]"
-												class="numeric foreign_employment_source_first"
+											<label th:each="option,indx : ${questionAndOption.options}"> <input type="checkbox"
+												th:name="'foreign_study[' + ${indx.index}+ ${i.index + 1} +']'" th:value="${indx.index}" data-event="toggle"
+												th:data-target="'foreign_study_source_' + ${indx.index} + ${questionAndOption.id}" th:data-value="${indx.index}"><span th:text = "${option}"></span>
+												<input type="text" th:name="'foreign_study_source_count[' + ${indx.index} + ${questionAndOption.id} + ']'"
+												class = "numeric" th:class="'foreign_study_source_' + ${indx.index} + ${questionAndOption.id}"
 												placeholder="संख्या खुलाउनु होस्" value=" 1 "
 												style="width: 50px; display: none">
-											</label> <label> <input type="checkbox"
-												name="foreign_employment[1]" value="2" data-event="toggle"
-												data-target="foreign_employment_source_second"
-												data-value="2">यूरोप <input type="text"
-												name="foreign_employment_source_count[1]"
-												class="numeric foreign_employment_source_second"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none">
-											</label> <label><input type="checkbox"
-												name="foreign_employment[2]" value="3" data-event="toggle"
-												data-target="foreign_employment_source_third" data-value="3">एसिया
-												<input type="text" name="foreign_employment_source_count[2]"
-												class="numeric foreign_employment_source_third"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none"> </label> <label><input
-												type="checkbox" name="foreign_employment[3]" value="4"
-												data-event="toggle"
-												data-target="foreign_employment_source_fourth"
-												data-value="4">अन्य <input type="text"
-												name="foreign_employment_source_count[3]"
-												class="numeric foreign_employment_source_fourth"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none"> </label>
+											</label> 
 										</div>
 									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label foreign_study">
-										<label for="house_floor"><h4>बैदेशिक अध्ययन :</h4> </label>
+									
+									<div class="form-group form-label water_source" th:if="${questionAndOption.type} == 'RATING_M'">
+										<label for="house_floor"><h4 th:text="${questionAndOption.desc}">पानी :</h4></label>
 										<div class="form-group form-radio  ">
-											<label> <input type="checkbox"
-												name="foreign_study[0]" value="1" data-event="toggle"
-												data-target="foreign_study_source_first" data-value="1">अष्ट्रेलिया
-												<input type="text" name="foreign_study_source_count[0]"
-												class="numeric foreign_study_source_first"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none">
-											</label> <label> <input type="checkbox"
-												name="foreign_study[1]" value="2" data-event="toggle"
-												data-target="foreign_study_source_second" data-value="2">यू.के
+											<label th:each="option, indx : ${questionAndOption.options}"><span th:text="${option}"></span><select>
+											<option value=""></option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="7">7</option>
+											</select></label>
+										</div>
+									</div>
+									
+									<div class="form-group form-label" th:if="${questionAndOption.type} == 'GPS'">
+										<label for="photo"><h4 th:text="${questionAndOption.desc}">फोटो :</h4></label> <input type="button"
+											class="form-control  " th:id="'photo' + ${questionAndOption.id}" th:name="'photo' + ${questionAndOption.id}" value=""
+											data-event="change" data-target="photo" accept="image/*">
 
-												<input type="text" name="foreign_study_source_count[1]"
-												class="numeric foreign_study_source_second"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none">
-											</label> <label><input type="checkbox"
-												name="foreign_study[2]" value="3" data-event="toggle"
-												data-target="foreign_study_source_third" data-value="3">यू.एस.ए
-												<input type="text" name="foreign_study_source_count[2]"
-												class="numeric foreign_study_source_third"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none"> </label> <label><input
-												type="checkbox" name="foreign_study[3]" value="4"
-												data-event="toggle"
-												data-target="foreign_study_source_fourth" data-value="4">अन्य
-												<input type="text" name="foreign_study_source_count[3]"
-												class="numeric foreign_study_source_fourth"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none"> </label>
-										</div>
 									</div>
+									
+									
+									
 								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label child_work">
-										<label for="house_floor"><h4>१६ वर्ष सम्मका
-												बालबालिका अन्य ठाउँमा काम गर्न गएका छन :</h4></label>
-										<div class="form-group form-radio  ">
-											<label> <input type="checkbox" name="child_work[0]"
-												value="1" data-event="toggle"
-												data-target="child_work_source_first" data-value="1">दैनिक
-												ज्यादारी <input type="text"
-												name="child_work_source_count[0]"
-												class="numeric child_work_source_first"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none">
-											</label> <label> <input type="checkbox" name="child_work[1]"
-												value="2" data-event="toggle"
-												data-target="child_work_source_second" data-value="2">कलकारखाना
-												मजदुर <input type="text" name="child_work_source_count[1]"
-												class="numeric child_work_source_second"
-												placeholder="संख्या खुलाउनु होस्" value="  1 "
-												style="width: 50px; display: none">
-											</label> <label><input type="checkbox" name="child_work[2]"
-												value="3" data-event="toggle"
-												data-target="child_work_source_third" data-value="3">यातायात
-												मजदुर <input type="text" name="child_work_source_count[2]"
-												class="numeric child_work_source_third"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none"> </label> <label><input
-												type="checkbox" name="child_work[3]" value="4"
-												data-event="toggle" data-target="child_work_source_fourth"
-												data-value="4">उत्पादन मजदुर <input type="text"
-												name="child_work_source_count[3]"
-												class="numeric child_work_source_fourth"
-												placeholder="संख्या खुलाउनु होस्" value="  1 "
-												style="width: 50px; display: none"> </label> <label><input
-												type="checkbox" name="child_work[4]" value="5"
-												data-event="toggle" data-target="child_work_source_fifth"
-												data-value="5">घरेलु कामदार <input type="text"
-												name="child_work_source_count[4]"
-												class="numeric child_work_source_fifth"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none"> </label> <label><input
-												type="checkbox" name="child_work[5]" value="6"
-												data-event="toggle" data-target="child_work_source_sixth"
-												data-value="6">अन्य <input type="text"
-												name="child_work_source_count[5]"
-												class="numeric child_work_source_sixth"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none"> </label>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label waste_management">
-										<label for="house_floor"><h4>घरबाट उत्पादन भएको
-												पोहोरका व्यवस्था :</h4></label>
-										<div class="form-group form-radio  ">
-											<label> <input type="checkbox"
-												name="waste_management[]" value="1" data-event="toggle"
-												data-target="waste_management_source" data-value="4">मल
-												बनाउनु
-											</label> <label> <input type="checkbox"
-												name="waste_management[]" value="2" data-event="toggle"
-												data-target="waste_management_source" data-value="4">निजि
-												संकलन
-											</label> <label><input type="checkbox"
-												name="waste_management[]" value="3" data-event="toggle"
-												data-target="waste_management_source" data-value="4">महानगरको
-												गाडीमा पठाउने </label> <label><input type="checkbox"
-												name="waste_management[]" value="4" data-event="toggle"
-												data-target="waste_management_source" data-value="4">अन्य
-											</label>
-										</div>
-										<div class="col-md-6 row waste_management_source"
-											style="display: none;">
-											<input type="text" name="waste_management_source"
-												class="form-control " placeholder="खुलाउनु होस्" value="">
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label electricity">
-										<label for="house_floor"><h4>बती :</h4></label>
-										<div class="form-group form-radio  ">
-											<label> <input type="checkbox" name="electricity[]"
-												value="1" data-event="toggle"
-												data-target="electricity_source" data-value="7">बिधुत
-											</label> <label> <input type="checkbox" name="electricity[]"
-												value="2" data-event="toggle"
-												data-target="electricity_source" data-value="7">जेनिरेटर
-											</label> <label><input type="checkbox" name="electricity[]"
-												value="3" data-event="toggle"
-												data-target="electricity_source" data-value="7">गोबर
-												ग्याँस </label> <label><input type="checkbox"
-												name="electricity[]" value="4" data-event="toggle"
-												data-target="electricity_source" data-value="7">सोलार
-											</label> <label><input type="checkbox" name="electricity[]"
-												value="5" data-event="toggle"
-												data-target="electricity_source" data-value="7">मट्टीतेल
-											</label> <label><input type="checkbox" name="electricity[]"
-												value="6" data-event="toggle"
-												data-target="electricity_source" data-value="7">इन्भटर
-												अथवा ब्याट्री </label> <label><input type="checkbox"
-												name="electricity[]" value="7" data-event="toggle"
-												data-target="electricity_source" data-value="7">अन्य
-											</label>
-										</div>
-										<div class="col-md-6 row electricity_source"
-											style="display: none;">
-											<input type="text" name="electricity_source"
-												class="form-control " placeholder="खुलाउनु होस्" value="">
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label cooking_source">
-										<label for="house_floor"><h4>खाना पकाउन प्रयोग
-												हुने इन्धन :</h4></label>
-										<div class="form-group form-radio  ">
-											<label> <input type="checkbox"
-												name="cooking_source[]" value="1" data-event="toggle"
-												data-target="cooking_source_source" data-value="4">LP
-												ग्याँस
-											</label> <label> <input type="checkbox"
-												name="cooking_source[]" value="2" data-event="toggle"
-												data-target="cooking_source_source" data-value="4">मट्टीतेल
-											</label> <label><input type="checkbox"
-												name="cooking_source[]" value="3" data-event="toggle"
-												data-target="cooking_source_source" data-value="4">दाउरा
-											</label> <label><input type="checkbox"
-												name="cooking_source[]" value="4" data-event="toggle"
-												data-target="cooking_source_source" data-value="4">अन्य
-											</label>
-										</div>
-										<div class="col-md-6 row cooking_source_source"
-											style="display: none;">
-											<input type="text" name="cooking_source_source"
-												class="form-control " placeholder="खुलाउनु होस्" value="">
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label communication_facility">
-										<label for="communication_facility"><h4>संचार
-												सुविधा :</h4></label>
-										<div class="form-group form-radio  ">
-											<label> <input type="checkbox"
-												name="communication_facility[]" value="1"
-												data-event="toggle"
-												data-target="communication_facility_source" data-value="6">टेलिफोन
-											</label> <label> <input type="checkbox"
-												name="communication_facility[]" value="2"
-												data-event="toggle"
-												data-target="communication_facility_source" data-value="6">इन्टरनेट
-											</label> <label><input type="checkbox"
-												name="communication_facility[]" value="3"
-												data-event="toggle"
-												data-target="communication_facility_source" data-value="6">मोबाइल
-											</label> <label><input type="checkbox"
-												name="communication_facility[]" value="4"
-												data-event="toggle"
-												data-target="communication_facility_source" data-value="6">टेलिभिजन
-											</label> <label><input type="checkbox"
-												name="communication_facility[]" value="5"
-												data-event="toggle"
-												data-target="communication_facility_source" data-value="6">रेडियो
-											</label> <label><input type="checkbox"
-												name="communication_facility[]" value="6"
-												data-event="toggle"
-												data-target="communication_facility_source" data-value="6">अन्य
-											</label>
-										</div>
-										<div class="col-md-6 row communication_facility_source"
-											style="display: none;">
-											<input type="text" name="communication_facility_source"
-												class="form-control " placeholder="खुलाउनु होस्" value="">
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="house_details"><h4>घर जग्गाको विवरण :</h4></label>
-										<input type="text" class="form-control  " id="house_details"
-											name="house_details" value="">
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="yearly_income"><h4>वार्षिक आम्दानी :</h4></label>
-										<select class="form-control" name="yearly_income"
-											id="yearly_income">
-											<option value=""></option>
-											<option value="1">१,००,०००/- भन्दा कम</option>
-											<option value="2">१,००,००१/- देखि २,५०,०००/-</option>
-											<option value="3">२,५०,००१/- देखि ४,००,०००</option>
-											<option value="4">४,००,००१/- देखि ६,००,०००</option>
-											<option value="5">६,००,०००१/- देखि ८,००,०००</option>
-											<option value="6">८,००,०००१/- भन्दा माथि</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="yearly_expense"><h4>वार्षिक खर्च :</h4></label> <select
-											class="form-control" name="yearly_expense"
-											id="yearly_expense">
-											<option value=""></option>
-											<option value="1">१,००,०००/- भन्दा कम</option>
-											<option value="2">१,००,००१/- देखि २,५०,०००/-</option>
-											<option value="3">२,५०,००१/- देखि ४,००,०००</option>
-											<option value="4">४,००,००१/- देखि ६,००,०००</option>
-											<option value="5">६,००,०००१/- देखि ८,००,०००</option>
-											<option value="6">८,००,०००१/- भन्दा माथि</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label cattle">
-										<label for="house_floor"><h4>चौपाया तथा पशुपंशी :</h4></label>
-										<div class="form-group form-radio  ">
-											<label> <input type="checkbox" name="cattle[0]"
-												value="1" data-event="toggle"
-												data-target="cattle_source_first" data-value="1">गाई
-												<input type="text" name="cattle_source_count[0]"
-												class="numeric cattle_source_first"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none">
-											</label> <label> <input type="checkbox" name="cattle[1]"
-												value="2" data-event="toggle"
-												data-target="cattle_source_second" data-value="2">भैसी
-												<input type="text" name="cattle_source_count[1]"
-												class="numeric cattle_source_second"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none">
-											</label> <label> <input type="checkbox" name="cattle[2]"
-												value="3" data-event="toggle"
-												data-target="cattle_source_third" data-value="3">गोरु
-												<input type="text" name="cattle_source_count[2]"
-												class="numeric cattle_source_third"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none">
-											</label> <label> <input type="checkbox" name="cattle[3]"
-												value="4" data-event="toggle"
-												data-target="cattle_source_fourth" data-value="4">बाख्रा
-												<input type="text" name="cattle_source_count[3]"
-												class="numeric cattle_source_fourth"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none">
-											</label> <label> <input type="checkbox" name="cattle[4]"
-												value="5" data-event="toggle"
-												data-target="cattle_source_fifth" data-value="5">बोको
-												<input type="text" name="cattle_source_count[4]"
-												class="numeric cattle_source_fifth"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none">
-											</label> <label> <input type="checkbox" name="cattle[5]"
-												value="6" data-event="toggle"
-												data-target="cattle_source_sixth" data-value="6">भेडा
-												<input type="text" name="cattle_source_count[5]"
-												class="numeric cattle_source_sixth"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none">
-											</label> <label> <input type="checkbox" name="cattle[6]"
-												value="7" data-event="toggle"
-												data-target="cattle_source_seventh" data-value="7">च्याङग्रा
-												<input type="text" name="cattle_source_count[6]"
-												class="numeric cattle_source_seventh"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none">
-											</label> <label> <input type="checkbox" name="cattle[7]"
-												value="8" data-event="toggle"
-												data-target="cattle_source_eighth" data-value="8">कुकुर
-												<input type="text" name="cattle_source_count[7]"
-												class="numeric cattle_source_eighth"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none">
-											</label> <label> <input type="checkbox" name="cattle[8]"
-												value="9" data-event="toggle"
-												data-target="cattle_source_ninenth" data-value="9">हाँस
-												<input type="text" name="cattle_source_count[8]"
-												class="numeric cattle_source_ninenth"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none">
-											</label> <label> <input type="checkbox" name="cattle[9]"
-												value="10" data-event="toggle"
-												data-target="cattle_source_ten" data-value="10">कुखुरा
-												<input type="text" name="cattle_source_count[9]"
-												class="numeric cattle_source_ten"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none">
-											</label> <label> <input type="checkbox" name="cattle[10]"
-												value="11" data-event="toggle"
-												data-target="cattle_source_eleven" data-value="11">अन्य
-												<input type="text" name="cattle_source_count[10]"
-												class="numeric cattle_source_eleven"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none">
-											</label> <label> <input type="checkbox" name="cattle[10]"
-												value="12">छैन <input type="text"
-												name="cattle_source_count[12]" class="numeric"
-												placeholder="संख्या खुलाउनु होस्" value=" 0 "
-												style="width: 50px; display: none">
-											</label>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-4">
-									<div class="form-group form-label">
-										<label for="cultivation_consumption"><h4>आफ्नो
-												उत्पादन तथा आय स्रोतले कति महिना खान पुग्छ? :</h4></label> <select
-											class="form-control" name="cultivation_consumption"
-											id="cultivation_consumption">
-											<option value=""></option>
-											<option value="1">३ महिना</option>
-											<option value="2">४-६ महिना</option>
-											<option value="3">७-९ महिना</option>
-											<option value="4">९ महिना भन्दा बढी</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-lg-4 col-md-4">
-									<div class="form-group form-label">
-										<label for="training"><h4>सिप तालिम पहिला
-												लिनुभएको छ ? :</h4></label> <select class="form-control" name="training"
-											id="training">
-											<option value=""></option>
-											<option value="1">छ</option>
-											<option value="2">छैन</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-lg-4 col-md-4">
-									<div class="form-group form-label">
-										<label for="future_training"><h4>भविष्यमा कस्तो
-												सिप तालिम गर्नु पर्ला? :</h4></label> <input type="text"
-											class="form-control  " id="future_training"
-											name="future_training" value="">
-									</div>
-								</div>
-								<div class="col-lg-4 col-md-4">
-									<div class="form-group form-label">
-										<select id="documents_copy" class="form-control">
-											<option value="citizenship_copy">नागरिकता</option>
-											<option value="relation_certificate_copy">नाता
-												प्रमाणपत्र</option>
-											<option value="house_map_copy">घरको पास भएको नक्सा</option>
-											<option value="others_file_copy">अन्य</option>
-										</select>
-									</div>
-									<div
-										class="form-group form-label citizenship_copy documents_hide">
-										<input type="file" class="form-control  "
-											id="citizenship_copy" name="citizenship_copy" value=""
-											data-event="change" data-target="citizenship_copy"
-											accept="image/*">
-									</div>
-									<div
-										class="form-group form-label relation_certificate_copy documents_hide"
-										style="display: none;">
-										<input type="file" class="form-control  "
-											id="relation_certificate_copy"
-											name="relation_certificate_copy" value="" data-event="change"
-											data-target="relation_certificate_copy" accept="image/*">
-									</div>
-									<div
-										class="form-group form-label house_map_copy documents_hide"
-										style="display: none;">
-										<input type="file" class="form-control  " id="house_map_copy"
-											name="house_map_copy" value="" data-event="change"
-											data-target="house_map_copy" accept="image/*">
-									</div>
-									<div
-										class="form-group form-label others_file_copy documents_hide"
-										style="display: none;">
-										<input type="file" class="form-control  "
-											id="others_file_copy" name="others_file_copy" value=""
-											data-event="change" data-target="others_file_copy"
-											accept="image/*">
-									</div>
-									<div style="display: flex;">
-										<div>
-
-											<a href="" style="display: none" target="_blank"
-												class="no-pjax"> <img src="" style="display: none"
-												class="img-thumbnail citizenship_copy">
-											</a>
-										</div>
-										<div>
-
-											<a href="" style="display: none" target="_blank"
-												class="no-pjax"><img src="" style="display: none"
-												class="img-thumbnail relation_certificate_copy"></a>
-										</div>
-										<div>
-
-											<a href="" style="display: none" target="_blank"
-												class="no-pjax"><img src="" style="display: none"
-												class="img-thumbnail house_map_copy"></a>
-										</div>
-										<div>
-
-											<a href="" style="display: none" target="_blank"
-												class="no-pjax"><img src="" style="display: none"
-												class="img-thumbnail others_file_copy"></a>
-										</div>
-									</div>
-								</div>
+							
+							<!--Dynamic code ends  -->
+							
 							</div>
 							<div class="row">
 								<div class="col-lg-4 col-md-4">
@@ -914,7 +200,7 @@
 							</div>
 							<input type="submit" class="btn btn-primary px-5"
 								name="category-submit-name" value="Add House"
-								style="margin-top: 10px">
+								style="margin-top: 10px" id="submit_btn">
 						</form>
 					</div>
 				</div>
@@ -928,6 +214,7 @@
 
 
 
+	<script th:src="@{/assets/customjs/savehousehold.js}" src="assets/customjs/savehousehold.js"></script>
 	<script th:src="@{/assets/js/popper.min.js}"
 		src="assets/js/popper.min.js"></script>
 
