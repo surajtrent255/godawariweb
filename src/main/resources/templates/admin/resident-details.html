@@ -240,7 +240,8 @@
 											<td><strong>व्यवसाय</strong>: <strong
 												th:text="${residentFullDetail.residentDetail.answer15}"></strong></td>
 											<td><strong>व्यवसायी</strong>: <strong
-												th:text="${residentFullDetail.residentDetail.answer16}"> </strong> <strong>फोन
+												th:text="${residentFullDetail.residentDetail.answer16}"> </strong>
+											 <strong>फोन
 													नं</strong>: <strong th:text="${residentFullDetail.residentDetail.answer17}">
 											</strong></td>
 										</tr>
@@ -419,9 +420,16 @@
 			const attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors';
 	
 			
-			const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-			const tiles = L.tileLayer(tileUrl, {attribution});
-			tiles.addTo(mymap);
+// 			const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+// 			const tiles = L.tileLayer(tileUrl, {attribution});
+// 			tiles.addTo(mymap);
+			
+			L.tileLayer('http://{s}.google.com/vt/lyrs=y,h&x={x}&y={y}&z={z}',{
+				attribution: 'Map data &copy; 2020 Google',
+			    maxZoom: 20,
+			    subdomains:['mt0','mt1','mt2','mt3']
+			}).addTo(mymap);
+			
 			
 			marker = L.marker([geoLat, geoLong]).addTo(mymap);	
 			
