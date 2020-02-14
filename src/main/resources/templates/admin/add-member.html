@@ -60,7 +60,8 @@
 	margin-left: 0;
 }
 </style>
-<script src="https://www.lalitpur15.org/datasys/public/js/jquery.min.js"></script>
+<script th:src="@{/assets/js/jquery.min.js}"
+	src="assets/js/jquery.min.js"></script>
 </head>
 <body>
 	<div id="wrapper">
@@ -127,33 +128,9 @@
 									</div>
 									<div class="col-lg-4 col-md-4 mb-2">
 										<div class="padding">
-											<label for="relation"><h4>नाता :</h4></label> <select
-												id="relation" name="relation" class="form-control required">
-												<option value="1">हजुरआमा</option>
-												<option value="2">हजुरबुवा</option>
-												<option value="3">बुवा</option>
-												<option value="4">आमा</option>
-												<option value="5">छोरा</option>
-												<option value="6">छोरी</option>
-												<option value="7">नाती</option>
-												<option value="8">नातिनी</option>
-												<option value="9">दिदि</option>
-												<option value="10">भाई</option>
-												<option value="11">दाई</option>
-												<option value="12">बुहारी</option>
-												<option value="13">श्रीमती</option>
-												<option value="14">श्रीमान</option>
-												<option value="15">बुहारी</option>
-												<option value="16">भाउजु</option>
-												<option value="17">बहिनी</option>
-												<option value="18">आाफै</option>
-												<option value="19">भान्जा</option>
-												<option value="20">भान्जी</option>
-												<option value="21">भतिजा</option>
-												<option value="22">भातिजी</option>
-												<option value="23">सासु</option>
-												<option value="24">ससुरा</option>
-												<option value="25">ज्वाईं</option>
+											<label for="relation"><h4>नाता :</h4></label> 
+											<select id="relation" name="relation" class="form-control required">
+												<option th:each="relation, iteration : ${memberFormDetails.relation}" th:value="${iteration.index + 1}" th:text="${relation}"></option>
 											</select>
 										</div>
 									</div>
@@ -161,9 +138,7 @@
 										<div class="padding">
 											<label for="gender"><h4>लिङ्ग :</h4></label> <select
 												id="gender" name="gender" class="form-control required">
-												<option value="1">पुरुष्</option>
-												<option value="2">महिला</option>
-												<option value="3">अरु</option>
+												<option th:each="gender, iteration : ${memberFormDetails.gender}" th:value="${iteration.index + 1}" th:text="${gender}"></option>
 											</select>
 										</div>
 									</div>
@@ -171,7 +146,7 @@
 										<div class="padding">
 											<label for="age"><h4>उमेर :</h4></label> <input type="text"
 												id="age" name="age" class="form-control age required" value="">
-											<input type="hidden" name="age" class="age" value="">
+<!-- 											<input type="hidden" name="age" class="age" value=""> -->
 										</div>
 									</div>
 									<div class="col-lg-4 col-md-4 mb-2">
@@ -186,9 +161,7 @@
 											<label><h4>वैवाहिक स्थिति :</h4></label> <select
 												name="marital_status" id="marital_status"
 												class="form-control required">
-												<option value=""></option>
-												<option value="1">विवाहित</option>
-												<option value="0">अविवाहित</option>
+												<option th:each="maritalStatus, iteration : ${memberFormDetails.maritalStatus}" th:value="${iteration.index + 1}" th:text="${maritalStatus}"></option>
 											</select>
 										</div>
 									</div>
@@ -197,15 +170,7 @@
 											<label for="education"><h4>सैक्षिक योग्येता</h4></label> <select
 												id="education" name="education"
 												class="form-control required">
-												<option value="1">पिएचडि</option>
-												<option value="2">एमफिल</option>
-												<option value="3">मास्टर डिग्री(स्नातकोत्तर)</option>
-												<option value="4">स्नाताक</option>
-												<option value="5">उच्च विद्यालय</option>
-												<option value="6">माध्यमिक</option>
-												<option value="7">तल्लो माध्यमिक</option>
-												<option value="8">प्राथमिक</option>
-												<option value="9">सामान्य शिक</option>
+												<option th:each="education, iteration : ${memberFormDetails.education}" th:value="${iteration.index + 1}" th:text="${education}"></option>
 											</select>
 										</div>
 									</div>
@@ -221,7 +186,6 @@
 											<label><h4>मतदाता परिचयपत्र :</h4></label> <select
 												class="form-control required" name="voter_card"
 												id="voter_card">
-												<option value=""></option>
 												<option value="1">छ</option>
 												<option value="0">छैन</option>
 											</select>
@@ -232,9 +196,8 @@
 											<label><h4>स्थायी ठेगाना :</h4></label> <select
 												class="form-control required" name="migration"
 												id="migration"> 
-												<option value=""></option>
 												<option value="1">स्थायी जन्म</option>
-												<option value="0">बसाई सराई</option>
+												<option value="2">बसाई सराई</option>
 											</select>
 										</div>
 									</div>
@@ -364,11 +327,12 @@
 			}
 		});
 	});
-	
 	});
 	
-	
-	
+//     $("#date_of_birth").nepaliDatePicker({
+//         dateFormat: "%y-%m-%d",
+//         closeOnDateSelect: true
+//     });
 	
  	</script>
 	

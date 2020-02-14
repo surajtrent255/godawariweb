@@ -9,4 +9,5 @@ public interface ResidentService {
 	Response<?> getResidentDataList();
 	Response<?> getResidentFullDetail(String filledId);
 	void addFamilyMember(FamilyMemberDTO familyMemberInfo);
+	Response<?> getMemberFormDetails();
 }
