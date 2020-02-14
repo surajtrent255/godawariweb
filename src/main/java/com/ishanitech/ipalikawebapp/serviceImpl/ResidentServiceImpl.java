@@ -8,6 +8,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 
 import com.ishanitech.ipalikawebapp.dto.FamilyMemberDTO;
+import com.ishanitech.ipalikawebapp.dto.MemberFormDetailsDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDetailDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
@@ -44,6 +45,12 @@ public class ResidentServiceImpl implements ResidentService {
 		log.info(familyMemberInfo.toString());
 		restTemplate.postForObject("http://localhost:8888/resident/member/", familyMemberInfo, String.class);
 		
+	}
+
+	@Override
+	public Response<?> getMemberFormDetails() {
+		Response<MemberFormDetailsDTO> memberFormDetails = restTemplate.getForObject("http://localhost:8888/resident/memberFormDetails/", Response.class);
+		return memberFormDetails;
 	}
 
 }

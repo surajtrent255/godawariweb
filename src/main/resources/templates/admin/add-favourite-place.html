@@ -123,7 +123,24 @@
 												type="number" id="placeWard" name="favWard" th:field="*{placeWard}"
 												class="form-control required" value="">
 										</div>
+										
 									</div>
+									<div class="col-lg-4 col-md-4 mb-2">
+										<div class="padding">
+											<label for="placeType"><h4>Type of Place:</h4></label> <br>
+<!-- 											<input -->
+<!-- 												type="number" id="placeType" name="placeType" -->
+<!-- 												th:field="*{placeType}" class="form-control required" -->
+<!-- 												value="">  -->
+												<select th:field="*{placeType}">
+												<option th:each="place, iteration : ${placeTypes}"
+													th:value="${iteration.index + 1}" th:text="${place}"></option>
+											</select>
+
+										</div>
+									</div>
+									
+									
 									<div class="col-lg-4 col-md-4 mb-2">
 										<div class="padding">
 											<label for="favDesc"><h4>Description</h4></label>
@@ -370,12 +387,6 @@
 				closeOnDateSelect : true
 			});
 		});
-		
-		
-		
-		
-		
-		
 		
 		
 	</script>

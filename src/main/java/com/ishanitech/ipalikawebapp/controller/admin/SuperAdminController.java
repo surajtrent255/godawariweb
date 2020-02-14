@@ -59,6 +59,7 @@ public class SuperAdminController {
 	@GetMapping("/addMemberForm/{residentFilledId}")
 	public String getMemberEntryForm(@PathVariable ("residentFilledId") String residentFilledId, Model model) {
 		model.addAttribute("residentFilledId", residentFilledId);
+		model.addAttribute("memberFormDetails", residentService.getMemberFormDetails().getData());
 		return "admin/add-member";
 	}
 
@@ -104,6 +105,8 @@ public class SuperAdminController {
 	
 	@GetMapping("/favouritePlaceAdd")
 	public String getFavouritePlaceEntryView(Model model) {
+		
+		model.addAttribute("placeTypes", favouritePlacesService.getTypesofFavourtiePlaces());
 		model.addAttribute("favPlaceObj", new FavouritePlaceDTO());
 		return "admin/add-favourite-place";
 	}
