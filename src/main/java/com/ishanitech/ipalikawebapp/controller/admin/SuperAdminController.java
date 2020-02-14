@@ -53,6 +53,8 @@ public class SuperAdminController {
 	public String getHouseholdEntryForm(Model model) {
 		model.addAttribute("answer", new AnswerDTO());
 		model.addAttribute("questionAndOptions", formService.getFullFormDetailById(1));
+		model.addAttribute("districts", formService.getListofDistricts().getData());
+		
 		return "admin/add-household";
 	}
 
