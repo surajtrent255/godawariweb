@@ -76,6 +76,15 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		}
 		map.add("picture", contentsAsResource);
 		restTemplate.postForObject("http://localhost:8888/favourite-place/image", map, String.class);
+//		restTemplate.postForObject("http://localhost:8888/favourite-place/image", file, String.class);
+	}
+
+
+
+	@Override
+	public List<String> getTypesofFavourtiePlaces() {
+		Response<List<String>> favPlaceTypes = restTemplate.getForObject("http://localhost:8888/favourite-place/types", Response.class);
+		return favPlaceTypes.getData();
 	}
 
 }

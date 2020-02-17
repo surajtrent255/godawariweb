@@ -3,7 +3,6 @@ package com.ishanitech.ipalikawebapp.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ishanitech.ipalikawebapp.dto.FavouritePlaceDTO;
@@ -53,9 +51,6 @@ public class FavouritePlacesController {
         String imageFileName = "JPEG_" + favouritePlaceInfo.getFilledId() + "_" + captureId + ".JPG";;
         favouritePlaceInfo.setPlaceImage(imageFileName);
      
-        
-        
-        
 		log.info("#################################################");
 		log.info(file.getOriginalFilename().toString());
 		
@@ -71,8 +66,6 @@ public class FavouritePlacesController {
 		log.info(favouritePlaceInfo.getPlaceWard());
 		log.info(favouritePlaceInfo.getPlaceImage());
 		log.info(favouritePlaceInfo.getPlaceGPS());
-		
-		favouritePlaceInfo.setPlaceType("Temple");
 		
 		favouritePlacesService.addFavouritePlaceInfo(favouritePlaceInfo);
 		

@@ -27,4 +27,10 @@ public class FormServiceImpl implements FormService {
 		return formDetail.getData();
 	}
 
+	@Override
+	public Response<List<String>> getListofDistricts() {
+		Response<List<String>> districts = restTemplate.getForObject("http://localhost:8888/form-detail/districts", Response.class);
+		return districts;
+	}
+
 }

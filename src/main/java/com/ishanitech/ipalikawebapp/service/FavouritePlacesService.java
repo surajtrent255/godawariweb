@@ -19,4 +19,6 @@ public interface FavouritePlacesService {
 
 	void addFavouritePlaceImage(MultipartFile file);
 
+	List<String> getTypesofFavourtiePlaces();
+
 }

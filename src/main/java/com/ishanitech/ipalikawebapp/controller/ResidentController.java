@@ -27,9 +27,6 @@ public class ResidentController {
 		this.residentService = residentService;
 	}
 
-
-
-
 	@PostMapping(value = "/add", consumes = "application/json")
 	public void addFamilyMember(@RequestBody FamilyMemberDTO familyMemberInfo, @AuthenticationPrincipal UserDTO user) {
 		

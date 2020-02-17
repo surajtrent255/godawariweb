@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ishanitech.ipalikawebapp.dto.FamilyMemberDTO;
+import com.ishanitech.ipalikawebapp.dto.MemberFormDetailsDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDetailDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
@@ -50,6 +51,12 @@ public class ResidentServiceImpl implements ResidentService {
 		RequestEntity requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, familyMemberInfo, MediaType.APPLICATION_JSON, token, "http://localhost:8888/resident/member/");
 		restTemplate.postForObject("http://localhost:8888/resident/member/", requestEntity, String.class);
 		
+	}
+
+	@Override
+	public Response<?> getMemberFormDetails() {
+		Response<MemberFormDetailsDTO> memberFormDetails = restTemplate.getForObject("http://localhost:8888/resident/memberFormDetails/", Response.class);
+		return memberFormDetails;
 	}
 
 }
