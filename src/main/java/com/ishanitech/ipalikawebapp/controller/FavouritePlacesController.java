@@ -48,7 +48,7 @@ public class FavouritePlacesController {
         favouritePlaceInfo.setFilledId(dateFormat.format(presentDate));
 
         
-        String imageFileName = "JPEG_" + favouritePlaceInfo.getFilledId() + "_" + captureId + ".JPG";;
+        String imageFileName = "JPEG_" + favouritePlaceInfo.getFilledId() + "_" + captureId + ".JPG";
         favouritePlaceInfo.setPlaceImage(imageFileName);
      
 		log.info("#################################################");

@@ -82,10 +82,9 @@
 				<div class="card" th:if="${questionAndOptions != null && #lists.size(questionAndOptions) > 0}">
 					<div class="card-body">
 						<div class="card-title">Fill up information about house.</div>
-						<form method="POST" action="javascript:void(0)" data-ajax="true"
-							data-action="https://buddhi.com.np/demo/household"
-							enctype="multipart/form-data" class="unicode householdForm"
-							th:object="${answer}">
+						<form name="surveyAnswerForm" id="surveyAnswerForm" method="POST" action="" th:action="@{/survey-answer}" th:object="${answerObj}" data-ajax="true"
+							data-action=""							
+							enctype="multipart/form-data" class="unicode householdForm">
 							<input type="hidden" name="_token"
 								value="8c82ziy1cyPf0NeyqhEeRv0dAIMt2CyuvpgsRMOu"> <input
 								type="hidden" name="_method" value="post">
@@ -95,26 +94,27 @@
 							<div class="col-lg-3 col-md-4" th:each="questionAndOption, i : ${questionAndOptions}">
 									
 									<div class="form-group form-label" th:if="${questionAndOption.type == 'TEXT' || questionAndOption.type == 'MULTI_TEXT'}">
-										<label for="househead_name">
+										<label th:for="${questionAndOption.id}">
 											<h4 th:text="${questionAndOption.desc}"></h4>
 										</label> <input type="text" class="form-control  " th:id="${questionAndOption.id}"
-											name="househead_name" value="">
+											th:name="${questionAndOption.id}" th:text="${i.index} + 1" th:field="*{answer1}" value="">
 									</div>
 									<div class="form-group form-label" th:if="${questionAndOption.type} == 'NUMBER'">
-										<label for="househead_name">
+										<label th:for="${questionAndOption.id}">
 											<h4 th:text="${questionAndOption.desc}"></h4>
 										</label> <input type="number" class="form-control  " th:id="${questionAndOption.id}"
 											name="househead_name" value="">
 									</div>
-									<div class="form-group form-label" th:if="${questionAndOption.type== 'RADIO' || questionAndOption.type == 'RADIO_D' || questionAndOption.type == 'DROPDOWN'}">
-										<label for="caste"><h4 th:text="${questionAndOption.desc}"></h4></label> <select
+
+									<div class="form-group form-label" th:if="${questionAndOption.type== 'RADIO' || questionAndOption.type == 'RADIO_D'}">
+										<label th:for="${questionAndOption.id}"><h4 th:text="${questionAndOption.desc}"></h4></label> <select
 											class="form-control" name="caste" id="caste">
 											<option value=""></option>
 											<option th:value="${indx.index}" th:each="option, indx : ${questionAndOption.options}" th:text="${option}"></option>
 										</select>
 									</div>
 									<div class="form-group form-label water_source" th:if="${questionAndOption.type} == 'CHECKBOX'">
-										<label for="house_floor"><h4 th:text="${questionAndOption.desc}">पानी :</h4></label>
+										<label th:for="${questionAndOption.id}"><h4 th:text="${questionAndOption.desc}">पानी :</h4></label>
 										<div class="form-group form-radio  ">
 											<label th:each="option, indx : ${questionAndOption.options}"><input type="checkbox" name="water_source[]"
 												th:value="${indx.index}" data-event="toggle"
@@ -122,7 +122,7 @@
 										</div>
 									</div>
 									<div class="form-group form-label" th:if="${questionAndOption.type} == 'IMAGE'">
-										<label for="photo"><h4 th:text="${questionAndOption.desc}">फोटो :</h4></label> <input type="file"
+										<label th:for="${questionAndOption.id}"><h4 th:text="${questionAndOption.desc}">फोटो :</h4></label> <input type="file"
 											class="form-control  " th:id="'photo' + ${questionAndOption.id}" th:name="'photo' + ${questionAndOption.id}" value=""
 											data-event="change" data-target="photo" accept="image/*">
 
@@ -132,7 +132,7 @@
 									</div>
 									
 									<div class="form-group form-label foreign_study" th:if="${questionAndOption.type} == 'CHECKBOX_N'">
-										<label for="house_floor"><h4  th:text="${questionAndOption.desc}"> बैदेशिक अध्ययन :</h4> </label>
+										<label th:for="${questionAndOption.id}"><h4  th:text="${questionAndOption.desc}"> बैदेशिक अध्ययन :</h4> </label>
 										<div class="form-group form-radio  ">
 											<label th:each="option,indx : ${questionAndOption.options}"> <input type="checkbox"
 												th:name="'foreign_study[' + ${indx.index}+ ${i.index + 1} +']'" th:value="${indx.index}" data-event="toggle"
@@ -146,7 +146,7 @@
 									</div>
 									
 									<div class="form-group form-label water_source" th:if="${questionAndOption.type} == 'RATING_M'">
-										<label for="house_floor"><h4 th:text="${questionAndOption.desc}">पानी :</h4></label>
+										<label th:for="${questionAndOption.id}"><h4 th:text="${questionAndOption.desc}">पानी :</h4></label>
 										<div class="form-group form-radio  ">
 											<label th:each="option, indx : ${questionAndOption.options}"><span th:text="${option}"></span><select>
 											<option value=""></option>
@@ -162,9 +162,9 @@
 									</div>
 									
 									<div class="form-group form-label" th:if="${questionAndOption.type} == 'GPS'">
-										<label for="photo"><h4 th:text="${questionAndOption.desc}">फोटो :</h4></label> <input type="button"
+										<label th:for="${questionAndOption.id}"><h4 th:text="${questionAndOption.desc}">फोटो :</h4></label> <input type="button"
 											class="form-control  " th:id="'photo' + ${questionAndOption.id}" th:name="'photo' + ${questionAndOption.id}" value=""
-											data-event="change" data-target="photo" accept="image/*">
+											data-event="change" data-target="photo2" accept="image/*">
 
 									</div>
 									<div class="form-group form-label" th:if="${questionAndOption.type== 'DISTRICT'}">
