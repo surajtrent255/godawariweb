@@ -3,6 +3,7 @@ package com.ishanitech.ipalikawebapp.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ishanitech.ipalikawebapp.dto.FamilyMemberDTO;
+import com.ishanitech.ipalikawebapp.dto.UserDTO;
 import com.ishanitech.ipalikawebapp.service.ResidentService;
 
 import lombok.experimental.Accessors;
@@ -29,13 +31,13 @@ public class ResidentController {
 
 
 	@PostMapping(value = "/add", consumes = "application/json")
-	public void addFamilyMember(@RequestBody FamilyMemberDTO familyMemberInfo) {
+	public void addFamilyMember(@RequestBody FamilyMemberDTO familyMemberInfo, @AuthenticationPrincipal UserDTO user) {
 		
 		Date presentDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
         familyMemberInfo.setMemberId(dateFormat.format(presentDate));
         
-		residentService.addFamilyMember(familyMemberInfo);
+		residentService.addFamilyMember(familyMemberInfo, user.getToken());
 	}
 
 }

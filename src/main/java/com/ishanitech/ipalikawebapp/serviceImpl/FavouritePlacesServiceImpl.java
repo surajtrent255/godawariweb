@@ -19,22 +19,18 @@ import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
 
 @Service
 public class FavouritePlacesServiceImpl implements FavouritePlacesService {
-
 	RestTemplate restTemplate;
 	
 	public FavouritePlacesServiceImpl(RestTemplate restTemplate) {
 		this.restTemplate = restTemplate;
 	}
 
-
-
 	@Override
 	public Response<List<FavouritePlaceDTO>> getAllFavouritePlaces() {
-		Response<List<FavouritePlaceDTO>> favouritePlaces = restTemplate.getForObject("http://localhost:8888/favourite-place", Response.class);
+		Response<List<FavouritePlaceDTO>> favouritePlaces = 
+				restTemplate.getForObject("http://localhost:8888/favourite-place", Response.class);
 		return favouritePlaces;
 	}
-
-
 
 	@Override
 	public Response<FavouritePlaceDTO> getFavouritePlaceByPlaceId(String placeId) {
@@ -42,21 +38,15 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		return favouritePlaceInfo;
 	}
 
-
-
 	@Override
 	public void deleteFavouritePlacebyPlaceId(String favPlaceId) {
 		restTemplate.delete("http://localhost:8888/favourite-place/" + favPlaceId);
 	}
 
-
-
 	@Override
 	public void addFavouritePlaceInfo(FavouritePlaceDTO favouritePlaceInfo) {
 		restTemplate.postForObject("http://localhost:8888/favourite-place/single", favouritePlaceInfo, String.class);
 	}
-
-
 
 	@Override
 	public void addFavouritePlaceImage(MultipartFile file) {
@@ -69,7 +59,7 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
 
         
-        String imageFileName = "JPEG_" + dateFormat.format(presentDate) + "_" + captureId + ".JPG";;
+        String imageFileName = "JPEG_" + dateFormat.format(presentDate) + "_" + captureId + ".JPG";
 		
 		map.add("name", imageFileName);
 		map.add("filename", imageFileName);
@@ -86,9 +76,6 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		}
 		map.add("picture", contentsAsResource);
 		restTemplate.postForObject("http://localhost:8888/favourite-place/image", map, String.class);
-		
-//		restTemplate.postForObject("http://localhost:8888/favourite-place/image", file, String.class);
-		
 	}
 
 }

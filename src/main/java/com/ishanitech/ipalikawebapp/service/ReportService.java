@@ -6,6 +6,6 @@ import com.ishanitech.ipalikawebapp.dto.PopulationReport;
 import com.ishanitech.ipalikawebapp.dto.QuestionReport;
 
 public interface ReportService {
-	List<PopulationReport> getPopulationReport();
-	List<QuestionReport> getQuestionReport();
+	List<PopulationReport> getPopulationReport(String token);
+	List<QuestionReport> getQuestionReport(String token);
 }

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class UserDTO implements Serializable {
+public class UserDTO extends Dto implements Serializable {
 	private static final long serialVersionUID = 2989312298454528014L;
 	private int userId;
 	private String token;
@@ -21,5 +21,6 @@ public class UserDTO implements Serializable {
 	private boolean enabled;
 	private boolean firstLogin;
 	private boolean expired;
+	private int wardNumber;
 	private List<String> roles;
 }

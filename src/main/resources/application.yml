@@ -35,9 +35,6 @@ server:
     whitelabel:
       enabled: false
 
-webservice:
-  login-url: /login
-  partialRestUrl: /api/v1
 ---
 
 ###### Development Config Properties #######
@@ -46,12 +43,10 @@ spring:
 server:
   port: 9191
   
-webservice:
-  base-url: http://localhost:8888/
-  
-http:
-  port: 9191
-  #base-url: http://103.233.58.121:8888
+rest-api:
+  protocol: http
+  domain: localhost
+  port: 8888
 ---
 
 ####### ishani Production Config Properties ########
@@ -64,7 +59,8 @@ server:
     key-store: /home/ishani/keystore/ipasal.p12
     key-store-password: ENC(bq4tjhncoATdejotP81VbWgaGMpRouOZ)
     key-alias: ipasal
-http:
-  port: 9191
-webservice:
-  base-url: http://localhost:8888
+#### Rest api base address #####   
+rest-api:
+  protocol: http
+  domain: 103.233.58.121
+  port: 8888

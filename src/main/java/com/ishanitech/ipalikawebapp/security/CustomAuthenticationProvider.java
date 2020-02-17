@@ -42,7 +42,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		
 		if((loggedInUserResponse != null) && (loggedInUserResponse.getData() != null)){
 			UserDTO loggedInUser = loggedInUserResponse.getData();
-			System.out.println("Token: " + loggedInUser.getToken());
 			Collection<? extends GrantedAuthority> authorities =  loggedInUser.getRoles().stream().map(auth -> {
 				return new SimpleGrantedAuthority(String.format("ROLE_%s", auth));
 			}).collect(Collectors.toList());

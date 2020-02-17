@@ -2,6 +2,7 @@ package com.ishanitech.ipalikawebapp.controller.admin;
 
 import java.util.List;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +14,12 @@ import com.ishanitech.ipalikawebapp.dto.FavouritePlaceDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDetailDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
+import com.ishanitech.ipalikawebapp.dto.UserDTO;
+import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
 import com.ishanitech.ipalikawebapp.service.FormService;
 import com.ishanitech.ipalikawebapp.service.ReportService;
-import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
 import com.ishanitech.ipalikawebapp.service.ResidentService;
+import com.ishanitech.ipalikawebapp.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,23 +32,26 @@ public class SuperAdminController {
 	private final FormService formService;
 	private final FavouritePlacesService favouritePlacesService;
 	private final ReportService reportService;
+	private final UserService userService;
 
 	
 	
 	public SuperAdminController(ResidentService residentService, 
 			FavouritePlacesService favouritePlacesService, 
 			FormService formService,
-			ReportService reportService) {
+			ReportService reportService, 
+			UserService userService) {
 		this.residentService = residentService;
 		this.favouritePlacesService = favouritePlacesService;
 		this.formService = formService;
 		this.reportService = reportService;
+		this.userService = userService;
 	}
 
 	@GetMapping
-	public String getDashboardView(Model model) {
-		model.addAttribute("populationReport", reportService.getPopulationReport());
-		model.addAttribute("questionReport", reportService.getQuestionReport());
+	public String getDashboardView(Model model, @AuthenticationPrincipal UserDTO user) {
+		model.addAttribute("populationReport", reportService.getPopulationReport(user.getToken()));
+		model.addAttribute("questionReport", reportService.getQuestionReport(user.getToken()));
 		return "admin/dashboard";
 	}
 
@@ -73,17 +79,17 @@ public class SuperAdminController {
 	}
 
 	@GetMapping("/residentData")
-	public String getResidentDataList(Model model) {
+	public String getResidentDataList(Model model, @AuthenticationPrincipal UserDTO user) {
 		Response<List<ResidentDTO>> residentResponse = (Response<List<ResidentDTO>>) residentService
-				.getResidentDataList();
+				.getResidentDataList(user.getToken());
 
 		model.addAttribute("residentList", residentResponse.getData());
 		return "admin/resident-data";
 	}
 
 	@GetMapping("/residentMember/{filledFormId}")
-	public String getResidentMemberList(@PathVariable("filledFormId") String filledId, Model model) {
-		Response<ResidentDetailDTO> residentResponse = (Response<ResidentDetailDTO>) residentService.getResidentFullDetail(filledId);
+	public String getResidentMemberList(@PathVariable("filledFormId") String filledId, Model model, @AuthenticationPrincipal UserDTO user) {
+		Response<ResidentDetailDTO> residentResponse = (Response<ResidentDetailDTO>) residentService.getResidentFullDetail(filledId, user.getToken());
 		model.addAttribute("residentFullDetail", residentResponse.getData());
 		return "admin/resident-details";
 	}
@@ -108,4 +114,9 @@ public class SuperAdminController {
 		return "admin/add-favourite-place";
 	}
 
+	@GetMapping("/addUser")
+	public String addUser(Model model, @AuthenticationPrincipal UserDTO user) {
+		model.addAttribute("roles", userService.getAllRoles(user.getToken()).getData());
+		return "admin/add-user";
+	}
 }

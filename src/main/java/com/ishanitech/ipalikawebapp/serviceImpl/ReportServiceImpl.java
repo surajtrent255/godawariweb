@@ -1,31 +1,51 @@
 package com.ishanitech.ipalikawebapp.serviceImpl;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.ishanitech.ipalikawebapp.configs.properties.RestApiProperties;
 import com.ishanitech.ipalikawebapp.dto.PopulationReport;
 import com.ishanitech.ipalikawebapp.dto.QuestionReport;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.service.ReportService;
+import com.ishanitech.ipalikawebapp.utilities.HttpUtils;
 
 @Service
 public class ReportServiceImpl implements ReportService {
 	private final RestTemplate restTemplate;
+	private final RestApiProperties restApiProperties;
+	private final String REPORT_BASE = "report/";
 
-	public ReportServiceImpl(RestTemplate restTemplate) {
+	public ReportServiceImpl(RestTemplate restTemplate, RestApiProperties restApiProperties) {
 		this.restTemplate = restTemplate;
+		this.restApiProperties = restApiProperties;
 	}
 
 	@Override
-	public List<PopulationReport> getPopulationReport() {
-		return (List<PopulationReport>) restTemplate.getForObject("http://localhost:8888/report/population", Response.class).getData();
+	public List<PopulationReport> getPopulationReport(String token) {
+		String template =  REPORT_BASE + "{populationReport}";
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, Collections.singletonMap("populationReport", "population"));
+		RequestEntity request = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<List<PopulationReport>>> bean = new ParameterizedTypeReference<Response<List<PopulationReport>>>() {};
+		return restTemplate.exchange(request, bean).getBody().getData();
 	}
 
 	@Override
-	public List<QuestionReport> getQuestionReport() {
-		return (List<QuestionReport>) restTemplate.getForObject("http://localhost:8888/report/question", Response.class).getData();
+	public List<QuestionReport> getQuestionReport(String token) {
+		String template =  REPORT_BASE + "{questionReport}";
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, Collections.singletonMap("questionReport", "question"));
+		RequestEntity request = HttpUtils.createRequestEntity(HttpMethod.GET, null, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<List<QuestionReport>>> bean = new ParameterizedTypeReference<Response<List<QuestionReport>>>() {};
+		return restTemplate.exchange(request, bean).getBody().getData();
 	}
 	
 	
