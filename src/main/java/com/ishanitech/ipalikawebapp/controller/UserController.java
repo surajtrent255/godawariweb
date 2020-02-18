@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
+import com.ishanitech.ipalikawebapp.dto.UserRegistrationDTO;
 import com.ishanitech.ipalikawebapp.service.UserService;
 import com.ishanitech.ipalikawebapp.utilities.UserDetailsUtil;
 
@@ -33,7 +34,7 @@ public class UserController {
 
 	@Secured({"ROLE_SUPER_ADMIN", "ROLE_CENTRAL_ADMIN"})
 	@PostMapping
-	public Response<String> addUser(@RequestBody UserDTO user, @AuthenticationPrincipal UserDTO loggedInUser) {
+	public Response<String> addUser(@RequestBody UserRegistrationDTO user, @AuthenticationPrincipal UserDTO loggedInUser) {
 		userService.addUser(user, UserDetailsUtil.getToken(loggedInUser));
 		return new Response<String>("User is created!");
 	}

@@ -15,11 +15,13 @@ import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDetailDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
+import com.ishanitech.ipalikawebapp.dto.UserRegistrationDTO;
 import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
 import com.ishanitech.ipalikawebapp.service.FormService;
 import com.ishanitech.ipalikawebapp.service.ReportService;
 import com.ishanitech.ipalikawebapp.service.ResidentService;
 import com.ishanitech.ipalikawebapp.service.UserService;
+import com.ishanitech.ipalikawebapp.service.WardService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,19 +35,20 @@ public class SuperAdminController {
 	private final FavouritePlacesService favouritePlacesService;
 	private final ReportService reportService;
 	private final UserService userService;
+	private final WardService wardService;
 
-	
-	
 	public SuperAdminController(ResidentService residentService, 
 			FavouritePlacesService favouritePlacesService, 
 			FormService formService,
 			ReportService reportService, 
-			UserService userService) {
+			UserService userService, 
+			WardService wardService) {
 		this.residentService = residentService;
 		this.favouritePlacesService = favouritePlacesService;
 		this.formService = formService;
 		this.reportService = reportService;
 		this.userService = userService;
+		this.wardService = wardService;
 	}
 
 	@GetMapping
@@ -113,7 +116,6 @@ public class SuperAdminController {
 	
 	@GetMapping("/favouritePlaceAdd")
 	public String getFavouritePlaceEntryView(Model model) {
-		
 		model.addAttribute("placeTypes", favouritePlacesService.getTypesofFavourtiePlaces());
 		model.addAttribute("favPlaceObj", new FavouritePlaceDTO());
 		return "admin/add-favourite-place";
@@ -122,6 +124,7 @@ public class SuperAdminController {
 	@GetMapping("/addUser")
 	public String addUser(Model model, @AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("roles", userService.getAllRoles(user.getToken()).getData());
+		model.addAttribute("wards", wardService.getAllWards(user.getToken()));
 		return "admin/add-user";
 	}
 }
