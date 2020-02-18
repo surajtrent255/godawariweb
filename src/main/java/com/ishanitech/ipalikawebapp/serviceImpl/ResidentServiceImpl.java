@@ -17,7 +17,6 @@ import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.service.ResidentService;
 import com.ishanitech.ipalikawebapp.utilities.HttpUtils;
 
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 public class ResidentServiceImpl implements ResidentService {

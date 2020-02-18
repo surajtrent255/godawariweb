@@ -25,16 +25,16 @@
 <link th:href="@{/assets/css/sidebar-menu.css}"
 	href="assets/css/sidebar-menu.css" rel="stylesheet" />
 
-<link rel="stylesheet"
-	href="https://www.lalitpur15.org/datasys/public/plugins/nepali-datepicker/nepaliDatePicker.min.css">
+<link rel="stylesheet" th:href="@{/assets/plugins/nepali-datepicker/nepaliDatePicker.min.css}"
+	href="assets/plugins/nepali-datepicker/nepaliDatePicker.min.css">
 
 
 <link th:href="@{/assets/css/app-style.css}"
 	href="assets/css/app-style.css" rel="stylesheet" />
 
 
-<link rel="stylesheet"
-	href="https://www.lalitpur15.org/datasys/public/plugins/datatable/css/datatables.min.css">
+<link rel="stylesheet" th:href="@{/assets/plugins/datatable/datatables.min.css}"
+	href="assets/plugins/datatable/datatables.min.css">
 
 <link rel="stylesheet"
 	th:href="@{/assets/plugins/jquery.steps/css/jquery.steps.css}"
@@ -92,7 +92,6 @@
 							<!-- dynamic code begins -->
 							
 							<div class="col-lg-3 col-md-4" th:each="questionAndOption, i : ${questionAndOptions}">
-									
 									<div class="form-group form-label" th:if="${questionAndOption.type == 'TEXT' || questionAndOption.type == 'MULTI_TEXT'}">
 										<label th:for="${questionAndOption.id}">
 											<h4 th:text="${questionAndOption.desc}"></h4>
@@ -233,29 +232,31 @@
 		src="assets/plugins/simplebar/js/simplebar.js"></script>
 
 	<!-- sidebar-menu js -->
-	<script th:src="@{/assets/js/sidebar-menu.js}"
-		src="assets/js/sidebar-menu.js"></script>
+<!-- 	<script th:src="@{/assets/js/sidebar-menu.js}" -->
+<!-- 		src="assets/js/sidebar-menu.js"></script> -->
 
-	<script
-		src="https://www.lalitpur15.org/datasys/public/plugins/datatable/js/datatables.min.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/plugins/alerts-boxes/js/sweetalert.min.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/jquery.pjax.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/sidebar-menu.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/plugins/nepali-datepicker/jquery.nepaliDatePicker.min.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/app-script.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/plugins/jquery.steps/js/jquery.steps.min.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+<!-- 	<script th:src="@{/assets/plugins/datatable/datatables.min.js}" -->
+<!-- 		src="assets/plugins/datatable/datatables.min.js"></script> -->
+<!-- 	<script th:src="@{/assets/plugins/alerts-boxes/js/sweetalert.min.js}" -->
+<!-- 		src="assets/plugins/alerts-boxes/js/sweetalert.min.js"></script> -->
+<!-- 	<script -->
+<!-- 		src="https://www.lalitpur15.org/datasys/public/js/jquery.pjax.js"></script> -->
+<!-- 	<script -->
+<!-- 		src="https://www.lalitpur15.org/datasys/public/js/sidebar-menu.js"></script> -->
+<!-- 	<script th:src="@{/assets/plugins/nepali-datepicker/jquery.nepaliDatePicker.min.js}" -->
+<!-- 		src="assets/plugins/nepali-datepicker/jquery.nepaliDatePicker.min.js"></script> -->
+<!-- 	<script -->
+<!-- 		src="https://www.lalitpur15.org/datasys/public/js/app-script.js"></script> -->
+<!-- 	<script th:src="@{/assets/plugins/jquery.steps/js/jquery.steps.min.js}" -->
+<!-- 		src="assets/plugins/jquery.steps/js/jquery.steps.min.js"></script> -->
+<!-- 	<script th:src="@{/assets/plugins/jquery-validation/js/jquery.validate.min.js}" -->
+<!-- 		src="assets/plugins/jquery-validation/js/jquery.validate.min.js"></script> -->
 	<!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script> -->
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/transliteration.I.js"></script>
-	<script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script>
+	
+	<script th:src="@{/assets/public/js/transliteration.js}"
+		src="assets/public/js/transliteration.js"></script>
+	
+<!-- 	<script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script> -->
 	<div id="scripts">
 		<script>
     $(function(){

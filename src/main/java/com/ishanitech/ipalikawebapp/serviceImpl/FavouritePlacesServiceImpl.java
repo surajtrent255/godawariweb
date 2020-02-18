@@ -5,51 +5,80 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ishanitech.ipalikawebapp.configs.properties.RestApiProperties;
 import com.ishanitech.ipalikawebapp.dto.FavouritePlaceDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
+import com.ishanitech.ipalikawebapp.utilities.HttpUtils;
 
 
 @Service
 public class FavouritePlacesServiceImpl implements FavouritePlacesService {
-	RestTemplate restTemplate;
+	private final RestTemplate restTemplate;
+	private final RestApiProperties restApiProperties;
+	private final String FAVOURITE_PLACE_BASE_URL = "favourite-place";
 	
-	public FavouritePlacesServiceImpl(RestTemplate restTemplate) {
+	public FavouritePlacesServiceImpl(RestTemplate restTemplate, RestApiProperties restApiProperties) {
 		this.restTemplate = restTemplate;
+		this.restApiProperties = restApiProperties;
 	}
 
 	@Override
 	public Response<List<FavouritePlaceDTO>> getAllFavouritePlaces() {
-		Response<List<FavouritePlaceDTO>> favouritePlaces = 
-				restTemplate.getForObject("http://localhost:8888/favourite-place", Response.class);
+		String template = FAVOURITE_PLACE_BASE_URL; 
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity<List<FavouritePlaceDTO>> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
+		ParameterizedTypeReference<Response<List<FavouritePlaceDTO>>> responseType = new ParameterizedTypeReference<Response<List<FavouritePlaceDTO>>>() {};
+		Response<List<FavouritePlaceDTO>> favouritePlaces = restTemplate.exchange(requestEntity, responseType).getBody();
 		return favouritePlaces;
 	}
 
 	@Override
 	public Response<FavouritePlaceDTO> getFavouritePlaceByPlaceId(String placeId) {
-		Response<FavouritePlaceDTO> favouritePlaceInfo = restTemplate.getForObject("http://localhost:8888/favourite-place/detail/" + placeId, Response.class);
+		String template = FAVOURITE_PLACE_BASE_URL + "/detail/" + placeId;
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity<FavouritePlaceDTO> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
+		ParameterizedTypeReference<Response<FavouritePlaceDTO>> responseType = new ParameterizedTypeReference<Response<FavouritePlaceDTO>>() {};
+		Response<FavouritePlaceDTO> favouritePlaceInfo = restTemplate.exchange(requestEntity, responseType).getBody();
 		return favouritePlaceInfo;
 	}
 
 	@Override
-	public void deleteFavouritePlacebyPlaceId(String favPlaceId) {
-		restTemplate.delete("http://localhost:8888/favourite-place/" + favPlaceId);
+	public void deleteFavouritePlacebyPlaceId(String favPlaceId, String token) {
+		String template = FAVOURITE_PLACE_BASE_URL + "/" + favPlaceId;
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity<String> requestEntity = HttpUtils.createRequestEntity(HttpMethod.DELETE, MediaType.APPLICATION_JSON, token , url);
+		restTemplate.exchange(requestEntity, String.class);
+//		restTemplate.delete("http://localhost:8888/favourite-place/" + favPlaceId);
 	}
 
 	@Override
-	public void addFavouritePlaceInfo(FavouritePlaceDTO favouritePlaceInfo) {
-		restTemplate.postForObject("http://localhost:8888/favourite-place/single", favouritePlaceInfo, String.class);
+	public void addFavouritePlaceInfo(FavouritePlaceDTO favouritePlaceInfo, String token) {
+		String template = FAVOURITE_PLACE_BASE_URL + "/single";
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity<FavouritePlaceDTO> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, favouritePlaceInfo, MediaType.APPLICATION_JSON, token, url);
+		restTemplate.exchange(requestEntity, String.class);
 	}
 
 	@Override
-	public void addFavouritePlaceImage(MultipartFile file) {
+	public void addFavouritePlaceImage(MultipartFile file, String token) {
+		String template = FAVOURITE_PLACE_BASE_URL + "/image";
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+	
+		
+		
 		
 		final String captureId = "1001";
 		
@@ -74,16 +103,25 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		map.add("picture", contentsAsResource);
-		restTemplate.postForObject("http://localhost:8888/favourite-place/image", map, String.class);
-//		restTemplate.postForObject("http://localhost:8888/favourite-place/image", file, String.class);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+	    httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+		
+	    
+//		restTemplate.postForObject("http://localhost:8888/favourite-place/image", map, String.class);
+		RequestEntity<MultiValueMap<String, Object>> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, map, MediaType.MULTIPART_FORM_DATA, token, url);
+		restTemplate.exchange(requestEntity, String.class);
 	}
-
-
 
 	@Override
 	public List<String> getTypesofFavourtiePlaces() {
-		Response<List<String>> favPlaceTypes = restTemplate.getForObject("http://localhost:8888/favourite-place/types", Response.class);
+		String template = FAVOURITE_PLACE_BASE_URL + "/types";
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity<List<String>> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
+		ParameterizedTypeReference<Response<List<String>>> responseType = new ParameterizedTypeReference<Response<List<String>>>() {};
+		Response<List<String>> favPlaceTypes = restTemplate.exchange(requestEntity, responseType).getBody();
 		return favPlaceTypes.getData();
 	}
 

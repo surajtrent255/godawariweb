@@ -13,11 +13,11 @@ public interface FavouritePlacesService {
 
 	Response<FavouritePlaceDTO> getFavouritePlaceByPlaceId(String placeId);
 
-	void deleteFavouritePlacebyPlaceId(String favPlaceId);
+	void deleteFavouritePlacebyPlaceId(String favPlaceId, String token);
 
-	void addFavouritePlaceInfo(FavouritePlaceDTO favouritePlaceInfo);
+	void addFavouritePlaceInfo(FavouritePlaceDTO favouritePlaceInfo, String token);
 
-	void addFavouritePlaceImage(MultipartFile file);
+	void addFavouritePlaceImage(MultipartFile file, String token);
 
 	List<String> getTypesofFavourtiePlaces();
 
