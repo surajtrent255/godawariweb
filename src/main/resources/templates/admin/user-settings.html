@@ -102,7 +102,7 @@
 					    let headerName = $("meta[name='_csrf_header']").attr("content");
         				if(password === confirmPassword) {
         					$.ajax({
-        						url : "http://localhost:9191/user/" + userId + "/password",
+        						url : contextPath + "/user/" + userId + "/password",
         						method : "PUT",
         						contentType: "application/json",
         						data: password,

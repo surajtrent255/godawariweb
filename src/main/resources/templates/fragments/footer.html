@@ -53,6 +53,9 @@
 				<script th:src="@{/assets/js/matrix.js}" src="assets/js/matrix.js"></script>
 				<script th:src="@{/assets/js/matrix.tables.js}" src="assets/js/matrix.tables.js"></script>
 			</div>
+			<script th:inline="javascript">
+				let contextPath = /*[[${#request.contextPath}]]*/;
+			</script>
 		</footer>
 	<!--End wrapper-->
 </body>

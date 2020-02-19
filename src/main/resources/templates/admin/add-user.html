@@ -144,9 +144,8 @@
 						"accountType": accountType,
 						"wardNo": wardNo
 					};
-					console.log(JSON.stringify(userInfo));
 					$.ajax({
-						url : "http://localhost:9191/user/",
+						url : contextPath + "/user/", //contextPath variable is initialized in footer.html
 						method : "POST",
 						contentType: "application/json",
 						data: JSON.stringify(userInfo),
