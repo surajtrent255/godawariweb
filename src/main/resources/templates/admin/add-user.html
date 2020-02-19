@@ -51,7 +51,6 @@
 					<div class="card-body">
 						<div class="card-title">नया खाता बनाउने फारम </div>
 						<form id="user-add-form">
-							<input type="hidden" name="userId" id="userId" th:value="${#authentication.principal.userId}">
 							<div class="form-group row">
 								<div class="col-md-4">
 									<label for="input-1">पुरा नाम (नाम को बिचमा खाली ठाउँ राख्नुहोस)</label> <input id="name" type="text"
@@ -64,6 +63,13 @@
 									<label for="username">युसर नाम</label> <input id="username"
 										type="text" class="form-control " name="username" required 
 										placeholder="Enter your username">
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="password">पासवोर्ड</label> <input id="password"
+										type="password" class="form-control " name="password" required 
+										placeholder="Enter your password">
 								</div>
 							</div>
 							<div class="form-group row">
@@ -89,10 +95,9 @@
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
-									<label for="account-type">वडा नम्बर</label> 
+									<label for="ward-no">वडा नम्बर</label> 
 									<select id="ward-no">
-										<option value="1"> 1</option>
-										<option value="2"> 2</option>
+										<option th:value="${wardNo}" th:each="wardNo: ${wards}" th:text="${wardNo}")> 1</option>
 									</select>
 								</div>
 							</div>
@@ -121,21 +126,27 @@
 	    	});
 		
 			$(function() {
-				 $("#profile-update-form").on("submit", function(event) {
+				 $("#user-add-form").on("submit", function(event) {
 					event.preventDefault();
-					let userId = $("#userId").val();
+					let email = $("#email").val();
 					let username = $("#username").val();
+					let password = $("#password").val();
 					let mobileNumber = $("#mobile").val();
 					let fullName = $("#name").val();
+					let accountType = $("#account-type").val();
+					let wardNo = $("#ward-no").val();
 					let userInfo = {
+						"email": email,
 						"username": username,
+						"password": password,
 						"mobileNumber": mobileNumber,
-						"fullName": fullName
+						"fullName": fullName,
+						"accountType": accountType,
+						"wardNo": wardNo
 					};
-					console.log(JSON.stringify(userInfo));
 					$.ajax({
-						url : "http://localhost:9191/user/" + userId,
-						method : "PATCH",
+						url : contextPath + "/user/", //contextPath variable is initialized in footer.html
+						method : "POST",
 						contentType: "application/json",
 						data: JSON.stringify(userInfo),
 					}).done(function(data) {

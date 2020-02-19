@@ -17,6 +17,7 @@ import com.ishanitech.ipalikawebapp.configs.properties.RestApiProperties;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.RoleDTO;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
+import com.ishanitech.ipalikawebapp.dto.UserRegistrationDTO;
 import com.ishanitech.ipalikawebapp.service.UserService;
 import com.ishanitech.ipalikawebapp.utilities.HttpUtils;
 
@@ -31,10 +32,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Response<?> addUser(UserDTO user, String token) {
+	public Response<?> addUser(UserRegistrationDTO user, String token) {
 		String template = String.format("%s", USER_BASE_URL);
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
-		RequestEntity<UserDTO> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, user, MediaType.APPLICATION_JSON, token, url);
+		RequestEntity<UserRegistrationDTO> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, user, MediaType.APPLICATION_JSON, token, url);
 		restTemplate.exchange(requestEntity, String.class);
 		return new Response<String>("Successful");
 	}
@@ -52,7 +53,7 @@ public class UserServiceImpl implements UserService {
 		Map<String, Object> urlVariables = new HashMap<>();
 		urlVariables.put("userId", userId);
 		urlVariables.put("password", "password");
-		String template =  USER_BASE_URL + "{userId}/{password}";
+		String template =  USER_BASE_URL + "/{userId}/{password}";
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, urlVariables);
 		RequestEntity<String> requestEntity = HttpUtils.createRequestEntity(HttpMethod.PUT, newPassword, MediaType.APPLICATION_JSON, token, url);
 		restTemplate.exchange(requestEntity, String.class).getBody();

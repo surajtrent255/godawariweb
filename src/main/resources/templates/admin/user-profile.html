@@ -119,9 +119,8 @@
 						"mobileNumber": mobileNumber,
 						"fullName": fullName
 					};
-					console.log(JSON.stringify(userInfo));
 					$.ajax({
-						url : "http://localhost:9191/user/" + userId,
+						url : contextPath + "/user/" + userId,
 						method : "PATCH",
 						contentType: "application/json",
 						data: JSON.stringify(userInfo),
