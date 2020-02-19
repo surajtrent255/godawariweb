@@ -3,7 +3,7 @@ package com.ishanitech.ipalikawebapp.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ishanitech.ipalikawebapp.dto.FavouritePlaceDTO;
+import com.ishanitech.ipalikawebapp.dto.UserDTO;
 import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,13 +35,14 @@ public class FavouritePlacesController {
 
 
 	@DeleteMapping("/{favPlaceId}")
-	public void deleteFavouritePlaceByPlaceId(@PathVariable("favPlaceId") String favPlaceId) {
-		favouritePlacesService.deleteFavouritePlacebyPlaceId(favPlaceId);
+	public void deleteFavouritePlaceByPlaceId(@PathVariable("favPlaceId") String favPlaceId, @AuthenticationPrincipal UserDTO user) {
+		log.info(user.getToken());
+		favouritePlacesService.deleteFavouritePlacebyPlaceId(favPlaceId, user.getToken());
 	}
 	
 	@PostMapping()
 	public void addFavouritePlace(@RequestParam(value = "favPhoto") MultipartFile file,
-			@ModelAttribute(value = "favPlaceObj") FavouritePlaceDTO favouritePlaceInfo) {
+			@ModelAttribute(value = "favPlaceObj") FavouritePlaceDTO favouritePlaceInfo, @AuthenticationPrincipal UserDTO user) {
 		final String captureId = "1001";
 		
 		Date presentDate = new Date();
@@ -67,9 +69,9 @@ public class FavouritePlacesController {
 		log.info(favouritePlaceInfo.getPlaceImage());
 		log.info(favouritePlaceInfo.getPlaceGPS());
 		
-		favouritePlacesService.addFavouritePlaceInfo(favouritePlaceInfo);
+		favouritePlacesService.addFavouritePlaceInfo(favouritePlaceInfo, user.getToken());
 		
-		favouritePlacesService.addFavouritePlaceImage(file);
+		favouritePlacesService.addFavouritePlaceImage(file, user.getToken());
 		
 	}
 	

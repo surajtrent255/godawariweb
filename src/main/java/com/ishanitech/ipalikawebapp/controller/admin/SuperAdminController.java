@@ -59,10 +59,10 @@ public class SuperAdminController {
 	}
 
 	@GetMapping("/addHouseholdForm")
-	public String getHouseholdEntryForm(Model model) {
+	public String getHouseholdEntryForm(Model model, @AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("answerObj", new AnswerDTO());
-		model.addAttribute("questionAndOptions", formService.getFullFormDetailById(1));
-		model.addAttribute("districts", formService.getListofDistricts().getData());
+		model.addAttribute("questionAndOptions", formService.getFullFormDetailById(1, user.getToken()));
+		model.addAttribute("districts", formService.getListofDistricts(user.getToken()).getData());
 		
 		return "admin/add-household";
 	}

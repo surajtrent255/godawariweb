@@ -58,6 +58,22 @@ public class HttpUtils {
 		return requestEntity;
 	}
 	
+	public static RequestEntity createRequestEntity(HttpMethod method,
+			MediaType mediaType, String url) {
+		RequestEntity requestEntity = null;
+		try {
+			requestEntity = RequestEntity
+					.method(method, new URI(url))
+					.contentType(mediaType)
+					.build();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		
+		return requestEntity;
+	}
+	
+	
 	public static String createRequestUrl(RestApiProperties restApiProperties, String template, Map<String, Object> urlValues) {
 		UriComponents uriComponent = UriComponentsBuilder.fromUriString(template)
 				.scheme(restApiProperties.getProtocol())
