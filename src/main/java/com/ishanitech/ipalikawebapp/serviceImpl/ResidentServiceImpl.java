@@ -9,6 +9,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.ishanitech.ipalikawebapp.configs.properties.RestApiProperties;
 import com.ishanitech.ipalikawebapp.dto.FamilyMemberDTO;
 import com.ishanitech.ipalikawebapp.dto.MemberFormDetailsDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
@@ -21,15 +22,21 @@ import com.ishanitech.ipalikawebapp.utilities.HttpUtils;
 @Service
 public class ResidentServiceImpl implements ResidentService {
 
-	RestTemplate restTemplate;
+	private final RestTemplate restTemplate;
+	private final RestApiProperties restApiProperties;
+	private final String RESIDENT_BASE_URL = "/resident";
 	
-	public ResidentServiceImpl(RestTemplate restTemplate) {
+	
+	public ResidentServiceImpl(RestTemplate restTemplate, RestApiProperties restApiProperties) {
 		this.restTemplate = restTemplate;
+		this.restApiProperties = restApiProperties;
 	}
 
 	@Override
 	public Response<?> getResidentDataList(String token) {
-		RequestEntity requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, null, MediaType.APPLICATION_JSON, token, "http://localhost:8888/resident");
+		String template = RESIDENT_BASE_URL;
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, null, MediaType.APPLICATION_JSON, token, url);
 		ParameterizedTypeReference<Response<List<ResidentDTO>>> responseType = new ParameterizedTypeReference<Response<List<ResidentDTO>>>() {};
 		Response<List<ResidentDTO>> residents = restTemplate.exchange(requestEntity, responseType).getBody();
 		return residents;
@@ -39,7 +46,9 @@ public class ResidentServiceImpl implements ResidentService {
 
 	@Override
 	public Response<?> getResidentFullDetail(String filledId, String token) {
-		RequestEntity requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, null, MediaType.APPLICATION_JSON, token, "http://localhost:8888/resident/detail/" + filledId);
+		String template = RESIDENT_BASE_URL + "/detail/" + filledId;
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, null, MediaType.APPLICATION_JSON, token, url);
 		ParameterizedTypeReference<Response<ResidentDetailDTO>> responseType = new ParameterizedTypeReference<Response<ResidentDetailDTO>>() {};
 		Response<ResidentDetailDTO> fullDetail = restTemplate.exchange(requestEntity, responseType).getBody();
 		return fullDetail;
@@ -47,14 +56,19 @@ public class ResidentServiceImpl implements ResidentService {
 
 	@Override
 	public void addFamilyMember(FamilyMemberDTO familyMemberInfo, String token) {
-		RequestEntity requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, familyMemberInfo, MediaType.APPLICATION_JSON, token, "http://localhost:8888/resident/member/");
-		restTemplate.postForObject("http://localhost:8888/resident/member/", requestEntity, String.class);
-		
+		String template = RESIDENT_BASE_URL + "/member";
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, familyMemberInfo, MediaType.APPLICATION_JSON, token, url);
+		restTemplate.exchange(requestEntity, String.class);
 	}
 
 	@Override
-	public Response<?> getMemberFormDetails() {
-		Response<MemberFormDetailsDTO> memberFormDetails = restTemplate.getForObject("http://localhost:8888/resident/memberFormDetails/", Response.class);
+	public Response<?> getMemberFormDetails(String token) {
+		String template = RESIDENT_BASE_URL + "/memberFormDetails";
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<MemberFormDetailsDTO>> responseType = new ParameterizedTypeReference<Response<MemberFormDetailsDTO>>() {};
+		Response<MemberFormDetailsDTO> memberFormDetails = restTemplate.exchange(requestEntity, responseType).getBody();
 		return memberFormDetails;
 	}
 

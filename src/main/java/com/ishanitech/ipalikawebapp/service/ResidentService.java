@@ -8,5 +8,5 @@ public interface ResidentService {
 	Response<?> getResidentDataList(String token);
 	Response<?> getResidentFullDetail(String filledId, String token);
 	void addFamilyMember(FamilyMemberDTO familyMemberInfo, String token);
-	Response<?> getMemberFormDetails();
+	Response<?> getMemberFormDetails(String token);
 }

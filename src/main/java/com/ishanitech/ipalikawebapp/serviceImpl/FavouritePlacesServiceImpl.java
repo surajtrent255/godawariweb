@@ -28,7 +28,7 @@ import com.ishanitech.ipalikawebapp.utilities.HttpUtils;
 public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 	private final RestTemplate restTemplate;
 	private final RestApiProperties restApiProperties;
-	private final String FAVOURITE_PLACE_BASE_URL = "favourite-place";
+	private final String FAVOURITE_PLACE_BASE_URL = "/favourite-place";
 	
 	public FavouritePlacesServiceImpl(RestTemplate restTemplate, RestApiProperties restApiProperties) {
 		this.restTemplate = restTemplate;

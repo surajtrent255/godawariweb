@@ -24,18 +24,14 @@
 	rel="stylesheet" type="text/css" />
 <link th:href="@{/assets/css/sidebar-menu.css}"
 	href="assets/css/sidebar-menu.css" rel="stylesheet" />
-
-<link rel="stylesheet" th:href="@{/assets/plugins/nepali-datepicker/nepaliDatePicker.min.css}"
+<link rel="stylesheet"
+	th:href="@{/assets/plugins/nepali-datepicker/nepaliDatePicker.min.css}"
 	href="assets/plugins/nepali-datepicker/nepaliDatePicker.min.css">
-
-
 <link th:href="@{/assets/css/app-style.css}"
 	href="assets/css/app-style.css" rel="stylesheet" />
-
-
-<link rel="stylesheet" th:href="@{/assets/plugins/datatable/datatables.min.css}"
+<link rel="stylesheet"
+	th:href="@{/assets/plugins/datatable/datatables.min.css}"
 	href="assets/plugins/datatable/datatables.min.css">
-
 <link rel="stylesheet"
 	th:href="@{/assets/plugins/jquery.steps/css/jquery.steps.css}"
 	href="assets/plugins/jquery.steps/css/jquery.steps.css">
@@ -243,8 +239,6 @@
 <!-- 		src="https://www.lalitpur15.org/datasys/public/js/jquery.pjax.js"></script> -->
 <!-- 	<script -->
 <!-- 		src="https://www.lalitpur15.org/datasys/public/js/sidebar-menu.js"></script> -->
-<!-- 	<script th:src="@{/assets/plugins/nepali-datepicker/jquery.nepaliDatePicker.min.js}" -->
-<!-- 		src="assets/plugins/nepali-datepicker/jquery.nepaliDatePicker.min.js"></script> -->
 <!-- 	<script -->
 <!-- 		src="https://www.lalitpur15.org/datasys/public/js/app-script.js"></script> -->
 <!-- 	<script th:src="@{/assets/plugins/jquery.steps/js/jquery.steps.min.js}" -->
@@ -253,8 +247,10 @@
 <!-- 		src="assets/plugins/jquery-validation/js/jquery.validate.min.js"></script> -->
 	<!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script> -->
 	
-	<script th:src="@{/assets/public/js/transliteration.js}"
-		src="assets/public/js/transliteration.js"></script>
+	<script th:src="@{/assets/js/transliteration.js}"
+		src="assets/js/transliteration.js"></script>
+	<script th:src="@{/assets/plugins/nepali-datepicker/nepaliDatePicker.min.js}"
+ 		src="assets/plugins/nepali-datepicker/nepaliDatePicker.min.js"></script> 
 	
 <!-- 	<script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script> -->
 	<div id="scripts">
@@ -300,6 +296,33 @@
             closeOnDateSelect: true
         });
             });
+    
+    
+    
+	google.load("elements", "1", {
+	    packages: "transliteration"
+	});
+	function onLoad() {
+	    var options = {
+	        sourceLanguage: 'en',
+	        destinationLanguage: ['ne'],
+	        shortcutKey: 'ctrl+g',
+	        transliterationEnabled: true
+	    };
+	    var control =new google.elements.transliteration.TransliterationControl(options);
+	    var uniElement = $(".unicode input[type='text'], #grid_filter input");
+	    control.makeTransliteratable(uniElement);
+	    // control.showControl('translControl');
+	}
+	
+	$(window).on("load", function (e) {
+		onLoad();
+	})
+	
+	$(document).on('pjax:complete', function() {
+	    onLoad();
+	})
+    
 </script>
 	</div>
 </body>
