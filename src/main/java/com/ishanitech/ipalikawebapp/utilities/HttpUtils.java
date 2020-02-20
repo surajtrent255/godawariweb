@@ -87,4 +87,14 @@ public class HttpUtils {
 		
 		return uriComponent.toUriString();
 	}
+	
+	public static String createRequestUrlWithQueryString(RestApiProperties restApiProperties, Map<String, Object> uriVariables) {
+		UriComponents uriComponent = UriComponentsBuilder.newInstance()
+				.scheme(restApiProperties.getProtocol())
+				.host(restApiProperties.getDomain())
+				.port(restApiProperties.getPort())
+				.path("/{rootAddress}")
+				.query("{queryParamName}={keyword}").buildAndExpand(uriVariables).encode();
+		return uriComponent.toUriString();
+	}
 }

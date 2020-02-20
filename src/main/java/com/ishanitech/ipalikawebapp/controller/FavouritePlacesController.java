@@ -3,6 +3,7 @@ package com.ishanitech.ipalikawebapp.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,9 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ishanitech.ipalikawebapp.dto.FavouritePlaceDTO;
+import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
 import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
 
@@ -33,11 +37,11 @@ public class FavouritePlacesController {
 		this.favouritePlacesService = favouritePlacesService;
 	}
 
-
+	@ResponseStatus(HttpStatus.OK)
 	@DeleteMapping("/{favPlaceId}")
 	public void deleteFavouritePlaceByPlaceId(@PathVariable("favPlaceId") String favPlaceId, @AuthenticationPrincipal UserDTO user) {
-		log.info(user.getToken());
 		favouritePlacesService.deleteFavouritePlacebyPlaceId(favPlaceId, user.getToken());
+		//return new Response<String>("Successfully deleted favorite place!");
 	}
 	
 	@PostMapping()

@@ -399,16 +399,14 @@
 		</div>
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
 			<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-		integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-		crossorigin=""></script>
+				integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+				crossorigin="">
+			</script>
 		<script th:inline="javascript">
 			/*<![CDATA[*/
 			var geoCoordinates = /*[[${residentFullDetail.residentDetail.answer48}]]*/ '0';
 
 			/*]]>*/
-
-			
-			
 			//Splitting the location coordinates into latitude and longitude
 			var geoFields = geoCoordinates.split(', ');
 
@@ -437,104 +435,6 @@
 			
 			marker = L.marker([geoLat, geoLong]).addTo(mymap);	
 			
-			
-			
-			
-			
-			
-			$(function() {
-				$('#print')
-						.click(
-								function() {
-									$('.saibu-display-form')
-											.printThis(
-													{
-														importCSS : false,
-														loadCSS : "https://www.lalitpur15.org/datasys/public/css/print.css",
-														removeInline : true,
-													});
-
-								});
-				window.grid = $('#grid')
-						.DataTable(
-								{
-									responsive : true,
-									"buttons" : [ {
-										extend : 'copy',
-									}, {
-										extend : 'excel',
-									}, {
-										extend : 'print',
-									}, ],
-									"bInfo" : false,
-									"bLengthChange" : false,
-									"bPaginate" : false,
-									"bFilter" : false,
-									"bProcessing" : true,
-									"bServerSide" : true,
-									"deferRender" : true,
-									"sServerMethod" : "POST",
-									"iDisplayLength" : 50,
-									ajax : 'https://buddhi.com.np/demo/householdMemberFetchData/5648bcd0-c0e5-4b03-a783-72e0ccd970ba',
-									columns : [ {
-										data : 'DT_RowIndex',
-										name : 'DT_RowIndex',
-										orderable : false,
-										searchable : false
-									}, {
-										data : 'name',
-										name : 'name'
-									}, {
-										data : 'relation',
-										name : 'relation'
-									}, {
-										data : 'gender',
-										name : 'gender'
-									}, {
-										data : 'age_year',
-										name : 'age_year'
-									}, {
-										data : 'maritial_status',
-										name : 'maritial_status'
-									}, {
-										data : 'education',
-										name : 'education'
-									}, {
-										data : 'occupation',
-										name : 'occupation'
-									}, {
-										data : 'voter_card',
-										name : 'voter_card'
-									}, {
-										data : 'temporary_address',
-										name : 'temporary_address'
-									}, {
-										data : 'health',
-										name : 'health'
-									}, {
-										data : 'action',
-										name : 'action',
-										orderable : false,
-										searchable : false
-									} ]
-								});
-				var _e = $(
-						'.printForm [type="checkbox"]:not(:checked), .printForm [type="radio"]:not(:checked)')
-						.closest("span");
-				$(_e).each(function(i, t) {
-					$(t).closest("span").remove();
-				});
-				var _c = $('.printForm [type="checkbox"]:checked').closest(
-						"span");
-				$(_c).each(function(i, t) {
-					$(t).closest("span").addClass("checked");
-				});
-			});
-			
-			
-			
-			
-			
 			//For showing the Map modal	
 			$("#view-location-btn").on("click", function(event){
 				event.preventDefault();
@@ -544,37 +444,23 @@
 					  }, 17)
 			});
 			
-			
-			
 			//For canceling and hiding the Map modal
 			$("#cancel-location-btn").on("click", function(event){
 				$("#map-location-modal").modal("hide");
 			});
 
+			//Prints the resident details
+			$(function() {
+				$('#print').click(function() {
+						$('.saibu-display-form').printThis({
+									importCSS : false,
+									loadCSS : "/assets/css/print.css",
+									removeInline : true
+						});
+				});
+			});
 			
-// 			//JS function for Maps Display
-// 			function initMap() {
-				
-// 				var surveyLocation = {
-// 					lat : parseFloat(geoLat),
-// 					lng : parseFloat(geoLong)
-// 				};
-// 				var surveyMap = new google.maps.Map(document.getElementById('surveyMap'), {
-// 					zoom : 16,
-// 					center : surveyLocation,
-// 				// mapTypeId: 'satellite'
-// 				});
-// 				var marker = new google.maps.Marker({
-// 					position : surveyLocation,
-// 					map : surveyMap
-// 				});
-// 			}
-		</script>
-		
-<!-- 		<script async defer -->
-<!-- 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyEeeKDRl59P7ylQQ6uIW32YrtgpJ5iIk&callback=initMap"> -->
-			
-<!-- 		</script> -->
+	</script> 
 	</div>
 </body>
 </html>

@@ -37,11 +37,5 @@ public class SurveyAnswerController {
         
         String documentPhoto = "JPEG_" + surveyAnswerInfo.getFilledId() + "1_document_photo" + ".JPG"; 
         surveyAnswerInfo.setAnswer49(documentPhoto);
-	
-        
-        
 	}
-	
-	
-	
 }

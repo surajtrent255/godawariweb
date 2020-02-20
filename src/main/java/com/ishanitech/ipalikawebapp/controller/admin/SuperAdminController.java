@@ -15,7 +15,6 @@ import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDetailDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
-import com.ishanitech.ipalikawebapp.dto.UserRegistrationDTO;
 import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
 import com.ishanitech.ipalikawebapp.service.FormService;
 import com.ishanitech.ipalikawebapp.service.ReportService;
@@ -68,9 +67,10 @@ public class SuperAdminController {
 	}
 
 	@GetMapping("/addMemberForm/{residentFilledId}")
-	public String getMemberEntryForm(@PathVariable ("residentFilledId") String residentFilledId, Model model) {
+	public String getMemberEntryForm(@PathVariable ("residentFilledId") String residentFilledId,
+			Model model, @AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("residentFilledId", residentFilledId);
-		model.addAttribute("memberFormDetails", residentService.getMemberFormDetails().getData());
+		model.addAttribute("memberFormDetails", residentService.getMemberFormDetails(user.getToken()).getData());
 		return "admin/add-member";
 	}
 
