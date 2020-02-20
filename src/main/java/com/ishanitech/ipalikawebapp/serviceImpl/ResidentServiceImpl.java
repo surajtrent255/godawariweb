@@ -1,6 +1,5 @@
 package com.ishanitech.ipalikawebapp.serviceImpl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +57,6 @@ public class ResidentServiceImpl implements ResidentService {
 		String template = String.format("%s/member", RESIDENT_BASE_URL);
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
 		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, familyMemberInfo, MediaType.APPLICATION_JSON, token, url);
-		//restTemplate.postForObject(url, requestEntity, String.class);
 		ParameterizedTypeReference<String> responseType = new ParameterizedTypeReference<String>() {
 		};
 		restTemplate.exchange(requestEntity, responseType);

@@ -88,7 +88,6 @@ public class SuperAdminController {
 	public String getResidentDataList(Model model, @AuthenticationPrincipal UserDTO user) {
 		Response<List<ResidentDTO>> residentResponse = (Response<List<ResidentDTO>>) residentService
 				.getResidentDataList(user.getToken());
-
 		model.addAttribute("residentList", residentResponse.getData());
 		return "admin/resident-data";
 	}

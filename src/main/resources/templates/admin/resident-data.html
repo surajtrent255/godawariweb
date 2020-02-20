@@ -26,20 +26,11 @@
 	href="assets/css/sidebar-menu.css" rel="stylesheet" />
 <link th:href="@{/assets/css/app-style.css}"
 	href="assets/css/app-style.css" rel="stylesheet" />
-
-
-
-<link rel="stylesheet"
-	href="https://www.lalitpur15.org/datasys/public/plugins/nepali-datepicker/nepaliDatePicker.min.css">
-
 <link rel="stylesheet" th:href="@{/assets/plugins/datatable/datatables.min.css}"
 	href="assets/plugins/datatable/datatables.min.css">
-
 <link rel="stylesheet"
 	th:href="@{/assets/plugins/jquery.steps/css/jquery.steps.css}"
 	href="assets/plugins/jquery.steps/css/jquery.steps.css">
-
-
 <script th:src="@{/assets/js/jquery.min.js}"
 	src="assets/js/jquery.min.js"></script>
 </head>
@@ -138,7 +129,32 @@
 		<!--Start footer-->
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
 	</div>
-	<script>
+	<script th:src="@{/assets/js/popper.min.js}"
+		src="assets/js/popper.min.js"></script>
+	<script th:src="@{/assets/js/bootstrap.min.js}"
+		src="assets/js/bootstrap.min.js"></script>
+	<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}"
+		src="assets/plugins/simplebar/js/simplebar.js"></script>
+	<script th:src="@{/assets/plugins/datatable/datatables.min.js}"
+		src="assets/plugins/datatable/datatables.min.js"></script>
+	<script th:src="@{/assets/plugins/alerts-boxes/js/sweetalert.min.js}"
+		src="assets/plugins/alerts-boxes/js/sweetalert.min.js"></script>
+	<script th:src="@{/assets/js/jquery.pjax.js}"
+		src="assets/js/jquery.pjax.js"></script>
+	<script th:src="@{/assets/js/sidebar-menu.js}"
+		src="assets/js/sidebar-menu.js"></script>
+	<script th:src="@{/assets/js/app-script.js}"
+		src="assets/js/app-script.js"></script>
+	<script th:src="@{/assets/plugins/jquery.steps/js/jquery.steps.min.js}"
+		src="assets/plugins/jquery.steps/js/jquery.steps.min.js"></script>
+	<script th:src="@{/assets/plugins/jquery-validation/js/jquery.validate.min.js}"
+		src="assets/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+	<!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script> -->
+	<script th:src="@{/assets/js/transliteration.js}"
+		src="assets/js/transliteration.js"></script>
+<!-- 	<script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script> -->
+	<div id="scripts">
+		<script>
 		$(function() {
 			function fixedEncodeURIComponent(str) {
 				  return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
@@ -203,5 +219,6 @@
 			});
 		});
 	</script>
+	</div>
 </body>
 </html>
