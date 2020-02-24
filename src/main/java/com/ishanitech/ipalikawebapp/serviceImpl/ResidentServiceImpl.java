@@ -87,4 +87,14 @@ public class ResidentServiceImpl implements ResidentService {
 		return residents;
 	}
 
+	@Override
+	public Response<?> getMemberByMemberId(String token, String memberId) {
+		String template = RESIDENT_BASE_URL + "/member/" + memberId;
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<FamilyMemberDTO>> responseType = new ParameterizedTypeReference<Response<FamilyMemberDTO>>() {};
+		Response<FamilyMemberDTO> memberInfo = restTemplate.exchange(requestEntity, responseType).getBody();
+		return memberInfo;
+	}
+
 }

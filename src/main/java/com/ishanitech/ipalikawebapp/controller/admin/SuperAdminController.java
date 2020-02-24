@@ -126,4 +126,11 @@ public class SuperAdminController {
 		model.addAttribute("wards", wardService.getAllWards(user.getToken()));
 		return "admin/add-user";
 	}
+	
+	@GetMapping("/editMemberView/{memberId}")
+	public String editMemberInfo(Model model, @PathVariable("memberId") String memberId, @AuthenticationPrincipal UserDTO user) {
+		model.addAttribute("member", residentService.getMemberByMemberId(user.getToken(), memberId).getData());
+		return "admin/edit-member";
+	}
+
 }

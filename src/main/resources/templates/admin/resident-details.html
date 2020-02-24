@@ -192,6 +192,7 @@
 											<th><strong>८</strong></th>
 											<th><strong>९</strong></th>
 											<th><strong>१० </strong></th>
+											<th><strong>११ </strong></th>
 											<th rowspan="2" class="rm-print"><strong>#</strong></th>
 										</tr>
 										<tr>
@@ -207,6 +208,7 @@
 											</strong></th>
 											<th><strong>स्थायी ठेगाना</strong></th>
 											<th><strong>स्वास्थ्य अवस्था</strong></th>
+											<th><strong>Actions</strong></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -222,6 +224,8 @@
 											<td th:text="${member.voterCard} ? 'छ' : 'छैन'"></td>
 											<td th:text="${member.address} == 1 ? 'स्थायी जन्म' : 'बसाई सराई' "></td>
 											<td th:text="${member.healthCondition}"></td>
+											<td><a href="#" th:href="@{/}" th:onclick="|editMember(${member.memberId})|" class="btn btn-xs btn-warning">Edit</a>
+												<Button>Delete</Button></td>
 										</tr>
 									</tbody>
 								</table>
