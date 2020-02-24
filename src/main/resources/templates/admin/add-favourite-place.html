@@ -190,64 +190,23 @@
 
 								</div>
 							</div>
-							<button id="submit-location-btn"
-								class="btn btn-success pull-right">
-								<b>✔</b>
-							</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- 	<a href="javaScript:void();" class="back-to-top"><i -->
-	<!-- 		class="fa fa-angle-double-up"></i> </a> -->
 	<!-- 	<!--Start footer-->
-	<!-- 		<footer th:replace="~{fragments/footer :: footer}"></footer> -->
-	<script th:src="@{/assets/js/popper.min.js}"
+	<footer th:replace="~{fragments/footer :: footer}"></footer> --><script th:src="@{/assets/js/popper.min.js}"
 		src="assets/js/popper.min.js"></script>
-	<script th:src="@{/assets/js/bootstrap.min.js}"
-		src="assets/js/bootstrap.min.js"></script>
-	<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}"
-		src="assets/plugins/simplebar/js/simplebar.js"></script>
-	<script th:src="@{/assets/js/sidebar-menu.js}"
-		src="assets/js/sidebar-menu.js"></script>
-	<script th:src="@{/assets/plugins/datatable/datatables.min.js}"
-		src="assets/plugins/datatable/datatables.min.js"></script>
-	<script th:src="@{/assets/plugins/alerts-boxes/js/sweetalert.min.js}"
-		src="assets/plugins/alerts-boxes/js/sweetalert.min.js"></script>
-	<script th:src="@{/assets/js/jquery.pjax.js}"
-		src="assets/js/jquery.pjax.js"></script>
-	<script th:src="@{/assets/js/sidebar-menu.js}"
-		src="assets/js/sidebar-menu.js"></script>
-	<script th:src="@{/assets/js/app-script.js}"
-		src="assets/js/app-script.js"></script>
-	<script th:src="@{/assets/plugins/jquery.steps/js/jquery.steps.min.js}"
-		src="assets/plugins/jquery.steps/js/jquery.steps.min.js"></script>
 	<script
 		th:src="@{/assets/plugins/jquery-validation/js/jquery.validate.min.js}"
 		src="assets/plugins/jquery-validation/js/jquery.validate.min.js"></script>
-	<!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script> -->
 	<script th:src="@{/assets/js/transliteration.js}"
 		src="assets/js/transliteration.js"></script>
 
-	<!-- 	This needs to be replaced -->
-	<!-- 	<script th:src="@{/assets/js/app.js}" -->
-	<!-- 	src="assets/js/app.js"></script> -->
-
-	<!-- <script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script> -->
-
-	<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-		integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-		crossorigin=""></script>
-
-	<!-- 	<script src="https://code.jquery.com/jquery-3.4.1.min.js" -->
-	<!-- 		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" -->
-	<!-- 		crossorigin="anonymous"></script> -->
-
+	<script th:src="@{/assets/js/leaflet.js}"></script>
 	<script th:inline="javascript">
-	
-	
 		$(function () {
 		    var token = $("meta[name='_csrf']").attr("content");
 		    var header = $("meta[name='_csrf_header']").attr("content");
@@ -261,9 +220,9 @@
 		$("#placeGPS").on("click", function(event) {
 			event.preventDefault();
 			$("#map-location-modal").modal("show");
-			  setTimeout(function() {
+			  //setTimeout(function() {
 				    mymap.invalidateSize();
-				  }, 17)
+				 // }, 17)
 		});
 
 		//For canceling and hiding the Map modal
@@ -273,23 +232,19 @@
 		});
 		
 		//For selecting the current marker and hiding the Map modal
-		$("#submit-location-btn").on("click", function(event) {
+		$("#map-location-modal").on("click", "#submit-location-btn", function(event) {
+			event.preventDefault();
 			$("#map-location-modal").modal("hide");
 			if(geoLat != null && geoLng != null) {
-			$("#placeGPS").val(geoLat + ', ' + geoLng);
+				$("#placeGPS").val(geoLat + ', ' + geoLng);
 			}
 		});
 
 		const mymap = L.map('mapid').setView([ 27.614979, 85.363180 ], 17);
-
 		var layerGroup = L.layerGroup().addTo(mymap);
-	
 		var marker;
 		var popup = L.popup();
-
 		const attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors';
-
-		
 		var geoLocation;
 		var geoLocationTemp;
 		var geoLat
@@ -324,9 +279,10 @@
 
 		function onMapClick(e) {
 			layerGroup.clearLayers();
-			popup.setLatLng(e.latlng).setContent(
-					"The selected location is " + e.latlng.toString()).openOn(
-					mymap);
+			popup.setLatLng(e.latlng)
+				 .setContent(
+					`The selected latitude and longiude is ${e.latlng.toString()}. <a href="#" id="submit-location-btn"> Use this location </a>`
+				 ).openOn(mymap);
 			geoLocation = e.latlng;
 			geoLat = geoLocation.lat;
 			geoLng = geoLocation.lng;
@@ -336,75 +292,23 @@
 		}
 
 		mymap.on('click', onMapClick);
-
-		$(function() {
-			var _t, _n, _d, _v;
-			$("input[data-event='change']").on("change", function() {
-				_t = this;
-				_c = $(this).data("target");
-				if (_t.files && _t.files[0]) {
-					var reader = new FileReader();
-					reader.onload = function(e) {
-						$('img.' + _c).attr('src', e.target.result).show();
-						$('img.' + _c).parent().show();
-					}
-					reader.readAsDataURL(_t.files[0]);
-				}
-			});
-			$("#documents_copy").on("change", function() {
-				_v = $(this).val();
-				$(".documents_hide").hide();
-				$("div." + _v).show();
-
-			});
-			$("[data-event='toggle']").on("change", function() {
-				_t = $(this);
-				_n = $(this).attr("name");
-				_d = $("[name='" + _n + "']").serializeArray();
-				_c = _t.data("target");
-				if (_d.length > 0 && _t.is(':checked')) {
-					$.each(_d, function(i, fd) {
-						if (fd.value == _t.data("value")) {
-							$("." + _c).show();
-						}
-					});
-				} else {
-					$("." + _c).hide();
-				}
-			});
-			
-// 			$("#survey_date").nepaliDatePicker({
-// 				dateFormat : "%y-%m-%d",
-// 				closeOnDateSelect : true
-// 			});
-		});
 		
 		google.load("elements", "1", {
 		    packages: "transliteration"
 		});
-		function onLoad() {
+		
+		$(function() {
 		    var options = {
-		        sourceLanguage: 'en',
-		        destinationLanguage: ['ne'],
-		        shortcutKey: 'ctrl+g',
-		        transliterationEnabled: true
-		    };
-		    var control =new google.elements.transliteration.TransliterationControl(options);
-		    var uniElement = $(".unicode input[type='text'], #grid_filter input");
-		    control.makeTransliteratable(uniElement);
-		    // control.showControl('translControl');
-		}
-		
-		$(window).on("load", function (e) {
-			onLoad();
-		})
-		
-		$(document).on('pjax:complete', function() {
-		    onLoad();
-		})
-		
-		
-		
+			        sourceLanguage: 'en',
+			        destinationLanguage: ['ne'],
+			        shortcutKey: 'ctrl+g',
+			        transliterationEnabled: true
+			    };
+			var control =new google.elements.transliteration.TransliterationControl(options);
+			var uniElement = $(".unicode input[type='text'], #grid_filter input");
+			control.makeTransliteratable(uniElement);
+			    // control.showControl('translControl');
+		});
 	</script>
 </body>
 </html>
