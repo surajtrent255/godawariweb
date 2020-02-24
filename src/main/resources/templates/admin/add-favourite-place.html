@@ -24,14 +24,15 @@
 	rel="stylesheet" type="text/css" />
 <link th:href="@{/assets/css/sidebar-menu.css}"
 	href="assets/css/sidebar-menu.css" rel="stylesheet" />
-	
+
 <link th:href="@{/assets/css/app-style.css}"
 	href="assets/css/app-style.css" rel="stylesheet" />
 
 
-<link rel="stylesheet" th:href="@{/assets/plugins/datatable/datatables.min.css}"
+<link rel="stylesheet"
+	th:href="@{/assets/plugins/datatable/datatables.min.css}"
 	href="assets/plugins/datatable/datatables.min.css">
-	
+
 <link rel="stylesheet"
 	th:href="@{/assets/plugins/jquery.steps/css/jquery.steps.css}"
 	href="assets/plugins/jquery.steps/css/jquery.steps.css">
@@ -68,7 +69,6 @@
 	margin-left: 0;
 }
 
-
 #mapid {
 	height: 50em;
 	width: 50em;
@@ -79,7 +79,6 @@
 </head>
 <body>
 	<div id="wrapper">
-
 		<!--           	Sidebar and header -->
 		<div th:replace="~{fragments/admin-sidebar}"></div>
 		<header th:replace="~{fragments/header}" class="header1"> </header>
@@ -98,129 +97,104 @@
 						</ol>
 					</div>
 				</div>
+
+
 				<div class="card">
 					<div class="card-body">
 						<div class="card-title">Fill up information about the place.</div>
-						<a href="javascript:void(0)"
-							class="add-member btn btn-primary mb-2" style="margin-left: 8px;">Add
-							Place</a>
-						<form name="favPlaceForm" id="favPlaceForm" method="POST" action="" th:action="@{/favourite}" th:object="${favPlaceObj}" data-ajax="true" data-action=""
+						<form name="favPlaceForm" id="favPlaceForm" method="POST"
+							th:action="@{/favourite}" th:object="${favPlaceObj}"
 							enctype="multipart/form-data" class="unicode">
-							<input type="hidden" name="_method" value="post">
-							<h2>Favourite Place</h2>
-							<fieldset>
-								<div class="row member-panel" style="display: flex;">
-									<div class="col-lg-4 col-md-4 mb-2">
-										<div class="padding">
-											<label for="favName"><h4>Name of the Place</h4></label> <input
-												type="text" id="placeName" name="favName" th:field="*{placeName}"
-												class="form-control required" value="">
-										</div>
-									</div>
-									<div class="col-lg-4 col-md-4 mb-2">
-										<div class="padding">
-											<label for="favWard"><h4>Ward Number:</h4></label> <input
-												type="number" id="placeWard" name="favWard" th:field="*{placeWard}"
-												class="form-control required" value="">
-										</div>
-										
-									</div>
-									<div class="col-lg-4 col-md-4 mb-2">
-										<div class="padding">
-											<label for="placeType"><h4>Type of Place:</h4></label> <br>
-<!-- 											<input -->
-<!-- 												type="number" id="placeType" name="placeType" -->
-<!-- 												th:field="*{placeType}" class="form-control required" -->
-<!-- 												value="">  -->
-												<select th:field="*{placeType}">
-												<option th:each="place, iteration : ${placeTypes}"
-													th:value="${iteration.index + 1}" th:text="${place}"></option>
-											</select>
-
-										</div>
-									</div>
-									
-									
-									<div class="col-lg-4 col-md-4 mb-2">
-										<div class="padding">
-											<label for="favDesc"><h4>Description</h4></label>
-											<!-- 											<input -->
-											<!-- 												type="text" id="favDesc" name="favDesc" -->
-											<!-- 												class="form-control required"> -->
-											<textarea name="favDesc" id="placeDescription" th:field="*{placeDescription}" class="form-control required" rows="20">Write description</textarea>
-										</div>
-									</div>
-
-
-									<!-- 									<div class="col-lg-3 col-md-4"> -->
-									<!-- 										<div class="form-group form-label"> -->
-									<!-- 											<label for="favPhoto"><h4>Photo of the Place: </h4></label> <input -->
-									<!-- 												type="file" class="form-control  " id="favPhoto" name="favPhoto" -->
-									<!-- 												value="" data-event="change" data-target="favPhoto" -->
-									<!-- 												accept="image/*"> <a href="" style="display: none" -->
-									<!-- 												target="_blank" class="no-pjax"><img src="" -->
-									<!-- 												style="display: none" class="img-thumbnail photo"></a> -->
-									<!-- 										</div> -->
-									<!-- 									</div> -->
-
-
-
-									<div class="col-lg-3 col-md-4">
-										<div class="form-group form-label">
-											<label for="favPhoto"><h4>Photo of the Place</h4></label> <input
-												type="file" class="form-control" id="placeImage"
-												name="favPhoto" value="" data-event="change"
-												data-target="favPhoto" accept="image/*"> <a href=""
-												style="display: none" target="_blank" class="no-pjax"><img
-												src="" style="display: none" class="img-thumbnail favPhoto"></a>
-										</div>
-									</div>
-
-
-									<div class="col-lg-4 col-md-4 mb-2">
-										<div class="padding">
-											<label for="favLocation"><h4>Place Location</h4></label> <input
-												type="text" id="placeGPS" name="favLocation" th:field="*{placeGPS}" placeholder="Click to add location" value=""
-												class="form-control required" readonly>
-										</div>
-									</div>
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="placeName">Place Name.</label> <input type="text"
+										id="placeName" name="favName" th:field="*{placeName}"
+										class="form-control required" />
 								</div>
-								<input type="submit" value="Submit" />
-							</fieldset>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="placeWard">ward number</label> <input type="number"
+										id="placeWard" name="favWard" th:field="*{placeWard}"
+										class="form-control required">
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="placeType">Place Type</label> <select
+										id="placeType" th:field="*{placeType}">
+										<option th:each="place, iteration : ${placeTypes}"
+											th:value="${iteration.index + 1}" th:text="${place}">
+										</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="placeDescription">Place Description</label>
+									<textarea name="favDesc" id="placeDescription"
+										th:field="*{placeDescription}" class="form-control required">Write description
+									</textarea>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="placeImage">Photo Of The Place</label> <input
+										type="file" class="form-control" id="placeImage"
+										name="favPhoto" value="" data-event="change"
+										data-target="favPhoto" accept="image/*" /> <a href=""
+										style="display: none" target="_blank" class="no-pjax"> <img
+										src="" style="display: none" class="img-thumbnail favPhoto">
+									</a>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="placeGPS">Location</label> <input type="text"
+										id="placeGPS" name="favLocation" th:field="*{placeGPS}"
+										placeholder="Click to add location"
+										class="form-control required" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<button id="password-reset-btn" class="btn btn-primary px-5">
+									<i class="icon-lock"></i>Add Place
+								</button>
+							</div>
 						</form>
-						
-															<!-- Modal View For Map Location Entry-->
-									<div class="modal fade" id="map-location-modal"
-										data-keyboard="false" data-backdrop="false" role="dialog"
-										aria-hidden="true">
-										<div class="modal-dialog modal-lg modal-dialog-centered"
-											role="document">
-											<div class="modal-content" style="border-radius: 10px;">
-												<div class="modal-header">
-													<h5 class="modal-title">
-														<b><span>Please Select the Location On Map</span></b>
-													</h5>
-										
-													<button id="cancel-location-btn"
-														class="btn btn-danger pull-right">
-														<b>✘</b>
-													</button>
-												</div>
-												<div class="modal-content-body">
-													<div class="row" style="margin: 5px;">
-														<div style="margin: 20px auto;">
-															<div id="mapid"></div>
-														</div>
-													
-													</div>
-												</div>
-												<button id="submit-location-btn"
-														class="btn btn-success pull-right">
-														<b>✔</b>
-													</button>
-											</div>
-										</div>
+					</div>
+				</div>
+
+				<!-- Modal For GPS  -->
+				<div class="modal fade" id="map-location-modal"
+					data-keyboard="false" data-backdrop="false" role="dialog"
+					aria-hidden="true">
+					<div class="modal-dialog modal-lg modal-dialog-centered"
+						role="document">
+						<div class="modal-content" style="border-radius: 10px;">
+							<div class="modal-header">
+								<h5 class="modal-title">
+									<b><span>Please Select the Location On Map</span></b>
+								</h5>
+
+								<button id="cancel-location-btn"
+									class="btn btn-danger pull-right">
+									<b>✘</b>
+								</button>
+							</div>
+							<div class="modal-content-body">
+								<div class="row" style="margin: 5px;">
+									<div style="margin: 20px auto;">
+										<div id="mapid"></div>
 									</div>
+
+								</div>
+							</div>
+							<button id="submit-location-btn"
+								class="btn btn-success pull-right">
+								<b>✔</b>
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -250,25 +224,26 @@
 		src="assets/js/app-script.js"></script>
 	<script th:src="@{/assets/plugins/jquery.steps/js/jquery.steps.min.js}"
 		src="assets/plugins/jquery.steps/js/jquery.steps.min.js"></script>
-	<script th:src="@{/assets/plugins/jquery-validation/js/jquery.validate.min.js}"
+	<script
+		th:src="@{/assets/plugins/jquery-validation/js/jquery.validate.min.js}"
 		src="assets/plugins/jquery-validation/js/jquery.validate.min.js"></script>
 	<!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script> -->
 	<script th:src="@{/assets/js/transliteration.js}"
 		src="assets/js/transliteration.js"></script>
-	
-<!-- 	This needs to be replaced -->
-<!-- 	<script th:src="@{/assets/js/app.js}" -->
-<!-- 	src="assets/js/app.js"></script> -->
 
-<!-- <script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script> -->
+	<!-- 	This needs to be replaced -->
+	<!-- 	<script th:src="@{/assets/js/app.js}" -->
+	<!-- 	src="assets/js/app.js"></script> -->
+
+	<!-- <script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script> -->
 
 	<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
 		integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
 		crossorigin=""></script>
 
-<!-- 	<script src="https://code.jquery.com/jquery-3.4.1.min.js" -->
-<!-- 		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" -->
-<!-- 		crossorigin="anonymous"></script> -->
+	<!-- 	<script src="https://code.jquery.com/jquery-3.4.1.min.js" -->
+	<!-- 		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" -->
+	<!-- 		crossorigin="anonymous"></script> -->
 
 	<script th:inline="javascript">
 	
