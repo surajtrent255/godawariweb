@@ -224,8 +224,8 @@
 											<td th:text="${member.voterCard} ? 'छ' : 'छैन'"></td>
 											<td th:text="${member.address} == 1 ? 'स्थायी जन्म' : 'बसाई सराई' "></td>
 											<td th:text="${member.healthCondition}"></td>
-											<td><a href="#" th:href="@{/}" th:onclick="|editMember(${member.memberId})|" class="btn btn-xs btn-warning">Edit</a>
-												<Button>Delete</Button></td>
+											<td><a href="#"	th:href="@{/super-admin/editMemberView/} + ${member.memberId}"
+											class="btn btn-xs btn-success">Edit Details</a><td>
 										</tr>
 									</tbody>
 								</table>

@@ -122,7 +122,7 @@
 										<div class="padding">
 											<label for="name"><h4>नाम थर :</h4></label> <input
 												type="text" id="name" name="name"
-												class="form-control required" th:value="member.name">
+												class="form-control required" th:value="${member.name}">
 										</div>
 									</div>
 									<div class="col-lg-4 col-md-4 mb-2">
@@ -144,7 +144,7 @@
 									<div class="col-md-4 col-lg-4 mb-2">
 										<div class="padding">
 											<label for="age"><h4>उमेर :</h4></label> <input type="text"
-												id="age" name="age" class="form-control age required" value="">
+												id="age" name="age" class="form-control age required" th:value="${member.age}">
 <!-- 											<input type="hidden" name="age" class="age" value=""> -->
 										</div>
 									</div>
@@ -152,7 +152,7 @@
 										<div class="padding">
 											<label for="date_of_birth"><h4>जन्म मिति</h4></label> <input
 												type="text" id="date_of_birth" name="date_of_birth"
-												class="form-control required" value="">
+												class="form-control required" th:value="${member.dateOfBirth}">
 										</div>
 									</div>
 
@@ -187,7 +187,7 @@
 										<div class="padding">
 											<label for="occupation"><h4>पेशा :</h4></label> <input
 												type="text" id="occupation" name="occupation"
-												class="form-control required" value="">
+												class="form-control required" th:value="${member.occupation}">
 										</div>
 									</div>
 									<div class="col-md-4 col-lg-4 mb-2">
@@ -214,7 +214,7 @@
 										<div class="padding">
 											<label for="health"><h4>स्वास्थ्य अवस्था :</h4></label> <input
 												type="text" id="health" name="health"
-												class="form-control required" value="">
+												class="form-control required" th:value="${member.healthCondition}">
 										</div>
 									</div>
 								</div>

@@ -130,6 +130,7 @@ public class SuperAdminController {
 	@GetMapping("/editMemberView/{memberId}")
 	public String editMemberInfo(Model model, @PathVariable("memberId") String memberId, @AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("member", residentService.getMemberByMemberId(user.getToken(), memberId).getData());
+		model.addAttribute("memberFormDetails", residentService.getMemberFormDetails(user.getToken()).getData());
 		return "admin/edit-member";
 	}
 
