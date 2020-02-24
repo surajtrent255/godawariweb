@@ -119,18 +119,44 @@
 						"mobileNumber": mobileNumber,
 						"fullName": fullName
 					};
-					$.ajax({
-						url : contextPath + "/user/" + userId,
-						method : "PATCH",
-						contentType: "application/json",
-						data: JSON.stringify(userInfo),
-					}).done(function(data) {
-						alert(data.data);
-					}).fail(function(data) {
-						alert(JSON.stringify(data));
+					
+					swal.fire({
+						title : 'Are you sure you want to change your info?',
+						text : "You won't be able to revert this!",
+						icon : 'warning',
+						showCancelButton : true,
+						confirmButtonColor : '#3085d6',
+						cancelButtonColor : '#d33',
+						confirmButtonText : 'Yes, change it!'
+					}).then((btnClicked) => {
+						if(btnClicked.value) {
+							$.ajax({
+								url : contextPath + "/user/" + userId,
+								method : "PATCH",
+								contentType: "application/json",
+								data: JSON.stringify(userInfo),
+							}).done(function(data) {
+								swal.fire({
+									icon : "success",
+									text : data.data
+								}).then((btnClick) => {
+									if(btnClick.value) {
+										location.reload(true);		
+									}
+								});
+							}).fail(function(data) {
+								swal.fire({
+									icon : "fail",
+									text : data.data
+								}).then((btnClick) => {
+									if(btnClick.value) {
+										location.reload(true);		
+									}
+								});
+							});
+						}
 					});
 				});
-				
 			});
 		</script>
 	</div>

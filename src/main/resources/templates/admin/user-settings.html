@@ -30,60 +30,69 @@
 	href="assets/css/app-style.css" rel="stylesheet" />
 
 </head>
-    <body>
-        <div id="wrapper">
-           <!-- Side bar and header -->
-			<div th:replace="~{fragments/admin-sidebar}"></div>
-			<header th:replace="~{fragments/header}" class="header1"> </header>
+<body>
+	<div id="wrapper">
+		<!-- Side bar and header -->
+		<div th:replace="~{fragments/admin-sidebar}"></div>
+		<header th:replace="~{fragments/header}" class="header1"> </header>
 
-            <div class="clearfix"></div>
-            <div class="content-wrapper">
-                <div class="container-fluid" id="pjax-container">
-                    <div class="row pt-2 pb-2">
-                        <div class="col-sm-9">
-                            <h4 class="page-title">नगरबासी बिवरण कम्प्युटर प्रणाली</h4>
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javaScript:void();">गृह</a></li>            
-                                <li class="breadcrumb-item active" aria-current="page">पासवोर्ड परिवर्तन</li>
-                             </ol>
-                         </div>
-                     </div>
-	            	<div class="card">
-					    <div class="card-body">
-					        <div class="card-title">पासवोर्ड परिवर्तन</div>
-					         <form id="password-reset-form">
-					            <input type="hidden" id="userId" name="userId" th:value="${#authentication.principal.userId}">
-					            <div class="form-group row">
-					                <div class="col-md-4">
-					                    <label for="email">इमेल</label>
-					                    <input id="email" type="email" class="form-control" name="email" th:value="${#authentication.principal.email}" required autocomplete="email" placeholder="Enter Your Email Address">
-					                </div>
-					            </div>
-					            <div class="form-group row">
-					                <div class="col-md-4">
-					                    <label for="password">पासवोर्ड</label>
-					                    <input id="password" type="password" class="form-control" name="password" placeholder="Enter Your Password">
-					                </div>
-					            </div>
-					            <div class="form-group row">
-					                <div class="col-md-4">
-					                    <label for="password-confirm">पासवोर्ड पक्का गर्नुहोस</label>
-					                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password">
-					                </div>
-					            </div>
-					            <div class="form-group">
-					                <button id="password-reset-btn" class="btn btn-primary px-5"><i class="icon-lock"></i>परिवर्तन गर्नुहोस</button>
-					            </div>
-					        </form>
-					    </div>
+		<div class="clearfix"></div>
+		<div class="content-wrapper">
+			<div class="container-fluid" id="pjax-container">
+				<div class="row pt-2 pb-2">
+					<div class="col-sm-9">
+						<h4 class="page-title">नगरबासी बिवरण कम्प्युटर प्रणाली</h4>
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="javaScript:void();">गृह</a></li>
+							<li class="breadcrumb-item active" aria-current="page">पासवोर्ड
+								परिवर्तन</li>
+						</ol>
 					</div>
-                </div>
-            </div>
-            <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
-            <footer th:replace="~{fragments/footer :: footer}"></footer>
-        </div>
-        <div>
-        	<script>
+				</div>
+				<div class="card">
+					<div class="card-body">
+						<div class="card-title">पासवोर्ड परिवर्तन</div>
+						<form id="password-reset-form">
+							<input type="hidden" id="userId" name="userId"
+								th:value="${#authentication.principal.userId}">
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="email">इमेल</label> <input id="email" type="email"
+										class="form-control" name="email"
+										th:value="${#authentication.principal.email}" required
+										autocomplete="email" placeholder="Enter Your Email Address">
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="password">पासवोर्ड</label> <input id="password"
+										type="password" class="form-control" name="password"
+										placeholder="Enter Your Password">
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="password-confirm">पासवोर्ड पक्का गर्नुहोस</label> <input
+										id="password-confirm" type="password" class="form-control"
+										name="password_confirmation" placeholder="Confirm Password">
+								</div>
+							</div>
+							<div class="form-group">
+								<button id="password-reset-btn" class="btn btn-primary px-5">
+									<i class="icon-lock"></i>परिवर्तन गर्नुहोस
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a href="javaScript:void();" class="back-to-top"><i
+			class="fa fa-angle-double-up"></i> </a>
+		<footer th:replace="~{fragments/footer :: footer}"></footer>
+	</div>
+	<div>
+		<script>
 	        	$(function () {
 		    	    var token = $("meta[name='_csrf']").attr("content");
 		    	    var header = $("meta[name='_csrf_header']").attr("content");
@@ -101,15 +110,41 @@
 					    let token = $("meta[name='_csrf']").attr("content");
 					    let headerName = $("meta[name='_csrf_header']").attr("content");
         				if(password === confirmPassword) {
-        					$.ajax({
-        						url : contextPath + "/user/" + userId + "/password",
-        						method : "PUT",
-        						contentType: "application/json",
-        						data: password,
-        					}).done(function(data) {
-        						alert(data.data);
-        					}).fail(function(data) {
-        						alert(JSON.stringify(data));
+        					swal.fire({
+        						title : 'Are you sure you want to change your password?',
+        						text : "You won't be able to revert this!",
+        						icon : 'warning',
+        						showCancelButton : true,
+        						confirmButtonColor : '#3085d6',
+        						cancelButtonColor : '#d33',
+        						confirmButtonText : 'Yes, change it!'
+        					}).then((btnClicked) => {
+        						if(btnClicked.value) {
+        							$.ajax({
+                						url : contextPath + "/user/" + userId + "/password",
+                						method : "PUT",
+                						contentType: "application/json",
+                						data: password,
+                					}).done(function(data) {
+                						swal.fire({
+            								icon : "success",
+            								text : data.data
+            							}).then((btnClick) => {
+            								if(btnClick.value) {
+            									location.reload(true);		
+            								}
+            							});
+                					}).fail(function(data) {
+                						swal.fire({
+            								icon : "fail",
+            								text : data.data
+            							}).then((btnClick) => {
+            								if(btnClick.value) {
+            									location.reload(true);		
+            								}
+            							});
+                					});
+        						}
         					});
         				}
         			});
@@ -117,6 +152,6 @@
         		});
         		
         	</script>
-         </div>
-    </body>
+	</div>
+</body>
 </html>

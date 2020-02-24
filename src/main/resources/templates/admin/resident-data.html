@@ -152,7 +152,6 @@
 	<!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script> -->
 	<script th:src="@{/assets/js/transliteration.js}"
 		src="assets/js/transliteration.js"></script>
-<!-- 	<script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script> -->
 	<div id="scripts">
 		<script>
 		$(function() {
@@ -175,7 +174,11 @@
 					let searchKey = $(this).val();
 					let finalUrl = encodeURI(contextPath + "/resident/search" + "?searchKey=" + encodeURIComponent(searchKey));
 					if(searchKey === "") {
-						alert("कृपया नाम दिन नभुल्नुहोला|");
+						swal.fire({
+							  text: 'कृपया नाम दिन नभुल्नुहोला!',
+							  icon: 'info',
+							  confirmButtonText: 'OK'
+						});
 					} else {
 						if(searchKey) {
 							$.ajax({
@@ -183,7 +186,6 @@
 								method: "POST",
 								contentType: "application/json"
 							}).done(function(data) {
-								$("#resident-body").empty();
 								let tablesData = "";
 								let count = 0;
 								if(data.length > 0) {
@@ -204,15 +206,18 @@
 															<a href=\"/super-admin/residentMember/${item.filledId}\" class="btn btn-xs btn-success">Show Details</a>
 														</td> </tr>`;
 									});
+									$("#resident-body").empty();
 									$("#resident-body").append(tablesData);
 								} else {
-									$("#resident-body").append("<h2>माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण भेटीएन|</h2>");
+									swal.fire({
+										  text: 'माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण भेटीएन!',
+										  icon: 'warning',
+										  confirmButtonText: 'OK'
+									});
 								}
 							}).fail(function(data) {
 								alert(data);
 							});
-							
-							
 						}
 					}
 				}
