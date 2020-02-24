@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -77,12 +78,14 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		String template = FAVOURITE_PLACE_BASE_URL + "/image";
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
 	
-		
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+	    headers.add("Authorization", token);
 		
 		
 		final String captureId = "1001";
 		
-		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 		
 		Date presentDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
@@ -106,13 +109,35 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		
 		map.add("picture", contentsAsResource);
 		
-		HttpHeaders httpHeaders = new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
 		
+	    HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = new HttpEntity<>(map, headers);
+	    restTemplate.postForObject(url, requestEntity, String.class);
+		
+		
+		
+//	      HttpHeaders headers = new HttpHeaders();
+//	      headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+//	      headers.add("Authorization", token);
+
+//	      LinkedMultiValueMap<String, Object> map =  
+
+//	                  new LinkedMultiValueMap<>();
+//	      map.add("your_param_key", "your_param_value");
+//	      map.add("files", your_file_content_in_byte_array);
+
+
+		
+		
+		
+//		HttpHeaders httpHeaders = new HttpHeaders();
+//	    httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+		
+//		HttpUtils.createRequestEntity(HttpMethod.POST, entity, mediaType, token, url)
 	    
 //		restTemplate.postForObject("http://localhost:8888/favourite-place/image", map, String.class);
-		RequestEntity<MultiValueMap<String, Object>> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, map, MediaType.MULTIPART_FORM_DATA, token, url);
-		restTemplate.exchange(requestEntity, String.class);
+//		RequestEntity<MultiValueMap<String, Object>> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, map, MediaType.MULTIPART_FORM_DATA, token, url);
+//		restTemplate.exchange(requestEntity, String.class);
+//		restTemplate.postForObject(url, requestEntity, String.class);
 	}
 
 	@Override
