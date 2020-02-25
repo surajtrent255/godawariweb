@@ -7,7 +7,9 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +22,9 @@ import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
 import com.ishanitech.ipalikawebapp.service.ResidentService;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequestMapping("/resident")
 @Controller
 public class ResidentController {
@@ -32,7 +36,7 @@ public class ResidentController {
 	}
 
 	@ResponseStatus(HttpStatus.OK)
-	@PostMapping(value = "/add", consumes = "application/json")
+	@PostMapping(consumes = "application/json")
 	public @ResponseBody Response<String> addFamilyMember(@RequestBody FamilyMemberDTO familyMemberInfo, @AuthenticationPrincipal UserDTO user) {
 		Date presentDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
@@ -44,6 +48,12 @@ public class ResidentController {
 	@PostMapping("/search")
 	public @ResponseBody List<ResidentDTO> getResidentsBySearchKey(@RequestParam("searchKey") String searchKey, @AuthenticationPrincipal UserDTO user) {
 		return residentService.searchResidentByKey(searchKey, user.getToken());
+	}
+	
+	@PutMapping("/{memberId}")
+	public @ResponseBody Response<String> editFamilyMember(@RequestBody FamilyMemberDTO familyMemberInfo,@PathVariable("memberId") String memberId, @AuthenticationPrincipal UserDTO user) {
+		residentService.editFamilyMemberInfo(familyMemberInfo, memberId, user.getToken());
+		return new Response<String>("Member information update successfully!");
 	}
 
 }

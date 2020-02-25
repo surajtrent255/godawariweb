@@ -88,11 +88,10 @@
 						<div class="card-title">Fill up information about family
 							members.</div>
 						<a href="javascript:void(0)"
-							class="add-member btn btn-primary mb-2" style="margin-left: 8px;">Edit
-							Member</a>
-						<th:form:form method="PUT" th:action="@{/resident/add}"
+							class="edit-member btn btn-primary mb-2"
+							style="margin-left: 8px;">Edit Member</a>
+						<th:form:form method="PUT" th:action="@{/resident/edit}"
 							modelAttribute="member" enctype="multipart/form-data">
-
 
 							<!-- 						<form method="POST" action="javascript:void(0)" data-ajax="true" -->
 							<!-- 							th:action="@{/resident/add}" -->
@@ -235,15 +234,16 @@
 							<!-- 								<input type="submit" value="Submit"/> -->
 							<button type="submit"
 								class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4"
-								id="member-entry-submit">Add Member</button>
+								id="member-update-submit">Update Member</button>
 						</th:form:form>
 					</div>
 				</div>
 			</div>
 		</div>
+		<footer th:replace="~{fragments/footer :: footer}"></footer>
 	</div>
-	<footer th:replace="~{fragments/footer :: footer}"></footer>
-	<script th:src="@{/assets/plugins/nepali-datepicker/nepaliDatePicker.min.js}"
+	<script
+		th:src="@{/assets/plugins/nepali-datepicker/nepaliDatePicker.min.js}"
 		src="assets/plugins/nepali-datepicker/jquery.nepaliDatePicker.min.js"></script>
 	<script th:inline="javascript">
 		$(function() {
@@ -253,12 +253,10 @@
 				xhr.setRequestHeader(header, token);
 			});
 		});
-
-		/*<![CDATA[*/
-		var mainId = /*[[${residentFilledId}]]*/'0';
-
-		/*]]>*/
-
+	
+	/*<![CDATA[*/
+	var memberId = /*[[${member.memberId}]]*/ '0';
+	/*]]>*/
 		google.load("elements", "1", {
 			packages : "transliteration"
 		});
@@ -281,62 +279,60 @@
 			onLoad();
 		})
 
-		$("#date_of_birth").nepaliDatePicker({
-			dateFormat : "%y-%m-%d",
-			closeOnDateSelect : true
-		});
-
-		$(function() {
-			$("#member-entry-submit").click(function(event) {
-				alert(mainId);
-				//Getting the data from the formm	
-				let memberName = $("#name").val();
-				let relation = $("#relation").val();
-				let gender = $("#gender").val();
-				let age = $("#age").val();
-				let dateOfBirth = $("#date_of_birth").val();
-				let maritalStatus = $("#marital_status").val();
-				let education = $("#education").val();
-				let occupation = $("#occupation").val();
-				let voterCard = $("#voter_card").val();
-				let migration = $("#migration").val();
-				let healthStatus = $("#health").val();
-				let familyId = mainId;
-				let memberInfo = {};
-				memberInfo.name = memberName;
-				memberInfo.relation = relation;
-				memberInfo.gender = gender;
-				memberInfo.age = age;
-				memberInfo.dateOfBirth = dateOfBirth;
-				memberInfo.maritalStatus = maritalStatus;
-				memberInfo.education = education;
-				memberInfo.occupation = occupation;
-				memberInfo.voterCard = voterCard;
-				memberInfo.address = migration;
-				memberInfo.healthCondition = healthStatus;
-				memberInfo.mainId = familyId;
-
-				// Now create an ajax request to send member details to the server
-				$.ajax({
-					method : "POST",
-					url : contextPath + "/resident/add",
-					data : JSON.stringify(memberInfo),
-					contentType : "Application/Json",
-					success : function(result) {
-						swal.fire({
-							text : "Member added successfully!",
-							icon : "success",
-							closeOnClickOutside : false,
-							closeOnEsc : false
-						}).then(function() {
-							alert("added");
-						});
-					},
-					error : function(error) {
-					}
-				});
+	
+	$("#date_of_birth").nepaliDatePicker({
+    	dateFormat: "%d/%m/%y",
+        closeOnDateSelect: true
+    });
+	
+	$(function() {
+		$("#member-update-submit").click(function(event) {
+			//Getting the data from the formm	
+			let memberName = $("#name").val();
+			let relation = $("#relation").val();
+			let gender = $("#gender").val();
+			let age = $("#age").val();
+			let dateOfBirth = $("#date_of_birth").val();
+			let maritalStatus = $("#marital_status").val();
+			let education = $("#education").val();
+			let occupation = $("#occupation").val();
+			let voterCard = $("#voter_card").val();
+			let migration = $("#migration").val();
+			let healthStatus = $("#health").val();
+			let memberInfo = {};
+			memberInfo.name = memberName;
+			memberInfo.relation = relation;
+			memberInfo.gender = gender;
+			memberInfo.age = age;
+			memberInfo.dateOfBirth = dateOfBirth;
+			memberInfo.maritalStatus = maritalStatus;
+			memberInfo.education = education;
+			memberInfo.occupation = occupation;
+			memberInfo.voterCard = voterCard;
+			memberInfo.address = migration;
+			memberInfo.healthCondition = healthStatus;
+		
+			// Now create an ajax request to send member details to the server
+			$.ajax({
+				method : "PUT",
+				url : contextPath + "/resident/" + memberId,
+				data : JSON.stringify(memberInfo),
+				contentType : "Application/Json",
+				success : function(result) {
+					swal.fire({
+						text : result.data,
+						icon : "success",
+						closeOnClickOutside : false,
+						closeOnEsc : false
+					}).then(function() {
+						window.location = contextPath + "/super-admin/residentData";
+					});
+				},
+				error : function(error) {
+				}
 			});
 		});
-	</script>
+	});
+</script>
 </body>
 </html>
