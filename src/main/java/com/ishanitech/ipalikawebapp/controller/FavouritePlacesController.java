@@ -30,9 +30,6 @@ public class FavouritePlacesController {
 
 	private final FavouritePlacesService favouritePlacesService;
 	
-	
-	
-	
 	public FavouritePlacesController(FavouritePlacesService favouritePlacesService) {
 		this.favouritePlacesService = favouritePlacesService;
 	}
@@ -41,42 +38,26 @@ public class FavouritePlacesController {
 	@DeleteMapping("/{favPlaceId}")
 	public void deleteFavouritePlaceByPlaceId(@PathVariable("favPlaceId") String favPlaceId, @AuthenticationPrincipal UserDTO user) {
 		favouritePlacesService.deleteFavouritePlacebyPlaceId(favPlaceId, user.getToken());
-		//return new Response<String>("Successfully deleted favorite place!");
 	}
 	
-	@PostMapping()
-	public void addFavouritePlace(@RequestParam(value = "favPhoto") MultipartFile file,
-			@ModelAttribute(value = "favPlaceObj") FavouritePlaceDTO favouritePlaceInfo, @AuthenticationPrincipal UserDTO user) {
-		final String captureId = "1001";
-		
+	@PostMapping
+	public String addFavouritePlace(@RequestParam(value = "favPhoto") MultipartFile file,
+			@ModelAttribute(value = "favPlaceObj") FavouritePlaceDTO favouritePlaceInfo,
+			@AuthenticationPrincipal UserDTO user) {
 		Date presentDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
         favouritePlaceInfo.setFilledId(dateFormat.format(presentDate));
-
-        
-        String imageFileName = "JPEG_" + favouritePlaceInfo.getFilledId() + "_" + captureId + ".JPG";
+        String imageFileName = "JPEG_" + favouritePlaceInfo.getFilledId() +".JPG";
         favouritePlaceInfo.setPlaceImage(imageFileName);
-     
-		log.info("#################################################");
-		log.info(file.getOriginalFilename().toString());
-		
-		
 		file.getOriginalFilename().concat(imageFileName);
-		
-		log.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-		log.info(file.getOriginalFilename());
-		
-		
-		log.info(favouritePlaceInfo.getPlaceName());
-		log.info(favouritePlaceInfo.getPlaceDescription());
-		log.info(favouritePlaceInfo.getPlaceWard());
-		log.info(favouritePlaceInfo.getPlaceImage());
-		log.info(favouritePlaceInfo.getPlaceGPS());
-		
-		favouritePlacesService.addFavouritePlaceInfo(favouritePlaceInfo, user.getToken());
-		
-		favouritePlacesService.addFavouritePlaceImage(file, user.getToken());
-		
+		try {
+			favouritePlacesService.addFavouritePlaceInfo(favouritePlaceInfo, user.getToken());
+			favouritePlacesService.addFavouritePlaceImage(file, user.getToken());
+			return "redirect:super-admin/favouritePlaceView";
+		} catch (Exception ex) {
+			log.info(ex.getMessage());
+			return "";
+		}
 	}
 	
 }

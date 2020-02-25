@@ -36,11 +36,14 @@ public class IpalikaFrontendApplication {
 	 */
 	private static RestTemplate defaultRestTemplate() {
 		RestTemplate restTemplate = new RestTemplate();
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-		converter.setObjectMapper(objectMapper);
-		restTemplate.setMessageConverters(Arrays.asList(converter));
+		/*
+		 * ObjectMapper objectMapper = new ObjectMapper();
+		 * objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
+		 * false); MappingJackson2HttpMessageConverter converter = new
+		 * MappingJackson2HttpMessageConverter();
+		 * converter.setObjectMapper(objectMapper);
+		 * restTemplate.setMessageConverters(Arrays.asList(converter));
+		 */
 		return restTemplate;
 	}
 

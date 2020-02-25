@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -24,7 +25,10 @@ import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
 import com.ishanitech.ipalikawebapp.utilities.HttpUtils;
 
+import lombok.extern.slf4j.Slf4j;
 
+
+@Slf4j
 @Service
 public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 	private final RestTemplate restTemplate;
@@ -48,7 +52,7 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 
 	@Override
 	public Response<FavouritePlaceDTO> getFavouritePlaceByPlaceId(String placeId) {
-		String template = FAVOURITE_PLACE_BASE_URL + "/detail/" + placeId;
+		String template = String.format("%s/%d", FAVOURITE_PLACE_BASE_URL, placeId);
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
 		RequestEntity<FavouritePlaceDTO> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
 		ParameterizedTypeReference<Response<FavouritePlaceDTO>> responseType = new ParameterizedTypeReference<Response<FavouritePlaceDTO>>() {};
@@ -58,16 +62,15 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 
 	@Override
 	public void deleteFavouritePlacebyPlaceId(String favPlaceId, String token) {
-		String template = FAVOURITE_PLACE_BASE_URL + "/" + favPlaceId;
+		String template = String.format("%s/%d", FAVOURITE_PLACE_BASE_URL, favPlaceId);
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
 		RequestEntity<String> requestEntity = HttpUtils.createRequestEntity(HttpMethod.DELETE, MediaType.APPLICATION_JSON, token , url);
 		restTemplate.exchange(requestEntity, String.class);
-//		restTemplate.delete("http://localhost:8888/favourite-place/" + favPlaceId);
 	}
 
 	@Override
 	public void addFavouritePlaceInfo(FavouritePlaceDTO favouritePlaceInfo, String token) {
-		String template = FAVOURITE_PLACE_BASE_URL + "/single";
+		String template = String.format("%s/single", FAVOURITE_PLACE_BASE_URL);
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
 		RequestEntity<FavouritePlaceDTO> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, favouritePlaceInfo, MediaType.APPLICATION_JSON, token, url);
 		restTemplate.exchange(requestEntity, String.class);
@@ -75,74 +78,18 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 
 	@Override
 	public void addFavouritePlaceImage(MultipartFile file, String token) {
-		String template = FAVOURITE_PLACE_BASE_URL + "/image";
+		String template = String.format("%s/image", FAVOURITE_PLACE_BASE_URL);
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
-	
-		HttpHeaders headers = new HttpHeaders();
-	    headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-	    headers.add("Authorization", token);
-		
-		
-		final String captureId = "1001";
-		
-		LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-		
-		Date presentDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
-
-        
-        String imageFileName = "JPEG_" + dateFormat.format(presentDate) + "_" + captureId + ".JPG";
-		
-		map.add("name", imageFileName);
-		map.add("filename", imageFileName);
-		ByteArrayResource contentsAsResource = null;
-		try {
-			contentsAsResource = new ByteArrayResource(file.getBytes()){
-			            @Override
-			            public String getFilename(){
-			                return imageFileName;
-			            }
-			        };
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		map.add("picture", contentsAsResource);
-		
-		
-	    HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = new HttpEntity<>(map, headers);
-	    restTemplate.postForObject(url, requestEntity, String.class);
-		
-		
-		
-//	      HttpHeaders headers = new HttpHeaders();
-//	      headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-//	      headers.add("Authorization", token);
-
-//	      LinkedMultiValueMap<String, Object> map =  
-
-//	                  new LinkedMultiValueMap<>();
-//	      map.add("your_param_key", "your_param_value");
-//	      map.add("files", your_file_content_in_byte_array);
-
-
-		
-		
-		
-//		HttpHeaders httpHeaders = new HttpHeaders();
-//	    httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
-		
-//		HttpUtils.createRequestEntity(HttpMethod.POST, entity, mediaType, token, url)
-	    
-//		restTemplate.postForObject("http://localhost:8888/favourite-place/image", map, String.class);
-//		RequestEntity<MultiValueMap<String, Object>> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, map, MediaType.MULTIPART_FORM_DATA, token, url);
-//		restTemplate.exchange(requestEntity, String.class);
-//		restTemplate.postForObject(url, requestEntity, String.class);
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+		map.add("picture", file.getResource());
+		HttpHeaders headers = HttpUtils.createHeader(MediaType.MULTIPART_FORM_DATA, token);
+	    HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(map, headers);
+		restTemplate.postForLocation(url, requestEntity);
 	}
 
 	@Override
 	public List<String> getTypesofFavourtiePlaces() {
-		String template = FAVOURITE_PLACE_BASE_URL + "/types";
+		String template = String.format("%s/type", FAVOURITE_PLACE_BASE_URL);
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
 		RequestEntity<List<String>> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
 		ParameterizedTypeReference<Response<List<String>>> responseType = new ParameterizedTypeReference<Response<List<String>>>() {};
