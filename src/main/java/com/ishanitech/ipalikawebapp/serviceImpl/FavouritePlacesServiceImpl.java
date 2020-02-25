@@ -52,7 +52,7 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 
 	@Override
 	public Response<FavouritePlaceDTO> getFavouritePlaceByPlaceId(String placeId) {
-		String template = String.format("%s/%d", FAVOURITE_PLACE_BASE_URL, placeId);
+		String template = String.format("%s/%s", FAVOURITE_PLACE_BASE_URL, placeId);
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
 		RequestEntity<FavouritePlaceDTO> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
 		ParameterizedTypeReference<Response<FavouritePlaceDTO>> responseType = new ParameterizedTypeReference<Response<FavouritePlaceDTO>>() {};
@@ -62,7 +62,7 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 
 	@Override
 	public void deleteFavouritePlacebyPlaceId(String favPlaceId, String token) {
-		String template = String.format("%s/%d", FAVOURITE_PLACE_BASE_URL, favPlaceId);
+		String template = String.format("%s/%s", FAVOURITE_PLACE_BASE_URL, favPlaceId);
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
 		RequestEntity<String> requestEntity = HttpUtils.createRequestEntity(HttpMethod.DELETE, MediaType.APPLICATION_JSON, token , url);
 		restTemplate.exchange(requestEntity, String.class);
