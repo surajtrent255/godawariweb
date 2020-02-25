@@ -27,21 +27,14 @@
 
 <link th:href="@{/assets/css/app-style.css}"
 	href="assets/css/app-style.css" rel="stylesheet" />
-
-
 <link rel="stylesheet"
 	th:href="@{/assets/plugins/datatable/datatables.min.css}"
 	href="assets/plugins/datatable/datatables.min.css">
-
 <link rel="stylesheet"
 	th:href="@{/assets/plugins/jquery.steps/css/jquery.steps.css}"
 	href="assets/plugins/jquery.steps/css/jquery.steps.css">
 
-
-<link rel="stylesheet"
-	href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-	integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-	crossorigin="" />
+<link rel="stylesheet" th:href="@{/assets/css/leaflet.css}"/>
 
 
 <style>
@@ -74,14 +67,12 @@
 	width: 50em;
 }
 </style>
-<script th:src="@{/assets/js/jquery.min.js}"
-	src="assets/js/jquery.min.js"></script>
 </head>
 <body>
 	<div id="wrapper">
 		<!--           	Sidebar and header -->
-		<div th:replace="~{fragments/admin-sidebar}"></div>
-		<header th:replace="~{fragments/header}" class="header1"> </header>
+		<div th:replace="~{fragments/admin-sidebar :: admin-sidebar}"></div>
+		<header th:replace="~{fragments/header :: header}" class="header1"> </header>
 
 
 		<div class="clearfix"></div>
@@ -197,14 +188,7 @@
 		</div>
 	</div>
 	<!-- 	<!--Start footer-->
-	<footer th:replace="~{fragments/footer :: footer}"></footer> --><script th:src="@{/assets/js/popper.min.js}"
-		src="assets/js/popper.min.js"></script>
-	<script
-		th:src="@{/assets/plugins/jquery-validation/js/jquery.validate.min.js}"
-		src="assets/plugins/jquery-validation/js/jquery.validate.min.js"></script>
-	<script th:src="@{/assets/js/transliteration.js}"
-		src="assets/js/transliteration.js"></script>
-
+	<footer th:replace="~{fragments/footer :: footer}"></footer> 
 	<script th:src="@{/assets/js/leaflet.js}"></script>
 	<script th:inline="javascript">
 		$(function () {

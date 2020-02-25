@@ -33,14 +33,12 @@
 <link rel="stylesheet"
 	th:href="@{/assets/plugins/jquery.steps/css/jquery.steps.css}"
 	href="assets/plugins/jquery.steps/css/jquery.steps.css">
-<script th:src="@{/assets/js/jquery.min.js}"
-	src="assets/js/jquery.min.js"></script>
 </head>
 <body>
 	<div id="wrapper">
 		<!--           	Sidebar and header -->
-		<div th:replace="~{fragments/admin-sidebar}"></div>
-		<header th:replace="~{fragments/header}" class="header1"> </header>
+		<div th:replace="~{fragments/admin-sidebar :: admin-sidebar}"></div>
+		<header th:replace="~{fragments/header :: header}" class="header1"> </header>
 
 		<div class="clearfix"></div>
 		<div class="content-wrapper">
@@ -105,34 +103,6 @@
 		<!--Start footer-->
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
 	</div>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/popper.min.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/bootstrap.min.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/plugins/simplebar/js/simplebar.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/sidebar-menu.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/plugins/datatable/js/datatables.min.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/plugins/alerts-boxes/js/sweetalert.min.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/jquery.pjax.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/sidebar-menu.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/plugins/nepali-datepicker/jquery.nepaliDatePicker.min.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/app-script.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/plugins/jquery.steps/js/jquery.steps.min.js"></script>
-	<script
-		src="https://www.lalitpur15.org/datasys/public/plugins/jquery-validation/js/jquery.validate.min.js"></script>
-	<!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script> -->
-	<script
-		src="https://www.lalitpur15.org/datasys/public/js/transliteration.I.js"></script>
-	<script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script>
 
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<div id="scripts"></div>
