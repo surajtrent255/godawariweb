@@ -88,9 +88,9 @@
 						<div class="card-title">Fill up information about family
 							members.</div>
 						<a href="javascript:void(0)"
-							class="add-member btn btn-primary mb-2" style="margin-left: 8px;">Edit
+							class="edit-member btn btn-primary mb-2" style="margin-left: 8px;">Edit
 							Member</a>
-						<th:form:form method="PUT" th:action="@{/resident/add}"
+						<th:form:form method="PUT" th:action="@{/resident/edit}"
 							modelAttribute="member" enctype="multipart/form-data"> 
 							
 
@@ -222,17 +222,18 @@
 <!-- 								<input type="submit" value="Submit"/> -->
 							<button type="submit"
 								class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4"
-								id="member-entry-submit">Add Member</button>
+								id="member-update-submit">Add Member</button>
 							</th:form:form>
 					</div>
 				</div>
 			</div>
 		</div>
+		<footer th:replace="~{fragments/footer :: footer}"></footer>
 	</div>
 <!-- 	<a href="javaScript:void();" class="back-to-top"><i -->
 <!-- 		class="fa fa-angle-double-up"></i> </a> -->
 	<!--Start footer-->
-<!-- 		<footer th:replace="~{fragments/footer :: footer}"></footer> -->
+		
 	<script th:src="@{/assets/js/popper.min.js}"
 		src="assets/js/popper.min.js"></script>
 	<script th:src="@{/assets/js/bootstrap.min.js}"
@@ -262,12 +263,13 @@
 		src="assets/js/transliteration.js"></script>
 <!-- 	<script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script> -->
 	
-<!-- 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<div id="scripts">
-	
-	
-	
 	<script th:inline="javascript">
+	/*<![CDATA[*/
+	var memberId = /*[[${member.memberId}]]*/ '0';
+
+	/*]]>*/
 	
 	$(function () {
 	    var token = $("meta[name='_csrf']").attr("content");
@@ -276,16 +278,8 @@
 	        xhr.setRequestHeader(header, token);
 	    });
 	});
-	
-	
 
-	/*<![CDATA[*/
-	var mainId = /*[[${residentFilledId}]]*/ '0';
 
-	/*]]>*/
-	
-	
-	let contextPath = /*[[${#request.contextPath}]]*/ '/admin'; 
 	
 	
 	$(function() {
@@ -352,7 +346,7 @@
 	})
 	
 	$("#date_of_birth").nepaliDatePicker({
-    	dateFormat: "%y-%m-%d",
+    	dateFormat: "%d/%m/%y",
         closeOnDateSelect: true
     });
 	
@@ -365,273 +359,59 @@
 // 		});
 	
 	
-	$(function() {$("#member-entry-submit").click(function(event) {
-		alert(mainId);
-// 		alert("clicked");
+	$(function() {
+		$("#member-update-submit").click(function(event) {
+			//Getting the data from the formm	
+			let memberName = $("#name").val();
+			let relation = $("#relation").val();
+			let gender = $("#gender").val();
+			let age = $("#age").val();
+			let dateOfBirth = $("#date_of_birth").val();
+			let maritalStatus = $("#marital_status").val();
+			let education = $("#education").val();
+			let occupation = $("#occupation").val();
+			let voterCard = $("#voter_card").val();
+			let migration = $("#migration").val();
+			let healthStatus = $("#health").val();
 		
-		//Getting the data from the formm	
-		let memberName = $("#name").val();
-		let relation = $("#relation").val();
-		let gender = $("#gender").val();
-		let age = $("#age").val();
-		let dateOfBirth = $("#date_of_birth").val();
-		let maritalStatus = $("#marital_status").val();
-		let education = $("#education").val();
-		let occupation = $("#occupation").val();
-		let voterCard = $("#voter_card").val();
-		let migration = $("#migration").val();
-		let healthStatus = $("#health").val();
-		let familyId = mainId;
+			
+			let memberInfo = {};
+			memberInfo.name = memberName;
+			memberInfo.relation = relation;
+			memberInfo.gender = gender;
+			memberInfo.age = age;
+			memberInfo.dateOfBirth = dateOfBirth;
+			memberInfo.maritalStatus = maritalStatus;
+			memberInfo.education = education;
+			memberInfo.occupation = occupation;
+			memberInfo.voterCard = voterCard;
+			memberInfo.address = migration;
+			memberInfo.healthCondition = healthStatus;
 		
-		alert(familyId);
-	
-		
-		let memberInfo = {};
-		memberInfo.name = memberName;
-		memberInfo.relation = relation;
-		memberInfo.gender = gender;
-		memberInfo.age = age;
-		memberInfo.dateOfBirth = dateOfBirth;
-		memberInfo.maritalStatus = maritalStatus;
-		memberInfo.education = education;
-		memberInfo.occupation = occupation;
-		memberInfo.voterCard = voterCard;
-		memberInfo.address = migration;
-		memberInfo.healthCondition = healthStatus;
-		memberInfo.mainId = familyId;
-	
-		// Now create an ajax request to send member details to the server
-		$.ajax({
-			method: "POST",
-			url: contextPath + "/resident/add",
-			data: JSON.stringify(memberInfo),
-			contentType: "Application/Json",
-			success: function(result) {
-				swal.fire({
-					text: "Member added successfully!",
-					icon: "success",
-					closeOnClickOutside: false,
-					closeOnEsc: false
-				}).then(function () {
-// 							window.location = contextPath+"/admin";
-							alert("added");
-						});
-			},
-			error: function(error) {
-// 				alert(error);
-			}
+			// Now create an ajax request to send member details to the server
+			$.ajax({
+				method : "PUT",
+				url : contextPath + "/resident/edit/" + memberId,
+				data : JSON.stringify(memberInfo),
+				contentType : "Application/Json",
+				success : function(result) {
+					swal.fire({
+						text : result.data,
+						icon : "success",
+						closeOnClickOutside : false,
+						closeOnEsc : false
+					}).then(function() {
+						window.location = contextPath + "/super-admin/residentData";
+					});
+				},
+				error : function(error) {
+				}
+			});
 		});
 	});
-	});
-	
-//     $("#date_of_birth").nepaliDatePicker({
-//         dateFormat: "%y-%m-%d",
-//         closeOnDateSelect: true
-//     });
 	
  	</script>
-	
-	
-		<script type="text/javascript">
-//     $(function(){
-//         var d, year, month, day;
-//         var member = `<div class="row member-panel" style="display: flex;">
-//                                             <div class="col-lg-4 col-md-4 mb-2">
-//                             <div class="padding">
-//                             <label for="household_id"><h4>कित्ता नं  :<\/h4><\/label>
-//                             <select name="household_id[]" id="household_id" class="form-control required">
-//                                                                     <option value="574d9387-8715-4d99-8e32-7b8bc974e4b9">सुर्य माया काफ्ले - (०)<\/option>
-//                                                             <\/select>
-//                             <\/div>
-//                         <\/div>
-//                                         <div class="col-lg-4 col-md-4 mb-2">
-//                         <div class="padding">
-//                         <label for="name"><h4>नाम थर  :<\/h4><\/label>
-//                         <input type="text" id="name" name="name[]" class="form-control required" value="">
-//                         <\/div>
-//                     <\/div>
-//                     <div class="col-lg-4 col-md-4 mb-2">
-//                         <div class="padding">
-//                         <label for="relation"><h4>नाता :<\/h4><\/label>
-//                         <select id="relation" name="relation[]" class="form-control required">
-//                                                             <option value="1">हजुरआमा<\/option>
-//                                                             <option value="2">हजुरबुवा<\/option>
-//                                                             <option value="3">बुवा<\/option>
-//                                                             <option value="4">आमा<\/option>
-//                                                             <option value="5">छोरा<\/option>
-//                                                             <option value="6">छोरी<\/option>
-//                                                             <option value="7">नाती<\/option>
-//                                                             <option value="8">नातिनी<\/option>
-//                                                             <option value="9">दिदि<\/option>
-//                                                             <option value="10">भाई<\/option>
-//                                                             <option value="11">दाई <\/option>
-//                                                             <option value="12">बुहारी  <\/option>
-//                                                             <option value="13">श्रीमती <\/option>
-//                                                             <option value="14">श्रीमान<\/option>
-//                                                             <option value="15">बुहारी<\/option>
-//                                                             <option value="16">भाउजु<\/option>
-//                                                             <option value="17">बहिनी<\/option>
-//                                                             <option value="18">आाफै<\/option>
-//                                                             <option value="19">भान्जा <\/option>
-//                                                             <option value="20">भान्जी <\/option>
-//                                                             <option value="21">भतिजा<\/option>
-//                                                             <option value="22">भातिजी <\/option>
-//                                                             <option value="23">सासु <\/option>
-//                                                             <option value="24">ससुरा<\/option>
-//                                                             <option value="25">ज्वाईं<\/option>
-//                                                     <\/select>
-//                         <\/div>
-//                     <\/div>
-//                     <div class="col-md-4 col-lg-4 mb-2">
-//                         <div class="padding">
-//                         <label for="gender"><h4>लिङ्ग  :<\/h4><\/label>
-//                         <select id="gender" name="gender[]" class="form-control required">
-//                             <option value="1">पुरुष्<\/option>
-//                             <option value="2">महिला<\/option>
-//                             <option value="3">अरु<\/option>
-//                         <\/select>
-//                         <\/div>
-//                     <\/div>
-//                     <div class="col-md-4 col-lg-4 mb-2">
-//                         <div class="padding">
-//                         <label for="age"><h4>उमेर :<\/h4><\/label>
-//                         <input type="text" name="age[]" class="form-control required age" value="">
-//                         <input type="hidden" name="age_eng[]" class="age_eng" value="">
-//                         <\/div>
-//                     <\/div>
-//                     <div class="col-md-4 col-lg-4 mb-2">
-//                         <div class="padding">
-//                         <label><h4>वैवाहिक स्थिति  :<\/h4><\/label>
-//                         <select name="maritial_status[]" id="maritial_status" class="form-control required">
-//                             <option value=""><\/option>
-//                             <option value="1">विवाहित<\/option>
-//                             <option value="0">अविवाहित<\/option>
-//                         <\/select>
-//                         <\/div>
-//                     <\/div>
-//                     <div class="col-md-4 col-lg-4 mb-2">
-//                         <div class="padding">
-//                         <label for="education"><h4>सैक्षिक योग्येता<\/h4><\/label>
-//                         <select id="education" name="education[]" class="form-control required">
-//                                                                                         <option value="1">पिएचडि<\/option>
-//                                                             <option value="2">एमफिल<\/option>
-//                                                             <option value="3">मास्टर डिग्री(स्नातकोत्तर)<\/option>
-//                                                             <option value="4">स्नाताक<\/option>
-//                                                             <option value="5">उच्च विद्यालय<\/option>
-//                                                             <option value="6">माध्यमिक<\/option>
-//                                                             <option value="7">तल्लो माध्यमिक<\/option>
-//                                                             <option value="8">प्राथमिक<\/option>
-//                                                             <option value="9">सामान्य शिक<\/option>
-//                                                     <\/select>
-//                         <\/div>
-//                     <\/div>
-//                     <div class="col-md-4 col-lg-4 mb-2">
-//                         <div class="padding">
-//                         <label for="occupation"><h4>पेशा  :<\/h4><\/label>
-//                         <input type="text" id="occupation" name="occupation[]" class="form-control required" value="">
-//                         <\/div>
-//                     <\/div>
-//                     <div class="col-md-4 col-lg-4 mb-2">
-//                         <div class="padding">
-//                         <label><h4>मतदाता परिचयपत्र  :<\/h4><\/label>
-//                         <select class="form-control required" name="voter_card[]" id="voter_card">
-//                             <option value=""><\/option>
-//                             <option value="1">छ<\/option>
-//                             <option value="0">छैन<\/option>
-//                         <\/select>
-//                         <\/div>
-//                     <\/div>
-//                     <div class="col-md-4 col-lg-4 mb-2">
-//                         <div class="padding">
-//                         <label><h4>स्थायी ठेगाना  :<\/h4><\/label>
-//                         <select class="form-control required" name="temporary_address[]" id="temporary_address">
-//                             <option value=""><\/option>
-//                             <option value="1">स्थायी जन्म<\/option>
-//                             <option value="0">बसाई सराई<\/option>
-//                         <\/select>
-//                         <\/div>
-//                     <\/div>
-//                     <div class="col-md-4 col-lg-4 mb-2">
-//                         <div class="padding">
-//                         <label for="health"><h4>स्वास्थ्य अवस्था   :<\/h4><\/label>
-//                         <input type="text" id="health" name="health[]" class="form-control required" value="">
-//                         <\/div>
-//                     <\/div>
-//                 <\/div>`;
-
-//         $(document).on("dateSelect", ".age", function (event) {
-//             d = event.datePickerData.adDate;
-//             year = d.getFullYear();
-//             month = d.getMonth()+1;
-//             day = d.getDate();
-//             $(this).siblings(".age_eng").val(year+"-"+month+"-"+day);
-//         });
-//         // wizard
-//         var form = $("#members-wizard");
-//         form.steps({
-//             headerTag: "h2",
-//             bodyTag: "fieldset",
-//             transitionEffect: "slideLeft",
-//             enableAllSteps: true,
-//             autoFocus: true,
-//             labels: {
-//                 finish: "Save Member",
-//                 loading: "Loading ..."
-//             },
-//             onInit: function (event, currentIndex) {
-//                 $(".age").nepaliDatePicker({
-//                     dateFormat: "%y-%m-%d",
-//                     closeOnDateSelect: true
-//                 });
-//             },
-//             onStepChanging: function (event, currentIndex, newIndex)
-//             {
-//                 form.validate().settings.ignore = ":disabled,:hidden";
-//                 return form.valid();
-//             },
-//             onFinishing: function (event, currentIndex)
-//             {
-//                 form.validate().settings.ignore = ":disabled,:hidden";
-//                 return form.valid();
-//             },
-//             onFinished: function (event, currentIndex)
-//             {
-//                 $("#members-wizard").submit();
-//             }
-//         });
-//         $(".add-member").on("click", function(){
-//             form.validate().settings.ignore = ":disabled,:hidden";
-//             if(form.valid()){
-//                 $('#members-wizard').steps('add', {
-//                     title:  `Member ${parseInt($("h2").length+1)}`,
-//                     content: `<div style="overflow: hidden"><a href='javascript:void(0)' class='remove-member btn btn-warning pull-right' data-position='${$("h2").length}'>Remove<\/a><\/div> ${member}`
-//                 });
-//                 $(".age").nepaliDatePicker({
-//                     dateFormat: "%y-%m-%d",
-//                     closeOnDateSelect: true
-//                 });
-//                 onLoad();
-//             }
-//         });
-//         $(document).on("click", ".remove-member", function(){
-//             Swal.fire({
-//                 title: 'Delete',
-//                 text: "Are you sure you want to delete selected member?  This process cannot be undone once in process",
-//                 type: 'warning',
-//                 showCancelButton: true,
-//                 confirmButtonColor: '#3085d6',
-//                 cancelButtonColor: '#d33',
-//                 confirmButtonText: 'Yes, delete it!'
-//             }).then((result) => {
-//                 if (result.value) {
-//                     var position = $(this).data("position");
-//                     $('#members-wizard').steps('remove', position);
-//                     $('#members-wizard').steps('previous');
-//                 }
-//             })
-//         });
-//     });
-  </script>
+		
   <script>
 // 		$(document).on("dateSelect", ".age", function (event) {
 // 		d = event.datePickerData.adDate;
