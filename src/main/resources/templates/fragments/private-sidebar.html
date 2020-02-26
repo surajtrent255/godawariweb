@@ -55,14 +55,14 @@
 						<i class="zmdi zmdi-layers"></i> <span>Data</span>
 					</a>
 				</li>
-				<li>
+				<li sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')">
 					<a th:href="@{/super-admin/addHouseholdForm}"
 					class="waves-effect"> <i class="zmdi zmdi-home"></i> <span>Add
 							House</span>
 					</a>
 				</li>
-				<li>
-					<a th:href="@{/super-admin/favouritePlaceAdd}"
+				<li sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')">
+					<a th:href="@{/favourite-place/add}"
 						class="waves-effect"> <i class="zmdi zmdi-gps-dot"></i> 
 						<span>Add Place</span>
 					</a>

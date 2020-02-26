@@ -4,8 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,7 +55,6 @@ public class FavouritePlacesController {
 		return "public/favourite-place-details";
 	}
 	
-	@Secured({"ROLE_SUPER_ADMIN", "ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN"})
 	@PostMapping
 	public String addFavouritePlace(@RequestParam(value = "favPhoto") MultipartFile file,
 			@ModelAttribute(value = "favPlaceObj") FavouritePlaceDTO favouritePlaceInfo,
@@ -71,11 +68,18 @@ public class FavouritePlacesController {
 		try {
 			favouritePlacesService.addFavouritePlaceInfo(favouritePlaceInfo, user.getToken());
 			favouritePlacesService.addFavouritePlaceImage(file, user.getToken());
-			return "redirect:super-admin/favouritePlaceView";
+			return "redirect:favourite-place/";
 		} catch (Exception ex) {
 			log.info(ex.getMessage());
 			return "";
 		}
+	}
+	
+	@GetMapping("/add")
+	public String getFavouritePlaceEntryView(Model model) {
+		model.addAttribute("placeTypes", favouritePlacesService.getTypesofFavourtiePlaces());
+		model.addAttribute("favPlaceObj", new FavouritePlaceDTO());
+		return "private/common/add-favourite-place";
 	}
 	
 }

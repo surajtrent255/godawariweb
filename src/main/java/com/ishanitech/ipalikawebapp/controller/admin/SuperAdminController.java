@@ -31,19 +31,16 @@ public class SuperAdminController {
 
 	private final ResidentService residentService;
 	private final FormService formService;
-	private final FavouritePlacesService favouritePlacesService;
 	private final ReportService reportService;
 	private final UserService userService;
 	private final WardService wardService;
 
 	public SuperAdminController(ResidentService residentService, 
-			FavouritePlacesService favouritePlacesService, 
 			FormService formService,
 			ReportService reportService, 
 			UserService userService, 
 			WardService wardService) {
 		this.residentService = residentService;
-		this.favouritePlacesService = favouritePlacesService;
 		this.formService = formService;
 		this.reportService = reportService;
 		this.userService = userService;
@@ -87,13 +84,6 @@ public class SuperAdminController {
 		Response<ResidentDetailDTO> residentResponse = (Response<ResidentDetailDTO>) residentService.getResidentFullDetail(filledId, user.getToken());
 		model.addAttribute("residentFullDetail", residentResponse.getData());
 		return "private/super-admin/resident-details";
-	}
-	
-	@GetMapping("/favouritePlaceAdd")
-	public String getFavouritePlaceEntryView(Model model) {
-		model.addAttribute("placeTypes", favouritePlacesService.getTypesofFavourtiePlaces());
-		model.addAttribute("favPlaceObj", new FavouritePlaceDTO());
-		return "private/super-admin/add-favourite-place";
 	}
 
 	@GetMapping("/addUser")
