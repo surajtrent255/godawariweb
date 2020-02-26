@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,21 +41,8 @@ public class FavouritePlacesController {
 		model.addAttribute("favouritePlaceList", favouritePlacesService.getAllFavouritePlaces().getData());
 		return "public/favourite-place";
 	}
-
-	@ResponseStatus(HttpStatus.OK)
-	@DeleteMapping("/{favPlaceId}")
-	public void deleteFavouritePlaceByPlaceId(@PathVariable("favPlaceId") String favPlaceId, @AuthenticationPrincipal UserDTO user) {
-		favouritePlacesService.deleteFavouritePlacebyPlaceId(favPlaceId, user.getToken());
-	}
 	
-	@GetMapping("/{favPlaceId}")
-	public String getFavouritePlaceByPlaceId(@PathVariable("favPlaceId") String favPlaceId,
-			@AuthenticationPrincipal UserDTO user, Model model) {
-		Response<FavouritePlaceDTO> favouritePlaceResponse = (Response<FavouritePlaceDTO>) favouritePlacesService.getFavouritePlaceByPlaceId(favPlaceId);
-		model.addAttribute("favouritePlaceInfo", favouritePlaceResponse.getData());
-		return "public/favourite-place-details";
-	}
-	
+	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SURVEYOR"})
 	@PostMapping
 	public String addFavouritePlace(@RequestParam(value = "favPhoto") MultipartFile file,
 			@ModelAttribute(value = "favPlaceObj") FavouritePlaceDTO favouritePlaceInfo,
@@ -74,7 +62,23 @@ public class FavouritePlacesController {
 			return "";
 		}
 	}
+
+	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SURVEYOR"})
+	@ResponseStatus(HttpStatus.OK)
+	@DeleteMapping("/{favPlaceId}")
+	public void deleteFavouritePlaceByPlaceId(@PathVariable("favPlaceId") String favPlaceId, @AuthenticationPrincipal UserDTO user) {
+		favouritePlacesService.deleteFavouritePlacebyPlaceId(favPlaceId, user.getToken());
+	}
 	
+	@GetMapping("/{favPlaceId}")
+	public String getFavouritePlaceByPlaceId(@PathVariable("favPlaceId") String favPlaceId,
+			@AuthenticationPrincipal UserDTO user, Model model) {
+		Response<FavouritePlaceDTO> favouritePlaceResponse = (Response<FavouritePlaceDTO>) favouritePlacesService.getFavouritePlaceByPlaceId(favPlaceId);
+		model.addAttribute("favouritePlaceInfo", favouritePlaceResponse.getData());
+		return "public/favourite-place-details";
+	}
+	
+	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SURVEYOR"})
 	@GetMapping("/add")
 	public String getFavouritePlaceEntryView(Model model) {
 		model.addAttribute("placeTypes", favouritePlacesService.getTypesofFavourtiePlaces());
