@@ -45,8 +45,8 @@
 					class="waves-effect"> <i class="zmdi zmdi-account-add"></i> <span>Add User</span>
 					</a>
 				</li>
-				<li>
-					<a th:href="@{/super-admin/residentData}" class="waves-effect">
+				<li sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')">
+					<a th:href="@{/resident}" class="waves-effect">
 						<i class="zmdi zmdi-layers"></i> <span>Data</span>
 					</a>
 				</li>

@@ -10,17 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ishanitech.ipalikawebapp.dto.AnswerDTO;
-import com.ishanitech.ipalikawebapp.dto.FavouritePlaceDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDetailDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
-import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
 import com.ishanitech.ipalikawebapp.service.FormService;
 import com.ishanitech.ipalikawebapp.service.ReportService;
 import com.ishanitech.ipalikawebapp.service.ResidentService;
-import com.ishanitech.ipalikawebapp.service.UserService;
-import com.ishanitech.ipalikawebapp.service.WardService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -64,25 +60,11 @@ public class SuperAdminController {
 		model.addAttribute("memberFormDetails", residentService.getMemberFormDetails(user.getToken()).getData());
 		return "private/super-admin/add-member";
 	}
-
-	@GetMapping("/residentData")
-	public String getResidentDataList(Model model, @AuthenticationPrincipal UserDTO user) {
-		Response<List<ResidentDTO>> residentResponse = (Response<List<ResidentDTO>>) residentService
-				.getResidentDataList(user.getToken());
-		model.addAttribute("residentList", residentResponse.getData());
-		return "private/super-admin/resident-data";
-	}
-
-	@GetMapping("/residentMember/{filledFormId}")
-	public String getResidentMemberList(@PathVariable("filledFormId") String filledId, Model model, @AuthenticationPrincipal UserDTO user) {
-		Response<ResidentDetailDTO> residentResponse = (Response<ResidentDetailDTO>) residentService.getResidentFullDetail(filledId, user.getToken());
-		model.addAttribute("residentFullDetail", residentResponse.getData());
-		return "private/super-admin/resident-details";
-	}
-	
 	
 	@GetMapping("/editMemberView/{memberId}")
-	public String editMemberInfo(Model model, @PathVariable("memberId") String memberId, @AuthenticationPrincipal UserDTO user) {
+	public String editMemberInfo(Model model, 
+			@PathVariable("memberId") String memberId, 
+			@AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("member", residentService.getMemberByMemberId(user.getToken(), memberId).getData());
 		model.addAttribute("memberFormDetails", residentService.getMemberFormDetails(user.getToken()).getData());
 		return "private/super-admin/edit-member";
