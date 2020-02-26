@@ -1,6 +1,9 @@
 package com.ishanitech.ipalikawebapp.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ishanitech.ipalikawebapp.dto.Response;
+import com.ishanitech.ipalikawebapp.dto.RoleDTO;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
 import com.ishanitech.ipalikawebapp.dto.UserRegistrationDTO;
 import com.ishanitech.ipalikawebapp.service.UserService;
@@ -48,7 +52,18 @@ public class UserController {
 	@Secured({"ROLE_SUPER_ADMIN", "ROLE_CENTRAL_ADMIN"})
 	@GetMapping("/add")
 	public String addUser(Model model, @AuthenticationPrincipal UserDTO user) {
-		model.addAttribute("roles", userService.getAllRoles(user.getToken()).getData());
+		List<RoleDTO> roles = new ArrayList<>();
+		if(user.getRoles().get(0).equalsIgnoreCase("SUPER_ADMIN")) {
+			roles = userService.getAllRoles(user.getToken()).getData();
+		} else {
+			roles = userService.getAllRoles(user.getToken()).getData()
+					.stream()
+					.filter(role -> !role.getRole().equalsIgnoreCase("SUPER_ADMIN")
+							&& !role.getRole().equalsIgnoreCase("CENTRAL_ADMIN"))
+					.collect(Collectors.toList());
+		}
+		
+		model.addAttribute("roles", roles);
 		model.addAttribute("wards", wardService.getAllWards(user.getToken()));
 		return "private/common/add-user";
 	}
