@@ -51,7 +51,7 @@
 					</a>
 				</li>
 				<li sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')">
-					<a th:href="@{/super-admin/addHouseholdForm}"
+					<a th:href="@{/survey-answer/household}"
 					class="waves-effect"> <i class="zmdi zmdi-home"></i> <span>Add
 							House</span>
 					</a>

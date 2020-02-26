@@ -29,7 +29,7 @@ import com.ishanitech.ipalikawebapp.service.ResidentService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "SURVEYOR"})
+@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SURVEYOR"})
 @RequestMapping("/resident")
 @Controller
 public class ResidentController {

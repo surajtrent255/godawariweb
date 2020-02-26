@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -55,7 +56,7 @@
 				<div class="row">
 					<div class="col-lg-12 col-md-12">
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<div class="ui">
 									<label >Show&nbsp;
 										<select id="result-option" class="ui input">
@@ -68,7 +69,19 @@
 									</label>
 								</div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-4">
+								<div class="ui" sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'SURVEYOR')">
+									<label >Ward&nbsp;
+										<select id="result-option" class="ui input">
+											<option value="10">1</option>
+											<option value="25">2</option>
+											<option value="50">3</option>
+											<option value="100">4</option>
+										</select>
+									</label>
+								</div>
+							</div>
+							<div class="col-md-4">
 								<div class="ui pull-right">
 									<label>
 										Search:&nbsp;<span class="ui input">
