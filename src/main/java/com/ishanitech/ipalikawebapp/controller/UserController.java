@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -20,6 +21,7 @@ import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
 import com.ishanitech.ipalikawebapp.dto.UserRegistrationDTO;
 import com.ishanitech.ipalikawebapp.service.UserService;
+import com.ishanitech.ipalikawebapp.service.WardService;
 import com.ishanitech.ipalikawebapp.utilities.UserDetailsUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,11 +31,28 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class UserController {
 	private final UserService userService;
+	private final WardService wardService;
 	
-	public UserController(UserService userService) {
+	public UserController(UserService userService, WardService wardService) {
 		this.userService = userService;
+		this.wardService = wardService;
 	}
-
+	
+	@Secured({"ROLE_SUPER_ADMIN", "ROLE_CENTRAL_ADMIN"})
+	@PostMapping
+	public @ResponseBody Response<String> addUser(@RequestBody UserRegistrationDTO user, @AuthenticationPrincipal UserDTO loggedInUser) {
+		userService.addUser(user, UserDetailsUtil.getToken(loggedInUser));
+		return new Response<String>("User is created!");
+	}
+	
+	@Secured({"ROLE_SUPER_ADMIN", "ROLE_CENTRAL_ADMIN"})
+	@GetMapping("/add")
+	public String addUser(Model model, @AuthenticationPrincipal UserDTO user) {
+		model.addAttribute("roles", userService.getAllRoles(user.getToken()).getData());
+		model.addAttribute("wards", wardService.getAllWards(user.getToken()));
+		return "private/common/add-user";
+	}
+	
 	@GetMapping("/profile")
 	public String userProfilePage() {
 		return "private/common/user-profile";
@@ -42,13 +61,6 @@ public class UserController {
 	@GetMapping("/setting")
 	public String userSettingPage() {
 		return "private/common/user-settings";
-	}
-	
-	@Secured({"ROLE_SUPER_ADMIN", "ROLE_CENTRAL_ADMIN"})
-	@PostMapping
-	public @ResponseBody Response<String> addUser(@RequestBody UserRegistrationDTO user, @AuthenticationPrincipal UserDTO loggedInUser) {
-		userService.addUser(user, UserDetailsUtil.getToken(loggedInUser));
-		return new Response<String>("User is created!");
 	}
 	
 	@Secured({"ROLE_SUPER_ADMIN", "ROLE_CENTRAL_ADMIN"})

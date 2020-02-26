@@ -32,19 +32,13 @@ public class SuperAdminController {
 	private final ResidentService residentService;
 	private final FormService formService;
 	private final ReportService reportService;
-	private final UserService userService;
-	private final WardService wardService;
 
 	public SuperAdminController(ResidentService residentService, 
 			FormService formService,
-			ReportService reportService, 
-			UserService userService, 
-			WardService wardService) {
+			ReportService reportService) {
 		this.residentService = residentService;
 		this.formService = formService;
 		this.reportService = reportService;
-		this.userService = userService;
-		this.wardService = wardService;
 	}
 
 	@GetMapping
@@ -85,13 +79,7 @@ public class SuperAdminController {
 		model.addAttribute("residentFullDetail", residentResponse.getData());
 		return "private/super-admin/resident-details";
 	}
-
-	@GetMapping("/addUser")
-	public String addUser(Model model, @AuthenticationPrincipal UserDTO user) {
-		model.addAttribute("roles", userService.getAllRoles(user.getToken()).getData());
-		model.addAttribute("wards", wardService.getAllWards(user.getToken()));
-		return "private/super-admin/add-user";
-	}
+	
 	
 	@GetMapping("/editMemberView/{memberId}")
 	public String editMemberInfo(Model model, @PathVariable("memberId") String memberId, @AuthenticationPrincipal UserDTO user) {
