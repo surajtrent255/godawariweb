@@ -54,7 +54,7 @@ public class SuperAdminController {
 	public String getDashboardView(Model model, @AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("populationReport", reportService.getPopulationReport(user.getToken()));
 		model.addAttribute("questionReport", reportService.getQuestionReport(user.getToken()));
-		return "super-admin/dashboard";
+		return "private/super-admin/dashboard";
 	}
 
 	@GetMapping("/addHouseholdForm")
@@ -63,7 +63,7 @@ public class SuperAdminController {
 		model.addAttribute("questionAndOptions", formService.getFullFormDetailById(1, user.getToken()));
 		model.addAttribute("districts", formService.getListofDistricts(user.getToken()).getData());
 		
-		return "super-admin/add-household";
+		return "private/super-admin/add-household";
 	}
 
 	@GetMapping("/addMemberForm/{residentFilledId}")
@@ -71,17 +71,7 @@ public class SuperAdminController {
 			Model model, @AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("residentFilledId", residentFilledId);
 		model.addAttribute("memberFormDetails", residentService.getMemberFormDetails(user.getToken()).getData());
-		return "super-admin/add-member";
-	}
-
-	@GetMapping("/userSettings")
-	public String getUserSettingsView() {
-		return "super-admin/user-settings";
-	}
-
-	@GetMapping("/userProfile")
-	public String getUserProfileView() {
-		return "super-admin/user-profile";
+		return "private/super-admin/add-member";
 	}
 
 	@GetMapping("/residentData")
@@ -89,35 +79,35 @@ public class SuperAdminController {
 		Response<List<ResidentDTO>> residentResponse = (Response<List<ResidentDTO>>) residentService
 				.getResidentDataList(user.getToken());
 		model.addAttribute("residentList", residentResponse.getData());
-		return "super-admin/resident-data";
+		return "private/super-admin/resident-data";
 	}
 
 	@GetMapping("/residentMember/{filledFormId}")
 	public String getResidentMemberList(@PathVariable("filledFormId") String filledId, Model model, @AuthenticationPrincipal UserDTO user) {
 		Response<ResidentDetailDTO> residentResponse = (Response<ResidentDetailDTO>) residentService.getResidentFullDetail(filledId, user.getToken());
 		model.addAttribute("residentFullDetail", residentResponse.getData());
-		return "super-admin/resident-details";
+		return "private/super-admin/resident-details";
 	}
 	
 	@GetMapping("/favouritePlaceAdd")
 	public String getFavouritePlaceEntryView(Model model) {
 		model.addAttribute("placeTypes", favouritePlacesService.getTypesofFavourtiePlaces());
 		model.addAttribute("favPlaceObj", new FavouritePlaceDTO());
-		return "super-admin/add-favourite-place";
+		return "private/super-admin/add-favourite-place";
 	}
 
 	@GetMapping("/addUser")
 	public String addUser(Model model, @AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("roles", userService.getAllRoles(user.getToken()).getData());
 		model.addAttribute("wards", wardService.getAllWards(user.getToken()));
-		return "super-admin/add-user";
+		return "private/super-admin/add-user";
 	}
 	
 	@GetMapping("/editMemberView/{memberId}")
 	public String editMemberInfo(Model model, @PathVariable("memberId") String memberId, @AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("member", residentService.getMemberByMemberId(user.getToken(), memberId).getData());
 		model.addAttribute("memberFormDetails", residentService.getMemberFormDetails(user.getToken()).getData());
-		return "super-admin/edit-member";
+		return "private/super-admin/edit-member";
 	}
 
 }

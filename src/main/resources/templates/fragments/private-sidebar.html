@@ -12,7 +12,7 @@
 <body>
 	<!-- Start wrapper-->
 		<!-- Start side bar-wrapper -->
-		<div th:fragment="admin-sidebar" id="sidebar-wrapper" class="bg-theme bg-theme2" data-simplebar=""
+		<div th:fragment="private-sidebar" id="sidebar-wrapper" class="bg-theme bg-theme2" data-simplebar=""
 			data-simplebar-auto-hide="true">
 			<div class="brand-logo">
 				<a th:href="@{/super-admin}"> <img
@@ -29,9 +29,9 @@
 				</div>
 				<div id="user-dropdown" class="collapse">
 					<ul class="user-setting-menu">
-						<li><a th:href="@{/super-admin/userProfile}"><i
+						<li><a th:href="@{/user/profile}"><i
 								class="icon-user"></i> My Profile</a></li>
-						<li><a th:href="@{/super-admin/userSettings}"><i
+						<li><a th:href="@{/user/setting}"><i
 								class="icon-settings"></i> Setting</a></li>
 						<li><a th:href="@{/logout}"><i class="icon-power"></i>
 								Logout</a></li>

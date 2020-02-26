@@ -71,7 +71,7 @@
 <body>
 	<div id="wrapper">
 		<!-- Side bar and header -->
-		<div th:replace="~{fragments/admin-sidebar :: admin-sidebar}"></div>
+		<div th:replace="~{fragments/private-sidebar :: private-sidebar}"></div>
 		<header th:replace="~{fragments/header :: header}" class="header1"> </header>
 		<div class="clearfix"></div>
 		<div class="content-wrapper">
@@ -221,7 +221,6 @@
 				$("#placeGPS").val(geoLat + ', ' + geoLng);
 			}
 		});
-
 		const mymap = L.map('mapid').setView([ 27.614979, 85.363180 ], 17);
 		var layerGroup = L.layerGroup().addTo(mymap);
 		var marker;
@@ -231,34 +230,11 @@
 		var geoLocationTemp;
 		var geoLat
 		var geoLng
-		
-		
-// 		L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-// 			maxZoom : 20,
-// 			subdomains : [ 'mt0', 'mt1', 'mt2', 'mt3' ]
-// 		}).addTo(mymap);
-
-// 		 var mapLink = '<a href="http://www.esri.com/">Esri</a>';
-// 	    var wholink = 'i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
-
-		
-// 	    L.tileLayer(
-// 	            'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-// 	            attribution: '&copy; '+mapLink+', '+wholink,
-// 	            maxZoom: 19,
-// 	            }).addTo(mymap);
-		
-		
 		L.tileLayer('http://{s}.google.com/vt/lyrs=y,h&x={x}&y={y}&z={z}',{
 			attribution: 'Map data &copy; 2020 Google',
 		    maxZoom: 20,
 		    subdomains:['mt0','mt1','mt2','mt3']
 		}).addTo(mymap);
-		
-		// 	const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-		// 	const tiles = L.tileLayer(tileUrl, {attribution});
-		// 	tiles.addTo(mymap);
-
 		function onMapClick(e) {
 			layerGroup.clearLayers();
 			popup.setLatLng(e.latlng)
@@ -269,8 +245,6 @@
 			geoLat = geoLocation.lat;
 			geoLng = geoLocation.lng;
 			marker = L.marker(geoLocation).addTo(layerGroup);
-			
-			// 	    var marker = L.marker([27.700769, 85.300140]).addTo(mymap);	
 		}
 
 		mymap.on('click', onMapClick);
@@ -289,7 +263,6 @@
 			var control =new google.elements.transliteration.TransliterationControl(options);
 			var uniElement = $(".unicode input[type='text'], #grid_filter input");
 			control.makeTransliteratable(uniElement);
-			    // control.showControl('translControl');
 		});
 	</script>
 </body>
