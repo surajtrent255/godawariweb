@@ -27,22 +27,14 @@ public class SuperAdminController {
 
 	private final ResidentService residentService;
 	private final FormService formService;
-	private final ReportService reportService;
 
 	public SuperAdminController(ResidentService residentService, 
-			FormService formService,
-			ReportService reportService) {
+			FormService formService) {
 		this.residentService = residentService;
 		this.formService = formService;
-		this.reportService = reportService;
 	}
 
-	@GetMapping
-	public String getDashboardView(Model model, @AuthenticationPrincipal UserDTO user) {
-		model.addAttribute("populationReport", reportService.getPopulationReport(user.getToken()));
-		model.addAttribute("questionReport", reportService.getQuestionReport(user.getToken()));
-		return "private/super-admin/dashboard";
-	}
+	
 
 	@GetMapping("/addHouseholdForm")
 	public String getHouseholdEntryForm(Model model, @AuthenticationPrincipal UserDTO user) {

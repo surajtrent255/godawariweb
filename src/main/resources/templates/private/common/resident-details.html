@@ -220,13 +220,17 @@
 											<td th:text="${member.voterCard} ? 'छ' : 'छैन'"></td>
 											<td th:text="${member.address} == 1 ? 'स्थायी जन्म' : 'बसाई सराई' "></td>
 											<td th:text="${member.healthCondition}"></td>
-											<td><a href="#"	th:href="@{/super-admin/editMemberView/} + ${member.memberId}"
+											<td><a href="#"	th:href="@{/resident/member/} + ${member.memberId}"
 											class="btn btn-xs btn-success">Edit Details</a><td>
 										</tr>
 									</tbody>
 								</table>
 								<table th:if="${residentFullDetail.familyMembers == null || #lists.isEmpty(residentFullDetail.familyMembers)}">
-									<h2> माफ गर्नुहोला | परिवारको कुनै पनि सदस्य भेटीएन वा प्रणालीमा बिवरण राखिएको छैन |</h2>
+									<thead>
+										<tr>
+											<td><h2> माफ गर्नुहोला | परिवारको कुनै पनि सदस्य भेटीएन वा प्रणालीमा बिवरण राखिएको छैन |</h2></td>
+										</tr>
+									</thead>
 								</table>
 							</div>
 						</div>

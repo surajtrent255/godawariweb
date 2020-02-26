@@ -66,9 +66,28 @@ public class ResidentController {
 		return "private/common/resident-details";
 	}
 	
+	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "SURVEYOR"})
 	@PostMapping("/search")
 	public @ResponseBody List<ResidentDTO> getResidentsBySearchKey(@RequestParam("searchKey") String searchKey, @AuthenticationPrincipal UserDTO user) {
 		return residentService.searchResidentByKey(searchKey, user.getToken());
+	}
+	
+	@GetMapping("/member/{memberId}")
+	public String editMemberInfo(Model model, 
+			@PathVariable("memberId") String memberId, 
+			@AuthenticationPrincipal UserDTO user) {
+		model.addAttribute("member", residentService.getMemberByMemberId(user.getToken(), memberId).getData());
+		model.addAttribute("memberFormDetails", residentService.getMemberFormDetails(user.getToken()).getData());
+		return "private/common/edit-member";
+	}
+	
+	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "SURVEYOR"})
+	@GetMapping("/{residentFilledId}/member")
+	public String getMemberEntryForm(@PathVariable ("residentFilledId") String residentFilledId,
+			Model model, @AuthenticationPrincipal UserDTO user) {
+		model.addAttribute("residentFilledId", residentFilledId);
+		model.addAttribute("memberFormDetails", residentService.getMemberFormDetails(user.getToken()).getData());
+		return "private/common/add-member";
 	}
 	
 	@PutMapping("/{memberId}")

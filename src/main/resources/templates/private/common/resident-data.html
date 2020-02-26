@@ -36,7 +36,7 @@
 </head>
 <body>
 	<div id="wrapper">
-		<!--Sidebar and header -->
+		<!-- Side bar and header -->
 		<div th:replace="~{fragments/private-sidebar :: private-sidebar}"></div>
 		<header th:replace="~{fragments/header :: header}" class="header1"> </header>
 		<div class="clearfix"></div>
@@ -108,7 +108,7 @@
 										<td>
 											<a href="#" th:href="@{/}" class="btn btn-xs btn-info">Edit</a>
 											<a href="#" th:href="@{/}" class="btn btn-xs btn-warning">Delete </a>
-											<a href="#" th:href="@{/super-admin/addMemberForm/} + ${resident.filledId}" class="btn btn-xs btn-danger">Add Member</a>
+											<a href="#" th:href="@{/resident/} + ${resident.filledId} +'/member/'" class="btn btn-xs btn-danger">Add Member</a>
 											<a href="#" th:href="@{/resident/} + ${resident.filledId}" class="btn btn-xs btn-success">Show Details</a>
 										</td>
 									</tr>
@@ -116,7 +116,11 @@
 								
 							</table>
 							<table th:if="${residentList == null || #lists.isEmpty(residentList)}">
-								<h2>माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण भेटीएन|</h2>
+								<thead>
+									<tr>
+										<td><h2>माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण भेटीएन|</h2></td>
+									</tr>
+								</thead>
 							</table>
 						</div>
 					</div>
@@ -178,8 +182,8 @@
 														<td>
 															<a href=\"\" class="btn btn-xs btn-info">Edit</a>
 															<a href=\"\" class="btn btn-xs btn-warning">Delete </a>
-															<a href=\"/super-admin/addMemberForm/${item.filledId}\" class="btn btn-xs btn-danger">Add Member</a>
-															<a href=\"/super-admin/residentMember/${item.filledId}\" class="btn btn-xs btn-success">Show Details</a>
+															<a href=\"/resident/${item.filledId}/member\" class="btn btn-xs btn-danger">Add Member</a>
+															<a href=\"/resident/${item.filledId}\" class="btn btn-xs btn-success">Show Details</a>
 														</td> </tr>`;
 									});
 									$("#resident-body").empty();
