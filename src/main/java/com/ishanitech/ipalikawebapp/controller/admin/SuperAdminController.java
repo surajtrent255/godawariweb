@@ -54,7 +54,7 @@ public class SuperAdminController {
 	public String getDashboardView(Model model, @AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("populationReport", reportService.getPopulationReport(user.getToken()));
 		model.addAttribute("questionReport", reportService.getQuestionReport(user.getToken()));
-		return "admin/dashboard";
+		return "super-admin/dashboard";
 	}
 
 	@GetMapping("/addHouseholdForm")
@@ -63,7 +63,7 @@ public class SuperAdminController {
 		model.addAttribute("questionAndOptions", formService.getFullFormDetailById(1, user.getToken()));
 		model.addAttribute("districts", formService.getListofDistricts(user.getToken()).getData());
 		
-		return "admin/add-household";
+		return "super-admin/add-household";
 	}
 
 	@GetMapping("/addMemberForm/{residentFilledId}")
@@ -71,17 +71,17 @@ public class SuperAdminController {
 			Model model, @AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("residentFilledId", residentFilledId);
 		model.addAttribute("memberFormDetails", residentService.getMemberFormDetails(user.getToken()).getData());
-		return "admin/add-member";
+		return "super-admin/add-member";
 	}
 
 	@GetMapping("/userSettings")
 	public String getUserSettingsView() {
-		return "admin/user-settings";
+		return "super-admin/user-settings";
 	}
 
 	@GetMapping("/userProfile")
 	public String getUserProfileView() {
-		return "admin/user-profile";
+		return "super-admin/user-profile";
 	}
 
 	@GetMapping("/residentData")
@@ -89,49 +89,35 @@ public class SuperAdminController {
 		Response<List<ResidentDTO>> residentResponse = (Response<List<ResidentDTO>>) residentService
 				.getResidentDataList(user.getToken());
 		model.addAttribute("residentList", residentResponse.getData());
-		return "admin/resident-data";
+		return "super-admin/resident-data";
 	}
 
 	@GetMapping("/residentMember/{filledFormId}")
 	public String getResidentMemberList(@PathVariable("filledFormId") String filledId, Model model, @AuthenticationPrincipal UserDTO user) {
 		Response<ResidentDetailDTO> residentResponse = (Response<ResidentDetailDTO>) residentService.getResidentFullDetail(filledId, user.getToken());
 		model.addAttribute("residentFullDetail", residentResponse.getData());
-		return "admin/resident-details";
-	}
-	
-	@GetMapping("/favouritePlaceView")
-	public String getFavouritePlaceView(Model model) {
-		Response<List<FavouritePlaceDTO>> favouritePlaceResponse = favouritePlacesService.getAllFavouritePlaces();
-		model.addAttribute("favouritePlaceList", favouritePlaceResponse.getData());
-		return "admin/favourite-place";
-	}
-	
-	@GetMapping("/favouritePlaceDetails/{placeId}")
-	public String getFavouritePlaceByPlaceId(Model model, @PathVariable("placeId") String placeId) {
-		Response<FavouritePlaceDTO> favouritePlaceResponse = (Response<FavouritePlaceDTO>) favouritePlacesService.getFavouritePlaceByPlaceId(placeId);
-		model.addAttribute("favouritePlaceInfo", favouritePlaceResponse.getData());
-		return "admin/favourite-place-details";
+		return "super-admin/resident-details";
 	}
 	
 	@GetMapping("/favouritePlaceAdd")
 	public String getFavouritePlaceEntryView(Model model) {
 		model.addAttribute("placeTypes", favouritePlacesService.getTypesofFavourtiePlaces());
 		model.addAttribute("favPlaceObj", new FavouritePlaceDTO());
-		return "admin/add-favourite-place";
+		return "super-admin/add-favourite-place";
 	}
 
 	@GetMapping("/addUser")
 	public String addUser(Model model, @AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("roles", userService.getAllRoles(user.getToken()).getData());
 		model.addAttribute("wards", wardService.getAllWards(user.getToken()));
-		return "admin/add-user";
+		return "super-admin/add-user";
 	}
 	
 	@GetMapping("/editMemberView/{memberId}")
 	public String editMemberInfo(Model model, @PathVariable("memberId") String memberId, @AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("member", residentService.getMemberByMemberId(user.getToken(), memberId).getData());
 		model.addAttribute("memberFormDetails", residentService.getMemberFormDetails(user.getToken()).getData());
-		return "admin/edit-member";
+		return "super-admin/edit-member";
 	}
 
 }

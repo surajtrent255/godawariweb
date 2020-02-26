@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -10,7 +11,7 @@
 </head>
 <body>
 	<!-- Start wrapper-->
-		<!--Start sidebar-wrapper-->
+		<!-- Start side bar-wrapper -->
 		<div th:fragment="admin-sidebar" id="sidebar-wrapper" class="bg-theme bg-theme2" data-simplebar=""
 			data-simplebar-auto-hide="true">
 			<div class="brand-logo">
@@ -39,28 +40,40 @@
 			</div>
 			<ul class="sidebar-menu do-nicescrol">
 				<li class="sidebar-header">MAIN NAVIGATION</li>
-				<li><a th:href="@{/super-admin}" class="waves-effect"> <i
-						class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
-				</a></li>
 				<li>
-					<a th:href="@{/super-admin/addUser}"
-					class="waves-effect"> <i class="zmdi zmdi-plus-circle"></i> <span>Add User</span>
+					<a th:href="@{/super-admin}" class="waves-effect"> <i
+							class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
 					</a>
 				</li>
-				<li><a th:href="@{/super-admin/residentData}" class="waves-effect">
+				<li sec:authorize="hasAnyRole('SUPER_ADMIN', 'CENTRAL_ADMIN')">
+					<a th:href="@{/super-admin/addUser}"
+					class="waves-effect"> <i class="zmdi zmdi-account-add"></i> <span>Add User</span>
+					</a>
+				</li>
+				<li>
+					<a th:href="@{/super-admin/residentData}" class="waves-effect">
 						<i class="zmdi zmdi-layers"></i> <span>Data</span>
-				</a></li>
+					</a>
+				</li>
 				<li>
 					<a th:href="@{/super-admin/addHouseholdForm}"
 					class="waves-effect"> <i class="zmdi zmdi-home"></i> <span>Add
 							House</span>
 					</a>
 				</li>
-				<li><a th:href="@{/super-admin/favouritePlaceView}"
-					class="waves-effect"><i class="zmdi zmdi-my-location"></i> <span>Favourite Places</span>
-				</a></li>
+				<li>
+					<a th:href="@{/super-admin/favouritePlaceAdd}"
+						class="waves-effect"> <i class="zmdi zmdi-gps-dot"></i> 
+						<span>Add Place</span>
+					</a>
+				</li>
+				<li>
+					<a th:href="@{/favourite-place}"
+						class="waves-effect"><i class="zmdi zmdi-map"></i> <span>Favourite Places</span>
+					</a>
+				</li>
 			</ul>
 		</div>
-		<!--End sidebar-wrapper-->
+		<!-- End side bar-wrapper -->
 </body>
 </html>
