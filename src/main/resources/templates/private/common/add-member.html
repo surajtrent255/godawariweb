@@ -24,8 +24,8 @@
 <link th:href="@{/assets/css/sidebar-menu.css}"
 	href="assets/css/sidebar-menu.css" rel="stylesheet" />
 <link rel="stylesheet"
-	th:href="@{/assets/plugins/nepali-datepicker/nepaliDatePicker.min.css}"
-	href="assets/plugins/nepali-datepicker/nepaliDatePicker.min.css">
+	th:href="@{/assets/plugins/nepali-datepicker-v2/nepaliDatePickerv2.min.css}"
+	href="assets/plugins/nepali-datepicker-v2/nepaliDatePickerv2.min.css">
 <link th:href="@{/assets/css/app-style.css}"
 	href="assets/css/app-style.css" rel="stylesheet" />
 <link rel="stylesheet"
@@ -87,10 +87,10 @@
 					<div class="card-body">
 						<div class="card-title">Fill up information about family
 							members.</div>
-						<a href="javascript:void(0)"
-							class="add-member btn btn-primary mb-2" style="margin-left: 8px;">Add
-							Member</a>
-						<th:form:form method="POST" th:action="@{/resident/add}"
+<!-- 						<a href="javascript:void(0)" -->
+<!-- 							class="add-member btn btn-primary mb-2" style="margin-left: 8px;">Add -->
+<!-- 							Member</a> -->
+						<th:form:form method="POST" th:action="@{/resident}"
 							modelAttribute="member" enctype="multipart/form-data">
 
 
@@ -148,27 +148,24 @@
 									<div class="col-md-4 col-lg-4 mb-2">
 										<div class="padding">
 											<label for="age"><h4>उमेर :</h4></label> <input type="text"
-												id="age" name="age" class="form-control age required"
-												value="">
-											<!-- 											<input type="hidden" name="age" class="age" value=""> -->
+												id="ageDisplay" name="ageDisplay" class="form-control age required"
+												value="" readonly>
+												<input type="hidden" name="age" id="age" value="">
 										</div>
 									</div>
 									<div class="col-lg-4 col-md-4 mb-2">
 										<div class="padding">
-											<label for="date_of_birth"><h4>जन्म मिति</h4></label> <input
-												type="text" id="date_of_birth" name="date_of_birth"
-												class="form-control required" value="">
+											<label for="date_of_birth_BS"><h4>जन्म मिति</h4></label><br>
+												<label>B.S.</label> <input type="text"
+													id="date_of_birth_BS" name="date_of_birth_BS"
+													class="form-control required" value="" readonly
+													style="width: 50%;">
+												<label>A.D.</label><input type="text"
+													id="date_of_birth_AD" name="date_of_birth_AD"
+													class="form-control required" value="" readonly
+													style="width: 50%;">
 										</div>
 									</div>
-
-									<!-- 									<div class="col-lg-4 col-md-4"> -->
-									<!-- 										<div class="form-group form-label"> -->
-									<!-- 											<label for="survey_date"><h4>मिति :</h4></label> <input -->
-									<!-- 												type="text" class="form-control" id="survey_date" -->
-									<!-- 												name="survey_date" value=""> -->
-									<!-- 										</div> -->
-									<!-- 									</div> -->
-
 
 									<div class="col-md-4 col-lg-4 mb-2">
 										<div class="padding">
@@ -231,8 +228,9 @@
 							</fieldset>
 							<!-- 								<input type="submit" value="Submit"/> -->
 							<button type="submit"
-								class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4"
+								class="add-member btn btn-primary mb-2" style="margin-left: 8px;"
 								id="member-entry-submit">Add Member</button>
+								
 						</th:form:form>
 					</div>
 				</div>
@@ -241,8 +239,8 @@
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
 	</div>
 	<script
-		th:src="@{/assets/plugins/nepali-datepicker/nepaliDatePicker.min.js}"
-		src="assets/plugins/nepali-datepicker/jquery.nepaliDatePicker.min.js"></script>
+		th:src="@{/assets/plugins/nepali-datepicker-v2/nepaliDatePickerv2.min.js}"
+		src="assets/plugins/nepali-datepicker-v2/jquery.nepaliDatePickerv2.min.js"></script>
 	<script th:inline="javascript">
 		/*<![CDATA[*/
 		var mainId = /*[[${residentFilledId}]]*/'0';
@@ -274,60 +272,142 @@
 			// control.showControl('translControl');
 		});
 
-		$("#date_of_birth").nepaliDatePicker({
-			dateFormat : "%d/%m/%y",
-			closeOnDateSelect : true
-		});
+		function goBack() {
+			window.history.back();
+		}
+		
+		$("#date_of_birth_BS")
+				.nepaliDatePicker(
+						{
+							npdMonth : true,
+							npdYear : true,
+							disableDaysAfter : '1',
+							onChange : function() {
+								$("#date_of_birth_AD").val(
+										BS2AD($("#date_of_birth_BS").val()));
+
+								var diff_ms = Date.now()
+										- Date.parse($("#date_of_birth_AD")
+												.val());
+
+								var yearString = "";
+								var monthString = "";
+								var dayString = "";
+
+								var yearValue = Math
+										.floor(diff_ms / 31536000000);
+								console.log("Years ", yearValue);
+								var monthValue = Math
+										.floor((diff_ms % 31536000000) / 2592000000);
+								console.log("Months ", monthValue);
+								var dayValue = Math
+										.floor(((diff_ms % 31536000000) % 2592000000) / 86400000);
+								console.log("Days ", dayValue);
+
+								if (yearValue > 1)
+									yearString = " years";
+								else
+									yearString = " year";
+								if (monthValue > 1)
+									monthString = " months";
+								else
+									monthString = " month";
+								if (dayValue > 1)
+									dayString = " days";
+								else
+									dayString = " day";
+
+								if ((yearValue > 0) && (monthValue > 0)
+										&& (dayValue > 0))
+									var calculatedValue = yearValue
+											+ yearString + " " + monthValue
+											+ monthString + " " + dayValue
+											+ dayString + " ";
+								else if ((yearValue > 0) && (monthValue > 0)
+										&& (dayValue == 0))
+									var calculatedValue = yearValue
+											+ yearString + " " + monthValue
+											+ monthString + " ";
+								else if ((yearValue > 0) && (monthValue == 0)
+										&& (dayValue > 0))
+									var calculatedValue = yearValue
+											+ yearString + " " + dayValue
+											+ dayString + " ";
+								else if ((yearValue == 0) && (monthValue > 0)
+										&& (dayValue > 0))
+									var calculatedValue = monthValue
+											+ monthString + " " + dayValue
+											+ dayString + " ";
+								else if ((yearValue == 0) && (monthValue == 0)
+										&& (dayValue > 0))
+									var calculatedValue = dayValue + dayString
+											+ " ";
+
+								$("#age").val(yearValue);
+								$("#ageDisplay").val(calculatedValue);
+							}
+						});
 
 		$(function() {
-			$("#member-entry-submit").click(function(event) {
-				//Getting the data from the formm	
-				let memberName = $("#name").val();
-				let relation = $("#relation").val();
-				let gender = $("#gender").val();
-				let age = $("#age").val();
-				let dateOfBirth = $("#date_of_birth").val();
-				let maritalStatus = $("#marital_status").val();
-				let education = $("#education").val();
-				let occupation = $("#occupation").val();
-				let voterCard = $("#voter_card").val();
-				let migration = $("#migration").val();
-				let healthStatus = $("#health").val();
-				let familyId = mainId;
-				let memberInfo = {};
-				memberInfo.name = memberName;
-				memberInfo.relation = relation;
-				memberInfo.gender = gender;
-				memberInfo.age = age;
-				memberInfo.dateOfBirth = dateOfBirth;
-				memberInfo.maritalStatus = maritalStatus;
-				memberInfo.education = education;
-				memberInfo.occupation = occupation;
-				memberInfo.voterCard = voterCard;
-				memberInfo.address = migration;
-				memberInfo.healthCondition = healthStatus;
-				memberInfo.mainId = familyId;
+			$("#member-entry-submit")
+					.click(
+							function(event) {
+								//Getting the data from the formm	
+								let memberName = $("#name").val();
+								let relation = $("#relation").val();
+								let gender = $("#gender").val();
+								let age = $("#age").val();
+								let dateOfBirthBS = $("#date_of_birth_BS")
+										.val();
+								let dateOfBirthAD = $("#date_of_birth_AD")
+										.val();
+								let maritalStatus = $("#marital_status").val();
+								let education = $("#education").val();
+								let occupation = $("#occupation").val();
+								let voterCard = $("#voter_card").val();
+								let migration = $("#migration").val();
+								let healthStatus = $("#health").val();
+								let familyId = mainId;
+								let memberInfo = {};
+								memberInfo.name = memberName;
+								memberInfo.relation = relation;
+								memberInfo.gender = gender;
+								memberInfo.age = age;
+								memberInfo.dateOfBirthBS = dateOfBirthBS;
+								memberInfo.dateOfBirthAD = dateOfBirthAD;
+								memberInfo.maritalStatus = maritalStatus;
+								memberInfo.education = education;
+								memberInfo.occupation = occupation;
+								memberInfo.voterCard = voterCard;
+								memberInfo.address = migration;
+								memberInfo.healthCondition = healthStatus;
+								memberInfo.mainId = familyId;
 
-				// Now create an ajax request to send member details to the server
-				$.ajax({
-					method : "POST",
-					url : contextPath + "/resident/",
-					data : JSON.stringify(memberInfo),
-					contentType : "Application/Json",
-					success : function(result) {
-						swal.fire({
-							text : result.data,
-							icon : "success",
-							closeOnClickOutside : false,
-							closeOnEsc : false
-						}).then(function() {
-							window.location = contextPath + "/super-admin";
-						});
-					},
-					error : function(error) {
-					}
-				});
-			});
+								// Now create an ajax request to send member details to the server
+								$
+										.ajax({
+											method : "POST",
+											url : contextPath + "/resident/",
+											data : JSON.stringify(memberInfo),
+											contentType : "Application/Json",
+											success : function(result) {
+												swal
+														.fire(
+																{
+																	text : result.data,
+																	icon : "success",
+																	closeOnClickOutside : false,
+																	closeOnEsc : false
+																})
+														.then(
+																function() {
+																	goBack();
+																});
+											},
+											error : function(error) {
+											}
+										});
+							});
 		});
 	</script>
 
