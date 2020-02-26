@@ -29,6 +29,7 @@ import com.ishanitech.ipalikawebapp.service.ResidentService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "SURVEYOR"})
 @RequestMapping("/resident")
 @Controller
 public class ResidentController {
@@ -39,7 +40,6 @@ public class ResidentController {
 		this.residentService = residentService;
 	}
 	
-	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "SURVEYOR"})
 	@GetMapping
 	public String getResidentDataListView(Model model, @AuthenticationPrincipal UserDTO user) {
 		Response<List<ResidentDTO>> residentResponse = (Response<List<ResidentDTO>>) residentService
@@ -58,7 +58,6 @@ public class ResidentController {
 		return new Response<String>("Member successfully added!");
 	}
 	
-	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "SURVEYOR"})
 	@GetMapping("/{filledFormId}")
 	public String getResidentMemberList(@PathVariable("filledFormId") String filledId, Model model, @AuthenticationPrincipal UserDTO user) {
 		Response<ResidentDetailDTO> residentResponse = (Response<ResidentDetailDTO>) residentService.getResidentFullDetail(filledId, user.getToken());
@@ -66,7 +65,6 @@ public class ResidentController {
 		return "private/common/resident-details";
 	}
 	
-	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "SURVEYOR"})
 	@PostMapping("/search")
 	public @ResponseBody List<ResidentDTO> getResidentsBySearchKey(@RequestParam("searchKey") String searchKey, @AuthenticationPrincipal UserDTO user) {
 		return residentService.searchResidentByKey(searchKey, user.getToken());
@@ -81,7 +79,6 @@ public class ResidentController {
 		return "private/common/edit-member";
 	}
 	
-	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "SURVEYOR"})
 	@GetMapping("/{residentFilledId}/member")
 	public String getMemberEntryForm(@PathVariable ("residentFilledId") String residentFilledId,
 			Model model, @AuthenticationPrincipal UserDTO user) {
