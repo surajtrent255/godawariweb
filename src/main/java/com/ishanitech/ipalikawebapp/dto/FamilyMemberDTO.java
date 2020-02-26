@@ -18,7 +18,8 @@ public class FamilyMemberDTO {
     private String voterCard;
     private String address;
     private String healthCondition;
-    private String dateOfBirth;
+    private String dateOfBirthAD;
+    private String dateOfBirthBS;
     private Boolean isDead;
     private Boolean submitStatus;
 }
