@@ -108,7 +108,8 @@
 		<!--Start footer-->
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
 	</div>
-
+	<div th:replace="~{fragments/scripts :: scripts}">
+	</div>
 	<script th:inline="javascript">
 		$(function() {
 			var token = $("meta[name='_csrf']").attr("content");

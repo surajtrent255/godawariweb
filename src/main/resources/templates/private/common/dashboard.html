@@ -948,10 +948,10 @@
 
 		<!--Start footer-->
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
-
 	</div>
 	<!--End wrapper-->
-
+	<div th:replace="~{fragments/scripts :: scripts}">
+	</div>
 	<!-- loader scripts -->
 	<!-- <script th:src="@{/assets/js/jquery.loading-indicator.html}"
 		src="assets/js/jquery.loading-indicator.html"></script> -->
@@ -1013,6 +1013,5 @@
 		});
 		
 	</script>
-
 </body>
 </html>

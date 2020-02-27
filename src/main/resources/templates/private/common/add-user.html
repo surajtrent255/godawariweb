@@ -32,7 +32,8 @@
 	<div id="wrapper">
 		<!--           	Sidebar and header -->
 		<div th:replace="~{fragments/private-sidebar :: private-sidebar}"></div>
-		<header th:replace="~{fragments/header :: header}" class="header1"> </header>
+		<header th:replace="~{fragments/header :: header}" class="header1">
+		</header>
 
 
 		<div class="clearfix"></div>
@@ -43,61 +44,65 @@
 						<h4 class="page-title">नगरबासी बिवरण कम्प्युटर प्रणाली</h4>
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="javaScript:void();">गृह</a></li>
-							<li class="breadcrumb-item active" aria-current="page">प्रयोगकर्ता  बिवरण परिवर्तन</li>
+							<li class="breadcrumb-item active" aria-current="page">प्रयोगकर्ता
+								बिवरण परिवर्तन</li>
 						</ol>
 					</div>
 				</div>
 				<div class="card">
 					<div class="card-body">
-						<div class="card-title">नया खाता बनाउने फारम </div>
+						<div class="card-title">नया खाता बनाउने फारम</div>
 						<form id="user-add-form">
 							<div class="form-group row">
 								<div class="col-md-4">
-									<label for="input-1">पुरा नाम (नाम को बिचमा खाली ठाउँ राख्नुहोस)</label> <input id="name" type="text"
-										class="form-control " name="name" required
-										autocomplete="name" autofocus placeholder="Enter Your Name">
+									<label for="input-1">पुरा नाम (नाम को बिचमा खाली ठाउँ
+										राख्नुहोस)</label> <input id="name" type="text" class="form-control "
+										name="name" required autocomplete="name" autofocus
+										placeholder="Enter Your Name">
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
 									<label for="username">युसर नाम</label> <input id="username"
-										type="text" class="form-control " name="username" required 
+										type="text" class="form-control " name="username" required
 										placeholder="Enter your username">
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
 									<label for="password">पासवोर्ड</label> <input id="password"
-										type="password" class="form-control " name="password" required 
+										type="password" class="form-control " name="password" required
 										placeholder="Enter your password">
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
-									<label for="email">इमेल</label> <input id="email"
-										type="email" class="form-control " name="email"required 
+									<label for="email">इमेल</label> <input id="email" type="email"
+										class="form-control " name="email" required
 										placeholder="Enter Your Email Address">
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
 									<label for="mobile">मोबाईल नम्बर</label> <input id="mobile"
-										type="text" class="form-control " name="mobile" placeholder="Enter Your Mobile Number" required>
+										type="text" class="form-control " name="mobile"
+										placeholder="Enter Your Mobile Number" required>
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
-									<label for="account-type">खाताको प्रकार</label> 
-									<select id="account-type">
-										<option th:value="${role.id}" th:each="role: ${roles}" th:text="${role.roleNepali}"> केन्द्रिय एडमिन </option>
+									<label for="account-type">खाताको प्रकार</label> <select
+										id="account-type">
+										<option th:value="${role.id}" th:each="role: ${roles}"
+											th:text="${role.roleNepali}">केन्द्रिय एडमिन</option>
 									</select>
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
-									<label for="ward-no">वडा नम्बर</label> 
-									<select id="ward-no">
-										<option th:value="${wardNo}" th:each="wardNo: ${wards}" th:text="${wardNo}")> 1</option>
+									<label for="ward-no">वडा नम्बर</label> <select id="ward-no">
+										<option th:value="${wardNo}" th:each="wardNo: ${wards}"
+											th:text="${wardNo}" )>1</option>
 									</select>
 								</div>
 							</div>
@@ -115,8 +120,8 @@
 			class="fa fa-angle-double-up"></i> </a>
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
 	</div>
-	<div>
-		<script>
+	<div th:replace="~{fragments/scripts :: scripts}"></div>
+	<script>
 			$(function () {
 	    	    var token = $("meta[name='_csrf']").attr("content");
 	    	    var header = $("meta[name='_csrf_header']").attr("content");
@@ -184,6 +189,5 @@
 				});
 			});
 		</script>
-	</div>
 </body>
 </html>

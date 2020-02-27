@@ -64,12 +64,9 @@
 </head>
 <body>
 	<div id="wrapper">
-
-		<!--           	Sidebar and header -->
+		<!-- Side bar and header -->
 		<div th:replace="~{fragments/private-sidebar :: private-sidebar}"></div>
 		<header th:replace="~{fragments/header :: header}" class="header1"> </header>
-
-
 		<div class="clearfix"></div>
 		<div class="content-wrapper">
 			<div class="container-fluid" id="pjax-container">
@@ -237,6 +234,8 @@
 			</div>
 		</div>
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
+	</div>
+	<div th:replace="~{fragments/scripts :: scripts}">
 	</div>
 	<script
 		th:src="@{/assets/plugins/nepali-datepicker-v2/nepaliDatePickerv2.min.js}"

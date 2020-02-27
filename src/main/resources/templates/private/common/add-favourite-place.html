@@ -33,7 +33,6 @@
 <link rel="stylesheet"
 	th:href="@{/assets/plugins/jquery.steps/css/jquery.steps.css}"
 	href="assets/plugins/jquery.steps/css/jquery.steps.css">
-
 <link rel="stylesheet" th:href="@{/assets/css/leaflet.css}"/>
 
 
@@ -185,6 +184,8 @@
 		<a href="javaScript:void();" class="back-to-top"><i
 			class="fa fa-angle-double-up"></i> </a>
 		<footer th:replace="~{fragments/footer :: footer}"></footer> 
+	</div>
+	<div th:replace="~{fragments/scripts :: scripts}">
 	</div>
 	<!-- 	<!--Start footer-->
 	<script th:src="@{/assets/js/leaflet.js}"></script>
