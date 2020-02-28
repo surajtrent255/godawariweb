@@ -31,8 +31,8 @@
 
 	<!-- Start wrapper-->
 	<div id="wrapper">
-		<header th:replace="~{fragments/header}" class="header1"> </header>
-		<div th:replace="~{fragments/admin-sidebar}"></div>
+		<div th:replace="~{fragments/private-sidebar :: private-sidebar}"></div>
+		<header th:replace="~{fragments/header :: header}" class="header1"> </header>
 		<div class="clearfix"></div>
 		<div class="content-wrapper">
 			<div class="container-fluid">
@@ -948,10 +948,10 @@
 
 		<!--Start footer-->
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
-
 	</div>
 	<!--End wrapper-->
-
+	<div th:replace="~{fragments/scripts :: scripts}">
+	</div>
 	<!-- loader scripts -->
 	<!-- <script th:src="@{/assets/js/jquery.loading-indicator.html}"
 		src="assets/js/jquery.loading-indicator.html"></script> -->
@@ -1013,6 +1013,5 @@
 		});
 		
 	</script>
-
 </body>
 </html>

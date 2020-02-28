@@ -68,7 +68,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		}
 
 		if (isSuperAdmin) {
-			return "/super-admin/residentData";
+			return "/super-admin/";
 		} else if (isCentralAdmin) {
 			return "/central-admin";
 		} else if(isWardAdmin) {

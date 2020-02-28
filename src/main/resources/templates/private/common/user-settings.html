@@ -33,7 +33,7 @@
 <body>
 	<div id="wrapper">
 		<!-- Side bar and header -->
-		<div th:replace="~{fragments/admin-sidebar}"></div>
+		<div th:replace="~{fragments/private-sidebar :: private-sidebar}"></div>
 		<header th:replace="~{fragments/header}" class="header1"> </header>
 
 		<div class="clearfix"></div>
@@ -91,8 +91,8 @@
 			class="fa fa-angle-double-up"></i> </a>
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
 	</div>
-	<div>
-		<script>
+	<div th:replace="~{fragments/scripts :: scripts}"></div>
+	<script>
 	        	$(function () {
 		    	    var token = $("meta[name='_csrf']").attr("content");
 		    	    var header = $("meta[name='_csrf_header']").attr("content");
@@ -152,6 +152,5 @@
         		});
         		
         	</script>
-	</div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -36,8 +37,8 @@
 </head>
 <body>
 	<div id="wrapper">
-		<!--Sidebar and header -->
-		<div th:replace="~{fragments/admin-sidebar :: admin-sidebar}"></div>
+		<!-- Side bar and header -->
+		<div th:replace="~{fragments/private-sidebar :: private-sidebar}"></div>
 		<header th:replace="~{fragments/header :: header}" class="header1"> </header>
 		<div class="clearfix"></div>
 		<div class="content-wrapper">
@@ -55,7 +56,7 @@
 				<div class="row">
 					<div class="col-lg-12 col-md-12">
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<div class="ui">
 									<label >Show&nbsp;
 										<select id="result-option" class="ui input">
@@ -68,7 +69,19 @@
 									</label>
 								</div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-4">
+								<div class="ui" sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'SURVEYOR')">
+									<label >Ward&nbsp;
+										<select id="result-option" class="ui input">
+											<option value="10">1</option>
+											<option value="25">2</option>
+											<option value="50">3</option>
+											<option value="100">4</option>
+										</select>
+									</label>
+								</div>
+							</div>
+							<div class="col-md-4">
 								<div class="ui pull-right">
 									<label>
 										Search:&nbsp;<span class="ui input">
@@ -108,15 +121,19 @@
 										<td>
 											<a href="#" th:href="@{/}" class="btn btn-xs btn-info">Edit</a>
 											<a href="#" th:href="@{/}" class="btn btn-xs btn-warning">Delete </a>
-											<a href="#" th:href="@{/super-admin/addMemberForm/} + ${resident.filledId}" class="btn btn-xs btn-danger">Add Member</a>
-											<a href="#" th:href="@{/super-admin/residentMember/} + ${resident.filledId}" class="btn btn-xs btn-success">Show Details</a>
+											<a href="#" th:href="@{/resident/} + ${resident.filledId} +'/member/'" class="btn btn-xs btn-danger">Add Member</a>
+											<a href="#" th:href="@{/resident/} + ${resident.filledId}" class="btn btn-xs btn-success">Show Details</a>
 										</td>
 									</tr>
 								</tbody>
 								
 							</table>
 							<table th:if="${residentList == null || #lists.isEmpty(residentList)}">
-								<h2>माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण भेटीएन|</h2>
+								<thead>
+									<tr>
+										<td><h2>माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण भेटीएन|</h2></td>
+									</tr>
+								</thead>
 							</table>
 						</div>
 					</div>
@@ -128,6 +145,8 @@
 			class="fa fa-angle-double-up"></i> </a>
 		<!--Start footer-->
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
+	</div>
+	<div th:replace="~{fragments/scripts :: scripts}">
 	</div>
 	<script>
 		$(function() {
@@ -178,8 +197,8 @@
 														<td>
 															<a href=\"\" class="btn btn-xs btn-info">Edit</a>
 															<a href=\"\" class="btn btn-xs btn-warning">Delete </a>
-															<a href=\"/super-admin/addMemberForm/${item.filledId}\" class="btn btn-xs btn-danger">Add Member</a>
-															<a href=\"/super-admin/residentMember/${item.filledId}\" class="btn btn-xs btn-success">Show Details</a>
+															<a href=\"/resident/${item.filledId}/member\" class="btn btn-xs btn-danger">Add Member</a>
+															<a href=\"/resident/${item.filledId}\" class="btn btn-xs btn-success">Show Details</a>
 														</td> </tr>`;
 									});
 									$("#resident-body").empty();

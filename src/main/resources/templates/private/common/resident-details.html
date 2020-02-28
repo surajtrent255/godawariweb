@@ -28,22 +28,25 @@
 	href="assets/css/app-style.css" rel="stylesheet" />
 
 
-<link rel="stylesheet" th:href="@{/assets/plugins/nepali-datepicker/nepaliDatePicker.min.css}"
+<link rel="stylesheet"
+	th:href="@{/assets/plugins/nepali-datepicker/nepaliDatePicker.min.css}"
 	href="assets/plugins/nepali-datepicker/nepaliDatePicker.min.css">
-	
-	
-<link rel="stylesheet" th:href="@{/assets/plugins/datatable/datatables.min.css}"
+
+
+<link rel="stylesheet"
+	th:href="@{/assets/plugins/datatable/datatables.min.css}"
 	href="assets/plugins/datatable/datatables.min.css">
-	
-<link rel="stylesheet" th:href="@{/assets/plugins/jquery.steps/css/jquery.steps.css}"
+
+<link rel="stylesheet"
+	th:href="@{/assets/plugins/jquery.steps/css/jquery.steps.css}"
 	href="assets/plugins/jquery.steps/css/jquery.steps.css">
 
 <link rel="stylesheet" type="text/css"
 	href="https://www.lalitpur15.org/datasys/public/css/print.css"
 	media="print">
-<link rel="stylesheet" th:href="@{/assets/css/leaflet.css}"/>
-	
-	
+<link rel="stylesheet" th:href="@{/assets/css/leaflet.css}" />
+
+
 <style type="text/css">
 .printForm .first_cell {
 	width: 30px;
@@ -59,7 +62,7 @@
 }
 
 .printForm [type="checkbox"]:not (:checked )+span, .printForm [type="radio"]:not
-	(:checked )+span {
+	 (:checked )+span {
 	display: none;
 }
 /* Base for span styling */
@@ -98,21 +101,23 @@
 </head>
 <body>
 	<div id="wrapper">
-
-		<!--           	Sidebar and header -->
-		<div th:replace="~{fragments/admin-sidebar :: admin-sidebar}"></div>
-		<header th:replace="~{fragments/header :: header}" class="header1"> </header>
-
-
+		<!-- Side bar and header -->
+		<div th:replace="~{fragments/private-sidebar :: private-sidebar}"></div>
+		<header th:replace="~{fragments/header :: header}" class="header1">
+		</header>
 		<div class="clearfix"></div>
-		<div class="content-wrapper" th:if="${residentFullDetail != null && residentFullDetail.residentDetail != null}">
+		<div class="content-wrapper"
+			th:if="${residentFullDetail != null && residentFullDetail.residentDetail != null}">
 			<div class="container-fluid" id="pjax-container">
 				<div class="row pt-2 pb-2">
 					<div class="col-sm-9">
-						<h4 class="page-title" th:text="${residentFullDetail.residentDetail.answer1} + ' को पूर्ण विवरण'">Godawari Nagarpalika Full Detail</h4>
+						<h4 class="page-title"
+							th:text="${residentFullDetail.residentDetail.answer1} + ' को पूर्ण विवरण'">Godawari
+							Nagarpalika Full Detail</h4>
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
-							<li class="breadcrumb-item active" aria-current="page">Household Members List</li>
+							<li class="breadcrumb-item active" aria-current="page">Household
+								Members List</li>
 						</ol>
 					</div>
 				</div>
@@ -144,7 +149,8 @@
 											<td th:text="${residentFullDetail.residentDetail.answer6}">दुर्गा
 												बहादुर राउत</td>
 											<td><strong>आमाको नाम</strong>:</td>
-											<td th:text="${residentFullDetail.residentDetail.answer7}">कान्छी राउत</td>
+											<td th:text="${residentFullDetail.residentDetail.answer7}">कान्छी
+												राउत</td>
 											<td><strong>मातृभाषा</strong>:</td>
 											<td th:text="${residentFullDetail.residentDetail.answer8}">नेपाली</td>
 											<td><strong>जाति</strong>:</td>
@@ -152,7 +158,8 @@
 										</tr>
 										<tr>
 											<td><strong>धर्म</strong>:</td>
-											<td th:text="${residentFullDetail.residentDetail.answer10}">हिन्दू धर्म</td>
+											<td th:text="${residentFullDetail.residentDetail.answer10}">हिन्दू
+												धर्म</td>
 											<td><strong>नागरिकता नं</strong>:</td>
 											<td th:text="${residentFullDetail.residentDetail.answer11}">१३/१६४१</td>
 											<td><strong>नागरिकता लिएको जिल्ला</strong>:</td>
@@ -165,7 +172,8 @@
 								<!-- Button for showing the modal for Map Location  -->
 								<div>
 									<button id="view-location-btn"
-										class="block2-user-id btn btn-success pull-right">यस स्थान मानचित्रमा हेर्नुहोस </button>
+										class="block2-user-id btn btn-success pull-right">यस
+										स्थान मानचित्रमा हेर्नुहोस</button>
 								</div>
 							</div>
 						</div>
@@ -174,7 +182,8 @@
 						<div class="col-lg-12 col-md-12">
 							<div class="table-responsive">
 								<table class="table table-striped table-hover table-member"
-									id="grid" th:if="${residentFullDetail.familyMembers != null && #lists.size(residentFullDetail.familyMembers) > 0}">
+									id="grid"
+									th:if="${residentFullDetail.familyMembers != null && #lists.size(residentFullDetail.familyMembers) > 0}">
 									<thead>
 										<tr>
 											<th rowspan="2"><strong>ऋ.स</strong></th>
@@ -208,7 +217,8 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="member,iteration: ${residentFullDetail.familyMembers}">
+										<tr
+											th:each="member,iteration: ${residentFullDetail.familyMembers}">
 											<td th:text="${iteration.index + 1}">1</td>
 											<td th:text="${member.name}"></td>
 											<td th:text="${member.relation}"></td>
@@ -218,15 +228,24 @@
 											<td th:text="${member.education}"></td>
 											<td th:text="${member.occupation}"></td>
 											<td th:text="${member.voterCard} ? 'छ' : 'छैन'"></td>
-											<td th:text="${member.address} == 1 ? 'स्थायी जन्म' : 'बसाई सराई' "></td>
+											<td
+												th:text="${member.address} == 1 ? 'स्थायी जन्म' : 'बसाई सराई' "></td>
 											<td th:text="${member.healthCondition}"></td>
-											<td><a href="#"	th:href="@{/super-admin/editMemberView/} + ${member.memberId}"
-											class="btn btn-xs btn-success">Edit Details</a><td>
+											<td><a href="#"
+												th:href="@{/resident/member/} + ${member.memberId}"
+												class="btn btn-xs btn-success">Edit Details</a>
+											<td>
 										</tr>
 									</tbody>
 								</table>
-								<table th:if="${residentFullDetail.familyMembers == null || #lists.isEmpty(residentFullDetail.familyMembers)}">
-									<h2> माफ गर्नुहोला | परिवारको कुनै पनि सदस्य भेटीएन वा प्रणालीमा बिवरण राखिएको छैन |</h2>
+								<table
+									th:if="${residentFullDetail.familyMembers == null || #lists.isEmpty(residentFullDetail.familyMembers)}">
+									<thead>
+										<tr>
+											<td><h2>माफ गर्नुहोला | परिवारको कुनै पनि सदस्य
+													भेटीएन वा प्रणालीमा बिवरण राखिएको छैन |</h2></td>
+										</tr>
+									</thead>
 								</table>
 							</div>
 						</div>
@@ -244,15 +263,17 @@
 											<td><strong>व्यवसाय</strong>: <strong
 												th:text="${residentFullDetail.residentDetail.answer15}"></strong></td>
 											<td><strong>व्यवसायी</strong>: <strong
-												th:text="${residentFullDetail.residentDetail.answer16}"> </strong>
-											 <strong>फोन
-													नं</strong>: <strong th:text="${residentFullDetail.residentDetail.answer17}">
+												th:text="${residentFullDetail.residentDetail.answer16}">
+											</strong> <strong>फोन नं</strong>: <strong
+												th:text="${residentFullDetail.residentDetail.answer17}">
 											</strong></td>
 										</tr>
 										<tr>
-											<td>१२. <strong>घरको तल्ला</strong>:</td>
+											<td>१२. <strong>घरको तल्ला</strong>:
+											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer18}"></td>
-											<td>१३. <strong>पानी</strong>:</td>
+											<td>१३. <strong>पानी</strong>:
+											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer19}"></td>
 										</tr>
 										<tr>
@@ -320,7 +341,7 @@
 											<td th:text="${residentFullDetail.residentDetail.answer41}"></td>
 											<td>२९. <strong>चौपाया तथा पशुपंशी</strong>:
 											</td>
-											<td	th:text="${residentFullDetail.residentDetail.answer42}"></td>
+											<td th:text="${residentFullDetail.residentDetail.answer42}"></td>
 										</tr>
 										<tr>
 											<td>३०. <strong>आफ्नो उत्पादन तथा आय स्रोतले
@@ -335,7 +356,8 @@
 											<td>३२. <strong>भविष्यमा कस्तो सिप तालिम गर्नु
 													पर्ला? </strong>:
 											</td>
-											<td colspan="3" th:text="${residentFullDetail.residentDetail.answer45}"></td>
+											<td colspan="3"
+												th:text="${residentFullDetail.residentDetail.answer45}"></td>
 										</tr>
 									</tbody>
 								</table>
@@ -357,9 +379,13 @@
 									<tbody>
 										<tr>
 
-											<td><strong>विवरण दिने : </strong> <span th:text="${residentFullDetail.residentDetail.answer1}"> </span></td>
-											<td><strong>मिति : </strong><span th:text="${residentFullDetail.residentDetail.entryDate}"></span></td>
-											<td><strong>तथ्यांक संकलन : </strong> <span th:text="${residentFullDetail.surveyor}"></span></td>
+											<td><strong>विवरण दिने : </strong> <span
+												th:text="${residentFullDetail.residentDetail.answer1}">
+											</span></td>
+											<td><strong>मिति : </strong><span
+												th:text="${residentFullDetail.residentDetail.entryDate}"></span></td>
+											<td><strong>तथ्यांक संकलन : </strong> <span
+												th:text="${residentFullDetail.surveyor}"></span></td>
 
 										</tr>
 									</tbody>
@@ -377,9 +403,14 @@
 						<div class="modal-content" style="border-radius: 10px;">
 							<div class="modal-header">
 								<h5 class="modal-title">
-									<b><span th:text=${residentFullDetail.residentDetail.answer1}></span> को बासस्थान|</b>
+									<b><span
+										th:text=${residentFullDetail.residentDetail.answer1}></span>
+										को बासस्थान|</b>
 								</h5>
-								<button id="cancel-location-btn" class="btn btn-danger pull-right"><b>X</b></button>
+								<button id="cancel-location-btn"
+									class="btn btn-danger pull-right">
+									<b>X</b>
+								</button>
 							</div>
 							<div class="modal-content-body">
 								<div class="row" style="margin: 5px 20px;">
@@ -391,74 +422,72 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="btn-print">
 					<button id="print" class="btn btn-primary">Print this page</button>
 				</div>
 			</div>
 		</div>
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
-		<script th:src="@{/assets/js/leaflet.js}"></script>
-		<script th:src="@{/assets/js/printThis.js}" src="assets/js/printThis.js"></script>
-		<script th:inline="javascript">
-			/*<![CDATA[*/
-			var geoCoordinates = /*[[${residentFullDetail.residentDetail.answer50}]]*/ '0';
+	</div>
+	<div th:replace="~{fragments/scripts :: scripts}"></div>
+	<script th:src="@{/assets/js/leaflet.js}"></script>
+	<script th:src="@{/assets/js/printThis.js}"
+		src="assets/js/printThis.js"></script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		var geoCoordinates = /*[[${residentFullDetail.residentDetail.answer50}]]*/'0';
 
-			/*]]>*/
-			//Splitting the location coordinates into latitude and longitude
-			var geoFields = geoCoordinates.split(', ');
+		/*]]>*/
+		//Splitting the location coordinates into latitude and longitude
+		var geoFields = geoCoordinates.split(', ');
 
-			var geoLat = geoFields[0];		//Gets the latitude
-			var geoLong = geoFields[1];		//Gets the longitude
-			
-			
-			//JS function for displaying the location of the household using leafletjs
-			const mymap = L.map('surveyMap').setView([geoLat, geoLong], 18);
-			var marker;
-// 			var layerGroup = L.layerGroup().addTo(mymap);
-	
-			const attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors';
-	
-			
-// 			const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-// 			const tiles = L.tileLayer(tileUrl, {attribution});
-// 			tiles.addTo(mymap);
-			
-			L.tileLayer('http://{s}.google.com/vt/lyrs=y,h&x={x}&y={y}&z={z}',{
-				attribution: 'Map data &copy; 2020 Google',
-			    maxZoom: 20,
-			    subdomains:['mt0','mt1','mt2','mt3']
-			}).addTo(mymap);
-			
-			
-			marker = L.marker([geoLat, geoLong]).addTo(mymap);	
-			
-			//For showing the Map modal	
-			$("#view-location-btn").on("click", function(event){
-				event.preventDefault();
-				$("#map-location-modal").modal("show");
-				 setTimeout(function() {
-					    mymap.invalidateSize();
-					  }, 17)
-			});
-			
-			//For canceling and hiding the Map modal
-			$("#cancel-location-btn").on("click", function(event){
-				$("#map-location-modal").modal("hide");
-			});
+		var geoLat = geoFields[0]; //Gets the latitude
+		var geoLong = geoFields[1]; //Gets the longitude
 
-			//Prints the resident details
-			$(function() {
-				$('#print').click(function() {
-						$('.saibu-display-form').printThis({
-									importCSS : false,
-									loadCSS : "/assets/css/print.css",
-									removeInline : true
-						});
+		//JS function for displaying the location of the household using leafletjs
+		const mymap = L.map('surveyMap').setView([ geoLat, geoLong ], 18);
+		var marker;
+		// 			var layerGroup = L.layerGroup().addTo(mymap);
+
+		const attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors';
+
+		// 			const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+		// 			const tiles = L.tileLayer(tileUrl, {attribution});
+		// 			tiles.addTo(mymap);
+
+		L.tileLayer('http://{s}.google.com/vt/lyrs=y,h&x={x}&y={y}&z={z}', {
+			attribution : 'Map data &copy; 2020 Google',
+			maxZoom : 20,
+			subdomains : [ 'mt0', 'mt1', 'mt2', 'mt3' ]
+		}).addTo(mymap);
+
+		marker = L.marker([ geoLat, geoLong ]).addTo(mymap);
+
+		//For showing the Map modal	
+		$("#view-location-btn").on("click", function(event) {
+			event.preventDefault();
+			$("#map-location-modal").modal("show");
+			setTimeout(function() {
+				mymap.invalidateSize();
+			}, 17)
+		});
+
+		//For canceling and hiding the Map modal
+		$("#cancel-location-btn").on("click", function(event) {
+			$("#map-location-modal").modal("hide");
+		});
+
+		//Prints the resident details
+		$(function() {
+			$('#print').click(function() {
+				$('.saibu-display-form').printThis({
+					importCSS : false,
+					loadCSS : "/assets/css/print.css",
+					removeInline : true
 				});
 			});
-			
-	</script> 
-	</div>
+		});
+	</script>
 </body>
 </html>

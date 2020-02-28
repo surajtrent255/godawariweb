@@ -64,12 +64,9 @@
 </head>
 <body>
 	<div id="wrapper">
-
-		<!--           	Sidebar and header -->
-		<div th:replace="~{fragments/admin-sidebar}"></div>
-		<header th:replace="~{fragments/header}" class="header1"> </header>
-
-
+		<!-- Side bar and header -->
+		<div th:replace="~{fragments/private-sidebar :: private-sidebar}"></div>
+		<header th:replace="~{fragments/header :: header}" class="header1"> </header>
 		<div class="clearfix"></div>
 		<div class="content-wrapper">
 			<div class="container-fluid" id="pjax-container">
@@ -78,7 +75,7 @@
 						<h4 class="page-title">Data Management System</h4>
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
-							<li class="breadcrumb-item active" aria-current="page">Add
+							<li class="breadcrumb-item active" aria-current="page">Edit
 								Member</li>
 						</ol>
 					</div>
@@ -87,12 +84,11 @@
 					<div class="card-body">
 						<div class="card-title">Fill up information about family
 							members.</div>
-						<a href="javascript:void(0)"
-							class="add-member btn btn-primary mb-2" style="margin-left: 8px;">Add
-							Member</a>
-						<th:form:form method="POST" th:action="@{/resident/add}"
+<!-- 						<a href="javascript:void(0)" -->
+<!-- 							class="edit-member btn btn-primary mb-2" -->
+<!-- 							style="margin-left: 8px;">Edit Member</a> -->
+						<th:form:form method="PUT" th:action="@{/resident}"
 							modelAttribute="member" enctype="multipart/form-data">
-
 
 							<!-- 						<form method="POST" action="javascript:void(0)" data-ajax="true" -->
 							<!-- 							th:action="@{/resident/add}" -->
@@ -122,7 +118,7 @@
 										<div class="padding">
 											<label for="name"><h4>नाम थर :</h4></label> <input
 												type="text" id="name" name="name"
-												class="form-control required" value="">
+												class="form-control required" th:value="${member.name}">
 										</div>
 									</div>
 									<div class="col-lg-4 col-md-4 mb-2">
@@ -148,27 +144,25 @@
 									<div class="col-md-4 col-lg-4 mb-2">
 										<div class="padding">
 											<label for="age"><h4>उमेर :</h4></label> <input type="text"
-												id="age" name="age" class="form-control age required"
-												value="">
-											<!-- 											<input type="hidden" name="age" class="age" value=""> -->
+												id="ageDisplay" name="ageDisplay" class="form-control age required"
+												th:value="${member.age}">
+											<input type="hidden" name="age" id="age" th:value="${member.age}">	
 										</div>
 									</div>
 									<div class="col-lg-4 col-md-4 mb-2">
 										<div class="padding">
-											<label for="date_of_birth"><h4>जन्म मिति</h4></label> <input
-												type="text" id="date_of_birth" name="date_of_birth"
-												class="form-control required" value="">
+											<label for="date_of_birth"><h4>जन्म मिति</h4></label><br> 
+											<label>B.S.</label><input type="text" id="date_of_birth_BS_devanagari" name="date_of_birth_BS_devanagari"
+												class="form-control required"
+												value="" readonly  style="width: 50%;">
+												<input type="hidden" name="date_of_birth_BS" id="date_of_birth_BS" th:value="${member.dateOfBirthBS}">
+											<label>A.D.</label><input type="text" id="date_of_birth_AD" name="date_of_birth_AD"
+												class="form-control required"
+												th:value="${member.dateOfBirthAD}" readonly  style="width: 50%;">
+															
+												
 										</div>
 									</div>
-
-									<!-- 									<div class="col-lg-4 col-md-4"> -->
-									<!-- 										<div class="form-group form-label"> -->
-									<!-- 											<label for="survey_date"><h4>मिति :</h4></label> <input -->
-									<!-- 												type="text" class="form-control" id="survey_date" -->
-									<!-- 												name="survey_date" value=""> -->
-									<!-- 										</div> -->
-									<!-- 									</div> -->
-
 
 									<div class="col-md-4 col-lg-4 mb-2">
 										<div class="padding">
@@ -197,7 +191,8 @@
 										<div class="padding">
 											<label for="occupation"><h4>पेशा :</h4></label> <input
 												type="text" id="occupation" name="occupation"
-												class="form-control required" value="">
+												class="form-control required"
+												th:value="${member.occupation}">
 										</div>
 									</div>
 									<div class="col-md-4 col-lg-4 mb-2">
@@ -224,7 +219,8 @@
 										<div class="padding">
 											<label for="health"><h4>स्वास्थ्य अवस्था :</h4></label> <input
 												type="text" id="health" name="health"
-												class="form-control required" value="">
+												class="form-control required"
+												th:value="${member.healthCondition}">
 										</div>
 									</div>
 								</div>
@@ -232,7 +228,7 @@
 							<!-- 								<input type="submit" value="Submit"/> -->
 							<button type="submit"
 								class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4"
-								id="member-entry-submit">Add Member</button>
+								id="member-update-submit">Update Member</button>
 						</th:form:form>
 					</div>
 				</div>
@@ -240,14 +236,16 @@
 		</div>
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
 	</div>
+	<div th:replace="~{fragments/scripts :: scripts}">
+	</div>
 	<script
 		th:src="@{/assets/plugins/nepali-datepicker/nepaliDatePicker.min.js}"
 		src="assets/plugins/nepali-datepicker/jquery.nepaliDatePicker.min.js"></script>
 	<script th:inline="javascript">
 		/*<![CDATA[*/
-		var mainId = /*[[${residentFilledId}]]*/'0';
+		var memberId = /*[[${member.memberId}]]*/ '0';
 		/*]]>*/
-
+	
 		$(function() {
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
@@ -255,12 +253,13 @@
 				xhr.setRequestHeader(header, token);
 			});
 		});
+	
 
 		google.load("elements", "1", {
 			packages : "transliteration"
 		});
 
-		$(function() {
+		function onLoad() {
 			var options = {
 				sourceLanguage : 'en',
 				destinationLanguage : [ 'ne' ],
@@ -272,46 +271,232 @@
 			var uniElement = $(".unicode input[type='text'], #grid_filter input");
 			control.makeTransliteratable(uniElement);
 			// control.showControl('translControl');
-		});
+		}
 
-		$("#date_of_birth").nepaliDatePicker({
-			dateFormat : "%d/%m/%y",
-			closeOnDateSelect : true
-		});
+		$(window).on("load", function(e) {
+			loadDateOfBirthBSDevanagari();
+			dateChangeManager();
+			onLoad();
+		})
 
+		function goBack() {
+			window.history.back();
+		}
+
+		//Gets the current date to set the max date in date picker
+		var currentDate = new Date();
+		var currentNepaliDate = calendarFunctions.getBsDateByAdDate(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate());
+		var formatedNepaliDate = calendarFunctions.bsDateFormat("%y-%m-%d", currentNepaliDate.bsYear, currentNepaliDate.bsMonth, currentNepaliDate.bsDate);
+		
+		var endDate = currentDate.getFullYear() + "-" + currentDate.getMonth() + 1 + "-" + currentDate.getDate();
+		
+		$("#date_of_birth_BS_devanagari").nepaliDatePicker({
+			dateFormat: "%y-%m-%d",
+			maxDate: formatedNepaliDate,
+		    closeOnDateSelect: true   
+		})
+		
+		
+		$("#date_of_birth_BS_devanagari").on("dateSelect", function (event) {
+			dateChangeManager();
+		});
+		
+		//Handles the change in the text field when a date is selected or changed
+		function dateChangeManager(){
+			$("#date_of_birth_AD").val(endDate);
+			let dateSelectedAD = "";
+			let dateSelectedBS = "";
+			
+			let dateSelectedBSDevanagari = calendarFunctions.parseFormattedBsDate("%y-%m-%d", $("#date_of_birth_BS_devanagari").val());
+			let nepaliYear = dateSelectedBSDevanagari.bsYear;
+			let nepaliMonth = dateSelectedBSDevanagari.bsMonth;
+			let nepaliDay = dateSelectedBSDevanagari.bsDate;
+			
+			
+			dateSelectedBS = [nepaliYear, nepaliMonth, nepaliDay].join('-');
+			
+			dateSelectedAD = calendarFunctions.getAdDateByBsDate(nepaliYear, nepaliMonth, nepaliDay);
+			
+			let formattedDateSelectedAD = formatDateAD(dateSelectedAD);
+			
+			$("#date_of_birth_AD").val(formattedDateSelectedAD);
+			$("#date_of_birth_BS").val(dateSelectedBS);
+			ageCalculator(formattedDateSelectedAD);
+		}
+		
+		//Calculates the age of the person based on the date of birth selected
+		function ageCalculator(dateOfBirthAD) {
+			var calculatedValue = "";
+			var displayYear = "";
+			
+			var end = Date.now();	//Getting the end full date, current date
+			var begin = Date.parse(dateOfBirthAD);	//Getting the beginning full date, date of Birth
+			var e = new Date(end);
+			var b = new Date(begin);
+			
+			var bYear = b.getFullYear();	//Getting the beginning year
+			var eYear = e.getFullYear();	//Getting the end year
+			var bMonth = b.getMonth();		//Getting the beginning month
+			var eMonth = e.getMonth();		//Getting the end month
+			var bDay = b.getDate();			//Getting the beginning day
+			var eDay = e.getDate();			//Getting the end day
+					
+
+			if ((eMonth == 0)||(eMonth == 2)||(eMonth == 4)|| (eMonth == 6) || (eMonth == 7) ||(eMonth == 9)||(eMonth == 11))
+				{
+					var eDays =  31;
+				}
+
+			if ((eMonth == 3)||(eMonth == 5)||(eMonth == 8)|| (eMonth == 10))
+				{
+					var eDays = 30;
+				}
+
+			if (eMonth == 1&&((eYear % 4 == 0) && (eYear % 100 != 0)) || (eYear % 400 == 0))
+				{
+					var eDays = 29;
+				}
+
+			if (eMonth == 1&&((eYear % 4 != 0) || (eYear % 100 == 0)))
+				{
+					var eDays = 28;
+				}
+
+			if ((bMonth == 0)||(bMonth == 2)||(bMonth == 4)|| (bMonth == 6) || (bMonth == 7) ||(bMonth == 9)||(bMonth == 11))
+				{
+					var bDays =  31;
+				}
+
+			if ((bMonth == 3)||(bMonth == 5)||(bMonth == 8)|| (bMonth == 10))
+				{
+					var bDays = 30;
+				}
+
+			if (bMonth == 1&&((bYear % 4 == 0) && (bYear % 100 != 0)) || (bYear % 400 == 0))
+				{
+					var bDays = 29;
+				}
+
+			if (bMonth == 1&&((bYear % 4 != 0) || (bYear % 100 == 0)))
+				{
+					var bDays = 28;
+				}
+
+			var FirstMonthDiff = bDays - bDay + 1;
+
+			if (eDay - bDay < 0)
+				{
+					eMonth = eMonth - 1;
+					eDay = eDay + eDays;
+				}
+	
+// 			if (eDay - bDay < 0) 
+// 				{ 
+// 					eMonth = eMonth - 1; 
+// 					eDay = eDay + bDays; 
+// 				}
+	
+			var daysDiff = eDay - bDay;
+			if(eMonth - bMonth < 0)
+				{
+					eYear = eYear - 1;
+					eMonth = eMonth + 12;
+				}
+
+			var monthDiff = eMonth - bMonth;
+
+			var yearDiff = eYear - bYear;
+
+			if (daysDiff == eDays)
+				{
+					daysDiff = 0;
+					monthDiff = monthDiff + 1;
+		
+					if (monthDiff == 12)
+					{
+						monthDiff = 0;
+						yearDiff = yearDiff + 1;
+					}
+	
+				}
+
+			if ((FirstMonthDiff != bDays)&&(eDay - 1 == eDays))
+				{
+					daysDiff = FirstMonthDiff;
+				}
+			
+			calculatedValue = yearDiff + " year(s)" + " " + monthDiff + " month(s) " + daysDiff + " days(s)";
+			displayYear = calendarFunctions.getNepaliNumber(yearDiff) + " बर्ष";
+			
+			$("#age").val(yearDiff);					//Sets the year as persons' age
+			$("#ageDisplay").val(displayYear);
+		}
+		
+		//Function to parse English Date into yyyy-mm-dd format	
+		function formatDateAD(date) {
+		    let d = new Date(date),
+		        month = '' + (d.getMonth() + 1),
+		        day = '' + d.getDate(),
+		        year = d.getFullYear();
+
+		    if (month.length < 2) 
+		        month = '0' + month;
+		    if (day.length < 2) 
+		        day = '0' + day;
+
+		    return [year, month, day].join('-');
+		}
+		
+		//Displays the DOB in Devanagari on first load of the page
+		function loadDateOfBirthBSDevanagari() {
+			
+			let dateString = $("#date_of_birth_BS").val();
+			let arrayDateSplit = new Array();
+
+			//split string and store it into array
+			arrayDateSplit = dateString.split('-');
+
+			//Converting the english numbers into devanagari numbers
+			let nepaliYearDevanagari = calendarFunctions.getNepaliNumber(parseInt(arrayDateSplit[0]));
+			let nepaliMonthDevanagari = calendarFunctions.getNepaliNumber(parseInt(arrayDateSplit[1]));
+			let nepaliDayDevanagari = calendarFunctions.getNepaliNumber(parseInt(arrayDateSplit[2]));
+			
+			$("#date_of_birth_BS_devanagari").val([nepaliYearDevanagari, nepaliMonthDevanagari, nepaliDayDevanagari].join('-'));
+		}
+		
 		$(function() {
-			$("#member-entry-submit").click(function(event) {
+			$("#member-update-submit").click(function(event) {
 				//Getting the data from the formm	
 				let memberName = $("#name").val();
 				let relation = $("#relation").val();
 				let gender = $("#gender").val();
 				let age = $("#age").val();
-				let dateOfBirth = $("#date_of_birth").val();
+				let dateOfBirthBS = $("#date_of_birth_BS").val();
+				let dateOfBirthAD = $("#date_of_birth_AD").val();
 				let maritalStatus = $("#marital_status").val();
 				let education = $("#education").val();
 				let occupation = $("#occupation").val();
 				let voterCard = $("#voter_card").val();
 				let migration = $("#migration").val();
 				let healthStatus = $("#health").val();
-				let familyId = mainId;
 				let memberInfo = {};
 				memberInfo.name = memberName;
 				memberInfo.relation = relation;
 				memberInfo.gender = gender;
 				memberInfo.age = age;
-				memberInfo.dateOfBirth = dateOfBirth;
+				memberInfo.dateOfBirthBS = dateOfBirthBS;
+				memberInfo.dateOfBirthAD = dateOfBirthAD;
 				memberInfo.maritalStatus = maritalStatus;
 				memberInfo.education = education;
 				memberInfo.occupation = occupation;
 				memberInfo.voterCard = voterCard;
 				memberInfo.address = migration;
 				memberInfo.healthCondition = healthStatus;
-				memberInfo.mainId = familyId;
 
 				// Now create an ajax request to send member details to the server
 				$.ajax({
-					method : "POST",
-					url : contextPath + "/resident/",
+					method : "PUT",
+					url : contextPath + "/resident/" + memberId,
 					data : JSON.stringify(memberInfo),
 					contentType : "Application/Json",
 					success : function(result) {
@@ -321,7 +506,7 @@
 							closeOnClickOutside : false,
 							closeOnEsc : false
 						}).then(function() {
-							window.location = contextPath + "/super-admin";
+							goBack();
 						});
 					},
 					error : function(error) {
@@ -330,6 +515,5 @@
 			});
 		});
 	</script>
-
 </body>
 </html>

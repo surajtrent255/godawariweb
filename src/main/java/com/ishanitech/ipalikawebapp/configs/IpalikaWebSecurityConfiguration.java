@@ -2,6 +2,7 @@ package com.ishanitech.ipalikawebapp.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -40,6 +41,7 @@ public class IpalikaWebSecurityConfiguration extends WebSecurityConfigurerAdapte
 		.authorizeRequests()
 		.antMatchers("/assets/**").permitAll()
 		.antMatchers("/home", "/", "/index").permitAll()
+		.antMatchers(HttpMethod.GET, "/favourite-place/**").permitAll()
 		.antMatchers("/super-admin/**").hasRole("SUPER_ADMIN")
 		.antMatchers("/central-admin/**").hasRole("CENTRAL_ADMIN")
 		.antMatchers("/ward-admin/**").hasRole("WARD_ADMIN")
