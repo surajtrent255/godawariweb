@@ -90,58 +90,79 @@
 							<div class="col-lg-3 col-md-4" th:each="questionAndOption, i : ${questionAndOptions}">
 									<div class="form-group form-label" th:if="${questionAndOption.type == 'TEXT' || questionAndOption.type == 'MULTI_TEXT'}">
 										<label th:for="${questionAndOption.id}">
-											<h4 th:text="${questionAndOption.desc}"></h4>
-										</label> <input type="text" class="form-control  " th:id="${questionAndOption.id}"
-											th:name="${questionAndOption.id}" th:text="${i.index} + 1" th:field="*{answer1}" value="">
+											<h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4>
+										</label> <input type="text" class="form-control  " th:id="'answer' + ${i.index + 1}"
+											th:name="'answer' + ${i.index + 1}" value="">
 									</div>
 									<div class="form-group form-label" th:if="${questionAndOption.type} == 'NUMBER'">
 										<label th:for="${questionAndOption.id}">
-											<h4 th:text="${questionAndOption.desc}"></h4>
-										</label> <input type="number" class="form-control  " th:id="${questionAndOption.id}"
-											name="househead_name" value="">
+											<h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4>
+										</label> <input type="number" class="form-control  " th:id="'answer' + ${i.index + 1}"
+											th:name="'answer' + ${i.index + 1}" value="">
 									</div>
-
+ 
 									<div class="form-group form-label" th:if="${questionAndOption.type== 'RADIO' || questionAndOption.type == 'RADIO_D'}">
-										<label th:for="${questionAndOption.id}"><h4 th:text="${questionAndOption.desc}"></h4></label> <select
-											class="form-control" name="caste" id="caste">
+										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4></label> <select
+											class="form-control" th:id="'answer' + ${i.index + 1}"
+											th:name="'answer' + ${i.index + 1}">
 											<option value=""></option>
 											<option th:value="${indx.index}" th:each="option, indx : ${questionAndOption.options}" th:text="${option}"></option>
 										</select>
 									</div>
+									<div class="form-group form-label" th:if="${questionAndOption.type == 'DROPDOWN'}">
+										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4></label> <select
+											class="form-control" th:id="'answer' + ${i.index + 1}"
+											th:name="'answer' + ${i.index + 1}">
+											<!-- <option value=""></option> -->
+											<option th:value="${indx.index}" th:each="option, indx : ${questionAndOption.options}" th:text="${option}"></option>
+										</select>
+									</div>
 									<div class="form-group form-label water_source" th:if="${questionAndOption.type} == 'CHECKBOX'">
-										<label th:for="${questionAndOption.id}"><h4 th:text="${questionAndOption.desc}">पानी :</h4></label>
+										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4></label>
 										<div class="form-group form-radio  ">
-											<label th:each="option, indx : ${questionAndOption.options}"><input type="checkbox" name="water_source[]"
+											<label th:each="option, indx : ${questionAndOption.options}"><input type="checkbox" th:class="'checkboxgroup' + ${i.index + 1}" name="water_source[]"
 												th:value="${indx.index}" data-event="toggle"
-												data-target="water_source_other" data-value="3"><span th:text="${option}"></span></label>
+												data-target="water_source_other" data-value="3"th:id="'answer' + ${i.index + 1}"
+											th:name="'answer' + ${i.index + 1}"><span th:text="${option}"></span></label>
 										</div>
 									</div>
 									<div class="form-group form-label" th:if="${questionAndOption.type} == 'IMAGE'">
-										<label th:for="${questionAndOption.id}"><h4 th:text="${questionAndOption.desc}">फोटो :</h4></label> <input type="file"
-											class="form-control  " th:id="'photo' + ${questionAndOption.id}" th:name="'photo' + ${questionAndOption.id}" value=""
-											data-event="change" data-target="photo" accept="image/*">
-
+										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4></label> 
+											<input type="file"
+											class="form-control  " th:id="'answer' + ${i.index + 1}"
+											th:name="'answer' + ${i.index + 1}" value=""
+											data-event="change" th:data-target="'photo' + ${i.index + 1}" accept="image/*">
+										
 										<a href="" style="display: none" target="_blank"
-											class="no-pjax"><img src="" style="display: none"
+											class="no-pjax">
+											<img src="" style="display: none" th:class="'photo' + ${i.index + 1} + ' img-thumbnail'"
 											class="img-thumbnail photo"></a>
 									</div>
 									
 									<div class="form-group form-label foreign_study" th:if="${questionAndOption.type} == 'CHECKBOX_N'">
-										<label th:for="${questionAndOption.id}"><h4  th:text="${questionAndOption.desc}"> बैदेशिक अध्ययन :</h4> </label>
+										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4> </label>
 										<div class="form-group form-radio  ">
 											<label th:each="option,indx : ${questionAndOption.options}"> <input type="checkbox"
-												th:name="'foreign_study[' + ${indx.index}+ ${i.index + 1} +']'" th:value="${indx.index}" data-event="toggle"
+												th:name="'foreign_study[' + ${indx.index}+ ${i.index + 1} +']'" th:class="'checkboxgroup' + ${i.index + 1}" th:value="${indx.index}" data-event="toggle"
 												th:data-target="'foreign_study_source_' + ${indx.index} + ${questionAndOption.id}" th:data-value="${indx.index}"><span th:text = "${option}"></span>
 												<input type="text" th:name="'foreign_study_source_count[' + ${indx.index} + ${questionAndOption.id} + ']'"
 												class = "numeric" th:class="'foreign_study_source_' + ${indx.index} + ${questionAndOption.id}"
-												placeholder="संख्या खुलाउनु होस्" value=" 1 "
-												style="width: 50px; display: none">
+												placeholder="संख्या खुलाउनु होस्" value="1"
+												style="width: 50px; display: none" th:id="'chkboxn' + ${i.index + 1} + ${indx.index}">
 											</label> 
 										</div>
 									</div>
 									
 									<div class="form-group form-label water_source" th:if="${questionAndOption.type} == 'RATING_M'">
-										<label th:for="${questionAndOption.id}"><h4 th:text="${questionAndOption.desc}">पानी :</h4></label>
+										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4></label>
 										<div class="form-group form-radio  ">
 											<label th:each="option, indx : ${questionAndOption.options}"><span th:text="${option}"></span><select>
 											<option value=""></option>
@@ -163,13 +184,23 @@
 
 									</div>
 									<div class="form-group form-label" th:if="${questionAndOption.type== 'DISTRICT'}">
-										<label for="caste"><h4 th:text="${questionAndOption.desc}"></h4></label> <select
-											class="form-control" name="caste" id="caste">
+										<label for="caste"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4></label> <select
+											class="form-control" th:id="'answer' + ${i.index + 1}"
+											th:name="'answer' + ${i.index + 1}">
 											<option value=""></option>
 											<option th:value="${indx.index}" th:each="option, indx : ${districts}" th:text="${option}"></option>
 										</select>
 									</div>
-									
+									<div class="form-group form-label" th:if="${questionAndOption.type== 'WARD'}">
+										<label for="caste"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4></label> <select
+											class="form-control" th:id="'answer' + ${i.index + 1}"
+											th:name="'answer' + ${i.index + 1}">
+											<option value=""></option>
+											<option th:value="${indx.index}" th:each="option, indx : ${wards}" th:text="${option}"></option>
+										</select>
+									</div>
 									
 									
 								</div>
@@ -200,9 +231,9 @@
 									</div>
 								</div>
 							</div>
-							<input type="submit" class="btn btn-primary px-5"
+							<input class="btn btn-primary px-5"
 								name="category-submit-name" value="Add House"
-								style="margin-top: 10px" id="submit_btn">
+								style="margin-top: 10px" id="household_submit_btn">
 						</form>
 					</div>
 				</div>
@@ -226,26 +257,6 @@
 	<!-- simplebar js -->
 	<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}"
 		src="assets/plugins/simplebar/js/simplebar.js"></script>
-
-	<!-- sidebar-menu js -->
-<!-- 	<script th:src="@{/assets/js/sidebar-menu.js}" -->
-<!-- 		src="assets/js/sidebar-menu.js"></script> -->
-
-<!-- 	<script th:src="@{/assets/plugins/datatable/datatables.min.js}" -->
-<!-- 		src="assets/plugins/datatable/datatables.min.js"></script> -->
-<!-- 	<script th:src="@{/assets/plugins/alerts-boxes/js/sweetalert.min.js}" -->
-<!-- 		src="assets/plugins/alerts-boxes/js/sweetalert.min.js"></script> -->
-<!-- 	<script -->
-<!-- 		src="https://www.lalitpur15.org/datasys/public/js/jquery.pjax.js"></script> -->
-<!-- 	<script -->
-<!-- 		src="https://www.lalitpur15.org/datasys/public/js/sidebar-menu.js"></script> -->
-<!-- 	<script -->
-<!-- 		src="https://www.lalitpur15.org/datasys/public/js/app-script.js"></script> -->
-<!-- 	<script th:src="@{/assets/plugins/jquery.steps/js/jquery.steps.min.js}" -->
-<!-- 		src="assets/plugins/jquery.steps/js/jquery.steps.min.js"></script> -->
-<!-- 	<script th:src="@{/assets/plugins/jquery-validation/js/jquery.validate.min.js}" -->
-<!-- 		src="assets/plugins/jquery-validation/js/jquery.validate.min.js"></script> -->
-	<!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script> -->
 	
 	<script th:src="@{/assets/js/transliteration.js}"
 		src="assets/js/transliteration.js"></script>
@@ -323,6 +334,72 @@
 	    onLoad();
 	})
     
+</script>
+
+<script th:inline="javascript">
+
+	/*<![CDATA[*/
+	var questionAndOptions = /*[[${questionAndOptions}]]*/'';
+	/*]]>*/
+
+	$(function(){
+		$("#household_submit_btn").click(function(event) {
+			let houseHoldInfo = {};
+			let answer = []; 
+			for (var questionAndOption in questionAndOptions){
+				 //console.log("hwelett packardd!");
+				 //console.log(Object.keys(questionAndOptions).indexOf(questionAndOption));
+				 let index = parseInt(Object.keys(questionAndOptions).indexOf(questionAndOption)) + 1;
+				 var id = '#answer' + index;
+				 console.log(id);
+				 //console.log(questionAndOption['type']);
+				 //console.log(questionAndOption.type);
+				 //console.log(questionAndOptions[questionAndOption].type);
+				 if(questionAndOptions[questionAndOption].type === "TEXT" || questionAndOptions[questionAndOption].type === "NUMBER"){
+				 answer[index] = $(id).val();
+				 console.log("answer" + index +"--->" + answer[index]);
+				 }
+				 else if(questionAndOptions[questionAndOption].type === "RADIO" || questionAndOptions[questionAndOption].type === "RADIO_D" || questionAndOptions[questionAndOption].type === "DROPDOWN"){
+					 answer[index] = $(id).val();
+					 console.log("answer" + index +"--->" + answer[index]);
+				}
+				 else if(questionAndOptions[questionAndOption].type === "DISTRICT" || questionAndOptions[questionAndOption].type === "WARD"){
+					 let ansy = $(id).val();
+					 answer[index] = parseInt(ansy) + 1 ;
+					 console.log("answer" + index +"--->" + answer[index]);
+				}
+				 else if(questionAndOptions[questionAndOption].type === "CHECKBOX"){
+					 let checkedstring = "";
+					 $.each($('.checkboxgroup' + index + ':checked'), function(){
+						checkedstring += $(this).val() + ","; 
+					 });
+					 
+					 answer[index] = checkedstring.substring(0, checkedstring.length - 1);
+					 
+					 console.log("answer" + index +"--->" + answer[index]);
+				}
+				 else if(questionAndOptions[questionAndOption].type === "CHECKBOX_N"){
+					 let checkedstring = "";
+					 $.each($('.checkboxgroup' + index + ':checked'), function(){
+						let countValue = $('#chkboxn' + index + $(this).val()).val();
+						 checkedstring += $(this).val() + ":" + countValue + ","; 
+					 });
+					 
+					 answer[index] = checkedstring.substring(0, checkedstring.length - 1);
+					 
+					 console.log("answer" + index +"--->" + answer[index]);
+				}
+				 else if(questionAndOptions[questionAndOption].type === "IMAGE"){
+					 answer[index] = $(id).val();
+					 console.log("answer" + index +"--->" + answer[index]);
+					 }
+				 
+				 
+			}
+		});
+	});
+
+
 </script>
 	</div>
 </body>

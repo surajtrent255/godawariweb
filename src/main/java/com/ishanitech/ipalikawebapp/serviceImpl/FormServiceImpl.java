@@ -50,4 +50,14 @@ public class FormServiceImpl implements FormService {
 		return districts;
 	}
 
+	@Override
+	public Response<List<String>> getListOfWards(String token) {
+		String template = "/ward";
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<List<String>>> responseType = new ParameterizedTypeReference<Response<List<String>>>() {};
+		Response<List<String>> wards = restTemplate.exchange(requestEntity, responseType).getBody();
+		return wards;
+	}
+
 }

@@ -62,6 +62,7 @@ public class SuperAdminController {
 		model.addAttribute("answerObj", new AnswerDTO());
 		model.addAttribute("questionAndOptions", formService.getFullFormDetailById(1, user.getToken()));
 		model.addAttribute("districts", formService.getListofDistricts(user.getToken()).getData());
+		model.addAttribute("wards", formService.getListOfWards(user.getToken()).getData());
 		
 		return "admin/add-household";
 	}
