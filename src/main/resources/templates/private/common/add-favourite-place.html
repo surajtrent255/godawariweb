@@ -100,9 +100,19 @@
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
-									<label for="placeWard">ward number</label> <input type="number"
-										id="placeWard" name="favWard" th:field="*{placeWard}"
-										class="form-control required">
+									<label for="placeWard">Ward number</label> 
+<!-- 									<input type="number" -->
+<!-- 										id="placeWard" name="favWard" th:field="*{placeWard}" -->
+<!-- 										class="form-control required"> -->
+										
+										<select id="placeWard" name="favWard" th:field="*{placeWard}" class="form-control required">
+												<option
+													th:each="ward, iteration : ${wardList}"
+													th:value="${iteration.index + 1}" th:text="${ward}"></option>
+											</select>
+										
+										
+										
 								</div>
 							</div>
 							<div class="form-group row">
@@ -118,7 +128,7 @@
 							<div class="form-group row">
 								<div class="col-md-4">
 									<label for="placeDescription">Place Description</label>
-									<textarea name="favDesc" id="placeDescription"
+									<textarea name="favDesc" id="placeDescription"  rows="10"
 										th:field="*{placeDescription}" class="form-control required">Write description
 									</textarea>
 								</div>
@@ -144,7 +154,7 @@
 							</div>
 							<div class="form-group">
 								<button id="add-favourite-btn" class="btn btn-primary px-5">
-									<i class="icon-lock"></i>Add Place
+									<i class="icon-lock"></i>  Add Place
 								</button>
 							</div>
 						</form>
@@ -264,6 +274,7 @@
 			var control =new google.elements.transliteration.TransliterationControl(options);
 			var uniElement = $(".unicode input[type='text'], #grid_filter input");
 			control.makeTransliteratable(uniElement);
+			control.makeTransliteratable(['placeDescription']);
 		});
 	</script>
 </body>

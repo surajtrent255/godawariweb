@@ -22,6 +22,7 @@ import com.ishanitech.ipalikawebapp.dto.FavouritePlaceDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
 import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
+import com.ishanitech.ipalikawebapp.service.WardService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,9 +32,11 @@ import lombok.extern.slf4j.Slf4j;
 public class FavouritePlacesController {
 
 	private final FavouritePlacesService favouritePlacesService;
+	private final WardService wardService;
 	
-	public FavouritePlacesController(FavouritePlacesService favouritePlacesService) {
+	public FavouritePlacesController(FavouritePlacesService favouritePlacesService, WardService wardService) {
 		this.favouritePlacesService = favouritePlacesService;
+		this.wardService = wardService;
 	}
 	
 	@GetMapping
@@ -80,7 +83,8 @@ public class FavouritePlacesController {
 	
 	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SURVEYOR"})
 	@GetMapping("/add")
-	public String getFavouritePlaceEntryView(Model model) {
+	public String getFavouritePlaceEntryView(Model model, @AuthenticationPrincipal UserDTO user) {
+		model.addAttribute("wardList", wardService.getAllWards(user.getToken()));
 		model.addAttribute("placeTypes", favouritePlacesService.getTypesofFavourtiePlaces());
 		model.addAttribute("favPlaceObj", new FavouritePlaceDTO());
 		return "private/common/add-favourite-place";
