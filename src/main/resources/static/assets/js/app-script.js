@@ -50,7 +50,17 @@ $(document).ready(function(){
 
      $('#pageloader-overlay').fadeOut(1000);
 
-    })  
+    }) 
+
+
+    // For page reloads or page refresh
+    if (window.performance) {
+    }
+      if (performance.navigation.type == 1) {
+        $('#pageloader-overlay').fadeOut(1000);
+      } else {
+        $('#pageloader-overlay').fadeOut(1000);
+      }
    
    
 $(function () {
