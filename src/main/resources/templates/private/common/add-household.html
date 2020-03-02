@@ -35,6 +35,7 @@
 <link rel="stylesheet"
 	th:href="@{/assets/plugins/jquery.steps/css/jquery.steps.css}"
 	href="assets/plugins/jquery.steps/css/jquery.steps.css">
+<link rel="stylesheet" th:href="@{/assets/css/leaflet.css}"/>
 <style>
 .householdForm .form-radio label, .householdForm .form-checkbox label {
 	display: inline-block;
@@ -267,7 +268,6 @@
 									<div style="margin: 20px auto;">
 										<div id="mapid"></div>
 									</div>
-
 								</div>
 							</div>
 						</div>
@@ -284,18 +284,18 @@
 	<div th:replace="~{fragments/scripts :: scripts}">
 	</div>
 	<script th:src="@{/assets/customjs/savehousehold.js}" src="assets/customjs/savehousehold.js"></script>
-	<script th:src="@{/assets/js/popper.min.js}"
-		src="assets/js/popper.min.js"></script>
+<!-- 	<script th:src="@{/assets/js/popper.min.js}" -->
+<!-- 		src="assets/js/popper.min.js"></script> -->
 
-	<script th:src="@{/assets/js/bootstrap.min.js}"
-		src="assets/js/bootstrap.min.js"></script>
+<!-- 	<script th:src="@{/assets/js/bootstrap.min.js}" -->
+<!-- 		src="assets/js/bootstrap.min.js"></script> -->
 
 	<!-- simplebar js -->
-	<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}"
-		src="assets/plugins/simplebar/js/simplebar.js"></script>
+<!-- 	<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}" -->
+<!-- 		src="assets/plugins/simplebar/js/simplebar.js"></script> -->
 	
-	<script th:src="@{/assets/js/transliteration.js}"
-		src="assets/js/transliteration.js"></script>
+<!-- 	<script th:src="@{/assets/js/transliteration.js}" -->
+<!-- 		src="assets/js/transliteration.js"></script> -->
 	<script th:src="@{/assets/plugins/nepali-datepicker/nepaliDatePicker.min.js}"
  		src="assets/plugins/nepali-datepicker/nepaliDatePicker.min.js"></script> 
 	
@@ -304,266 +304,294 @@
 
 	<div id="scripts">
 	
-	<script th:inline="javascript">
-//For showing the Map modal	
-$("#placeGPS").on("click", function(event) {
-	event.preventDefault();
-	$("#map-location-modal").modal("show");
-	  setTimeout(function() {
-		    mymap.invalidateSize();
-		 }, 17)
-});
+<script th:inline="javascript">
 
-//For canceling and hiding the Map modal
-$("#cancel-location-btn").on("click", function(event) {
-	$("#map-location-modal").modal("hide");
-	marker = L.marker(geoLocationTemp).addTo(layerGroup);
-});
+	/*<![CDATA[*/
+	var questionAndOptions = /*[[${questionAndOptions}]]*/'';
+	/*]]>*/
 
-//For selecting the current marker and hiding the Map modal
-$("#map-location-modal").on("click", "#submit-location-btn", function(event) {
-	event.preventDefault();
-	$("#map-location-modal").modal("hide");
-	if(geoLat != null && geoLng != null) {
-		$("#placeGPS").val(geoLat + ', ' + geoLng);
-	}
-});
-const mymap = L.map('mapid').setView([ 27.614979, 85.363180 ], 17);
-var layerGroup = L.layerGroup().addTo(mymap);
-var marker;
-var popup = L.popup();
-const attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors';
-var geoLocation;
-var geoLocationTemp;
-var geoLat
-var geoLng
-L.tileLayer('http://{s}.google.com/vt/lyrs=y,h&x={x}&y={y}&z={z}',{
-	attribution: 'Map data &copy; 2020 Google',
-    maxZoom: 20,
-    subdomains:['mt0','mt1','mt2','mt3']
-}).addTo(mymap);
-function onMapClick(e) {
-	layerGroup.clearLayers();
-	popup.setLatLng(e.latlng)
-		 .setContent(
-			`The selected latitude and longiude is ${e.latlng.toString()}. <a href="#" id="submit-location-btn"> Use this location </a>`
-		 ).openOn(mymap);
-	geoLocation = e.latlng;
-	geoLat = geoLocation.lat;
-	geoLng = geoLocation.lng;
-	marker = L.marker(geoLocation).addTo(layerGroup);
-}
-
-mymap.on('click', onMapClick);
-
-google.load("elements", "1", {
-    packages: "transliteration"
-});
-
-$(function() {
-    var options = {
-	        sourceLanguage: 'en',
-	        destinationLanguage: ['ne'],
-	        shortcutKey: 'ctrl+g',
-	        transliterationEnabled: true
-	    };
-	var control =new google.elements.transliteration.TransliterationControl(options);
-	var uniElement = $(".unicode input[type='text'], #grid_filter input");
-	control.makeTransliteratable(uniElement);
-});
-</script>
 	
-		<script>
-    $(function(){
-        var _t,_n,_d,_v;
-        $("input[data-event='change']").on("change", function(){
-            _t = this;
-            _c = $(this).data("target");
-            if (_t.files && _t.files[0]) {
-                var reader = new FileReader(); 
-                reader.onload = function(e) {
-                  $('img.'+_c).attr('src', e.target.result).show();
-                  $('img.'+_c).parent().show();
-                }
-                reader.readAsDataURL(_t.files[0]);
-              }
-        });
-        $("#documents_copy").on("change", function(){
-            _v = $(this).val();
-            $(".documents_hide").hide();
-            $("div."+_v).show();
-
-        });
-        $("[data-event='toggle']").on("change", function(){
-            _t = $(this);
-            _n = $(this).attr("name");
-            _d = $("[name='"+_n+"']").serializeArray();
-            _c = _t.data("target");
-            if(_d.length > 0 && _t.is(':checked')){
-                $.each(_d, function(i, fd) {
-                    if(fd.value == _t.data("value")){
-                        $("."+_c).show();
-                    }
-                });
-            }
-            else{
-                $("."+_c).hide();   
-            }
-        });
-        $("#survey_date").nepaliDatePicker({
-            dateFormat: "%y-%m-%d",
-            closeOnDateSelect: true
-        });
-            });
-    
-    $(function() {
+	$(function() {
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$(document).ajaxSend(function(e, xhr, options) {
 			xhr.setRequestHeader(header, token);
 		});
 	});
-    
-    
-    
-	google.load("elements", "1", {
-	    packages: "transliteration"
+	
+	
+	//For showing the Map modal	
+	$("#placeGPS").on("click", function(event) {
+		event.preventDefault();
+		$("#map-location-modal").modal("show");
+		setTimeout(function() {
+			mymap.invalidateSize();
+		}, 17)
 	});
-	function onLoad() {
-	    var options = {
-	        sourceLanguage: 'en',
-	        destinationLanguage: ['ne'],
-	        shortcutKey: 'ctrl+g',
-	        transliterationEnabled: true
-	    };
-	    var control =new google.elements.transliteration.TransliterationControl(options);
-	    var uniElement = $(".unicode input[type='text'], #grid_filter input");
-	    control.makeTransliteratable(uniElement);
-	    // control.showControl('translControl');
-	}
-	
-	$(window).on("load", function (e) {
-		onLoad();
-	})
-	
-	$(document).on('pjax:complete', function() {
-	    onLoad();
-	})
-    
-</script>
 
-<script th:inline="javascript">
+	//For canceling and hiding the Map modal
+	$("#cancel-location-btn").on("click", function(event) {
+		$("#map-location-modal").modal("hide");
+		marker = L.marker(geoLocationTemp).addTo(layerGroup);
+	});
 
-	/*<![CDATA[*/
-	var questionAndOptions = /*[[${questionAndOptions}]]*/'';
-	/*]]>*/
-	
-
-	$(function(){
-		
-		var d = new Date();
-		var startTime = d.getTime();
-		$("#household_submit_btn").click(function(event) {
-			var endTime = d.getTime();
-			var duration = endTime - startTime;
-			let houseHoldInfo = {};
-			let answer = []; 
-			for (var questionAndOption in questionAndOptions){
-				 //console.log("hwelett packardd!");
-				 //console.log(Object.keys(questionAndOptions).indexOf(questionAndOption));
-				 let index = parseInt(Object.keys(questionAndOptions).indexOf(questionAndOption)) + 1;
-				 var id = '#answer' + index;
-				 console.log(id);
-				 //console.log(questionAndOption['type']);
-				 //console.log(questionAndOption.type);
-				 //console.log(questionAndOptions[questionAndOption].type);
-				 if(questionAndOptions[questionAndOption].type === "TEXT" || questionAndOptions[questionAndOption].type === "NUMBER"){
-				 answer[index] = $(id).val();
-				 console.log("answer" + index +"--->" + answer[index]);
-				 }
-				 else if(questionAndOptions[questionAndOption].type === "RADIO" || questionAndOptions[questionAndOption].type === "RADIO_D" || questionAndOptions[questionAndOption].type === "DROPDOWN"){
-					 answer[index] = $(id).val();
-					 console.log("answer" + index +"--->" + answer[index]);
-				}
-				 else if(questionAndOptions[questionAndOption].type === "DISTRICT" || questionAndOptions[questionAndOption].type === "WARD"){
-					 let ansy = $(id).val();
-					 answer[index] = parseInt(ansy) + 1 ;
-					 console.log("answer" + index +"--->" + answer[index]);
-				}
-				 else if(questionAndOptions[questionAndOption].type === "CHECKBOX"){
-					 let checkedstring = "";
-					 $.each($('.checkboxgroup' + index + ':checked'), function(){
-						checkedstring += $(this).val() + ","; 
-					 });
-					 
-					 answer[index] = checkedstring.substring(0, checkedstring.length - 1);
-					 
-					 console.log("answer" + index +"--->" + answer[index]);
-				}
-				 else if(questionAndOptions[questionAndOption].type === "CHECKBOX_N"){
-					 let checkedstring = "";
-					 $.each($('.checkboxgroup' + index + ':checked'), function(){
-						let countValue = $('#chkboxn' + index + $(this).val()).val();
-						 checkedstring += $(this).val() + ":" + countValue + ","; 
-					 });
-					 
-					 answer[index] = checkedstring.substring(0, checkedstring.length - 1);
-					 
-					 console.log("answer" + index +"--->" + answer[index]);
-				}
-				 else if(questionAndOptions[questionAndOption].type === "IMAGE"){
-					 answer[index] = $(id).val();
-					 console.log("answer" + index +"--->" + answer[index]);
-					 }
-				 
-				let codeToExecute = "houseHoldInfo.answer" + index + "= answer[" + index + "]";
-				console.log(codeToExecute);
-				eval(codeToExecute);
-				 
-			}
-			
-			console.log("duration---->" + duration);
-			houseHoldInfo.duration = duration;
-			
-			console.log(houseHoldInfo);
-			
-			console.log(contextPath);
-			$.ajax({
-				method: "POST",
-				url: contextPath + "/survey-answer/household",
-				data: JSON.stringify(houseHoldInfo),
-				contentType: "application/json",
-
-				success: function(result) {
-					swal.fire({
-						text: "House Hold Info added successfully!",
-						icon: "success",
-						closeOnClickOutside: true,
-						closeOnEsc: true
-					})
-					.then(function() {
-						window.location.href = contextPath;
-					});
-				}, 
-
-				error: function(error) {
-					$(".loader-holder").hide();
-					swal.fire({
-						text: error.responseJSON.message,
-						icon: "error",
-						closeOnClickOutside: false,
-						closeOnEsc: false
-					})
-					.then(function() {
-						window.location.href = contextPath;
-					});
+	//For selecting the current marker and hiding the Map modal
+	$("#map-location-modal").on("click", "#submit-location-btn",
+			function(event) {
+				event.preventDefault();
+				$("#map-location-modal").modal("hide");
+				if (geoLat != null && geoLng != null) {
+					$("#placeGPS").val(geoLat + ', ' + geoLng);
 				}
 			});
-			
+	const mymap = L.map('mapid').setView([ 27.614979, 85.363180 ], 17);
+	var layerGroup = L.layerGroup().addTo(mymap);
+	var marker;
+	var popup = L.popup();
+	const attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors';
+	var geoLocation;
+	var geoLocationTemp;
+	var geoLat
+	var geoLng
+	L.tileLayer('http://{s}.google.com/vt/lyrs=y,h&x={x}&y={y}&z={z}', {
+		attribution : 'Map data &copy; 2020 Google',
+		maxZoom : 20,
+		subdomains : [ 'mt0', 'mt1', 'mt2', 'mt3' ]
+	}).addTo(mymap);
+	function onMapClick(e) {
+		layerGroup.clearLayers();
+		popup
+				.setLatLng(e.latlng)
+				.setContent(
+						`The selected latitude and longiude is ${e.latlng.toString()}. <a href="#" id="submit-location-btn"> Use this location </a>`)
+				.openOn(mymap);
+		geoLocation = e.latlng;
+		geoLat = geoLocation.lat;
+		geoLng = geoLocation.lng;
+		marker = L.marker(geoLocation).addTo(layerGroup);
+	}
+
+	mymap.on('click', onMapClick);
+
+	google.load("elements", "1", {
+		packages : "transliteration"
+	});
+
+	$(function() {
+		var options = {
+			sourceLanguage : 'en',
+			destinationLanguage : [ 'ne' ],
+			shortcutKey : 'ctrl+g',
+			transliterationEnabled : true
+		};
+		var control = new google.elements.transliteration.TransliterationControl(
+				options);
+		var uniElement = $(".unicode input[type='text'], #grid_filter input");
+		control.makeTransliteratable(uniElement);
+	});
+
+	$(function() {
+		var _t, _n, _d, _v;
+		$("input[data-event='change']").on("change", function() {
+			_t = this;
+			_c = $(this).data("target");
+			if (_t.files && _t.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$('img.' + _c).attr('src', e.target.result).show();
+					$('img.' + _c).parent().show();
+				}
+				reader.readAsDataURL(_t.files[0]);
+			}
+		});
+		$("#documents_copy").on("change", function() {
+			_v = $(this).val();
+			$(".documents_hide").hide();
+			$("div." + _v).show();
+
+		});
+		$("[data-event='toggle']").on("change", function() {
+			_t = $(this);
+			_n = $(this).attr("name");
+			_d = $("[name='" + _n + "']").serializeArray();
+			_c = _t.data("target");
+			if (_d.length > 0 && _t.is(':checked')) {
+				$.each(_d, function(i, fd) {
+					if (fd.value == _t.data("value")) {
+						$("." + _c).show();
+					}
+				});
+			} else {
+				$("." + _c).hide();
+			}
+		});
+		$("#survey_date").nepaliDatePicker({
+			dateFormat : "%y-%m-%d",
+			closeOnDateSelect : true
 		});
 	});
 
+	$(function() {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$(document).ajaxSend(function(e, xhr, options) {
+			xhr.setRequestHeader(header, token);
+		});
+	});
 
+	google.load("elements", "1", {
+		packages : "transliteration"
+	});
+	function onLoad() {
+		var options = {
+			sourceLanguage : 'en',
+			destinationLanguage : [ 'ne' ],
+			shortcutKey : 'ctrl+g',
+			transliterationEnabled : true
+		};
+		var control = new google.elements.transliteration.TransliterationControl(
+				options);
+		var uniElement = $(".unicode input[type='text'], #grid_filter input");
+		control.makeTransliteratable(uniElement);
+		// control.showControl('translControl');
+	}
+
+	$(window).on("load", function(e) {
+		onLoad();
+	})
+
+	$(document).on('pjax:complete', function() {
+		onLoad();
+	})
+
+	$(function() {
+
+		var d = new Date();
+		var startTime = d.getTime();
+		$("#household_submit_btn")
+				.click(
+						function(event) {
+							var endTime = d.getTime();
+							var duration = endTime - startTime;
+							let houseHoldInfo = {};
+							let answer = [];
+							for ( var questionAndOption in questionAndOptions) {
+								//console.log("hwelett packardd!");
+								//console.log(Object.keys(questionAndOptions).indexOf(questionAndOption));
+								let index = parseInt(Object.keys(
+										questionAndOptions).indexOf(
+										questionAndOption)) + 1;
+								var id = '#answer' + index;
+								console.log(id);
+								//console.log(questionAndOption['type']);
+								//console.log(questionAndOption.type);
+								//console.log(questionAndOptions[questionAndOption].type);
+								if (questionAndOptions[questionAndOption].type === "TEXT"
+										|| questionAndOptions[questionAndOption].type === "NUMBER") {
+									answer[index] = $(id).val();
+									console.log("answer" + index + "--->"
+											+ answer[index]);
+								} else if (questionAndOptions[questionAndOption].type === "RADIO"
+										|| questionAndOptions[questionAndOption].type === "RADIO_D"
+										|| questionAndOptions[questionAndOption].type === "DROPDOWN") {
+									answer[index] = $(id).val();
+									console.log("answer" + index + "--->"
+											+ answer[index]);
+								} else if (questionAndOptions[questionAndOption].type === "DISTRICT"
+										|| questionAndOptions[questionAndOption].type === "WARD") {
+									let ansy = $(id).val();
+									answer[index] = parseInt(ansy) + 1;
+									console.log("answer" + index + "--->"
+											+ answer[index]);
+								} else if (questionAndOptions[questionAndOption].type === "CHECKBOX") {
+									let checkedstring = "";
+									$.each($('.checkboxgroup' + index
+											+ ':checked'), function() {
+										checkedstring += $(this).val() + ",";
+									});
+
+									answer[index] = checkedstring.substring(0,
+											checkedstring.length - 1);
+
+									console.log("answer" + index + "--->"
+											+ answer[index]);
+								} else if (questionAndOptions[questionAndOption].type === "CHECKBOX_N") {
+									let checkedstring = "";
+									$.each($('.checkboxgroup' + index
+											+ ':checked'), function() {
+										let countValue = $(
+												'#chkboxn' + index
+														+ $(this).val()).val();
+										checkedstring += $(this).val() + ":"
+												+ countValue + ",";
+									});
+
+									answer[index] = checkedstring.substring(0,
+											checkedstring.length - 1);
+
+									console.log("answer" + index + "--->"
+											+ answer[index]);
+								} else if (questionAndOptions[questionAndOption].type === "IMAGE") {
+									answer[index] = $(id).val();
+									console.log("answer" + index + "--->"
+											+ answer[index]);
+								}
+
+								let codeToExecute = "houseHoldInfo.answer"
+										+ index + "= answer[" + index + "]";
+								console.log(codeToExecute);
+								eval(codeToExecute);
+
+							}
+
+							console.log("duration---->" + duration);
+							houseHoldInfo.duration = duration;
+
+							console.log(houseHoldInfo);
+
+							console.log(contextPath);
+							$
+									.ajax({
+										method : "POST",
+										url : contextPath
+												+ "/survey-answer/household",
+										data : JSON.stringify(houseHoldInfo),
+										contentType : "application/json",
+
+										success : function(result) {
+											swal
+													.fire(
+															{
+																text : "House Hold Info added successfully!",
+																icon : "success",
+																closeOnClickOutside : true,
+																closeOnEsc : true
+															})
+													.then(
+															function() {
+																window.location.href = contextPath;
+															});
+										},
+
+										error : function(error) {
+											$(".loader-holder").hide();
+											swal
+													.fire(
+															{
+																text : error.responseJSON.message,
+																icon : "error",
+																closeOnClickOutside : false,
+																closeOnEsc : false
+															})
+													.then(
+															function() {
+																window.location.href = contextPath;
+															});
+										}
+									});
+
+						});
+	});
 </script>
 
 	</div>
