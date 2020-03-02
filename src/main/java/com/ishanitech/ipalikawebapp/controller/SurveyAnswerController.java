@@ -9,9 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import com.ishanitech.ipalikawebapp.dto.AnswerDTO;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
@@ -38,6 +41,7 @@ public class SurveyAnswerController {
 		model.addAttribute("answerObj", new AnswerDTO());
 		model.addAttribute("questionAndOptions", formService.getFullFormDetailById(1, user.getToken()));
 		model.addAttribute("districts", formService.getListofDistricts(user.getToken()).getData());
+		model.addAttribute("wards", formService.getListOfWards(user.getToken()).getData());
 		return "private/common/add-household";
 	}
 	
@@ -53,4 +57,13 @@ public class SurveyAnswerController {
         String documentPhoto = "JPEG_" + surveyAnswerInfo.getFilledId() + "1_document_photo" + ".JPG"; 
         surveyAnswerInfo.setAnswer49(documentPhoto);
 	}
+	
+	@PostMapping("/household")
+	public @ResponseBody
+    int addHouseHold(@RequestBody AnswerDTO answerDto) {
+        System.out.println(answerDto.toString());
+        //Response<Integer> response = (Response<Integer>) aboutService.updateAboutInfo(aboutUs);
+        //return response.getData();
+        return 1;
+    }
 }
