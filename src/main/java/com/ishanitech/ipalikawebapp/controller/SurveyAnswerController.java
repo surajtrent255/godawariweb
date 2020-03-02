@@ -1,6 +1,7 @@
 package com.ishanitech.ipalikawebapp.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -60,10 +61,21 @@ public class SurveyAnswerController {
 	
 	@PostMapping("/household")
 	public @ResponseBody
-    int addHouseHold(@RequestBody AnswerDTO answerDto) {
+    int addHouseHold(@RequestBody AnswerDTO answerDto, @AuthenticationPrincipal UserDTO user) {
         System.out.println(answerDto.toString());
-        //Response<Integer> response = (Response<Integer>) aboutService.updateAboutInfo(aboutUs);
-        //return response.getData();
-        return 1;
+        Date presentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
+        answerDto.setFilledId(dateFormat.format(presentDate));
+        answerDto.setEntryDate(LocalDateTime.now().toString());
+       
+        try {
+        	surveyAnswerService.addHouseholdSurveyAnswer(answerDto, user.getToken());
+        	return 1;
+        }catch(Exception e) {
+        	e.printStackTrace();
+        	log.info(e.getMessage());
+        	return 0;
+        }
+        //return 1;
     }
 }

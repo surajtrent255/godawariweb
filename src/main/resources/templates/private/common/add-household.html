@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
 <title>गोदावरी नगरपालिका, ललितपुर</title>
 <link rel="icon" th:href="@{/assets/images/favicon1.ico}"
 	href="assets/images/favicon1.ico" type="image/x-icon" />
@@ -152,7 +152,7 @@
 											<label th:each="option,indx : ${questionAndOption.options}"> <input type="checkbox"
 												th:name="'foreign_study[' + ${indx.index}+ ${i.index + 1} +']'" th:class="'checkboxgroup' + ${i.index + 1}" th:value="${indx.index}" data-event="toggle"
 												th:data-target="'foreign_study_source_' + ${indx.index} + ${questionAndOption.id}" th:data-value="${indx.index}"><span th:text = "${option}"></span>
-												<input type="text" th:name="'foreign_study_source_count[' + ${indx.index} + ${questionAndOption.id} + ']'"
+												<input type="number" th:name="'foreign_study_source_count[' + ${indx.index} + ${questionAndOption.id} + ']'"
 												class = "numeric" th:class="'foreign_study_source_' + ${indx.index} + ${questionAndOption.id}"
 												placeholder="संख्या खुलाउनु होस्" value="1"
 												style="width: 50px; display: none" th:id="'chkboxn' + ${i.index + 1} + ${indx.index}">
@@ -411,6 +411,14 @@ $(function() {
         });
             });
     
+    $(function() {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$(document).ajaxSend(function(e, xhr, options) {
+			xhr.setRequestHeader(header, token);
+		});
+	});
+    
     
     
 	google.load("elements", "1", {
@@ -447,7 +455,12 @@ $(function() {
 	
 
 	$(function(){
+		
+		var d = new Date();
+		var startTime = d.getTime();
 		$("#household_submit_btn").click(function(event) {
+			var endTime = d.getTime();
+			var duration = endTime - startTime;
 			let houseHoldInfo = {};
 			let answer = []; 
 			for (var questionAndOption in questionAndOptions){
@@ -503,6 +516,10 @@ $(function() {
 				eval(codeToExecute);
 				 
 			}
+			
+			console.log("duration---->" + duration);
+			houseHoldInfo.duration = duration;
+			
 			console.log(houseHoldInfo);
 			
 			console.log(contextPath);
@@ -513,7 +530,7 @@ $(function() {
 				contentType: "application/json",
 
 				success: function(result) {
-					swal({
+					swal.fire({
 						text: "House Hold Info added successfully!",
 						icon: "success",
 						closeOnClickOutside: true,
@@ -526,7 +543,7 @@ $(function() {
 
 				error: function(error) {
 					$(".loader-holder").hide();
-					swal({
+					swal.fire({
 						text: error.responseJSON.message,
 						icon: "error",
 						closeOnClickOutside: false,
