@@ -51,6 +51,11 @@
 	margin-top: -2px;
 	margin-left: -1px;
 }
+
+#mapid {
+		height: 50em;
+		width: 50em;
+	}
 </style>
 <script th:src="@{/assets/js/jquery.min.js}"
 	src="assets/js/jquery.min.js"></script>
@@ -304,9 +309,9 @@
 $("#placeGPS").on("click", function(event) {
 	event.preventDefault();
 	$("#map-location-modal").modal("show");
-	  //setTimeout(function() {
+	  setTimeout(function() {
 		    mymap.invalidateSize();
-		 // }, 17)
+		 }, 17)
 });
 
 //For canceling and hiding the Map modal

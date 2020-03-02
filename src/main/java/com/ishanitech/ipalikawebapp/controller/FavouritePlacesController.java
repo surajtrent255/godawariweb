@@ -90,4 +90,13 @@ public class FavouritePlacesController {
 		return "private/common/add-favourite-place";
 	}
 	
+	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SURVEYOR"})
+	@GetMapping("/edit/{favPlaceId}")
+	public String getFavouritePlaceEditView(@PathVariable("favPlaceId") String favPlaceId, Model model, @AuthenticationPrincipal UserDTO user) {
+		model.addAttribute("wardList", wardService.getAllWards(user.getToken()));
+		model.addAttribute("placeTypes", favouritePlacesService.getTypesofFavourtiePlaces());
+		model.addAttribute("favPlaceObj", favouritePlacesService.getFavouritePlaceByPlaceId(favPlaceId).getData());
+		return "private/common/edit-favourite-place";
+	}
+	
 }

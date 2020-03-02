@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
+<title>गोदावरी नगरपालिका, ललितपुर</title>
+<link rel="icon" th:href="@{/assets/images/favicon1.ico}"
+	href="assets/images/favicon1.ico" type="image/x-icon" />
+<link th:href="@{/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css}"
+	href="assets/plugins/vectormap/jquery-jvectormap-2.0.2.css"
+	rel="stylesheet" />
+<link th:href="@{/assets/plugins/simplebar/css/simplebar.css}"
+	href="assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+<link th:href="@{/assets/css/bootstrap.min.css}"
+	href="assets/css/bootstrap.min.css" rel="stylesheet" />
+<link th:href="@{/assets/css/animate.css}" href="assets/css/animate.css"
+	rel="stylesheet" type="text/css" />
+<link th:href="@{/assets/css/icons.css}" href="assets/css/icons.css"
+	rel="stylesheet" type="text/css" />
+<link th:href="@{/assets/css/sidebar-menu.css}"
+	href="assets/css/sidebar-menu.css" rel="stylesheet" />
+
+<link th:href="@{/assets/css/app-style.css}"
+	href="assets/css/app-style.css" rel="stylesheet" />
+<link rel="stylesheet"
+	th:href="@{/assets/plugins/datatable/datatables.min.css}"
+	href="assets/plugins/datatable/datatables.min.css">
+<link rel="stylesheet"
+	th:href="@{/assets/plugins/jquery.steps/css/jquery.steps.css}"
+	href="assets/plugins/jquery.steps/css/jquery.steps.css">
+<link rel="stylesheet" th:href="@{/assets/css/leaflet.css}"/>
+
+
+<style>
+.form-group {
+	width: 100%;
+}
+
+.wizard>.content {
+	background: #fff;
+	min-height: 430px;
+	margin: 0;
+}
+
+.wizard>.content>.body {
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.member-panel .padding, .member-panel-submit .padding {
+	padding: 10px;
+}
+
+.wizard>.content>.body label.error {
+	margin-left: 0;
+}
+
+#mapid {
+	height: 50em;
+	width: 50em;
+}
+</style>
+</head>
+<body>
+	<div id="wrapper">
+		<!-- Side bar and header -->
+		<div th:replace="~{fragments/private-sidebar :: private-sidebar}"></div>
+		<header th:replace="~{fragments/header :: header}" class="header1"> </header>
+		<div class="clearfix"></div>
+		<div class="content-wrapper">
+			<div class="container-fluid" id="pjax-container">
+				<div class="row pt-2 pb-2">
+					<div class="col-sm-9">
+						<h4 class="page-title">Data Management System</h4>
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Edit
+								Favourite Place</li>
+						</ol>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-body">
+						<div class="card-title">Edit information about the place.</div>
+						<form name="favPlaceForm" id="favPlaceForm" method="POST"
+							th:action="@{/favourite-place}" th:object="${favPlaceObj}"
+							enctype="multipart/form-data" class="unicode">
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="placeName">Place Name.</label> <input type="text"
+										id="placeName" name="favName" th:field="*{placeName}"
+										class="form-control required" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="placeWard">Ward number</label> 
+<!-- 									<input type="number" -->
+<!-- 										id="placeWard" name="favWard" th:field="*{placeWard}" -->
+<!-- 										class="form-control required"> -->
+										
+										<select id="placeWard" name="favWard" th:field="*{placeWard}" class="form-control required">
+												<option
+													th:each="ward, iteration : ${wardList}"
+													th:value="${iteration.index + 1}" th:text="${ward}"></option>
+											</select>
+										
+										
+										
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="placeType">Place Type</label> <select
+										id="placeType" th:field="*{placeType}">
+										<option th:each="place, iteration : ${placeTypes}"
+											th:value="${iteration.index + 1}" th:text="${place}">
+										</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="placeDescription">Place Description</label>
+									<textarea name="favDesc" id="placeDescription"  rows="10"
+										th:field="*{placeDescription}" class="form-control required">Write description
+									</textarea>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="placeImage">Photo Of The Place</label><br>
+									 <img
+									th:src="${favPlaceObj.placeImage}"
+									class="media-object"
+									style="width: 50%; height: 50%;"> 
+									 
+									 
+									 <input
+										type="file" class="form-control" id="placeImage"
+										name="favPhoto" value="" data-event="change"
+										data-target="favPhoto" accept="image/*" /> 
+<!-- 										<a href="" -->
+<!-- 										style="display: none" target="_blank" class="no-pjax"> <img -->
+<!-- 										src="" style="display: none" class="img-thumbnail favPhoto"> -->
+<!-- 									</a> -->
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="placeGPS">Location</label> <input type="text"
+										id="placeGPS" name="favLocation" th:field="*{placeGPS}"
+										placeholder="Click to add location"
+										class="form-control required" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<button id="add-favourite-btn" class="btn btn-primary px-5">
+									<i class="icon-lock"></i>  Add Place
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<!-- Modal For GPS  -->
+				<div class="modal fade" id="map-location-modal"
+					data-keyboard="false" data-backdrop="false" role="dialog"
+					aria-hidden="true">
+					<div class="modal-dialog modal-lg modal-dialog-centered"
+						role="document">
+						<div class="modal-content" style="border-radius: 10px;">
+							<div class="modal-header">
+								<h5 class="modal-title">
+									<b><span>Please Select the Location On Map</span></b>
+								</h5>
+
+								<button id="cancel-location-btn"
+									class="btn btn-danger pull-right">
+									<b>✘</b>
+								</button>
+							</div>
+							<div class="modal-content-body">
+								<div class="row" style="margin: 5px;">
+									<div style="margin: 20px auto;">
+										<div id="mapid"></div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a href="javaScript:void();" class="back-to-top"><i
+			class="fa fa-angle-double-up"></i> </a>
+		<footer th:replace="~{fragments/footer :: footer}"></footer> 
+	</div>
+	<div th:replace="~{fragments/scripts :: scripts}">
+	</div>
+	<!-- 	<!--Start footer-->
+	<script th:src="@{/assets/js/leaflet.js}"></script>
+	<script th:inline="javascript">
+		$(function () {
+		    var token = $("meta[name='_csrf']").attr("content");
+		    var header = $("meta[name='_csrf_header']").attr("content");
+		    $(document).ajaxSend(function(e, xhr, options) {
+		        xhr.setRequestHeader(header, token);
+		    });
+		});
+	
+	
+		//For showing the Map modal	
+		$("#placeGPS").on("click", function(event) {
+			event.preventDefault();
+			$("#map-location-modal").modal("show");
+			  //setTimeout(function() {
+				    mymap.invalidateSize();
+				 // }, 17)
+		});
+
+		//For canceling and hiding the Map modal
+		$("#cancel-location-btn").on("click", function(event) {
+			$("#map-location-modal").modal("hide");
+			marker = L.marker(geoLocationTemp).addTo(layerGroup);
+		});
+		
+		//For selecting the current marker and hiding the Map modal
+		$("#map-location-modal").on("click", "#submit-location-btn", function(event) {
+			event.preventDefault();
+			$("#map-location-modal").modal("hide");
+			if(geoLat != null && geoLng != null) {
+				$("#placeGPS").val(geoLat + ', ' + geoLng);
+			}
+		});
+		const mymap = L.map('mapid').setView([ 27.614979, 85.363180 ], 17);
+		var layerGroup = L.layerGroup().addTo(mymap);
+		var marker;
+		var popup = L.popup();
+		const attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors';
+		var geoLocation;
+		var geoLocationTemp;
+		var geoLat
+		var geoLng
+		L.tileLayer('http://{s}.google.com/vt/lyrs=y,h&x={x}&y={y}&z={z}',{
+			attribution: 'Map data &copy; 2020 Google',
+		    maxZoom: 20,
+		    subdomains:['mt0','mt1','mt2','mt3']
+		}).addTo(mymap);
+		function onMapClick(e) {
+			layerGroup.clearLayers();
+			popup.setLatLng(e.latlng)
+				 .setContent(
+					`The selected latitude and longiude is ${e.latlng.toString()}. <a href="#" id="submit-location-btn"> Use this location </a>`
+				 ).openOn(mymap);
+			geoLocation = e.latlng;
+			geoLat = geoLocation.lat;
+			geoLng = geoLocation.lng;
+			marker = L.marker(geoLocation).addTo(layerGroup);
+		}
+
+		mymap.on('click', onMapClick);
+		
+		google.load("elements", "1", {
+		    packages: "transliteration"
+		});
+		
+		$(function() {
+		    var options = {
+			        sourceLanguage: 'en',
+			        destinationLanguage: ['ne'],
+			        shortcutKey: 'ctrl+g',
+			        transliterationEnabled: true
+			    };
+			var control =new google.elements.transliteration.TransliterationControl(options);
+			var uniElement = $(".unicode input[type='text'], #grid_filter input");
+			control.makeTransliteratable(uniElement);
+			control.makeTransliteratable(['placeDescription']);
+		});
+	</script>
+</body>
+</html>

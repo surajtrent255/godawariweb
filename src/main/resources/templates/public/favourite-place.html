@@ -78,7 +78,15 @@
 										<td th:text="${favPlace.placeName}"></td>
 										<td th:text="${favPlace.placeWard}"></td>
 										<td>
-											<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-warning" th:attr="onclick=|deleteFavouritePlace('${favPlace.filledId}')|">
+<!-- 											<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-warning" th:href="@{/favourite-place/edit/} + ${favPlace.filledId}"> -->
+<!-- 												Edit -->
+<!-- 											</button> -->
+											
+											<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#"
+											th:href="@{/favourite-place/edit/} + ${favPlace.filledId}"
+											class="btn btn-xs btn-warning">Edit Details</a>
+											
+											<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteFavouritePlace('${favPlace.filledId}')|">
 												Delete
 											</button>
 											<a href="#"
