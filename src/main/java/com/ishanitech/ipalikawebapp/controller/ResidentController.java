@@ -9,6 +9,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -70,10 +71,10 @@ public class ResidentController {
 		return residentService.searchResidentByKey(searchKey, user.getToken());
 	}
 	
+	
+	//Returns the page for family member info edit
 	@GetMapping("/member/{memberId}")
-	public String editMemberInfo(Model model, 
-			@PathVariable("memberId") String memberId, 
-			@AuthenticationPrincipal UserDTO user) {
+	public String editMemberInfoView(Model model, @PathVariable("memberId") String memberId, @AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("member", residentService.getMemberByMemberId(user.getToken(), memberId).getData());
 		model.addAttribute("memberFormDetails", residentService.getMemberFormDetails(user.getToken()).getData());
 		return "private/common/edit-member";
@@ -91,6 +92,12 @@ public class ResidentController {
 	public @ResponseBody Response<String> editFamilyMember(@RequestBody FamilyMemberDTO familyMemberInfo,@PathVariable("memberId") String memberId, @AuthenticationPrincipal UserDTO user) {
 		residentService.editFamilyMemberInfo(familyMemberInfo, memberId, user.getToken());
 		return new Response<String>("Member information update successfully!");
+	}
+	
+	@DeleteMapping("/{memberId}")
+	public @ResponseBody Response<String> deleteFamilyMember(@PathVariable("memberId") String memberId, @AuthenticationPrincipal UserDTO user) {
+		residentService.deleteFamilyMember(memberId, user.getToken());
+		return new Response<String>("Member removed successfully!");
 	}
 
 }

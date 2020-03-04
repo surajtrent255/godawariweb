@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
 <title>गोदावरी नगरपालिका, ललितपुर</title>
 <!--favicon-->
 <link rel="icon" th:href="@{/assets/images/favicon1.ico}"
@@ -234,6 +235,9 @@
 											<td><a href="#"
 												th:href="@{/resident/member/} + ${member.memberId}"
 												class="btn btn-xs btn-success">Edit Details</a>
+												<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteMemberInfo('${member.memberId}')|">
+												Delete
+												</button>
 											<td>
 										</tr>
 									</tbody>
@@ -439,6 +443,16 @@
 		var geoCoordinates = /*[[${residentFullDetail.residentDetail.answer50}]]*/'0';
 
 		/*]]>*/
+		
+		$(function() {
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$(document).ajaxSend(function(e, xhr, options) {
+				xhr.setRequestHeader(header, token);
+			});
+		});
+		
+		
 		//Splitting the location coordinates into latitude and longitude
 		var geoFields = geoCoordinates.split(', ');
 
@@ -488,6 +502,50 @@
 				});
 			});
 		});
+		
+		
+		
+		// For deleting favPlace
+		function deleteMemberInfo(memberId) {
+			swal.fire({
+				title : 'Are you sure you want to delete this member?',
+				text : "You won't be able to revert this!",
+				icon : 'warning',
+				showCancelButton : true,
+				confirmButtonColor : '#3085d6',
+				cancelButtonColor : '#d33',
+				confirmButtonText : 'Yes, delete it!'
+			}).then((btnClicked) => {
+				if(btnClicked.value) {
+					swal.fire({
+						title : 'Are you sure absolutely sure?',
+						text : "This action cannot be reverted!",
+						icon : 'warning',
+						showCancelButton : true,
+						confirmButtonColor : '#3085d6',
+						cancelButtonColor : '#d33',
+						confirmButtonText : 'Yes, delete it!'
+					}).then((btnClicked) => {
+						if(btnClicked.value) {
+							$.ajax({
+								url : contextPath + "/resident/" + memberId,
+								method : "DELETE",
+								success : function(data) {
+									swal.fire({
+										icon : "success",
+										text : "The family member has been removed"
+									}).then((btnClick) => {
+										if(btnClick.value) {
+											location.reload(true);		
+										}
+									});
+								}
+							});
+						}
+					});
+				}
+			});
+		}
 	</script>
 </body>
 </html>

@@ -229,7 +229,12 @@
 		//For canceling and hiding the Map modal
 		$("#cancel-location-btn").on("click", function(event) {
 			$("#map-location-modal").modal("hide");
-			marker = L.marker(geoLocationTemp).addTo(layerGroup);
+			if(geoLat != null && geoLng != null) {
+				marker = L.marker(geoLocationTemp).addTo(layerGroup);
+			}
+			if(geoLat == null && geoLng == null) {
+				layerGroup.clearLayers();
+			}
 		});
 		
 		//For selecting the current marker and hiding the Map modal
@@ -254,6 +259,7 @@
 		    maxZoom: 20,
 		    subdomains:['mt0','mt1','mt2','mt3']
 		}).addTo(mymap);
+		
 		function onMapClick(e) {
 			layerGroup.clearLayers();
 			popup.setLatLng(e.latlng)

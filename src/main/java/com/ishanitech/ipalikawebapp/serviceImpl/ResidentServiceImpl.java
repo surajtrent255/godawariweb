@@ -112,4 +112,15 @@ public class ResidentServiceImpl implements ResidentService {
 		
 	}
 
+	@Override
+	public void deleteFamilyMember(String memberId, String token) {
+		String template = String.format("%s/member/{memberId}", RESIDENT_BASE_URL);
+		Map<String, Object> urlValues = new HashMap<>();
+		urlValues.put("memberId", memberId);
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, urlValues);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.DELETE, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<String> responseType = new ParameterizedTypeReference<String>() {};
+		restTemplate.exchange(requestEntity, responseType);
+	}
+
 }
