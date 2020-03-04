@@ -96,22 +96,22 @@
 							<div class="col-lg-3 col-md-4" th:each="questionAndOption, i : ${questionAndOptions}">
 									<div class="form-group form-label" th:if="${questionAndOption.type == 'TEXT' || questionAndOption.type == 'MULTI_TEXT'}">
 										<label th:for="${questionAndOption.id}">
-											<h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
-											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h4>
 										</label> <input type="text" class="form-control  " th:id="'answer' + ${i.index + 1}"
 											th:name="'answer' + ${i.index + 1}" value="">
 									</div>
 									<div class="form-group form-label" th:if="${questionAndOption.type} == 'NUMBER'">
 										<label th:for="${questionAndOption.id}">
-											<h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
-											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h4>
 										</label> <input type="number" class="form-control  " th:id="'answer' + ${i.index + 1}"
 											th:name="'answer' + ${i.index + 1}" value="">
 									</div>
  
 									<div class="form-group form-label" th:if="${questionAndOption.type== 'RADIO' || questionAndOption.type == 'RADIO_D'}">
-										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
-											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4></label> <select
+										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h4></label> <select
 											class="form-control" th:id="'answer' + ${i.index + 1}"
 											th:name="'answer' + ${i.index + 1}">
 											<option value=""></option>
@@ -119,8 +119,8 @@
 										</select>
 									</div>
 									<div class="form-group form-label" th:if="${questionAndOption.type == 'DROPDOWN'}">
-										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
-											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4></label> <select
+										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h4></label> <select
 											class="form-control" th:id="'answer' + ${i.index + 1}"
 											th:name="'answer' + ${i.index + 1}">
 											<!-- <option value=""></option> -->
@@ -128,8 +128,8 @@
 										</select>
 									</div>
 									<div class="form-group form-label water_source" th:if="${questionAndOption.type} == 'CHECKBOX'">
-										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
-											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4></label>
+										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h4></label>
 										<div class="form-group form-radio  ">
 											<label th:each="option, indx : ${questionAndOption.options}"><input type="checkbox" th:class="'checkboxgroup' + ${i.index + 1}" name="water_source[]"
 												th:value="${indx.index}" data-event="toggle"
@@ -138,8 +138,8 @@
 										</div>
 									</div>
 									<div class="form-group form-label" th:if="${questionAndOption.type} == 'IMAGE'">
-										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
-											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4></label> 
+										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h4></label> 
 											<form th:id="'form' + ${i.index + 1}" th:name="'form' + ${i.index + 1}" enctype="multipart/form-data" useToken="true">
 											<input type="file"
 											class="form-control  " th:id="'answer' + ${i.index + 1}"
@@ -153,8 +153,8 @@
 									</div>
 									
 									<div class="form-group form-label foreign_study" th:if="${questionAndOption.type} == 'CHECKBOX_N'">
-										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
-											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4> </label>
+										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h4> </label>
 										<div class="form-group form-radio  ">
 											<label th:each="option,indx : ${questionAndOption.options}"> <input type="checkbox"
 												th:name="'foreign_study[' + ${indx.index}+ ${i.index + 1} +']'" th:class="'checkboxgroup' + ${i.index + 1}" th:value="${indx.index}" data-event="toggle"
@@ -168,34 +168,34 @@
 									</div>
 									
 									<div class="form-group form-label water_source" th:if="${questionAndOption.type} == 'RATING_M'">
-										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
-											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4></label>
+										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h4></label>
 										<div class="form-group form-radio  ">
-											<label th:each="option, indx : ${questionAndOption.options}"><span th:text="${option}"></span><select>
-											<option value=""></option>
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
+											<label th:each="option, indx : ${questionAndOption.options}"><span th:text="${option}"></span><select th:id="'dropdown' + ${i.index + 1} + ${indx.index + 1}">
+											<option value="" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '0'"></option>
+											<option value="1" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '1'">1</option>
+											<option value="2" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '2'">2</option>
+											<option value="3" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '3'">3</option>
+											<option value="4" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '4'">4</option>
+											<option value="5" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '5'">5</option>
+											<option value="6" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '6'">6</option>
+											<option value="7" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '7'">7</option>
 											</select></label>
 										</div>
 									</div>
 									
 									<div class="form-group form-label" th:if="${questionAndOption.type} == 'GPS'">
-										<label th:for="${questionAndOption.id}"><h4 th:text="${questionAndOption.desc}">फोटो :</h4></label> <input type="button"
-											class="form-control  " th:id="'photo' + ${questionAndOption.id}" th:name="'photo' + ${questionAndOption.id}" value=""
-											data-event="change" data-target="photo2" accept="image/*"><input type="text"
+										<label th:for="${questionAndOption.id}"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h4></label> <input type="text"
 										id="placeGPS" name="favLocation"
 										placeholder="Click to add location"
-										class="form-control required" readonly>
+										class="form-control required" readonly><input type="hidden" th:id="'answer' + ${i.index + 1}"
+											th:name="'answer' + ${i.index + 1}">
 
 									</div>
 									<div class="form-group form-label" th:if="${questionAndOption.type== 'DISTRICT'}">
-										<label for="caste"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
-											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4></label> <select
+										<label for="caste"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h4></label> <select
 											class="form-control" th:id="'answer' + ${i.index + 1}"
 											th:name="'answer' + ${i.index + 1}">
 											<option value=""></option>
@@ -203,8 +203,8 @@
 										</select>
 									</div>
 									<div class="form-group form-label" th:if="${questionAndOption.type== 'WARD'}">
-										<label for="caste"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'"></h4>
-											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}"></h4></label> <select
+										<label for="caste"><h4 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h4>
+											<h4 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h4></label> <select
 											class="form-control" th:id="'answer' + ${i.index + 1}"
 											th:name="'answer' + ${i.index + 1}">
 											<option value=""></option>
@@ -321,6 +321,48 @@
 	});
 	
 	
+	//for raing_m question on selected listener
+	
+		$(function() {
+			for (var questionAndOption in questionAndOptions){
+				let questionindex = parseInt(Object.keys(questionAndOptions).indexOf(questionAndOption)) + 1;
+				if(questionAndOptions[questionAndOption].type === "RATING_M"){
+					for(var option in questionAndOptions[questionAndOption].options){
+						let optionindex = parseInt(Object.keys(questionAndOptions[questionAndOption].options).indexOf(option)) + 1;
+					var idString = "#dropdown" + questionindex + optionindex ;
+					
+					
+					var previousValue;
+					
+					$(idString).on('focus', function(){
+						previousValue = this.value;
+					}).change(function(){
+						
+						var selectedVal = $(this).val();
+						for(var i = 1; i< 8; i++){
+							var idofoption = "#dropdownoption" + questionindex + i + selectedVal;
+						$(idofoption).attr("hidden", true);
+						}
+						
+						console.log("SelectedVal--->" + selectedVal);
+						if(selectedVal == ""){
+							for(var i = 1; i< 8; i++){
+								var idofoption = "#dropdownoption" + questionindex + i + previousValue;
+								console.log("id of option-->" + idofoption);
+							$(idofoption).removeAttr('hidden');
+							}
+						}
+						
+					});
+					
+					
+					}
+				}
+			}
+	});	
+	
+	//ends
+	
 	//For showing the Map modal	
 	$("#placeGPS").on("click", function(event) {
 		event.preventDefault();
@@ -342,7 +384,9 @@
 				event.preventDefault();
 				$("#map-location-modal").modal("hide");
 				if (geoLat != null && geoLng != null) {
-					$("#placeGPS").val(geoLat + ', ' + geoLng);
+ 					$("#placeGPS").val(geoLat + ', ' + geoLng);
+					$("#placeGPS").next().val(geoLat + ', ' + geoLng);
+				
 				}
 			});
 	const mymap = L.map('mapid').setView([ 27.614979, 85.363180 ], 17);
@@ -476,6 +520,7 @@
 			var duration = endTime - startTime;
 			let houseHoldInfo = {};
 			let answer = []; 
+			let proceedSave = [];
 			let myFiles = new Array();
 			var timestamp = new Date().getTime();
 			for (var questionAndOption in questionAndOptions){
@@ -483,22 +528,42 @@
 				 //console.log(Object.keys(questionAndOptions).indexOf(questionAndOption));
 				 let index = parseInt(Object.keys(questionAndOptions).indexOf(questionAndOption)) + 1;
 				 var id = '#answer' + index;
+				 var questId = '#question' + index;
 				 console.log(id);
 				 //console.log(questionAndOption['type']);
 				 //console.log(questionAndOption.type);
 				 //console.log(questionAndOptions[questionAndOption].type);
-				 if(questionAndOptions[questionAndOption].type === "TEXT" || questionAndOptions[questionAndOption].type === "NUMBER"){
+				 if(questionAndOptions[questionAndOption].type === "TEXT" || questionAndOptions[questionAndOption].type === "NUMBER" || questionAndOptions[questionAndOption].type === "GPS"){
 				 answer[index] = $(id).val();
 				 console.log("answer" + index +"--->" + answer[index]);
+				 proceedSave[index] = true;
+				 $(questId).css('color', 'black');
+				 if(questionAndOptions[questionAndOption].isRequired == 2 && answer[index] == ""){
+					 proceedSave[index] = false;
+					 console.log("No value for field");
+					 $(questId).css('color', 'red');
+				 }
 				 }
 				 else if(questionAndOptions[questionAndOption].type === "RADIO" || questionAndOptions[questionAndOption].type === "RADIO_D" || questionAndOptions[questionAndOption].type === "DROPDOWN"){
 					 answer[index] = $(id).val();
 					 console.log("answer" + index +"--->" + answer[index]);
+					 proceedSave[index] = true;
+					 $(questId).css('color', 'black');
+					 if(questionAndOptions[questionAndOption].isRequired == 2 && answer[index] == ""){
+						 proceedSave[index] = false;
+						 $(questId).css('color', 'red');
+					 }
 				}
 				 else if(questionAndOptions[questionAndOption].type === "DISTRICT" || questionAndOptions[questionAndOption].type === "WARD"){
 					 let ansy = $(id).val();
 					 answer[index] = parseInt(ansy) + 1 ;
 					 console.log("answer" + index +"--->" + answer[index]);
+					 proceedSave[index] = true;
+					 $(questId).css('color', 'black');
+					 if(questionAndOptions[questionAndOption].isRequired == 2 && isNaN(answer[index])){
+						 proceedSave[index] = false;
+						 $(questId).css('color', 'red');
+					 }
 				}
 				 else if(questionAndOptions[questionAndOption].type === "CHECKBOX"){
 					 let checkedstring = "";
@@ -509,6 +574,13 @@
 					 answer[index] = checkedstring.substring(0, checkedstring.length - 1);
 					 
 					 console.log("answer" + index +"--->" + answer[index]);
+					 
+					 proceedSave[index] = true;
+					 $(questId).css('color', 'black');
+					 if(questionAndOptions[questionAndOption].isRequired == 2 && answer[index] == ""){
+						 proceedSave[index] = false;
+						 $(questId).css('color', 'red');
+					 }
 				}
 				 else if(questionAndOptions[questionAndOption].type === "CHECKBOX_N"){
 					 let checkedstring = "";
@@ -520,7 +592,41 @@
 					 answer[index] = checkedstring.substring(0, checkedstring.length - 1);
 					 
 					 console.log("answer" + index +"--->" + answer[index]);
+					 
+					 proceedSave[index] = true;
+					 $(questId).css('color', 'black');
+					 if(questionAndOptions[questionAndOption].isRequired == 2 && answer[index] == ""){
+						 proceedSave[index] = false;
+						 $(questId).css('color', 'red');
+					 }
 				}
+				 else if(questionAndOptions[questionAndOption].type === "RATING_M"){
+					 let rating_answer = "";
+					 let booleanForRatingM = true;
+					 for(var option in questionAndOptions[questionAndOption].options){
+							let optionindex = parseInt(Object.keys(questionAndOptions[questionAndOption].options).indexOf(option)) + 1;
+						var idString = "#dropdown" + index + optionindex ;
+						
+						let selVal = $(idString).val();
+						
+						if(selVal != ""){
+						rating_answer += selVal + ",";
+						}else{
+							booleanForRatingM = false;
+						}
+					 }
+					 
+					 answer[index] = rating_answer.substring(0, rating_answer.length - 1);
+					 
+					 console.log("answer" + index +"--->" + answer[index]);
+					 
+					 proceedSave[index] = true;
+					 $(questId).css('color', 'black');
+					 if(questionAndOptions[questionAndOption].isRequired == 2 && booleanForRatingM == false){
+						 proceedSave[index] = false;
+						 $(questId).css('color', 'red');
+					 }
+				}				 
 				 else if(questionAndOptions[questionAndOption].type === "IMAGE"){
 					 var randomGeneratedId = Date.now();
 					 
@@ -535,14 +641,22 @@
 					myFile.extension = $(id).val().split('.').pop() ;
 					myFile.index = index;
 					
+					if(myFile.extension != ""){
 					myFiles.push(myFile);
-					
+					}
 					console.log(myFile);
 					 
 					var imageName = "JPEG_" + timestamp + "_" +questionAndOptions[questionAndOption].id + "." + $(id).val().split('.').pop();
 					
 					 answer[index] = imageName;
 					 console.log("answer" + index +"--->" + answer[index]);
+					 proceedSave[index] = true;
+					 $(questId).css('color', 'black');
+					 if(questionAndOptions[questionAndOption].isRequired == 2 && $(id).val() == ""){
+						 proceedSave[index] = false;
+						 $(questId).css('color', 'red');
+					 }
+					 
 					 }
 				 
 				let codeToExecute = "houseHoldInfo.answer" + index + "= answer[" + index + "]";
@@ -560,8 +674,19 @@
 			
 			console.log(contextPath);
 			
-
+			var confirmProceed = true;
 			
+			
+			for(let proceed of proceedSave){
+				if(proceed == false){
+					confirmProceed = false;
+					break;
+				}
+			}
+			
+			console.dir(proceedSave);
+			
+			if(confirmProceed){
 			$.ajax({
 				method: "POST",
 				url: contextPath + "/survey-answer/household",
@@ -593,11 +718,12 @@
 					});
 				}
 			});
-			
+			}
 //for sending image
 			
 			var imgindex = 0;
 			
+			if(confirmProceed){
 			while(imgindex < myFiles.length){
 				console.log("Index--------->" + myFiles[imgindex].index);
 				var formId = "form" + myFiles[imgindex].index;
@@ -651,6 +777,7 @@
 			});
 
 			imgindex++;
+			}
 			}
 			//ends
 			

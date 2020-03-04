@@ -47,6 +47,9 @@ rest-api:
   protocol: http
   domain: localhost
   port: 8888
+  
+com:
+  tempFileUploadingDirectory: C:/upload-dir/  
 ---
 
 ####### ishani Production Config Properties ########
@@ -64,3 +67,8 @@ rest-api:
   protocol: http
   domain: 103.233.58.121
   port: 8888
+  
+  
+com:
+  ipalika:
+    tempFileUploadingDirectory: /home/ishani/Pictures/ 

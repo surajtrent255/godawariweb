@@ -57,5 +57,6 @@ public class IpalikaFrontendApplication {
     	factory.setReadTimeout(5000);
     	return factory;
     }
+	
 
 }

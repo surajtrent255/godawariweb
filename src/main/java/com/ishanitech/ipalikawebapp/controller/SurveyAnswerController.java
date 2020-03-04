@@ -5,7 +5,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -32,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.ishanitech.ipalikawebapp.configs.properties.UploadDirectoryProperties;
 import com.ishanitech.ipalikawebapp.dto.AnswerDTO;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
 import com.ishanitech.ipalikawebapp.service.FormService;
@@ -45,13 +48,18 @@ import lombok.extern.slf4j.Slf4j;
 public class SurveyAnswerController {
 	private final FormService formService;
 	private final SurveyAnswerService surveyAnswerService;
+	private final UploadDirectoryProperties uploadDirectoryProperties;
 
-	public SurveyAnswerController(SurveyAnswerService surveyAnswerService,
-			FormService formService) {
-		this.surveyAnswerService = surveyAnswerService;
-		this.formService = formService;
-	}
 	
+	
+	public SurveyAnswerController(FormService formService, SurveyAnswerService surveyAnswerService,
+			UploadDirectoryProperties uploadDirectoryProperties) {
+		super();
+		this.formService = formService;
+		this.surveyAnswerService = surveyAnswerService;
+		this.uploadDirectoryProperties = uploadDirectoryProperties;
+	}
+
 	@GetMapping("/household")
 	public String getHouseholdEntryForm(Model model, @AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("answerObj", new AnswerDTO());
@@ -103,7 +111,7 @@ public class SurveyAnswerController {
 		String extension = request.getParameter("extension");
 		String filledId = request.getParameter("filledId");
 		String questionId = request.getParameter("questionId");
-		Path rootLocation = Paths.get("C:/upload-dir");
+		Path rootLocation = Paths.get(uploadDirectoryProperties.getTempFileUploadingDirectory());
 		try {
 			MultipartFile ourImage = request.getFile(inputTagName);
 			//ourImage.getOriginalFilename().replace(ourImage.getOriginalFilename(), "JPEG_" + filledId + "_" + questionId + "." + extension);
@@ -119,17 +127,27 @@ public class SurveyAnswerController {
 			Files.copy(ourImage.getInputStream(), rootLocation.resolve(imageName));
 			
 			//for retrieving saved multipart file
-			File file = new File("C:/upload-dir/" + imageName);
+			File file = new File(uploadDirectoryProperties.getTempFileUploadingDirectory() + imageName);
 			FileItem fileItem = new DiskFileItem("mainFile", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length(), file.getParentFile());
 
+			InputStream input = null;
+			OutputStream os = null;
+			
 			try {
-			    InputStream input = new FileInputStream(file);
-			    OutputStream os = fileItem.getOutputStream();
+			     input = new FileInputStream(file);
+			     os = fileItem.getOutputStream();
 			    IOUtils.copy(input, os);
 			    // Or faster..
 			    // IOUtils.copy(new FileInputStream(file), fileItem.getOutputStream());
 			} catch (IOException ex) {
 			    // do something.
+			}finally {
+				if(input != null) {
+					input.close();
+				}
+				if(os!= null) {
+					os.close();
+				}
 			}
 
 			MultipartFile multipartFile = new CommonsMultipartFile(fileItem);
@@ -142,6 +160,36 @@ public class SurveyAnswerController {
 			e.printStackTrace();
 		}
 		
+	
+		try
+        { 
+			String imageName = "JPEG_" + filledId + "_" + questionId + "." + extension;
+			//for testing purpose
+			File file = new File(uploadDirectoryProperties.getTempFileUploadingDirectory() + imageName);
+			Path path = Paths.get(uploadDirectoryProperties.getTempFileUploadingDirectory() + imageName);
+			// printing the permissions associated with the file 
+//            System.out.println("Executable: " + file.canExecute()); 
+//            System.out.println("Readable: " + file.canRead()); 
+//            System.out.println("Writable: "+ file.canWrite());
+			
+//            System.out.println("ImagePath--->" + uploadDirectoryProperties.getTempFileUploadingDirectory() + imageName);
+			//ends
+            //Files.deleteIfExists(Paths.get(uploadDirectoryProperties.getTempFileUploadingDirectory() + imageName)); 
+            Files.delete(path);
+        } 
+        catch(NoSuchFileException e) 
+        { 
+            System.out.println("No such file/directory exists"); 
+        } 
+        catch(DirectoryNotEmptyException e) 
+        { 
+            System.out.println("Directory is not empty."); 
+        } 
+        catch(IOException e) 
+        { 
+            System.out.println("Invalid permissions."); 
+            e.printStackTrace();
+        }	
 		
 		
 		return "1";
