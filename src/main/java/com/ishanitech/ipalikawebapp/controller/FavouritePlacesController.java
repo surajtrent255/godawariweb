@@ -56,6 +56,7 @@ public class FavouritePlacesController {
         String imageFileName = "JPEG_" + favouritePlaceInfo.getFilledId() +".JPG";
         favouritePlaceInfo.setPlaceImage(imageFileName);
 		file.getOriginalFilename().concat(imageFileName);
+		System.out.println(file.getOriginalFilename());
 		try {
 			favouritePlacesService.addFavouritePlaceInfo(favouritePlaceInfo, user.getToken());
 			favouritePlacesService.addFavouritePlaceImage(file, user.getToken());
