@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ishanitech.ipalikawebapp.configs.properties.RestApiProperties;
+import com.ishanitech.ipalikawebapp.dto.AnswerDTO;
 import com.ishanitech.ipalikawebapp.dto.FamilyMemberDTO;
 import com.ishanitech.ipalikawebapp.dto.MemberFormDetailsDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
@@ -49,6 +50,18 @@ public class ResidentServiceImpl implements ResidentService {
 		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, null, MediaType.APPLICATION_JSON, token, url);
 		ParameterizedTypeReference<Response<ResidentDetailDTO>> responseType = new ParameterizedTypeReference<Response<ResidentDetailDTO>>() {};
 		Response<ResidentDetailDTO> fullDetail = restTemplate.exchange(requestEntity, responseType).getBody();
+		return fullDetail;
+	}
+	
+	@Override
+	public Response<?> getResidentFullDetailRaw(String filledId, String token) {
+		String template = String.format("%s/detail/rawAnswers/{filledId}", RESIDENT_BASE_URL);
+		Map<String, Object> urlValues = new HashMap<>();
+		urlValues.put("filledId", filledId);
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, urlValues);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, null, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<AnswerDTO>> responseType = new ParameterizedTypeReference<Response<AnswerDTO>>() {};
+		Response<AnswerDTO> fullDetail = restTemplate.exchange(requestEntity, responseType).getBody();
 		return fullDetail;
 	}
 

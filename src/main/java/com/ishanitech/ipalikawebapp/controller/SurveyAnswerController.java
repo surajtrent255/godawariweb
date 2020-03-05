@@ -24,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,8 +37,11 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.ishanitech.ipalikawebapp.configs.properties.UploadDirectoryProperties;
 import com.ishanitech.ipalikawebapp.dto.AnswerDTO;
+import com.ishanitech.ipalikawebapp.dto.ResidentDetailDTO;
+import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
 import com.ishanitech.ipalikawebapp.service.FormService;
+import com.ishanitech.ipalikawebapp.service.ResidentService;
 import com.ishanitech.ipalikawebapp.service.SurveyAnswerService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -48,15 +52,17 @@ import lombok.extern.slf4j.Slf4j;
 public class SurveyAnswerController {
 	private final FormService formService;
 	private final SurveyAnswerService surveyAnswerService;
+	private final ResidentService residentService;
 	private final UploadDirectoryProperties uploadDirectoryProperties;
 
 	
 	
-	public SurveyAnswerController(FormService formService, SurveyAnswerService surveyAnswerService,
+	public SurveyAnswerController(FormService formService, SurveyAnswerService surveyAnswerService, ResidentService residentService,
 			UploadDirectoryProperties uploadDirectoryProperties) {
 		super();
 		this.formService = formService;
 		this.surveyAnswerService = surveyAnswerService;
+		this.residentService = residentService;
 		this.uploadDirectoryProperties = uploadDirectoryProperties;
 	}
 
@@ -67,6 +73,21 @@ public class SurveyAnswerController {
 		model.addAttribute("districts", formService.getListofDistricts(user.getToken()).getData());
 		model.addAttribute("wards", formService.getListOfWards(user.getToken()).getData());
 		return "private/common/add-household";
+	}
+	
+	@GetMapping("/household/edit/{filledFormId}")
+	public String getHouseholdEditForm(Model model, @AuthenticationPrincipal UserDTO user, @PathVariable("filledFormId") String filledId) {
+		model.addAttribute("answerObj", new AnswerDTO());
+		model.addAttribute("questionAndOptions", formService.getFullFormDetailById(1, user.getToken()));
+		model.addAttribute("districts", formService.getListofDistricts(user.getToken()).getData());
+		model.addAttribute("wards", formService.getListOfWards(user.getToken()).getData());
+		
+		//for editing purpose
+		Response<AnswerDTO> residentResponse = (Response<AnswerDTO>) residentService.getResidentFullDetailRaw(filledId, user.getToken());
+		model.addAttribute("residentFullDetail", residentResponse.getData());
+		
+		//ends
+		return "private/common/edit-household";
 	}
 	
 	@PostMapping
@@ -92,6 +113,7 @@ public class SurveyAnswerController {
         httpServletRequest.getSession().setAttribute("filledId" , formFilledId);*/
        
         answerDto.setEntryDate(LocalDateTime.now().toString());
+        answerDto.setAddedBy(user.getUserId());
         
         try {
         	surveyAnswerService.addHouseholdSurveyAnswer(answerDto, user.getToken());

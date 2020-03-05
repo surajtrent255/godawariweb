@@ -10,6 +10,7 @@ public interface ResidentService {
 	Response<?> getResidentDataList(String token);
 	List<ResidentDTO> searchResidentByKey(String searchKey, String token);
 	Response<?> getResidentFullDetail(String filledId, String token);
+	Response<?> getResidentFullDetailRaw(String filledId, String token);
 	void addFamilyMember(FamilyMemberDTO familyMemberInfo, String token);
 	Response<?> getMemberFormDetails(String token);
 	Response<?> getMemberByMemberId(String token, String memberId);

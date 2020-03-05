@@ -119,7 +119,7 @@
 										<td> <img th:src="${resident.imageUrl}" width="50px" height="50px"/></td>
 										<td th:text="${resident.totalFamilyMembers}"></td>
 										<td>
-											<a href="#" th:href="@{/}" class="btn btn-xs btn-info">Edit</a>
+											<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" th:href="@{/survey-answer/household/edit/} + ${resident.filledId}" class="btn btn-xs btn-info">Edit</a>
 											<a href="#" th:href="@{/}" class="btn btn-xs btn-warning">Delete </a>
 											<a href="#" th:href="@{/resident/} + ${resident.filledId} +'/member/'" class="btn btn-xs btn-danger">Add Member</a>
 											<a href="#" th:href="@{/resident/} + ${resident.filledId}" class="btn btn-xs btn-success">Show Details</a>
