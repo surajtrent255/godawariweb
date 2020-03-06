@@ -150,7 +150,7 @@
 												<option
 													th:each="maritalStatus, iteration : ${memberFormDetails.maritalStatus}"
 													th:value="${iteration.index + 1}"
-													th:text="${maritalStatus}"></option>
+													th:text="${maritalStatus}" th:selected="${member.maritalStatus}" ></option>
 											</select>
 										</div>
 									</div>
@@ -169,8 +169,7 @@
 										<div class="padding">
 											<label for="occupation"><h4>पेशा :</h4></label> <input
 												type="text" id="occupation" name="occupation"
-												class="form-control required"
-												th:value="${member.occupation}">
+												class="form-control required" th:value="${member.occupation}">
 										</div>
 									</div>
 									<div class="col-md-4 col-lg-4 mb-2">
@@ -222,6 +221,7 @@
 	<script th:inline="javascript">
 		/*<![CDATA[*/
 		var memberId = /*[[${member.memberId}]]*/ '0';
+		var memberInfo = /*[[${member}]]*/;
 		/*]]>*/
 	
 		$(function() {
@@ -255,7 +255,18 @@
 			loadDateOfBirthBSDevanagari();
 			dateChangeManager();
 			onLoad();
+			evaluateAnswers();
 		})
+		
+		function evaluateAnswers() {
+			$("#relation").val(eval(memberInfo.relation));
+			$("#gender").val(eval(memberInfo.gender));
+			$("#marital_status").val(eval(memberInfo.maritalStatus));
+			$("#education").val(eval(memberInfo.education));
+			$("#voter_card").val(eval(memberInfo.voterCard));
+			$("#migration").val(eval(memberInfo.address));
+		}
+		
 
 		function goBack() {
 			window.history.back();

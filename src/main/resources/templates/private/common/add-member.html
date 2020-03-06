@@ -64,12 +64,9 @@
 </head>
 <body>
 	<div id="wrapper">
-
 		<!--           	Sidebar and header -->
 		<div th:replace="~{fragments/private-sidebar :: private-sidebar}"></div>
 		<header th:replace="~{fragments/header}" class="header1"> </header>
-
-
 		<div class="clearfix"></div>
 		<div class="content-wrapper">
 			<div class="container-fluid" id="pjax-container">
@@ -92,32 +89,9 @@
 <!-- 							Member</a> -->
 						<th:form:form method="POST" th:action="@{/resident}"
 							modelAttribute="member" enctype="multipart/form-data">
-
-
-							<!-- 						<form method="POST" action="javascript:void(0)" data-ajax="true" -->
-							<!-- 							th:action="@{/resident/add}" -->
-							<!-- 							enctype="multipart/form-data"> -->
-							<!-- 							<input type="hidden" name="mainId" th:value="${residentFilledId}"> -->
-							<!-- 							<input type="hidden" name="_method" value="post"> -->
-							<!-- 							<h2>Member 1</h2> -->
+							
 							<fieldset>
 								<div class="row member-panel" style="display: flex;">
-
-
-									<!-- 									<div class="col-lg-4 col-md-4 mb-2"> -->
-									<!-- 										<div class="padding"> -->
-									<!-- 											<label for="household_id"><h4>कित्ता नं :</h4></label> <select -->
-									<!-- 												name="household_id[]" id="household_id" -->
-									<!-- 												class="form-control required"> -->
-
-
-
-
-									<!-- 											</select> -->
-									<!-- 										</div> -->
-									<!-- 									</div> -->
-
-
 									<div class="col-lg-4 col-md-4 mb-2">
 										<div class="padding">
 											<label for="name"><h4>नाम थर :</h4></label> <input
