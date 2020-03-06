@@ -99,5 +99,10 @@ public class ResidentController {
 		residentService.deleteFamilyMember(memberId, user.getToken());
 		return new Response<String>("Member removed successfully!");
 	}
-
+	
+	@DeleteMapping("/household/{familyId}")
+	public @ResponseBody Response<String> deleteHouseholdByFamilyId(@PathVariable("familyId") String familyId, @AuthenticationPrincipal UserDTO user) {
+		residentService.deleteHouseholdByFamilyId(familyId, user.getToken());
+		return new Response<String>("Household Removed successfully");
+	}
 }

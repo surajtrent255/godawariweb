@@ -106,7 +106,7 @@ public class ResidentServiceImpl implements ResidentService {
 		Map<String, Object> urlValues = new HashMap<>();
 		urlValues.put("memberId", memberId);
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, urlValues);
-		RequestEntity requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
 		ParameterizedTypeReference<Response<FamilyMemberDTO>> responseType = new ParameterizedTypeReference<Response<FamilyMemberDTO>>() {};
 		Response<FamilyMemberDTO> memberInfo = restTemplate.exchange(requestEntity, responseType).getBody();
 		return memberInfo;
@@ -134,6 +134,20 @@ public class ResidentServiceImpl implements ResidentService {
 		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.DELETE, MediaType.APPLICATION_JSON, token, url);
 		ParameterizedTypeReference<String> responseType = new ParameterizedTypeReference<String>() {};
 		restTemplate.exchange(requestEntity, responseType);
+	}
+
+	@Override
+	public void deleteHouseholdByFamilyId(String familyId, String token) {
+		String template = String.format("%s/{familyId}", RESIDENT_BASE_URL);
+		Map<String, Object> urlValues = new HashMap<>();
+		urlValues.put("familyId", familyId);
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, urlValues);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.DELETE, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<String> responseType = new ParameterizedTypeReference<String>() {};
+		restTemplate.exchange(requestEntity, responseType);
+		
+		
+		
 	}
 
 }

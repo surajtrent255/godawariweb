@@ -750,6 +750,8 @@ hr {
 /* Logo */
 
 .brand-logo{
+  background-color: #ffffff;
+  border-right: 1px solid #ccc;
   width: 100%;
   height: 60px;
   line-height: 60px;
@@ -771,7 +773,7 @@ hr {
 }
 
 .logo-icon{
-    width: 35px;
+    width: 195px;
     margin-right: 5px;
 }
 

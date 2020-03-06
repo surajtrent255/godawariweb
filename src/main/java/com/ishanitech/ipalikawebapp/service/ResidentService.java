@@ -16,4 +16,5 @@ public interface ResidentService {
 	Response<?> getMemberByMemberId(String token, String memberId);
 	void editFamilyMemberInfo(FamilyMemberDTO familyMemberInfo, String memberId, String token);
 	void deleteFamilyMember(String memberId, String token);
+	void deleteHouseholdByFamilyId(String familyId, String token);
 }
