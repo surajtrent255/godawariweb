@@ -163,16 +163,28 @@
 				confirmButtonText : 'Yes, delete it!'
 			}).then((btnClicked) => {
 				if(btnClicked.value) {
-					$.ajax({
-						url : contextPath + "/resident/household/" + familyId,
-						method : "DELETE",
-						success : function(data) {
-							swal.fire({
-								icon : "success",
-								text : "The household has been removed!"
-							}).then((btnClick) => {
-								if(btnClick.value) {
-									location.reload(true);		
+					swal.fire({
+						title : 'Are you sure you want to delete this household?',
+						text : "This will delete all the family members too. Are you sure?",
+						icon : 'warning',
+						showCancelButton : true,
+						confirmButtonColor : '#3085d6',
+						cancelButtonColor : '#d33',
+						confirmButtonText : "Yes, I'm sure. Delete it!"
+					}).then((btnClicked) => {
+						if(btnClicked.value) {
+							$.ajax({
+								url : contextPath + "/resident/household/" + familyId,
+								method : "DELETE",
+								success : function(data) {
+									swal.fire({
+										icon : "success",
+										text : "The household has been removed!"
+									}).then((btnClick) => {
+										if(btnClick.value) {
+											location.reload(true);		
+										}
+									});
 								}
 							});
 						}

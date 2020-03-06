@@ -88,7 +88,7 @@
 <!-- 							class="edit-member btn btn-primary mb-2" -->
 <!-- 							style="margin-left: 8px;">Edit Member</a> -->
 						<th:form:form method="PUT" th:action="@{/resident}"
-							modelAttribute="member" enctype="multipart/form-data">
+							modelAttribute="member" enctype="multipart/form-data" name="edit-member">
 
 							<fieldset>
 								<div class="row member-panel" style="display: flex;">
@@ -150,7 +150,7 @@
 												<option
 													th:each="maritalStatus, iteration : ${memberFormDetails.maritalStatus}"
 													th:value="${iteration.index + 1}"
-													th:text="${maritalStatus}"></option>
+													th:text="${maritalStatus}" th:selected="${member.maritalStatus}" ></option>
 											</select>
 										</div>
 									</div>
@@ -169,8 +169,7 @@
 										<div class="padding">
 											<label for="occupation"><h4>पेशा :</h4></label> <input
 												type="text" id="occupation" name="occupation"
-												class="form-control required"
-												th:value="${member.occupation}">
+												class="form-control required" th:value="${member.occupation}">
 										</div>
 									</div>
 									<div class="col-md-4 col-lg-4 mb-2">
@@ -203,7 +202,6 @@
 									</div>
 								</div>
 							</fieldset>
-							<!-- 								<input type="submit" value="Submit"/> -->
 							<button type="submit"
 								class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4"
 								id="member-update-submit">Update Member</button>
@@ -222,6 +220,7 @@
 	<script th:inline="javascript">
 		/*<![CDATA[*/
 		var memberId = /*[[${member.memberId}]]*/ '0';
+		var memberInfo = /*[[${member}]]*/;
 		/*]]>*/
 	
 		$(function() {
@@ -255,8 +254,63 @@
 			loadDateOfBirthBSDevanagari();
 			dateChangeManager();
 			onLoad();
+			evaluateAnswers();
 		})
-
+		
+		function evaluateAnswers() {
+			$("#relation").val(eval(memberInfo.relation));
+			$("#gender").val(eval(memberInfo.gender));
+			$("#marital_status").val(eval(memberInfo.maritalStatus));
+			$("#education").val(eval(memberInfo.education));
+			$("#voter_card").val(eval(memberInfo.voterCard));
+			$("#migration").val(eval(memberInfo.address));
+		}
+		
+		
+// 		// Wait for the DOM to be ready
+// 		$(function() {
+// 		  // Initialize form validation on the registration form.
+// 		  // It has the name attribute "registration"
+// 		  $("form[name='edit-member']").validate({
+// 		    // Specify validation rules
+// 		    rules: {
+// 		      // The key name on the left side is the name attribute
+// 		      // of an input field. Validation rules are defined
+// 		      // on the right side
+// 		      name: "required",
+// 		      relation: "required",
+// 		      gender: "required",
+// 		      age: "required",
+// 		      date_of_birth_BS: "required",
+// 		      marital_status: "required",
+// 			  education: "required",
+// 		      occupation: "required",
+// 		      voter_card: "required",
+// 		      migration: "required",
+// 		    },
+// 		    // Specify validation error messages
+// 		    messages: {
+// 		      name: "Please enter the full name",
+// 		      relation: "Please select valid relationship",
+// 		      gender: "Please select valid gender",
+// 		      age: "Please enter valid age",
+// 		      date_of_birth_BS: "Please enter valid date of birth (BS)",
+// 		      marital_status: "Please select valid marital status",
+// 		      education: "Please select valid educational qualification",
+// 		      occupation: "Please enter the occupation",
+// 		      voter_card: "Please select valid answer",
+// 		      migration: "Please select valid answer"
+// 		    },
+// 		    // Make sure the form is submitted to the destination defined
+// 		    // in the "action" attribute of the form when valid
+// 		    submitHandler: function() {
+// 		    	$("#member-update-submit").click();
+// 		    }
+// 		  });
+// 		});
+		
+		
+		
 		function goBack() {
 			window.history.back();
 		}

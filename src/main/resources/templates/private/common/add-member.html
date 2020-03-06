@@ -58,18 +58,22 @@
 .wizard>.content>.body label.error {
 	margin-left: 0;
 }
+
+.error_form {
+	top: 12px;
+	color: rgb(216, 15, 15);
+	font-size: 15px;
+	font-family: Helvetica;
+}
 </style>
 <script th:src="@{/assets/js/jquery.min.js}"
 	src="assets/js/jquery.min.js"></script>
 </head>
 <body>
 	<div id="wrapper">
-
 		<!--           	Sidebar and header -->
 		<div th:replace="~{fragments/private-sidebar :: private-sidebar}"></div>
 		<header th:replace="~{fragments/header}" class="header1"> </header>
-
-
 		<div class="clearfix"></div>
 		<div class="content-wrapper">
 			<div class="container-fluid" id="pjax-container">
@@ -92,37 +96,15 @@
 <!-- 							Member</a> -->
 						<th:form:form method="POST" th:action="@{/resident}"
 							modelAttribute="member" enctype="multipart/form-data">
-
-
-							<!-- 						<form method="POST" action="javascript:void(0)" data-ajax="true" -->
-							<!-- 							th:action="@{/resident/add}" -->
-							<!-- 							enctype="multipart/form-data"> -->
-							<!-- 							<input type="hidden" name="mainId" th:value="${residentFilledId}"> -->
-							<!-- 							<input type="hidden" name="_method" value="post"> -->
-							<!-- 							<h2>Member 1</h2> -->
+							
 							<fieldset>
 								<div class="row member-panel" style="display: flex;">
-
-
-									<!-- 									<div class="col-lg-4 col-md-4 mb-2"> -->
-									<!-- 										<div class="padding"> -->
-									<!-- 											<label for="household_id"><h4>कित्ता नं :</h4></label> <select -->
-									<!-- 												name="household_id[]" id="household_id" -->
-									<!-- 												class="form-control required"> -->
-
-
-
-
-									<!-- 											</select> -->
-									<!-- 										</div> -->
-									<!-- 									</div> -->
-
-
 									<div class="col-lg-4 col-md-4 mb-2">
 										<div class="padding">
 											<label for="name"><h4>नाम थर :</h4></label> <input
 												type="text" id="name" name="name"
 												class="form-control required" value="">
+												<span class="error_form" id="name_error_message"></span>
 										</div>
 									</div>
 									<div class="col-lg-4 col-md-4 mb-2">
@@ -133,6 +115,7 @@
 													th:each="relation, iteration : ${memberFormDetails.relation}"
 													th:value="${iteration.index + 1}" th:text="${relation}"></option>
 											</select>
+											<span class="error_form" id="relation_error_message"></span>
 										</div>
 									</div>
 									<div class="col-md-4 col-lg-4 mb-2">
@@ -143,6 +126,7 @@
 													th:each="gender, iteration : ${memberFormDetails.gender}"
 													th:value="${iteration.index + 1}" th:text="${gender}"></option>
 											</select>
+											<span class="error_form" id="gender_error_message"></span>
 										</div>
 									</div>
 									<div class="col-md-4 col-lg-4 mb-2">
@@ -151,6 +135,7 @@
 												id="ageDisplay" name="ageDisplay" class="form-control age required"
 												value="" readonly>
 												<input type="hidden" name="age" id="age" value="">
+												<span class="error_form" id="age_error_message"></span>
 										</div>
 									</div>
 									<div class="col-lg-4 col-md-4 mb-2">
@@ -165,6 +150,7 @@
 													id="date_of_birth_AD" name="date_of_birth_AD"
 													class="form-control required" value="" readonly
 													style="width: 50%;">
+												<span class="error_form" id="dateOfBirthBS_error_message"></span>
 										</div>
 									</div>
 
@@ -178,6 +164,7 @@
 													th:value="${iteration.index + 1}"
 													th:text="${maritalStatus}"></option>
 											</select>
+											<span class="error_form" id="maritalStatus_error_message"></span>
 										</div>
 									</div>
 									<div class="col-md-4 col-lg-4 mb-2">
@@ -189,6 +176,7 @@
 													th:each="education, iteration : ${memberFormDetails.education}"
 													th:value="${iteration.index + 1}" th:text="${education}"></option>
 											</select>
+											<span class="error_form" id="education_error_message"></span>
 										</div>
 									</div>
 									<div class="col-md-4 col-lg-4 mb-2">
@@ -196,6 +184,7 @@
 											<label for="occupation"><h4>पेशा :</h4></label> <input
 												type="text" id="occupation" name="occupation"
 												class="form-control required" value="">
+											<span class="error_form" id="occupation_error_message"></span>
 										</div>
 									</div>
 									<div class="col-md-4 col-lg-4 mb-2">
@@ -206,6 +195,7 @@
 												<option value="1">छ</option>
 												<option value="0">छैन</option>
 											</select>
+											<span class="error_form" id="voterCard_error_message"></span>
 										</div>
 									</div>
 									<div class="col-md-4 col-lg-4 mb-2">
@@ -216,6 +206,7 @@
 												<option value="1">स्थायी जन्म</option>
 												<option value="2">बसाई सराई</option>
 											</select>
+											<span class="error_form" id="migration_error_message"></span>
 										</div>
 									</div>
 									<div class="col-md-4 col-lg-4 mb-2">
@@ -223,6 +214,7 @@
 											<label for="health"><h4>स्वास्थ्य अवस्था :</h4></label> <input
 												type="text" id="health" name="health"
 												class="form-control required" value="">
+											<span class="error_form" id="health_error_message"></span>
 										</div>
 									</div>
 								</div>
@@ -449,59 +441,316 @@
 		}
 		
 
-		$(function() {$("#member-entry-submit").click(
-			function(event) {
-				//Getting the data from the formm	
-				let memberName = $("#name").val();
-				let relation = $("#relation").val();
-				let gender = $("#gender").val();
-				let age = $("#age").val();
-				let dateOfBirthBS = $("#date_of_birth_BS").val();
-				let dateOfBirthAD = $("#date_of_birth_AD").val();
-				let maritalStatus = $("#marital_status").val();
-				let education = $("#education").val();
-				let occupation = $("#occupation").val();
-				let voterCard = $("#voter_card").val();
-				let migration = $("#migration").val();
-				let healthStatus = $("#health").val();
-				let familyId = mainId;
-				let memberInfo = {};
-				memberInfo.name = memberName;
-				memberInfo.relation = relation;
-				memberInfo.gender = gender;
-				memberInfo.age = age;
-				memberInfo.dateOfBirthBS = dateOfBirthBS;
-				memberInfo.dateOfBirthAD = dateOfBirthAD;
-				memberInfo.maritalStatus = maritalStatus;
-				memberInfo.education = education;
-				memberInfo.occupation = occupation;
-				memberInfo.voterCard = voterCard;
-				memberInfo.address = migration;
-				memberInfo.healthCondition = healthStatus;
-				memberInfo.mainId = familyId;
-
-				// Now create an ajax request to send member details to the server
-				$.ajax({
-					method : "POST",
-					url : contextPath + "/resident/",
-					data : JSON.stringify(memberInfo),
-					contentType : "Application/Json",
-					success : function(result) {
-						swal.fire(
-							{
-								text : result.data,
-								icon : "success",
-								closeOnClickOutside : false,
-								closeOnEsc : false
-							}).then(function() {
-								goBack();
-							});
-					},
-					error : function(error) {
-					}
-				});
+		//Form validation using jQuery//
+	 	$(function() {
+			
+			$("#name_error_message").hide();
+			$("#relation_error_message").hide();
+			$("#age_error_message").hide();
+			$("#gender_error_message").hide();
+			$("#dateOfBirthBS_error_message").hide();
+			$("#maritalStatus_error_message").hide();
+			$("#education_error_message").hide();
+			$("#occupation_error_message").hide();
+			$("#voterCard_error_message").hide();
+			$("#migration_error_message").hide();
+			$("#health_error_message").hide();
+			
+			
+			let error_name = false;
+			let error_relation = false;
+			let error_age = false;
+			let error_gender = false;
+			let error_dateOfBirthBS = false;
+			let error_maritalStatus = false;
+			let error_education = false;
+			let error_occupation = false;
+			let error_voterCard = false;
+			let error_migration = false;
+			let error_health = false;
+			
+			
+			$("#name").focusout(function(){
+				check_name();
 			});
+			
+			$("#relation").focusout(function(){
+				check_relation();
+			});
+			
+			$("#age").focusout(function(){
+				check_age();
+			});
+			
+			$("#gender").focusout(function(){
+				check_gender();
+			});
+			
+			$("#date_of_birth_BS").focusout(function(){
+				check_dateOfBirthBS();
+			});
+			
+			$("#marital_status").focusout(function(){
+				check_maritalStatus();
+			});
+			
+			$("#education").focusout(function(){
+				check_education();
+			});
+			
+			$("#occupation").focusout(function(){
+				check_occupation();
+			});
+			
+			$("#voter_card").focusout(function(){
+				check_voterCard();
+			});
+			
+			$("#migration").focusout(function(){
+				check_migration();
+			});
+			
+			$("#health").focusout(function() {
+				check_health();
+			});
+			
+			
+			function check_name() {
+				let name = $("#name").val();
+				if(name !== '') {
+					$("#name_error_message").hide();
+					$("#name").css("border-bottom", "2px solid #34F458");
+				} else {
+					$("#name_error_message").html("Please enter the Family Member Name!");
+					$("#name_error_message").show();
+					$("#name").css("border-bottom", "2px solid #F90A0A");
+					error_name = true;
+				}
+			} 
+			
+			function check_relation() {
+				let relation = $("#relation").val();
+				if(relation !== '') {
+					$("#relation_error_message").hide();
+					$("#relation").css("border-bottom", "2px solid #34F458");
+				} else {
+					$("#relation_error_message").html("Please specify the type of relation!");
+					$("#relation_error_message").show();
+					$("#relation").css("border-bottom", "2px solid #F90A0A");
+					error_relation = true;
+				}
+			} 
+			
+			function check_gender() {
+				let gender = $("#gender").val();
+				if(relation !== '') {
+					$("#gender_error_message").hide();
+					$("#gender").css("border-bottom", "2px solid #34F458");
+				} else {
+					$("#gender_error_message").html("Please specify the gender!");
+					$("#gender_error_message").show();
+					$("#gender").css("border-bottom", "2px solid #F90A0A");
+					error_gender = true;
+				}
+			} 
+			
+			function check_age() {
+				let age = $("#age").val();
+				if(age !== '') {
+					$("#age_error_message").hide();
+					$("#age").css("border-bottom", "2px solid #34F458");
+				} else {
+					$("#age_error_message").html("Could you tell the age?");
+					$("#age_error_message").show();
+					$("#age").css("border-bottom", "2px solid #F90A0A");
+					error_age = true;
+				}
+			} 
+			
+			function check_dateOfBirthBS() {
+				let dateOfBirthBS = $("#date_of_birth_BS").val();
+				if(dateOfBirthBS !== '') {
+					$("#dateOfBirthBS_error_message").hide();
+					$("#date_of_birth_BS").css("border", "2px solid #34F458");
+				} else {
+					$("#dateOfBirthBS_error_message").html("Could you provide the date of birth from the calender?");
+					$("#dateOfBirthBS_error_message").show();
+					$("#date_of_birth_BS").css("border", "2px solid #F90A0A");
+					error_dateOfBirthBS = true;
+				}
+			} 
+			
+			function check_maritalStatus() {
+				let maritalStatus = $("#marital_status").val();
+				if(maritalStatus !== '') {
+					$("#maritalStatus_error_message").hide();
+					$("#marital_status").css("border-bottom", "2px solid #34F458");
+				} else {
+					$("#maritalStatus_error_message").html("Please specify the marital status");
+					$("#maritalStatus_error_message").show();
+					$("#marital_status").css("border-bottom", "2px solid #F90A0A");
+					error_maritalStatus = true;
+				}
+			} 
+			
+			function check_education() {
+				let education = $("#education").val();
+				if(education !== '') {
+					$("#education_error_message").hide();
+					$("#education").css("border-bottom", "2px solid #34F458");
+				} else {
+					$("#education_error_message").html("Please specify the educational qualification");
+					$("#edcuation_error_message").show();
+					$("#education").css("border-bottom", "2px solid #F90A0A");
+					error_education = true;
+				}
+			} 
+			
+			function check_occupation() {
+				let occupation = $("#occupation").val();
+				if(occupation !== '') {
+					$("#occupation_error_message").hide();
+					$("#ocuupation").css("border-bottom", "2px solid #34F458");
+				} else {
+					$("#occupation_error_message").html("Please specify occupation");
+					$("#ocuupation_error_message").show();
+					$("#occupation").css("border-bottom", "2px solid #F90A0A");
+					error_occupation = true;
+				}
+			} 
+			
+			function check_voterCard() {
+				let voterCard = $("#voter_card").val();
+				if(voterCard !== '') {
+					$("#voterCard_error_message").hide();
+					$("#voter_card").css("border-bottom", "2px solid #34F458");
+				} else {
+					$("#voterCard_error_message").html("Does the family member have voting card?");
+					$("#voterCard_error_message").show();
+					$("#voter_card").css("border-bottom", "2px solid #F90A0A");
+					error_votingCard = true;
+				}
+			}
+			
+			function check_migration() {
+				let migration = $("#migration").val();
+				if(migration !== '') {
+					$("#migration_error_message").hide();
+					$("#migration").css("border-bottom", "2px solid #34F458");
+				} else {
+					$("#migration_error_message").html("Please specify the migration status!");
+					$("#migration_error_message").show();
+					$("#migration").css("border-bottom", "2px solid #F90A0A");
+					error_migration = true;
+				}
+			}
+			
+			function check_health() {
+				let health = $("#health").val();
+				if(health !== '') {
+					$("#health_error_message").hide();
+					$("#health").css("border-bottom", "2px solid #34F458");
+				} else {
+					$("#health_error_message").html("Please specify the health status!");
+					$("#health_error_message").show();
+					$("#health").css("border-bottom", "2px solid #F90A0A");
+					error_health = true;
+				}
+			}
+			
+			
+		$(function() {
+			$("#member-entry-submit").click(function(event) {
+			event.preventDefault();
+				
+			error_name = false;
+			error_relation = false;
+			error_gender = false;
+			error_age = false;
+			error_dateOfBirthBS = false;
+			error_maritalStatus = false;
+			error_edcuation = false;
+			error_occupation = false;
+			error_voterCard = false;
+			error_migration = false;
+			error_health = false;
+				
+				
+			check_name();
+			check_relation();
+			check_gender();
+			check_age();
+			check_dateOfBirthBS();
+			check_maritalStatus();
+			check_education();
+			check_occupation();
+			check_voterCard();
+			check_migration();
+			check_health();
+				
+			if(error_name === false && error_relation === false && error_gender === false && error_age === false && error_dateOfBirthBS === false && error_maritalStatus === false &&
+					error_education === false && error_occupation === false && error_voterCard === false && error_migration === false && error_health === false) {
+					
+					//Getting the data from the formm	
+					let memberName = $("#name").val();
+					let relation = $("#relation").val();
+					let gender = $("#gender").val();
+					let age = $("#age").val();
+					let dateOfBirthBS = $("#date_of_birth_BS").val();
+					let dateOfBirthAD = $("#date_of_birth_AD").val();
+					let maritalStatus = $("#marital_status").val();
+					let education = $("#education").val();
+					let occupation = $("#occupation").val();
+					let voterCard = $("#voter_card").val();
+					let migration = $("#migration").val();
+					let healthStatus = $("#health").val();
+					let familyId = mainId;
+					
+					let memberInfo = {};
+					memberInfo.name = memberName;
+					memberInfo.relation = relation;
+					memberInfo.gender = gender;
+					memberInfo.age = age;
+					memberInfo.dateOfBirthBS = dateOfBirthBS;
+					memberInfo.dateOfBirthAD = dateOfBirthAD;
+					memberInfo.maritalStatus = maritalStatus;
+					memberInfo.education = education;
+					memberInfo.occupation = occupation;
+					memberInfo.voterCard = voterCard;
+					memberInfo.address = migration;
+					memberInfo.healthCondition = healthStatus;
+					memberInfo.mainId = familyId;
+
+					// Now create an ajax request to send member details to the server
+					$.ajax({
+						method : "POST",
+						url : contextPath + "/resident/",
+						data : JSON.stringify(memberInfo),
+						contentType : "Application/Json",
+						success : function(result) {
+							swal.fire(
+								{
+									text : result.data,
+									icon : "success",
+									closeOnClickOutside : false,
+									closeOnEsc : false
+								}).then(function() {
+									goBack();
+								});
+						},
+						error : function(error) {
+						}
+					});
+				} else {
+					swal.fire({
+		            	icon: "info",
+		            	text: "Please enter the required fields correctly :(",
+		        	});
+				}
+			}) 
 		});
+	
+	});
 	</script>
 
 </body>
