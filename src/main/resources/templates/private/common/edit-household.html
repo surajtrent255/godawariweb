@@ -146,9 +146,9 @@
 											th:name="'answer' + ${i.index + 1}" value=""
 											data-event="change" th:data-target="'photo' + ${i.index + 1}" accept="image/*"></form>
 										
-										<a href="" style="display: none" target="_blank"
+										<a href="" style="display: block" target="_blank"
 											class="no-pjax">
-											<img src="" style="display: none" th:class="'photo' + ${i.index + 1} + ' img-thumbnail'"
+											<img src="" style="display: block" th:class="'photo' + ${i.index + 1} + ' img-thumbnail'"
 											class="img-thumbnail photo"></a>
 									</div>
 									
@@ -218,7 +218,7 @@
 							<!--Dynamic code ends  -->
 							
 							</div>
-							<div class="row">
+<!-- 							<div class="row">
 								<div class="col-lg-4 col-md-4">
 									<div class="form-group form-label">
 										<label for="information_giver"><h4>विवरण दिने :</h4></label> <input
@@ -240,9 +240,9 @@
 											name="collector_name" value="">
 									</div>
 								</div>
-							</div>
+							</div> -->
 							<input class="btn btn-primary px-5"
-								name="category-submit-name" value="Add House"
+								name="category-submit-name" value="Edit House"
 								style="margin-top: 10px" id="household_submit_btn">
 						<!-- </form> -->
 					</div>
@@ -310,6 +310,11 @@
 	/*<![CDATA[*/
 	var questionAndOptions = /*[[${questionAndOptions}]]*/'';
 	/*]]>*/
+	
+	
+	/*<![CDATA[*/
+	var residentFullDetail = /*[[${residentFullDetail}]]*/'';
+	/*]]>*/
 
 	
 	$(function() {
@@ -345,7 +350,7 @@
 						}
 						
 						console.log("SelectedVal--->" + selectedVal);
-						if(selectedVal == ""){
+						if(previousValue != ""){
 							for(var i = 1; i< 8; i++){
 								var idofoption = "#dropdownoption" + questionindex + i + previousValue;
 								console.log("id of option-->" + idofoption);
@@ -645,17 +650,25 @@
 					myFiles.push(myFile);
 					}
 					console.log(myFile);
-					 
-					var imageName = "JPEG_" + timestamp + "_" +questionAndOptions[questionAndOption].id + "." + $(id).val().split('.').pop();
+					
+					if($(id).val() != ""){
+					var imageName = "JPEG_" + residentFullDetail.filledId + "_" +questionAndOptions[questionAndOption].id + "." + $(id).val().split('.').pop();
+					}else{
+						let answerNo = "residentFullDetail.answer" + index;
+						let evalString = eval(answerNo);
+						console.log("ImageName" + index + "---->" + evalString);
+						var imageName = "JPEG_" + residentFullDetail.filledId + "_" +questionAndOptions[questionAndOption].id + "." + evalString.split('.').pop();
+					}
+					
 					
 					 answer[index] = imageName;
 					 console.log("answer" + index +"--->" + answer[index]);
 					 proceedSave[index] = true;
 					 $(questId).css('color', 'black');
-					 if(questionAndOptions[questionAndOption].isRequired == 2 && $(id).val() == ""){
+					 /* if(questionAndOptions[questionAndOption].isRequired == 2 && $(id).val() == ""){
 						 proceedSave[index] = false;
 						 $(questId).css('color', 'red');
-					 }
+					 } */
 					 
 					 }
 				 
@@ -666,9 +679,7 @@
 			}
 			
 			console.log(myFiles);
-			console.log("duration---->" + duration);
-			houseHoldInfo.duration = duration;
-			houseHoldInfo.filledId = timestamp;
+			houseHoldInfo.filledId = residentFullDetail.filledId;
 			
 			console.log(houseHoldInfo);
 			
@@ -687,15 +698,24 @@
 			console.dir(proceedSave);
 			
 			if(confirmProceed){
+				var endTime = new Date().getTime();
+				console.log("endTime---->" + endTime);
+				
+				var diff = endTime - startTime;
+				let duration = Math.round((diff/1000)/60 * 100)/100 + " min";
+				console.log("duration---->" + duration);
+				
+				houseHoldInfo.duration = duration;
+				
 			$.ajax({
 				method: "POST",
-				url: contextPath + "/survey-answer/household",
+				url: contextPath + "/survey-answer/household/edit",
 				data: JSON.stringify(houseHoldInfo),
 				contentType: "application/json",
 
 				success: function(result) {
 					swal.fire({
-						text: "House Hold Info added successfully!",
+						text: "House Hold Info edited successfully!",
 						icon: "success",
 						closeOnClickOutside: true,
 						closeOnEsc: true
@@ -735,7 +755,7 @@
 				formData.append("imgIndex", imgId);
 				formData.append("questionId", myFiles[imgindex].questionId);
 				formData.append("extension", myFiles[imgindex].extension);
-				formData.append("filledId", timestamp);
+				formData.append("filledId", residentFullDetail.filledId);
 				
 				
 				for (var pair of formData.entries()) {
@@ -744,7 +764,7 @@
 				
 			$.ajax({
 				method: "POST",
-				url: contextPath + "/survey-answer/image",
+				url: contextPath + "/survey-answer/editImage",
 				data: formData,
 				async: false,
 				contentType: false,
@@ -790,18 +810,13 @@
 <!-- for editing purpose -->
 
 <script th:inline="javascript">
-
-/*<![CDATA[*/
-var residentFullDetail = /*[[${residentFullDetail}]]*/'';
-/*]]>*/
-
 $(function() {
 	console.log(residentFullDetail);
 	
 	for (var questionAndOption in questionAndOptions){
 		 let index = parseInt(Object.keys(questionAndOptions).indexOf(questionAndOption)) + 1;
 		 var id = '#answer' + index;
-		 if(questionAndOptions[questionAndOption].type === "TEXT" || questionAndOptions[questionAndOption].type === "NUMBER"){
+		 if(questionAndOptions[questionAndOption].type === "TEXT" || questionAndOptions[questionAndOption].type === "NUMBER" || questionAndOptions[questionAndOption].type === "MULTI_TEXT"){
 			 let answerNo = "residentFullDetail.answer" + index;
 			 $(id).val(eval(answerNo));
 		 }
@@ -860,6 +875,48 @@ $(function() {
 					}
 				 });
 		 }
+		 else if(questionAndOptions[questionAndOption].type === "GPS"){
+			 let answerNo = "residentFullDetail.answer" + index;
+			 let evalString = eval(answerNo);
+		
+			 $(id).val(evalString);
+			 $('#placeGPS').val(evalString);			
+		 }
+		 else if(questionAndOptions[questionAndOption].type === "RATING_M"){
+			 let answerNo = "residentFullDetail.answer" + index;
+			 let evalString = eval(answerNo);
+		
+			 var res = evalString.split(",");
+			 
+			 for(var option in questionAndOptions[questionAndOption].options){
+					let optionindex = parseInt(Object.keys(questionAndOptions[questionAndOption].options).indexOf(option)) + 1;
+				var idString = "#dropdown" + index + optionindex ;
+				
+				$(idString).val(res[optionindex - 1]);
+				
+				for(var i = 1; i< 8; i++){
+					var idofoption = "#dropdownoption" + index + optionindex + i;
+					$(idofoption).attr("hidden", true);
+				}
+				
+			 }		 
+		 }
+		 else if(questionAndOptions[questionAndOption].type === "IMAGE"){
+			 let answerNo = "residentFullDetail.answer" + index;
+			 let evalString = eval(answerNo);
+			 console.log("ImageName" + index + "---->" + evalString);
+			 
+			 //if(evalString.includes(".")){
+			 //$(id).val(evalString);
+			 //}
+			
+			 let className = ".photo" + index; 
+			 if(evalString.includes(".")){
+			 $(className).attr("src", evalString)
+			 //$(id).val(evalString);
+			 }
+		 }
+		 
 		 
 	}
 });

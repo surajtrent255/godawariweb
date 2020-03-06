@@ -64,4 +64,28 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 		
 	}
 
+
+	@Override
+	public void editHouseholdSurveyAnswer(AnswerDTO answerDto, String token) {
+		String template = String.format("%s/edit", ADD_HOUSEHOLD_BASE_URL);
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity<AnswerDTO> requestEntity = HttpUtils.createRequestEntity(HttpMethod.PUT, answerDto, MediaType.APPLICATION_JSON, token, url);
+		restTemplate.exchange(requestEntity, String.class);
+		
+	}
+
+
+	@Override
+	public void addEditedPhoto(MultipartFile file, String imageName, String token) {
+		String template = String.format("%s/editImage", ADD_HOUSEHOLD_BASE_URL);
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+		map.add("picture", file.getResource());
+		log.info("###########################" + file.getOriginalFilename());
+		HttpHeaders headers = HttpUtils.createHeader(MediaType.MULTIPART_FORM_DATA, token);
+	    HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(map, headers);
+		restTemplate.postForLocation(url, requestEntity);
+		
+	}
+
 }

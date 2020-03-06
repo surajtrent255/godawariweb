@@ -10,4 +10,8 @@ public interface SurveyAnswerService {
 	
 	void addPhoto(MultipartFile file, String imageName, String token);
 
+	void editHouseholdSurveyAnswer(AnswerDTO answerDto, String token);
+
+	void addEditedPhoto(MultipartFile multipartFile, String imageName, String token);
+
 }

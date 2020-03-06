@@ -216,4 +216,114 @@ public class SurveyAnswerController {
 		
 		return "1";
 	}
+	
+	@PostMapping("/household/edit")
+	public @ResponseBody
+    int editHouseHold(@RequestBody AnswerDTO answerDto, @AuthenticationPrincipal UserDTO user, HttpServletRequest httpServletRequest) {
+        System.out.println(answerDto.toString());
+       
+        answerDto.setModifiedBy(user.getUserId());
+        
+        try {
+        	surveyAnswerService.editHouseholdSurveyAnswer(answerDto, user.getToken());
+        	return 1;
+        }catch(Exception e) {
+        	e.printStackTrace();
+        	log.info(e.getMessage());
+        	return 0;
+        }
+        //return 1;
+    }
+	
+	@RequestMapping(value = "/editImage", method = RequestMethod.POST)
+	public @ResponseBody String addEditedImage(MultipartHttpServletRequest request, @AuthenticationPrincipal UserDTO user) {
+		
+		String inputTagName = request.getParameter("imgIndex");
+		System.out.println("InputTagName----> " + inputTagName);
+		String extension = request.getParameter("extension");
+		String filledId = request.getParameter("filledId");
+		String questionId = request.getParameter("questionId");
+		Path rootLocation = Paths.get(uploadDirectoryProperties.getTempFileUploadingDirectory());
+		try {
+			MultipartFile ourImage = request.getFile(inputTagName);
+			//ourImage.getOriginalFilename().replace(ourImage.getOriginalFilename(), "JPEG_" + filledId + "_" + questionId + "." + extension);
+			
+			String imageName = "JPEG_" + filledId + "_" + questionId + "." + extension;
+			//ourImage.getOriginalFilename().concat(imageName);
+			System.out.println("GeneratedImageName----->" + imageName);
+			System.out.println(ourImage.getSize());
+			System.out.println(ourImage.getOriginalFilename());
+			System.out.println("Name----->" + ourImage.getName());
+			
+			//for copying file to upload directory
+			Files.copy(ourImage.getInputStream(), rootLocation.resolve(imageName));
+			
+			//for retrieving saved multipart file
+			File file = new File(uploadDirectoryProperties.getTempFileUploadingDirectory() + imageName);
+			FileItem fileItem = new DiskFileItem("mainFile", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length(), file.getParentFile());
+
+			InputStream input = null;
+			OutputStream os = null;
+			
+			try {
+			     input = new FileInputStream(file);
+			     os = fileItem.getOutputStream();
+			    IOUtils.copy(input, os);
+			    // Or faster..
+			    // IOUtils.copy(new FileInputStream(file), fileItem.getOutputStream());
+			} catch (IOException ex) {
+			    // do something.
+			}finally {
+				if(input != null) {
+					input.close();
+				}
+				if(os!= null) {
+					os.close();
+				}
+			}
+
+			MultipartFile multipartFile = new CommonsMultipartFile(fileItem);
+			//ends
+			
+			surveyAnswerService.addEditedPhoto(multipartFile, imageName, user.getToken());
+			
+		} catch(Exception e) {
+			e.getMessage();
+			e.printStackTrace();
+		}
+		
+	
+		try
+        { 
+			String imageName = "JPEG_" + filledId + "_" + questionId + "." + extension;
+			//for testing purpose
+			File file = new File(uploadDirectoryProperties.getTempFileUploadingDirectory() + imageName);
+			Path path = Paths.get(uploadDirectoryProperties.getTempFileUploadingDirectory() + imageName);
+			// printing the permissions associated with the file 
+//            System.out.println("Executable: " + file.canExecute()); 
+//            System.out.println("Readable: " + file.canRead()); 
+//            System.out.println("Writable: "+ file.canWrite());
+			
+//            System.out.println("ImagePath--->" + uploadDirectoryProperties.getTempFileUploadingDirectory() + imageName);
+			//ends
+            //Files.deleteIfExists(Paths.get(uploadDirectoryProperties.getTempFileUploadingDirectory() + imageName)); 
+            Files.delete(path);
+        } 
+        catch(NoSuchFileException e) 
+        { 
+            System.out.println("No such file/directory exists"); 
+        } 
+        catch(DirectoryNotEmptyException e) 
+        { 
+            System.out.println("Directory is not empty."); 
+        } 
+        catch(IOException e) 
+        { 
+            System.out.println("Invalid permissions."); 
+            e.printStackTrace();
+        }	
+		
+		
+		return "1";
+	}
 }

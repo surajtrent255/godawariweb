@@ -218,7 +218,7 @@
 							<!--Dynamic code ends  -->
 							
 							</div>
-							<div class="row">
+<!-- 							<div class="row">
 								<div class="col-lg-4 col-md-4">
 									<div class="form-group form-label">
 										<label for="information_giver"><h4>विवरण दिने :</h4></label> <input
@@ -240,7 +240,7 @@
 											name="collector_name" value="">
 									</div>
 								</div>
-							</div>
+							</div> -->
 							<input class="btn btn-primary px-5"
 								name="category-submit-name" value="Add House"
 								style="margin-top: 10px" id="household_submit_btn">
@@ -321,7 +321,7 @@
 	});
 	
 	
-	//for raing_m question on selected listener
+	//for rating_m question on selected listener
 	
 		$(function() {
 			for (var questionAndOption in questionAndOptions){
@@ -339,14 +339,16 @@
 					}).change(function(){
 						
 						var selectedVal = $(this).val();
-						for(var i = 1; i< 8; i++){
+						for(var i = 1; i< 8; i++){							
 							var idofoption = "#dropdownoption" + questionindex + i + selectedVal;
 						$(idofoption).attr("hidden", true);
 						}
 						
 						console.log("SelectedVal--->" + selectedVal);
-						if(selectedVal == ""){
-							for(var i = 1; i< 8; i++){
+						//if(selectedVal == "" || selectedVal != previousValue){
+							if(previousValue != ""){
+								console.log("previousValue != ''");	
+								for(var i = 1; i< 8; i++){
 								var idofoption = "#dropdownoption" + questionindex + i + previousValue;
 								console.log("id of option-->" + idofoption);
 							$(idofoption).removeAttr('hidden');
@@ -513,16 +515,15 @@
 
 		var d = new Date();
 		var startTime = d.getTime();
+		console.log("startTime---->" + startTime);
 		
 		$("#household_submit_btn").click(function(event) {
 			event.preventDefault();
-			var endTime = d.getTime();
-			var duration = endTime - startTime;
 			let houseHoldInfo = {};
 			let answer = []; 
 			let proceedSave = [];
 			let myFiles = new Array();
-			var timestamp = new Date().getTime();
+			var timestamp = new Date().getTime() + Math.floor(Math.random()*(999-100+1)+100);
 			for (var questionAndOption in questionAndOptions){
 				 //console.log("hwelett packardd!");
 				 //console.log(Object.keys(questionAndOptions).indexOf(questionAndOption));
@@ -666,8 +667,7 @@
 			}
 			
 			console.log(myFiles);
-			console.log("duration---->" + duration);
-			houseHoldInfo.duration = duration;
+			
 			houseHoldInfo.filledId = timestamp;
 			
 			console.log(houseHoldInfo);
@@ -687,6 +687,17 @@
 			console.dir(proceedSave);
 			
 			if(confirmProceed){
+				var endTime = new Date().getTime();
+				console.log("endTime---->" + endTime);
+				
+				var diff = endTime - startTime;
+				var duration = Math.round((diff/1000)/60 * 100)/100 + " min";
+				console.log("duration---->" + duration);
+				
+				houseHoldInfo.duration = duration;
+				
+				
+				
 			$.ajax({
 				method: "POST",
 				url: contextPath + "/survey-answer/household",
