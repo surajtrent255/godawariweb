@@ -354,6 +354,8 @@
 							$(idofoption).removeAttr('hidden');
 							}
 						}
+							
+							$(this).blur();
 						
 					});
 					
@@ -712,7 +714,7 @@
 						closeOnEsc: true
 					})
 					.then(function() {
-						window.location.href = contextPath;
+						window.location.href = contextPath + '/resident';
 					});
 				}, 
 
@@ -769,7 +771,7 @@
 						closeOnEsc: true
 					})
 					.then(function() {
-						window.location.href = contextPath;
+						window.location.href = contextPath + '/resident';
 					});
 				}, 
 
