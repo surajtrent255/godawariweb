@@ -252,6 +252,9 @@
 									</thead>
 								</table>
 							</div>
+												<a th:href="@{/resident/} + ${residentFullDetail.residentDetail.filledId} +'/member/'"><button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-primary pull-right">
+												Add Family Member
+												</button></a>
 						</div>
 					</div>
 					<div class="row">
