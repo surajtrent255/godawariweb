@@ -739,7 +739,7 @@
 									closeOnClickOutside : false,
 									closeOnEsc : false
 								}).then(function() {
-									goBack();
+									window.location.href = contextPath + "/resident/" + familyId;
 								});
 						},
 						error : function(error) {
