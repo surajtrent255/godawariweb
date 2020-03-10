@@ -219,7 +219,6 @@
 									</div>
 								</div>
 							</fieldset>
-							<!-- 								<input type="submit" value="Submit"/> -->
 							<button type="submit"
 								class="add-member btn btn-primary mb-2" style="margin-left: 8px;"
 								id="member-entry-submit">Add Member</button>
@@ -610,10 +609,10 @@
 				let occupation = $("#occupation").val();
 				if(occupation !== '') {
 					$("#occupation_error_message").hide();
-					$("#ocuupation").css("border-bottom", "2px solid #34F458");
+					$("#occupation").css("border-bottom", "2px solid #34F458");
 				} else {
 					$("#occupation_error_message").html("Please specify occupation");
-					$("#ocuupation_error_message").show();
+					$("#occupation_error_message").show();
 					$("#occupation").css("border-bottom", "2px solid #F90A0A");
 					error_occupation = true;
 				}
@@ -691,7 +690,7 @@
 			if(error_name === false && error_relation === false && error_gender === false && error_age === false && error_dateOfBirthBS === false && error_maritalStatus === false &&
 					error_education === false && error_occupation === false && error_voterCard === false && error_migration === false && error_health === false) {
 					
-					//Getting the data from the formm	
+					//Getting the data from the form	
 					let memberName = $("#name").val();
 					let relation = $("#relation").val();
 					let gender = $("#gender").val();
@@ -716,7 +715,12 @@
 					memberInfo.maritalStatus = maritalStatus;
 					memberInfo.education = education;
 					memberInfo.occupation = occupation;
-					memberInfo.voterCard = voterCard;
+					if(voterCard == 1) {
+						memberInfo.voterCard = "true";
+					}
+					else if(voterCard == 0) {
+						memberInfo.voterCard = "false";
+					}
 					memberInfo.address = migration;
 					memberInfo.healthCondition = healthStatus;
 					memberInfo.mainId = familyId;
@@ -749,9 +753,7 @@
 				}
 			}) 
 		});
-	
 	});
 	</script>
-
 </body>
 </html>
