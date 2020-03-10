@@ -228,7 +228,7 @@
 											<td th:text="${member.maritalStatus}"></td>
 											<td th:text="${member.education}"></td>
 											<td th:text="${member.occupation}"></td>
-											<td th:text="${member.voterCard} ? 'छ' : 'छैन'"></td>
+											<td th:text="${member.voterCard} == 'true' ? 'छ' : 'छैन'"></td>
 											<td
 												th:text="${member.address} == 1 ? 'स्थायी जन्म' : 'बसाई सराई' "></td>
 											<td th:text="${member.healthCondition}"></td>
