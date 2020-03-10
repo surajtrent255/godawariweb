@@ -433,10 +433,11 @@
 			shortcutKey : 'ctrl+g',
 			transliterationEnabled : true
 		};
-		var control = new google.elements.transliteration.TransliterationControl(
-				options);
+		var control = new google.elements.transliteration.TransliterationControl(options);
 		var uniElement = $(".unicode input[type='text'], #grid_filter input");
-		control.makeTransliteratable(uniElement);
+		var myElements = $("input[type='text']");
+		control.makeTransliteratable(myElements);
+		//control.makeTransliteratable(['answer1']);
 	});
 
 	$(function() {
