@@ -58,6 +58,13 @@
 .wizard>.content>.body label.error {
 	margin-left: 0;
 }
+
+.error_form {
+	top: 12px;
+	color: rgb(216, 15, 15);
+	font-size: 15px;
+	font-family: Helvetica;
+}
 </style>
 <script th:src="@{/assets/js/jquery.min.js}"
 	src="assets/js/jquery.min.js"></script>
@@ -212,7 +219,7 @@
 								</div>
 							</fieldset>
 							<button type="submit"
-								class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4"
+								class="update-member btn btn-primary mb-2" style="margin-left: 8px;"
 								id="member-update-submit">Update Member</button>
 						</th:form:form>
 					</div>
