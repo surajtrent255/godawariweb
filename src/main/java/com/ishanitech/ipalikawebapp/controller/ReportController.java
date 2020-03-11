@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
@@ -26,6 +27,12 @@ public class ReportController {
 	public String getDashboardView(Model model, @AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("populationReport", reportService.getPopulationReport(user.getToken()));
 		model.addAttribute("questionReport", reportService.getQuestionReport(user.getToken()));
+		return "private/common/dashboard";
+	}
+	
+	@PostMapping
+	public String generateReport(@AuthenticationPrincipal UserDTO user) {
+		reportService.generateReport(user.getToken());
 		return "private/common/dashboard";
 	}
 }

@@ -47,6 +47,15 @@ public class ReportServiceImpl implements ReportService {
 		ParameterizedTypeReference<Response<List<QuestionReport>>> bean = new ParameterizedTypeReference<Response<List<QuestionReport>>>() {};
 		return restTemplate.exchange(request, bean).getBody().getData();
 	}
+
+	@Override
+	public void generateReport(String token) {
+		String template = REPORT_BASE;
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<String> responseType = new ParameterizedTypeReference<String>() {};
+		restTemplate.exchange(requestEntity, responseType);
+	}
 	
 	
 }

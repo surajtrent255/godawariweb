@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
 <title>गोदावरी नगरपालिका, ललितपुर</title>
 <!--favicon-->
 <link rel="icon" th:href="@{/assets/images/favicon1.ico}"
@@ -36,9 +36,9 @@
 		<div class="clearfix"></div>
 		<div class="content-wrapper">
 			<div class="container-fluid">
-
+				<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-primary" th:attr="onclick=|generateReport()|">Generate Latest Report</button>
 				<!--Start Dashboard Content-->
-
+<!-- 				<button class="add-member btn btn-primary mb-2" style="margin-left: 8px;" id="generateReport">Generate Latest Report</button> -->
 				<div th:if="${!#lists.isEmpty(populationReport) && populationReport != null && populationReport.get(0) != null}" class="row mt-3">
 					<div class="col-12 col-lg-6 col-xl-3">
 						<div class="card gradient-deepblue">
@@ -962,6 +962,37 @@
 	
 
 	<script th:inline="javascript">
+	
+		$(function() {
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$(document).ajaxSend(function(e, xhr, options) {
+				xhr.setRequestHeader(header, token);
+			});
+		});
+		
+		
+		function generateReport() {
+			$.ajax({
+				method : "POST",
+				url : contextPath + "/report/",
+				contentType : "Application/Json",
+				success : function(result) {
+					swal.fire(
+						{
+							text : "The latest report has been generated",
+							icon : "success",
+							closeOnClickOutside : false,
+							closeOnEsc : false
+						}).then(function() {
+							window.location.href = contextPath + "/report";
+						});
+				},
+				error : function(error) {
+				}
+			});
+		}
+	
 		$(function() {
 			let populationReportExists = /*[[${#lists.isEmpty(populationReport)}]]*/;
 			if(!populationReportExists) {
@@ -1011,6 +1042,7 @@
 				});
 			}
 		});
+		
 		
 	</script>
 </body>
