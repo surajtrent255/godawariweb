@@ -72,3 +72,19 @@ rest-api:
 com:
   ipalika:
     tempFileUploadingDirectory: /home/ishani/Pictures/ 
+    
+---
+
+###### Development Config 121 server Properties #######
+spring:
+  profiles: ishani-prod
+server:
+  port: 9191
+  
+rest-api:
+  protocol: http
+  domain: localhost
+  port: 8888
+  
+com:
+  tempFileUploadingDirectory: /home/ishani/Pictures/    
