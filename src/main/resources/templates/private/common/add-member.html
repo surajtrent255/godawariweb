@@ -299,7 +299,6 @@
 			let nepaliMonth = dateSelectedBSDevanagari.bsMonth;
 			let nepaliDay = dateSelectedBSDevanagari.bsDate;
 			
-			
 			dateSelectedBS = [nepaliYear, nepaliMonth, nepaliDay].join('-');
 			
 			dateSelectedAD = calendarFunctions.getAdDateByBsDate(nepaliYear, nepaliMonth, nepaliDay);
@@ -320,9 +319,6 @@
 			var begin = Date.parse(dateOfBirthAD);	//Getting the beginning full date, date of Birth
 			var e = new Date(end);
 			var b = new Date(begin);
-			
-			console.log(begin);
-			
 			
 			var bYear = b.getFullYear();	//Getting the beginning year
 			var eYear = e.getFullYear();	//Getting the end year
