@@ -66,17 +66,16 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 				break;
 			}
 		}
-
-		if (isSuperAdmin) {
-			return "/super-admin/";
-		} else if (isCentralAdmin) {
-			return "/central-admin";
-		} else if(isWardAdmin) {
-			return "/ward-admin";
-		} else {
-			return "/surveyor";
-		}
-
+//		if (isSuperAdmin) {
+//			return "/super-admin/";
+//		} else if (isCentralAdmin) {
+//			return "/central-admin";
+//		} else if(isWardAdmin) {
+//			return "/ward-admin";
+//		} else {
+//			return "/surveyor";
+//		}
+		return "/report";
 	}
 
 	public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
