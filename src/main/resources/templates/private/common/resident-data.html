@@ -72,11 +72,9 @@
 							<div class="col-md-4">
 								<div class="ui" sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'SURVEYOR')">
 									<label >Ward&nbsp;
-										<select id="result-option" class="ui input">
-											<option value="10">1</option>
-											<option value="25">2</option>
-											<option value="50">3</option>
-											<option value="100">4</option>
+										<select id="ward-wise-select" class="ui input">
+											<option value=""></option>
+											<option th:value="${indx.index} + 1" th:each="option, indx : ${wards}" th:text="${option}"></option>
 										</select>
 									</label>
 								</div>
@@ -211,7 +209,9 @@
 			$("#search").on("keypress", function(event) {
 				if(event.which == 13 && event.keyCode == 13) {
 					let searchKey = $(this).val();
-					let finalUrl = encodeURI(contextPath + "/resident/search" + "?searchKey=" + encodeURIComponent(searchKey));
+					let wardNumber = $("#ward-wise-select").val();
+					console.log("ward-->" + wardNumber);
+					let finalUrl = encodeURI(contextPath + "/resident/search" + "?searchKey=" + encodeURIComponent(searchKey) + "&wardNo=" + wardNumber);
 					if(searchKey === "") {
 						swal.fire({
 							  text: 'कृपया नाम दिन नभुल्नुहोला!',
@@ -262,6 +262,42 @@
 				}
 			});
 		});
+		
+		$("#ward-wise-select").on("change", function(event) {
+				let wardNumber = $(this).val();
+				let wardNumberz = $("#ward-wise-select").val();
+				console.log("ward-->" + wardNumber);
+				let finalUrl = encodeURI(contextPath + "/resident/ward" + "?wardNo=" + wardNumber);
+						$.ajax({
+							url : finalUrl,
+							method: "POST",
+							contentType: "application/json"
+						}).done(function(data) {
+							let tablesData = "";
+							let count = 0;
+							if(data.length > 0) {
+								data.forEach(item => {
+									count += 1;
+									tablesData += `<tr><td>${count}</td>
+													<td>${item.houseOwner}</td>
+													<td>${item.houseNo}</td>
+													<td>${item.tole}</td>
+													<td>${item.phoneNo}</td>
+													<td>${item.kittaNo}</td>
+													<td> <img src="${item.imageUrl}" width="50px" height="50px"/></td>
+													<td>${item.totalFamilyMembers}</td>
+													<td>
+														<a href=\"\" class="btn btn-xs btn-info">Edit</a>
+														<a href=\"\" class="btn btn-xs btn-warning">Delete </a>
+														<a href=\"/resident/${item.filledId}/member\" class="btn btn-xs btn-danger">Add Member</a>
+														<a href=\"/resident/${item.filledId}\" class="btn btn-xs btn-success">Show Details</a>
+													</td> </tr>`;
+								});
+								$("#resident-body").empty();
+								$("#resident-body").append(tablesData);
+							}
+						});
+	});
 	</script>
 </body>
 </html>

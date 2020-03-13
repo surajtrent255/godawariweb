@@ -8,7 +8,8 @@ import com.ishanitech.ipalikawebapp.dto.Response;
 
 public interface ResidentService {
 	Response<?> getResidentDataList(String token);
-	List<ResidentDTO> searchResidentByKey(String searchKey, String token);
+	List<ResidentDTO> searchResidentByKey(String searchKey,String wardNo, String token);
+	List<ResidentDTO> searchResidentByWard(String wardNo, String token);
 	Response<?> getResidentFullDetail(String filledId, String token);
 	Response<?> getResidentFullDetailRaw(String filledId, String token);
 	void addFamilyMember(FamilyMemberDTO familyMemberInfo, String token);

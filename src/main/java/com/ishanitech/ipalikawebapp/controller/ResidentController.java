@@ -25,6 +25,7 @@ import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDetailDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
+import com.ishanitech.ipalikawebapp.service.FormService;
 import com.ishanitech.ipalikawebapp.service.ResidentService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,9 +36,11 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class ResidentController {
 	
+	private final FormService formService;
 	private final ResidentService residentService;
 	
-	public ResidentController(ResidentService residentService) {
+	public ResidentController(FormService formService, ResidentService residentService) {
+		this.formService = formService;
 		this.residentService = residentService;
 	}
 	
@@ -46,6 +49,7 @@ public class ResidentController {
 		Response<List<ResidentDTO>> residentResponse = (Response<List<ResidentDTO>>) residentService
 				.getResidentDataList(user.getToken());
 		model.addAttribute("residentList", residentResponse.getData());
+		model.addAttribute("wards", formService.getListOfWards(user.getToken()).getData());
 		return "private/common/resident-data";
 	}
 	
@@ -67,10 +71,16 @@ public class ResidentController {
 	}
 	
 	@PostMapping("/search")
-	public @ResponseBody List<ResidentDTO> getResidentsBySearchKey(@RequestParam("searchKey") String searchKey, @AuthenticationPrincipal UserDTO user) {
-		return residentService.searchResidentByKey(searchKey, user.getToken());
+	public @ResponseBody List<ResidentDTO> getResidentsBySearchKey(@RequestParam("searchKey") String searchKey, @RequestParam("wardNo") String wardNo, @AuthenticationPrincipal UserDTO user) {
+		log.info("WardNo---->" + wardNo);
+		return residentService.searchResidentByKey(searchKey, wardNo, user.getToken());
 	}
 	
+	@PostMapping("/ward")
+	public @ResponseBody List<ResidentDTO> getResidentsByWard(@RequestParam("wardNo") String wardNo, @AuthenticationPrincipal UserDTO user) {
+		log.info("WardNo---->" + wardNo);
+		return residentService.searchResidentByWard(wardNo, user.getToken());
+	}
 	
 	//Returns the page for family member info edit
 	@GetMapping("/member/{memberId}")

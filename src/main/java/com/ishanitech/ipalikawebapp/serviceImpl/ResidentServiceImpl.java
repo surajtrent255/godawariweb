@@ -21,6 +21,10 @@ import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.service.ResidentService;
 import com.ishanitech.ipalikawebapp.utilities.HttpUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
+
+@Slf4j
 @Service
 public class ResidentServiceImpl implements ResidentService {
 	private final String RESIDENT_BASE_URL = "resident";
@@ -86,13 +90,30 @@ public class ResidentServiceImpl implements ResidentService {
 	}
 
 	@Override
-	public List<ResidentDTO> searchResidentByKey(String searchKey, String token) {
+	public List<ResidentDTO> searchResidentByKey(String searchKey, String wardNo, String token) {
 		String template = String.format("%s/search", RESIDENT_BASE_URL);
 		Map<String, Object> uriVariables = new HashMap<String, Object>();
 		uriVariables.put("rootAddress", template);
 		uriVariables.put("queryParamName", "searchKey");
 		uriVariables.put("keyword", searchKey);
+		uriVariables.put("wardNo", wardNo);
 		String url = HttpUtils.createRequestUrlWithQueryString(restApiProperties, uriVariables);
+		log.info("URL--->" + url);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<List<ResidentDTO>>> responseType = new ParameterizedTypeReference<Response<List<ResidentDTO>>>() {
+		};
+		List<ResidentDTO> residents = restTemplate.exchange(requestEntity, responseType).getBody().getData();
+		return residents;
+	}
+	
+	@Override
+	public List<ResidentDTO> searchResidentByWard(String wardNo, String token) {
+		String template = String.format("%s/search/ward", RESIDENT_BASE_URL);
+		Map<String, Object> uriVariables = new HashMap<String, Object>();
+		uriVariables.put("rootAddress", template);
+		uriVariables.put("wardNo", wardNo);
+		String url = HttpUtils.createRequestUrlWithWardString(restApiProperties, uriVariables);
+		log.info("URL--->" + url);
 		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, MediaType.APPLICATION_JSON, token, url);
 		ParameterizedTypeReference<Response<List<ResidentDTO>>> responseType = new ParameterizedTypeReference<Response<List<ResidentDTO>>>() {
 		};
@@ -149,5 +170,6 @@ public class ResidentServiceImpl implements ResidentService {
 		
 		
 	}
+
 
 }
