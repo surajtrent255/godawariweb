@@ -7,7 +7,7 @@ import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 
 public interface ResidentService {
-	Response<?> getResidentDataList(String token);
+	Response<?> getResidentDataList(String token, List<String> roles, int wardNumber);
 	List<ResidentDTO> searchResidentByKey(String searchKey,String wardNo, String token);
 	List<ResidentDTO> searchResidentByWard(String wardNo, String token);
 	Response<?> getResidentFullDetail(String filledId, String token);

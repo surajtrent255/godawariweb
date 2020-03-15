@@ -47,9 +47,11 @@ public class ResidentController {
 	@GetMapping
 	public String getResidentDataListView(Model model, @AuthenticationPrincipal UserDTO user) {
 		Response<List<ResidentDTO>> residentResponse = (Response<List<ResidentDTO>>) residentService
-				.getResidentDataList(user.getToken());
+				.getResidentDataList(user.getToken(), user.getRoles(), user.getWardNo());
+		log.info("WardNo--->" + user.getWardNo());
 		model.addAttribute("residentList", residentResponse.getData());
 		model.addAttribute("wards", formService.getListOfWards(user.getToken()).getData());
+		model.addAttribute("loggedInUserWard", user.getWardNo());
 		return "private/common/resident-data";
 	}
 	

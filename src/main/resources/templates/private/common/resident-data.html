@@ -78,6 +78,16 @@
 										</select>
 									</label>
 								</div>
+								
+								<div class="ui" sec:authorize="hasAnyRole('WARD_ADMIN')">
+									<label >Ward&nbsp;
+										<select id="ward-wise-select" class="ui input">
+											<!-- <option value=""></option> -->
+											<option th:value="${loggedInUserWard}" th:text="${loggedInUserWard}"></option>
+										</select>
+									</label>
+								</div>
+								
 							</div>
 							<div class="col-md-4">
 								<div class="ui pull-right">
@@ -264,6 +274,7 @@
 		});
 		
 		$("#ward-wise-select").on("change", function(event) {
+			$("#search").val("");
 				let wardNumber = $(this).val();
 				let wardNumberz = $("#ward-wise-select").val();
 				console.log("ward-->" + wardNumber);

@@ -21,6 +21,6 @@ public class UserDTO extends Dto implements Serializable {
 	private boolean enabled;
 	private boolean firstLogin;
 	private boolean expired;
-	private int wardNumber;
+	private int wardNo;
 	private List<String> roles;
 }

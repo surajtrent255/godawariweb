@@ -18,6 +18,7 @@ import com.ishanitech.ipalikawebapp.dto.MemberFormDetailsDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDetailDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
+import com.ishanitech.ipalikawebapp.dto.RoleWardDTO;
 import com.ishanitech.ipalikawebapp.service.ResidentService;
 import com.ishanitech.ipalikawebapp.utilities.HttpUtils;
 
@@ -36,10 +37,16 @@ public class ResidentServiceImpl implements ResidentService {
 	}
 
 	@Override
-	public Response<?> getResidentDataList(String token) {
+	public Response<?> getResidentDataList(String token, List<String> roles, int wardNumber) {
+		
+		RoleWardDTO roleWard = new RoleWardDTO();
+		if(roles.contains("WARD_ADMIN")) {
+			roleWard.setRole(3);
+			roleWard.setWardNumber(wardNumber);
+		}
 		String template = String.format("%s", RESIDENT_BASE_URL);
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
-		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, null, MediaType.APPLICATION_JSON, token, url);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, roleWard , MediaType.APPLICATION_JSON, token, url);
 		ParameterizedTypeReference<Response<List<ResidentDTO>>> responseType = new ParameterizedTypeReference<Response<List<ResidentDTO>>>() {};
 		Response<List<ResidentDTO>> residents = restTemplate.exchange(requestEntity, responseType).getBody();
 		return residents;
