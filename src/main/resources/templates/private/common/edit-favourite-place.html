@@ -117,7 +117,8 @@
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
-									<label for="placeType">Place Type</label> <select
+									<label for="placeType">Place Type</label>
+									<select
 										id="placeType" th:field="*{placeType}">
 										<option th:each="place, iteration : ${placeTypes}"
 											th:value="${iteration.index + 1}" th:text="${place}">

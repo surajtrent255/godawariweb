@@ -65,6 +65,13 @@
 	height: 50em;
 	width: 50em;
 }
+
+.error_form {
+	top: 12px;
+	color: rgb(216, 15, 15);
+	font-size: 15px;
+	font-family: Helvetica;
+}
 </style>
 </head>
 <body>
@@ -89,71 +96,66 @@
 					<div class="card-body">
 						<div class="card-title">Fill up information about the place.</div>
 						<form name="favPlaceForm" id="favPlaceForm" method="POST"
-							th:action="@{/favourite-place}" th:object="${favPlaceObj}"
-							enctype="multipart/form-data" class="unicode">
+							th:action="@{/favourite-place}"	enctype="multipart/form-data" class="unicode">
 							<div class="form-group row">
 								<div class="col-md-4">
-									<label for="placeName">Place Name.</label> <input type="text"
-										id="placeName" name="favName" th:field="*{placeName}"
-										class="form-control required" />
+									<label for="placeName">Place Name</label> <input type="text"
+										id="placeName" name="placeName" class="form-control required" />
+										<span class="error_form" id="placeName_error_message"></span>
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
 									<label for="placeWard">Ward number</label> 
-<!-- 									<input type="number" -->
-<!-- 										id="placeWard" name="favWard" th:field="*{placeWard}" -->
-<!-- 										class="form-control required"> -->
-										
-										<select id="placeWard" name="favWard" th:field="*{placeWard}" class="form-control required">
+										<select id="placeWard" name="placeWard" class="form-control required">
 												<option
 													th:each="ward, iteration : ${wardList}"
 													th:value="${iteration.index + 1}" th:text="${ward}"></option>
 											</select>
-										
-										
-										
+									<span class="error_form" id="placeWard_error_message"></span>										
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
 									<label for="placeType">Place Type</label> <select
-										id="placeType" th:field="*{placeType}">
+										id="placeType" name="placeType" class="form-control required">
 										<option th:each="place, iteration : ${placeTypes}"
 											th:value="${iteration.index + 1}" th:text="${place}">
 										</option>
 									</select>
+									<span class="error_form" id="placeType_error_message"></span>
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
 									<label for="placeDescription">Place Description</label>
-									<textarea name="favDesc" id="placeDescription"  rows="10"
-										th:field="*{placeDescription}" class="form-control required">Write description
+									<textarea name="placeDescription" id="placeDescription"  rows="20"
+										class="form-control required" placeholder="Write description">
 									</textarea>
+									<span class="error_form" id="placeDescription_error_message"></span>
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
 									<label for="placeImage">Photo Of The Place</label> <input
-										type="file" class="form-control" id="placeImage"
-										name="favPhoto" value="" data-event="change"
-										data-target="favPhoto" accept="image/*" /> <a href=""
+										type="file" class="form-control" id="placeImage" name="placeImage" value="" data-event="change"
+										data-target="placeImage" accept="image/*" /> <a href=""
 										style="display: none" target="_blank" class="no-pjax"> <img
-										src="" style="display: none" class="img-thumbnail favPhoto">
+										src="" style="display: none" class="img-thumbnail placeImage">
 									</a>
+									<span class="error_form" id="placeImage_error_message"></span>
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
 									<label for="placeGPS">Location</label> <input type="text"
-										id="placeGPS" name="favLocation" th:field="*{placeGPS}"
-										placeholder="Click to add location"
+										id="placeGPS" name="placeGPs" placeholder="Click to add location"
 										class="form-control required" readonly>
+									<span class="error_form" id="placeGPS_error_message"></span>
 								</div>
 							</div>
 							<div class="form-group">
-								<button id="add-favourite-btn" class="btn btn-primary px-5" onclick="return clicked();">
+								<button id="add-favourite-btn" class="btn btn-primary px-5">
 									<i class="icon-lock"></i>  Add Place
 								</button>
 							</div>
@@ -200,33 +202,13 @@
 	<!-- 	<!--Start footer-->
 	<script th:src="@{/assets/js/leaflet.js}"></script>
 	<script th:inline="javascript">
-		
-		function clicked() {
-			swal.fire({
-				title : 'Do you want to add this place',
-				text : "Are all the information correct",
-				icon : 'warning',
-				showCancelButton : true,
-				confirmButtonColor : '#3085d6',
-				cancelButtonColor : '#d33',
-				confirmButtonText : "Yes, I'm sure. Add it!"
-			}).then((btnClicked) => {
-				if(btnClicked.value) {
-					favPlaceForm.submit();
-				}
-			});
-		}
-	
-	
-	
 		$(function () {
 		    var token = $("meta[name='_csrf']").attr("content");
 		    var header = $("meta[name='_csrf_header']").attr("content");
 		    $(document).ajaxSend(function(e, xhr, options) {
 		        xhr.setRequestHeader(header, token);
 		    });
-		});
-	
+		});	
 	
 		//For showing the Map modal	
 		$("#placeGPS").on("click", function(event) {
@@ -279,6 +261,8 @@
 
 		mymap.on('click', onMapClick);
 		
+		
+		//Transliteration portion
 		google.load("elements", "1", {
 		    packages: "transliteration"
 		});
@@ -296,39 +280,248 @@
 			control.makeTransliteratable(['placeDescription']);
 		});
 		
-		// Wait for the DOM to be ready
+		//Form validation using jQuery//
+	 	$(function() {
+			$("#placeName_error_message").hide();
+			$("#placeWard_error_message").hide();
+			$("#placeType_error_message").hide();
+			$("#placeDescription_error_message").hide();
+			$("#placeImage_error_message").hide();
+			$("#placeGPS_error_message").hide();
+			
+			let error_placeName = false;
+			let error_placeWard = false;
+			let error_placeType = false;
+			let error_placeDescription = false;
+			let error_placeImage = false;
+			let error_placeGPS = false;
+			
+			$("#placeName").focusout(function(){
+				check_placeName();
+			});
+			
+			$("#placeWard").focusout(function(){
+				check_placeWard();
+			});
+			
+			$("#placeType").focusout(function(){
+				check_placeType();
+			});
+			
+			$("#placeDescription").focusout(function(){
+				check_placeDescription();
+			});
+			
+			$("#placeImage").focusout(function(){
+				check_placeImage();
+			});
+			
+			$("#placeGPS").focusout(function(){
+				check_placeGPS();
+			});
+			
+			function check_placeName() {
+				let placeName = $("#placeName").val();
+				if(placeName !== '') {
+					$("#placeName_error_message").hide();
+					$("#placeName").css("border-bottom", "2px solid #34F458");
+				} else {
+					$("#placeName_error_message").html("Please enter the name of the place!");
+					$("#placeName_error_message").show();
+					$("#placeName").css("border-bottom", "2px solid #F90A0A");
+					error_placeName = true;
+				}
+			} 
+			
+			function check_placeWard() {
+				let placeWard = $("#placeWard").val();
+				if(placeWard !== '') {
+					$("#placeWard_error_message").hide();
+					$("#placeWard").css("border-bottom", "2px solid #34F458");
+				} else {
+					$("#placeWard_error_message").html("Please specify the ward!");
+					$("#placeWard_error_message").show();
+					$("#placeWard").css("border-bottom", "2px solid #F90A0A");
+					error_placeWard = true;
+				}
+			} 
+			
+			function check_placeType() {
+				let placeType = $("#placeType").val();
+				if(placeType !== '') {
+					$("#placeType_error_message").hide();
+					$("#placeType").css("border-bottom", "2px solid #34F458");
+				} else {
+					$("#placeType_error_message").html("Please specify the type of the place!");
+					$("#placeType_error_message").show();
+					$("#placeType").css("border-bottom", "2px solid #F90A0A");
+					error_placeType = true;
+				}
+			} 
+			
+			function check_placeDescription() {
+				let placeDecription = $("#placeDescription").val();
+				if(placeDescription !== '') {
+					$("#placeDescription_error_message").hide();
+					$("#placeDescription").css("border-bottom", "2px solid #34F458");
+				} else {
+					$("#placeDescription_error_message").html("Could you provide a short description?");
+					$("#placeDescription_error_message").show();
+					$("#placeDescription").css("border-bottom", "2px solid #F90A0A");
+					error_placeDescription = true;
+				}
+			} 
+			
+			function check_placeImage() {
+				let placeImage = $("#placeImage").val();
+				if(placeImage !== '') {
+					$("#placeImage_error_message").hide();
+					$("#placeImage").css("border", "2px solid #34F458");
+				} else {
+					$("#placeImage_error_message").html("Could you select a image to add?");
+					$("#placeImage_error_message").show();
+					$("#placeImage").css("border-bottom", "2px solid #F90A0A");
+					error_placeImage = true;
+				}
+			} 
+			
+			function check_placeGPS() {
+				let placeGPS = $("#placeGPS").val();
+				if(placeGPS !== '') {
+					$("#placeGPS_error_message").hide();
+					$("#placeGPS").css("border-bottom", "2px solid #34F458");
+				} else {
+					$("#placeGPS_error_message").html("Please specify the GPS location");
+					$("#placeGPS_error_message").show();
+					$("#placeGPS").css("border-bottom", "2px solid #F90A0A");
+					error_placeGPS = true;
+				}
+			} 
+			
+			
 		$(function() {
-		  // Initialize form validation on the registration form.
-		  // It has the name attribute "registration"
-		  $("form[name='favPlaceForm']").validate({
-		    // Specify validation rules
-		    rules: {
-		      // The key name on the left side is the name attribute
-		      // of an input field. Validation rules are defined
-		      // on the right side
-		      placeName: "required",
-		      placeWard: "required",
-		      placeType: "required",
-		      placeDescription: "required",
-		      placeGPs: "required",
-		      placeImage: "required"
-		    },
-		    // Specify validation error messages
-		    messages: {
-		      placeName: "Please enter the place name",
-		      placeWard: "Please select valid ward",
-		      placeType: "Please select valid place tyoer",
-		      placeDescription: "Please enter a short description of the place",
-		      placeGPs: "Please select the location for the place using the map",
-		      placeImage: "Please select an image of the place"
-		    },
-		    // Make sure the form is submitted to the destination defined
-		    // in the "action" attribute of the form when valid
-		    submitHandler: function(form) {
-		    	form.submit();
-		    }
-		  });
+			$("#add-favourite-btn").click(function(event) {
+				
+			var timestamp = new Date().getTime() + Math.floor(Math.random()*(999-100+1)+100);
+				
+			event.preventDefault();
+				
+			error_placeName = false;
+			error_placeWard = false;
+			error_placeType = false;
+			error_placeDescription = false;
+			error_placeImage = false;
+			error_placeGPS = false;
+				
+				
+			check_placeName();
+			check_placeWard();
+			check_placeType();
+			check_placeDescription();
+			check_placeImage();
+			check_placeGPS();
+				
+			if(error_placeName === false && error_placeWard === false && error_placeType === false &&
+				 error_placeDescription === false && error_placeImage === false && error_placeGPS === false) {
+					
+					//Getting the data from the form	
+					let placeName = $("#placeName").val();
+					let placeWard = $("#placeWard").val();
+					let placeType = $("#placeType").val();
+					let placeDescription = $("#placeDescription").val();
+// 					let placeImage = $("#placeImage").val();
+					let placeGPS = $("#placeGPS").val();
+					
+					let favPlaceInfo = {};
+					favPlaceInfo.placeName = placeName;
+					favPlaceInfo.placeWard = placeWard;
+					favPlaceInfo.placeType = placeType;
+					favPlaceInfo.placeDescription = placeDescription;
+					favPlaceInfo.placeGPs = placeGPS;
+					favPlaceInfo.filledId = timestamp;
+					
+					 
+// 					let myFile = {}; 
+					
+// 					var file = $(id).prop('files');
+					
+// 					myFile.file = file;
+// 					myFile.extension = $(id).val().split('.').pop() ;
+					
+// 					if(myFile.extension != ""){
+// 					myFiles.push(myFile);
+// 					}
+// 					console.log(myFile);
+					 
+					var imageName = "JPEG_" + timestamp + "." + $(id).val().split('.').pop();
+					
+					favPlaceInfo.placeImage = imageName;
+					
+					var formData = new FormData();
+					
+					formData.append("placeImg", $('input[type=file]')[0].files[0]);
+				
+					
+// 					var formId = "form" + myFiles[0].index;
+// 					var imgId = "answer" + myFiles[0].index;
+// 					console.log("FormId--------->" + formId);
+// 					var form = document.getElementById(formId);
+// 					var formData = new FormData(form);
+					
+// 					var formData = new FormData();
+// 					formData.append("imgIndex", imgId);
+// 					formData.append("extension", myFiles[0].extension);
+// 					formData.append("filledId", timestamp);
+// 					formData.append('placeImg', $('input[type=file]')[0].files[0]); 
+					
+// 					for (var pair of formData.entries()) {
+// 					    console.log(pair[0]+ ', ' + pair[1]); 
+// 					}
+					
+// 					var file = file = $(id).prop('files');
+					
+					// Now create an ajax request to send member details to the server
+					$.ajax({
+						method : "POST",
+						url : contextPath + "/favourite-place/",
+						data : JSON.stringify(favPlaceInfo),
+						contentType : "application/json",
+						processData: false,
+						success : function(result) {
+							$.ajax({
+								method: "POST",
+								url : contextPath + "/favourite-place/image",
+								data: formData,
+								async: false,
+								contentType: false,
+								processData: false,
+								success: function(result) {
+									swal.fire(
+										{
+											text : "The place has been added",
+											icon : "success",
+											closeOnClickOutside : false,
+											closeOnEsc : false
+									}).then(function() {
+										window.location.href = contextPath + "/favourite-place/";
+									});
+								}
+								
+							});
+						},
+						error : function(error) {
+						}
+					});
+				} else {
+					swal.fire({
+		            	icon: "info",
+		            	text: "Please enter the required fields correctly :(",
+		        	});
+				}
+			}) 
 		});
+	});
+		
 	</script>
 </body>
 </html>

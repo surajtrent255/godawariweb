@@ -42,6 +42,11 @@
 					</a>
 				</li>
 				<li sec:authorize="hasAnyRole('SUPER_ADMIN', 'CENTRAL_ADMIN')">
+					<a th:href="@{/ward}"
+					class="waves-effect"> <i class="zmdi zmdi-format-list-numbered"></i> <span>Ward List</span>
+					</a>
+				</li>
+				<li sec:authorize="hasAnyRole('SUPER_ADMIN', 'CENTRAL_ADMIN')">
 					<a th:href="@{/user/add}"
 					class="waves-effect"> <i class="zmdi zmdi-account-add"></i> <span>Add User</span>
 					</a>
