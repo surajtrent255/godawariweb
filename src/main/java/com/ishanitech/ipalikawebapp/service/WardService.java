@@ -6,6 +6,19 @@ package com.ishanitech.ipalikawebapp.service;
 
 import java.util.List;
 
+import com.ishanitech.ipalikawebapp.dto.Response;
+import com.ishanitech.ipalikawebapp.dto.WardDTO;
+
 public interface WardService {
 	List<Integer> getAllWards(String token);
+
+	void addWard(WardDTO wardInfo, String token);
+
+	Response<WardDTO> getWardByWardNumber(int wardNo, String token);
+
+	Response<List<WardDTO>> getAllWardInfo(String token);
+
+	void deleteWard(int wardNo, String token);
+
+	void editWard(WardDTO wardInfo, int wardNo, String token);
 }
