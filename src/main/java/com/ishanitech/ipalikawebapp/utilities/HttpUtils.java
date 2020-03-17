@@ -94,7 +94,7 @@ public class HttpUtils {
 				.host(restApiProperties.getDomain())
 				.port(restApiProperties.getPort())
 				.path("/{rootAddress}")
-				.query("{queryParamName}={keyword}" + "&wardNo={wardNo}").buildAndExpand(uriVariables).encode();
+				.query("{queryParamName}={keyword}" + "&wardNo={wardNo}" + "&pageSize={pageSize}").buildAndExpand(uriVariables).encode();
 		return uriComponent.toUriString();
 	}
 	
@@ -104,7 +104,7 @@ public class HttpUtils {
 				.host(restApiProperties.getDomain())
 				.port(restApiProperties.getPort())
 				.path("/{rootAddress}")
-				.query("wardNo={wardNo}").buildAndExpand(uriVariables).encode();
+				.query("wardNo={wardNo}" + "&pageSize={pageSize}").buildAndExpand(uriVariables).encode();
 		return uriComponent.toUriString();
 	}
 }

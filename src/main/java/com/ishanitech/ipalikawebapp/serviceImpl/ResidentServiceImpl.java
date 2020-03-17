@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -97,13 +99,14 @@ public class ResidentServiceImpl implements ResidentService {
 	}
 
 	@Override
-	public List<ResidentDTO> searchResidentByKey(String searchKey, String wardNo, String token) {
+	public List<ResidentDTO> searchResidentByKey(HttpServletRequest request,String searchKey, String wardNo, String token) {
 		String template = String.format("%s/search", RESIDENT_BASE_URL);
 		Map<String, Object> uriVariables = new HashMap<String, Object>();
 		uriVariables.put("rootAddress", template);
 		uriVariables.put("queryParamName", "searchKey");
 		uriVariables.put("keyword", searchKey);
 		uriVariables.put("wardNo", wardNo);
+		uriVariables.put("pageSize", request.getParameter("pageSize"));
 		String url = HttpUtils.createRequestUrlWithQueryString(restApiProperties, uriVariables);
 		log.info("URL--->" + url);
 		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, MediaType.APPLICATION_JSON, token, url);
@@ -114,11 +117,12 @@ public class ResidentServiceImpl implements ResidentService {
 	}
 	
 	@Override
-	public List<ResidentDTO> searchResidentByWard(String wardNo, String token) {
+	public List<ResidentDTO> searchResidentByWard(HttpServletRequest request, String wardNo, String token) {
 		String template = String.format("%s/search/ward", RESIDENT_BASE_URL);
 		Map<String, Object> uriVariables = new HashMap<String, Object>();
 		uriVariables.put("rootAddress", template);
 		uriVariables.put("wardNo", wardNo);
+		uriVariables.put("pageSize", request.getParameter("pageSize"));
 		String url = HttpUtils.createRequestUrlWithWardString(restApiProperties, uriVariables);
 		log.info("URL--->" + url);
 		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, MediaType.APPLICATION_JSON, token, url);
@@ -176,6 +180,41 @@ public class ResidentServiceImpl implements ResidentService {
 		
 		
 		
+	}
+
+	@Override
+	public List<ResidentDTO> getNextLotResidents(HttpServletRequest request,List<String> roles, int wardNumber, String token) {
+		String endPoint = "?";
+		if(request.getParameter("searchKey") != null) {
+			endPoint += "searchKey=" + request.getParameter("searchKey") + "&";
+		}
+		if(request.getParameter("wardNo") != null) {
+			endPoint += "wardNo=" + request.getParameter("wardNo") + "&";
+		}
+		endPoint += "last_seen=" + request.getParameter("lastSeenId") + "&";
+		endPoint += "action=" + request.getParameter("action") + "&";
+		endPoint += "pageSize=" + request.getParameter("pageLimit");
+		log.info("SearchKEy---->"+ request.getParameter("searchKey"));
+		log.info("WardNo---->"+ request.getParameter("wardNo"));
+		log.info("PageLimit---->"+ request.getParameter("pageLimit"));
+		String template = String.format("%s/nextLot" + endPoint, RESIDENT_BASE_URL);
+		
+		//for roleWard
+		RoleWardDTO roleWard = new RoleWardDTO();
+		if(roles.contains("WARD_ADMIN")) {
+			roleWard.setRole(3);
+			roleWard.setWardNumber(wardNumber);
+		}
+		//ends
+		Map<String, Object> uriVariables = new HashMap<String, Object>();
+		uriVariables.put("rootAddress", template);
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, uriVariables);
+		log.info("URL--->" + url);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, roleWard, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<List<ResidentDTO>>> responseType = new ParameterizedTypeReference<Response<List<ResidentDTO>>>() {
+		};
+		List<ResidentDTO> residents = restTemplate.exchange(requestEntity, responseType).getBody().getData();
+		return residents;
 	}
 
 

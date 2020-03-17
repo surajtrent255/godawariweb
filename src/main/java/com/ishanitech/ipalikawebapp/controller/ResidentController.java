@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -73,15 +75,22 @@ public class ResidentController {
 	}
 	
 	@PostMapping("/search")
-	public @ResponseBody List<ResidentDTO> getResidentsBySearchKey(@RequestParam("searchKey") String searchKey, @RequestParam("wardNo") String wardNo, @AuthenticationPrincipal UserDTO user) {
+	public @ResponseBody List<ResidentDTO> getResidentsBySearchKey(HttpServletRequest request, @RequestParam("searchKey") String searchKey, @RequestParam("wardNo") String wardNo, @AuthenticationPrincipal UserDTO user) {
 		log.info("WardNo---->" + wardNo);
-		return residentService.searchResidentByKey(searchKey, wardNo, user.getToken());
+		return residentService.searchResidentByKey(request, searchKey, wardNo, user.getToken());
 	}
 	
 	@PostMapping("/ward")
-	public @ResponseBody List<ResidentDTO> getResidentsByWard(@RequestParam("wardNo") String wardNo, @AuthenticationPrincipal UserDTO user) {
+	public @ResponseBody List<ResidentDTO> getResidentsByWard(@RequestParam("wardNo") String wardNo,HttpServletRequest request, @AuthenticationPrincipal UserDTO user) {
 		log.info("WardNo---->" + wardNo);
-		return residentService.searchResidentByWard(wardNo, user.getToken());
+		log.info("PagedLimited---->" + request.getParameter("pageSize"));
+		return residentService.searchResidentByWard(request, wardNo, user.getToken());
+	}
+	
+	@PostMapping("/nextLot")
+	public @ResponseBody List<ResidentDTO> getNextLotResidents(@AuthenticationPrincipal UserDTO user, HttpServletRequest request) {
+		//log.info("WardNo---->" + request.getParameter("wardNo"));
+		return residentService.getNextLotResidents(request, user.getRoles(), user.getWardNo(), user.getToken());
 	}
 	
 	//Returns the page for family member info edit

@@ -59,11 +59,12 @@
 							<div class="col-md-4">
 								<div class="ui">
 									<label >Show&nbsp;
-										<select id="result-option" class="ui input">
-											<option value="10">10</option>
-											<option value="25">25</option>
-											<option value="50">50</option>
-											<option value="100">100</option>
+										<select id="page-limit-select" class="ui input">
+											<option value="3">3</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="5">5</option>
+											<!-- 10 25 50 100 -->
 										</select>&nbsp;
 										 entries
 									</label>
@@ -79,7 +80,7 @@
 									</label>
 								</div>
 								
-								<div class="ui" sec:authorize="hasAnyRole('WARD_ADMIN')">
+								<div class="ui" sec:authorize="hasAnyRole('WARD_ADMIN') && !hasAnyRole('CENTRAL_ADMIN', 'SURVEYOR')">
 									<label >Ward&nbsp;
 										<select id="ward-wise-select" class="ui input">
 											<!-- <option value=""></option> -->
@@ -148,6 +149,17 @@
 						</div>
 					</div>
 				</div>
+				
+				<div class="ui stackable pagination menu pull-right">
+				<div class="paginate_button item previous disabled" id="grid_previous" href="#" aria-controls="grid" data-dt-idx="0" tabindex="0">Previous</div>
+				<!-- <a class="paginate_button item active" href="#" aria-controls="grid" data-dt-idx="1" tabindex="0">1</a>
+				<a class="paginate_button item " href="#" aria-controls="grid" data-dt-idx="2" tabindex="0">2</a>
+				<a class="paginate_button item " href="#" aria-controls="grid" data-dt-idx="3" tabindex="0">3</a>
+				<a class="paginate_button item " href="#" aria-controls="grid" data-dt-idx="4" tabindex="0">4</a>
+				<a class="paginate_button item " href="#" aria-controls="grid" data-dt-idx="5" tabindex="0">5</a>
+				<div class="paginate_button item disabled" id="grid_ellipsis" href="#" aria-controls="grid" data-dt-idx="6" tabindex="0">…</div>
+				<a class="paginate_button item " href="#" aria-controls="grid" data-dt-idx="7" tabindex="0">90</a> -->
+				<a class="paginate_button item next" id="grid_next" href="#" aria-controls="grid" data-dt-idx="8" tabindex="0">Next</a></div>
 
 			</div>
 		</div>
@@ -158,7 +170,12 @@
 	</div>
 	<div th:replace="~{fragments/scripts :: scripts}">
 	</div>
-	<script>
+	<script th:inline="javascript">
+	
+	/*<![CDATA[*/
+	var residentList = /*[[${residentList}]]*/'';
+	/*]]>*/
+	
 		// For deleting resident
 		function deleteResident(familyId) {
 			swal.fire({
@@ -200,6 +217,7 @@
 				}
 			});
 		}
+		
 	
 		$(function() {
 			function fixedEncodeURIComponent(str) {
@@ -220,8 +238,9 @@
 				if(event.which == 13 && event.keyCode == 13) {
 					let searchKey = $(this).val();
 					let wardNumber = $("#ward-wise-select").val();
+					let pageLimit = $("#page-limit-select").val();
 					console.log("ward-->" + wardNumber);
-					let finalUrl = encodeURI(contextPath + "/resident/search" + "?searchKey=" + encodeURIComponent(searchKey) + "&wardNo=" + wardNumber);
+					let finalUrl = encodeURI(contextPath + "/resident/search" + "?searchKey=" + encodeURIComponent(searchKey) + "&wardNo=" + wardNumber + "&pageSize=" + pageLimit);
 					if(searchKey === "") {
 						swal.fire({
 							  text: 'कृपया नाम दिन नभुल्नुहोला!',
@@ -257,6 +276,10 @@
 									});
 									$("#resident-body").empty();
 									$("#resident-body").append(tablesData);
+									lastItemId = data[data.length-1].id;
+									console.log("LastItemIdUpdated--->"+ lastItemId);
+									firstItemId = data[0].id;
+									
 								} else {
 									swal.fire({
 										  text: 'माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण भेटीएन!',
@@ -274,11 +297,12 @@
 		});
 		
 		$("#ward-wise-select").on("change", function(event) {
-			$("#search").val("");
+				$("#search").val("");
 				let wardNumber = $(this).val();
 				let wardNumberz = $("#ward-wise-select").val();
+				let pageLimit = $("#page-limit-select").val();
 				console.log("ward-->" + wardNumber);
-				let finalUrl = encodeURI(contextPath + "/resident/ward" + "?wardNo=" + wardNumber);
+				let finalUrl = encodeURI(contextPath + "/resident/ward" + "?wardNo=" + wardNumber + "&pageSize=" + pageLimit);
 						$.ajax({
 							url : finalUrl,
 							method: "POST",
@@ -306,9 +330,135 @@
 								});
 								$("#resident-body").empty();
 								$("#resident-body").append(tablesData);
+								lastItemId = data[data.length-1].id;
+								console.log("LastItemIdUpdated--->"+ lastItemId);
+								firstItemId = data[0].id;
 							}
 						});
 	});
+		
+
+			var firstItemId = residentList[0].id;
+	    	   console.log("firstItemId--->" + firstItemId);
+	    	   let pageCount = $("#page-limit-select").val();
+	    	   var lastItemId = residentList[pageCount-1].id;
+	    	   console.log("LastItemId--->" + lastItemId);
+		
+		$("#grid_next").on("click", function(event) {
+			//$("#search").val("");
+				$("#grid_previous").removeClass("disabled");
+				let searchKey = $("#search").val();
+				//let wardNumber = $(this).val();
+				let wardNumber = $("#ward-wise-select").val();
+				let pageLimit = $("#page-limit-select").val();
+				console.log("ward-->" + wardNumber);
+				//var lastItemId = residentList[pageLimit-1].id;
+				let url = contextPath + "/resident/nextLot?";
+				if(searchKey != ""){
+					url += "searchKey=" + searchKey + "&";
+				}
+				if(wardNumber != ""){
+					url += "wardNo=" + wardNumber + "&";
+				}
+				url += "lastSeenId=" + lastItemId + "&";
+				url += "action=next"+ "&";
+				url += "pageLimit=" + pageLimit;
+				console.log("URL--->" + url);
+				let finalUrl = encodeURI(url);
+						$.ajax({
+							url : finalUrl,
+							method: "POST",
+							contentType: "application/json"
+						}).done(function(data) {
+							let tablesData = "";
+							let count = 0;
+							if(data.length > 0) {
+								data.forEach(item => {
+									count += 1;
+									tablesData += `<tr><td>${count}</td>
+													<td>${item.houseOwner}</td>
+													<td>${item.houseNo}</td>
+													<td>${item.tole}</td>
+													<td>${item.phoneNo}</td>
+													<td>${item.kittaNo}</td>
+													<td> <img src="${item.imageUrl}" width="50px" height="50px"/></td>
+													<td>${item.totalFamilyMembers}</td>
+													<td>
+														<a href=\"\" class="btn btn-xs btn-info">Edit</a>
+														<a href=\"\" class="btn btn-xs btn-warning">Delete </a>
+														<a href=\"/resident/${item.filledId}/member\" class="btn btn-xs btn-danger">Add Member</a>
+														<a href=\"/resident/${item.filledId}\" class="btn btn-xs btn-success">Show Details</a>
+													</td> </tr>`;
+								});
+								$("#resident-body").empty();
+								$("#resident-body").append(tablesData);
+								if(data[pageLimit-1] != null){
+								lastItemId = data[pageLimit-1].id;
+								}else{
+									lastItemId = data[data.length-1].id;
+								}
+								console.log("LastItemIdUpdated--->"+ lastItemId);
+								firstItemId = data[0].id;
+								console.log("firstItemUpdated-->"+ firstItemId);
+							}
+						});
+	});
+
+
+	$("#grid_previous").on("click", function(event) {
+			//$("#search").val("");
+				//$("#grid_next").removeClass("disabled");
+				let searchKey = $("#search").val();
+				//let wardNumber = $(this).val();
+				let wardNumber = $("#ward-wise-select").val();
+				let pageLimit = $("#page-limit-select").val();
+				console.log("ward-->" + wardNumber);
+				//var lastItemId = residentList[pageLimit-1].id;
+				let url = contextPath + "/resident/nextLot?";
+				if(searchKey != ""){
+					url += "searchKey=" + searchKey + "&";
+				}
+				if(wardNumber != ""){
+					url += "wardNo=" + wardNumber + "&";
+				}
+				url += "lastSeenId=" + firstItemId + "&";
+				url += "action=prev"+ "&";
+				url += "pageLimit=" + pageLimit;
+				console.log("URL--->" + url);
+				let finalUrl = encodeURI(url);
+						$.ajax({
+							url : finalUrl,
+							method: "POST",
+							contentType: "application/json"
+						}).done(function(data) {
+							let tablesData = "";
+							let count = 0;
+							if(data.length > 0) {
+								data.forEach(item => {
+									count += 1;
+									tablesData += `<tr><td>${count}</td>
+													<td>${item.houseOwner}</td>
+													<td>${item.houseNo}</td>
+													<td>${item.tole}</td>
+													<td>${item.phoneNo}</td>
+													<td>${item.kittaNo}</td>
+													<td> <img src="${item.imageUrl}" width="50px" height="50px"/></td>
+													<td>${item.totalFamilyMembers}</td>
+													<td>
+														<a href=\"\" class="btn btn-xs btn-info">Edit</a>
+														<a href=\"\" class="btn btn-xs btn-warning">Delete </a>
+														<a href=\"/resident/${item.filledId}/member\" class="btn btn-xs btn-danger">Add Member</a>
+														<a href=\"/resident/${item.filledId}\" class="btn btn-xs btn-success">Show Details</a>
+													</td> </tr>`;
+								});
+								$("#resident-body").empty();
+								$("#resident-body").append(tablesData);
+								firstItemId = data[0].id;
+								console.log("firstItemIdUpdated--->"+ firstItemId);
+								lastItemId = data[data.length-1].id;
+							}
+						});
+	});	
 	</script>
 </body>
 </html>

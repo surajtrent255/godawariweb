@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ResidentDTO {
+	private int id;
 	private String houseOwner;
 	private String houseNo;
 	private String tole;
