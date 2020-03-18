@@ -132,6 +132,25 @@ public class ResidentServiceImpl implements ResidentService {
 		return residents;
 	}
 
+
+	@Override
+	public List<ResidentDTO> getResidentByPageLimit(HttpServletRequest request, String wardNo, String token) {
+		String template = String.format("%s/pageLimit", RESIDENT_BASE_URL);
+		Map<String, Object> uriVariables = new HashMap<String, Object>();
+		uriVariables.put("rootAddress", template);
+		uriVariables.put("wardNo", wardNo);
+		uriVariables.put("pageSize", request.getParameter("pageSize"));
+		uriVariables.put("searchKey", request.getParameter("searchKey"));
+		uriVariables.put("lastSeenId", request.getParameter("lastSeenId"));
+		String url = HttpUtils.createRequestUrlWithPageLimit(restApiProperties, uriVariables);
+		log.info("URL--->" + url);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<List<ResidentDTO>>> responseType = new ParameterizedTypeReference<Response<List<ResidentDTO>>>() {
+		};
+		List<ResidentDTO> residents = restTemplate.exchange(requestEntity, responseType).getBody().getData();
+		return residents;
+	}
+	
 	@Override
 	public Response<?> getMemberByMemberId(String token, String memberId) {
 		String template = String.format("%s/member-data/{memberId}", RESIDENT_BASE_URL);
@@ -216,6 +235,7 @@ public class ResidentServiceImpl implements ResidentService {
 		List<ResidentDTO> residents = restTemplate.exchange(requestEntity, responseType).getBody().getData();
 		return residents;
 	}
+
 
 
 }

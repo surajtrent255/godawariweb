@@ -107,4 +107,15 @@ public class HttpUtils {
 				.query("wardNo={wardNo}" + "&pageSize={pageSize}").buildAndExpand(uriVariables).encode();
 		return uriComponent.toUriString();
 	}
+
+	public static String createRequestUrlWithPageLimit(RestApiProperties restApiProperties,
+			Map<String, Object> uriVariables) {
+		UriComponents uriComponent = UriComponentsBuilder.newInstance()
+				.scheme(restApiProperties.getProtocol())
+				.host(restApiProperties.getDomain())
+				.port(restApiProperties.getPort())
+				.path("/{rootAddress}")
+				.query("wardNo={wardNo}" + "&pageSize={pageSize}" + "&searchKey={searchKey}" + "&lastSeenId={lastSeenId}").buildAndExpand(uriVariables).encode();
+		return uriComponent.toUriString();
+	}
 }

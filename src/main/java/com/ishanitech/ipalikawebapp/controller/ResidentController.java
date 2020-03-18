@@ -87,6 +87,13 @@ public class ResidentController {
 		return residentService.searchResidentByWard(request, wardNo, user.getToken());
 	}
 	
+	@PostMapping("/pageLimit")
+	public @ResponseBody List<ResidentDTO> getResidentsByPageLimit(@RequestParam("wardNo") String wardNo,HttpServletRequest request, @AuthenticationPrincipal UserDTO user) {
+		log.info("WardNo---->" + wardNo);
+		log.info("PagedLimited---->" + request.getParameter("pageSize"));
+		return residentService.getResidentByPageLimit(request, wardNo, user.getToken());
+	}
+	
 	@PostMapping("/nextLot")
 	public @ResponseBody List<ResidentDTO> getNextLotResidents(@AuthenticationPrincipal UserDTO user, HttpServletRequest request) {
 		//log.info("WardNo---->" + request.getParameter("wardNo"));

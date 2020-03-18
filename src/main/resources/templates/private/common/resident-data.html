@@ -337,9 +337,58 @@
 								firstItemId = data[0].id;
 								$("#grid_previous").addClass("disabled");
 								$("#grid_next").removeClass("disabled");
+							}else{
+								swal.fire({
+									  text: 'Sorry | No Data for this ward!',
+									  icon: 'warning',
+									  confirmButtonText: 'OK'
+								});
+								$("#resident-body").empty();
 							}
 						});
 	});
+		
+		$("#page-limit-select").on("change", function(event) {
+			//$("#search").val("");
+			let pageLimit = $(this).val();
+			let wardNumber = $("#ward-wise-select").val();
+			let searchKey = $("#search").val();
+			//let pageLimit = $("#page-limit-select").val();
+			console.log("ward-->" + wardNumber);
+			let finalUrl = encodeURI(contextPath + "/resident/pageLimit" + "?wardNo=" + wardNumber + "&pageSize=" + pageLimit + "&searchKey=" + searchKey + "&lastSeenId=" + firstItemId);
+					$.ajax({
+						url : finalUrl,
+						method: "POST",
+						contentType: "application/json"
+					}).done(function(data) {
+						let tablesData = "";
+						let count = 0;
+						if(data.length > 0) {
+							data.forEach(item => {
+								count += 1;
+								tablesData += `<tr><td>${count}</td>
+												<td>${item.houseOwner}</td>
+												<td>${item.houseNo}</td>
+												<td>${item.tole}</td>
+												<td>${item.phoneNo}</td>
+												<td>${item.kittaNo}</td>
+												<td> <img src="${item.imageUrl}" width="50px" height="50px"/></td>
+												<td>${item.totalFamilyMembers}</td>
+												<td>
+													<a href=\"\" class="btn btn-xs btn-info">Edit</a>
+													<a href=\"\" class="btn btn-xs btn-warning">Delete </a>
+													<a href=\"/resident/${item.filledId}/member\" class="btn btn-xs btn-danger">Add Member</a>
+													<a href=\"/resident/${item.filledId}\" class="btn btn-xs btn-success">Show Details</a>
+												</td> </tr>`;
+							});
+							$("#resident-body").empty();
+							$("#resident-body").append(tablesData);
+							lastItemId = data[data.length-1].id;
+							console.log("LastItemIdUpdated--->"+ lastItemId);
+							firstItemId = data[0].id;
+						}
+					});
+});
 		
 
 			var firstItemId = residentList[0].id;
