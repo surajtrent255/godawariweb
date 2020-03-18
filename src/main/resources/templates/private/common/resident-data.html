@@ -60,10 +60,10 @@
 								<div class="ui">
 									<label >Show&nbsp;
 										<select id="page-limit-select" class="ui input">
-											<option value="3">3</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="5">5</option>
+											<option value="10">10</option>
+											<option value="25">25</option>
+											<option value="50">50</option>
+											<option value="100">100</option>
 											<!-- 10 25 50 100 -->
 										</select>&nbsp;
 										 entries
@@ -223,7 +223,7 @@
 			function fixedEncodeURIComponent(str) {
 // 				  return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
 				    return '%' + c.charCodeAt(0).toString(16);
-				  });
+				  //});
 			}
 			
 			$(function () {
@@ -279,6 +279,8 @@
 									lastItemId = data[data.length-1].id;
 									console.log("LastItemIdUpdated--->"+ lastItemId);
 									firstItemId = data[0].id;
+									$("#grid_previous").addClass("disabled");
+									$("#grid_next").removeClass("disabled");
 									
 								} else {
 									swal.fire({
@@ -333,6 +335,8 @@
 								lastItemId = data[data.length-1].id;
 								console.log("LastItemIdUpdated--->"+ lastItemId);
 								firstItemId = data[0].id;
+								$("#grid_previous").addClass("disabled");
+								$("#grid_next").removeClass("disabled");
 							}
 						});
 	});
@@ -400,6 +404,13 @@
 								console.log("LastItemIdUpdated--->"+ lastItemId);
 								firstItemId = data[0].id;
 								console.log("firstItemUpdated-->"+ firstItemId);
+							}else{
+								swal.fire({
+										  text: 'Sorry | No more Data!',
+										  icon: 'warning',
+										  confirmButtonText: 'OK'
+									});
+								$("#grid_next").addClass("disabled");
 							}
 						});
 	});
@@ -407,7 +418,7 @@
 
 	$("#grid_previous").on("click", function(event) {
 			//$("#search").val("");
-				//$("#grid_next").removeClass("disabled");
+				$("#grid_next").removeClass("disabled");
 				let searchKey = $("#search").val();
 				//let wardNumber = $(this).val();
 				let wardNumber = $("#ward-wise-select").val();
@@ -456,6 +467,13 @@
 								firstItemId = data[0].id;
 								console.log("firstItemIdUpdated--->"+ firstItemId);
 								lastItemId = data[data.length-1].id;
+							}else{
+								swal.fire({
+										  text: 'Sorry | No new Data!',
+										  icon: 'warning',
+										  confirmButtonText: 'OK'
+									});
+								$("#grid_previous").addClass("disabled");
 							}
 						});
 	});	
