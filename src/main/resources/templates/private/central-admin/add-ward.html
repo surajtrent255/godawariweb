@@ -163,6 +163,9 @@
 		    });
 		});	
 	
+		$(window).on("load", function(e) {
+			$("#wardDescription").val('');
+		})		
 		
 		//Transliteration portion
 		google.load("elements", "1", {
@@ -263,7 +266,7 @@
 			} 
 			
 			function check_wardDescription() {
-				let wardDecription = $("#wardDescription").val();
+				let wardDescription = $("#wardDescription").val();
 				if(wardDescription !== '') {
 					$("#wardDescription_error_message").hide();
 					$("#wardDescription").css("border-bottom", "2px solid #34F458");
