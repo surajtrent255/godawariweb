@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -93,9 +94,14 @@
 						<form name="wardEditForm" id="wardEditForm" method="POST"
 							th:action="@{/ward}"	enctype="multipart/form-data" class="unicode">
 							<div class="form-group row">
-								<div class="col-md-4">
+								<div class="col-md-4" sec:authorize="hasAnyRole('CENTRAL_ADMIN')">
 									<label for="wardNumber">Ward Number</label> <input type="text"
 										id="wardNumber" name="wardNumber" class="form-control required" th:value="${wardInfo.wardNumber}"/>
+										<span class="error_form" id="wardNumber_error_message"></span>
+								</div>
+								<div class="col-md-4" sec:authorize="hasAnyRole('WARD_ADMIN')">
+									<label for="wardNumber">Ward Number</label> <input type="text"
+										id="wardNumber" name="wardNumber" class="form-control required" th:value="${wardInfo.wardNumber}" readonly/>
 										<span class="error_form" id="wardNumber_error_message"></span>
 								</div>
 							</div>
@@ -175,9 +181,12 @@
 		})
 		
 		function evaluateAnswers() {
-			$("#wardDescription").val(eval(wardInfoInitial.wardDescription));
+			$("#wardDescription").val(wardInfoInitial.wardDescription);
 		}
 		
+		function goBack() {
+			window.history.back();
+		}
 		//Transliteration portion
 		google.load("elements", "1", {
 		    packages: "transliteration"
@@ -369,7 +378,7 @@
 									closeOnClickOutside : false,
 									closeOnEsc : false
 								}).then(function() {
-									window.location.href = contextPath + "/ward/";
+									goBack();
 								});
 						},
 						error : function(error) {

@@ -56,8 +56,13 @@ public class WardController {
 	
 	@GetMapping("/{wardNumber}")
 	public String getWardInfoByWardNumber(@PathVariable("wardNumber") int wardNo, @AuthenticationPrincipal UserDTO user, Model model) {
-		Response<WardDTO> wardResponse = wardService.getWardByWardNumber(wardNo, user.getToken());
-		model.addAttribute("wardInfo", wardResponse.getData());
+		if(user.getRoles().contains("WARD_ADMIN")) {
+			Response<WardDTO> wardResponse = wardService.getWardByWardNumber(user.getWardNo(), user.getToken());
+			model.addAttribute("wardInfo", wardResponse.getData());
+		} else {
+			Response<WardDTO> wardResponse = wardService.getWardByWardNumber(wardNo, user.getToken());
+			model.addAttribute("wardInfo", wardResponse.getData());
+		}
 		return "private/common/ward-details";
 	}
 	
@@ -70,16 +75,24 @@ public class WardController {
 	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN"})
 	@GetMapping("/edit/{wardNumber}")
 	public String getWardEditView(@PathVariable("wardNumber") int wardNo, @AuthenticationPrincipal UserDTO user, Model model) {
-		Response<WardDTO> wardResponse = wardService.getWardByWardNumber(wardNo, user.getToken());
-		log.info(wardResponse.toString());
-		model.addAttribute("wardInfo", wardResponse.getData());
+		if(user.getRoles().contains("WARD_ADMIN")) {
+			Response<WardDTO> wardResponse = wardService.getWardByWardNumber(user.getWardNo(), user.getToken());
+			model.addAttribute("wardInfo", wardResponse.getData());
+		} else {
+			Response<WardDTO> wardResponse = wardService.getWardByWardNumber(wardNo, user.getToken());
+			model.addAttribute("wardInfo", wardResponse.getData());
+		}
 		return "private/common/edit-ward";
 	}
 	
 	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN"})
 	@PutMapping("/{wardNumber}")
 	public @ResponseBody Response<String> editWard(@RequestBody WardDTO wardInfo, @PathVariable("wardNumber") int wardNo, @AuthenticationPrincipal UserDTO user) {
+		if(user.getRoles().contains("WARD_ADMIN")) {
+			wardService.editWard(wardInfo, user.getWardNo(), user.getToken());
+		} else {
 		wardService.editWard(wardInfo, wardNo, user.getToken());
+		}
 		return new Response<String>("Ward details edited successfully");
 	}
 	
