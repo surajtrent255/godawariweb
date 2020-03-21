@@ -56,7 +56,7 @@
 				<div class="row">
 					<div class="col-lg-12 col-md-12">
 						<div class="row">
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="ui">
 									<label >Show&nbsp;
 										<select id="page-limit-select" class="ui input">
@@ -70,7 +70,7 @@
 									</label>
 								</div>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="ui" sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'SURVEYOR')">
 									<label >Ward&nbsp;
 										<select id="ward-wise-select" class="ui input">
@@ -90,7 +90,18 @@
 								</div>
 								
 							</div>
-							<div class="col-md-4">
+							
+							<div class="col-md-3">
+								<div class="ui">
+									<label>
+										Sorted By:&nbsp;<span class="ui" id="sortedBySpan">
+											
+										</span>
+									</label>
+								</div>
+							</div>
+							
+							<div class="col-md-3">
 								<div class="ui pull-right">
 									<label>
 										Search:&nbsp;<span class="ui input">
@@ -105,14 +116,14 @@
 							<table th:if="${residentList.size() > 0}" class="table table-striped table-hover" id="grid">
 								<thead>
 									<tr>
-										<th><strong>ऋ.स</strong></th>
-										<th><strong>घरमुलीको नाम</strong></th>
-										<th><strong>घर नं</strong></th>
-										<th><strong>टोल</strong></th>
-										<th><strong>फोन नं </strong></th>
-										<th><strong>कित्ता नं</strong></th>
+										<th id="IdNumberColumn"><strong>ऋ.स</strong></th>
+										<th th:onclick="'sortByFunction(\'ownerName\');'"><strong>घरमुलीको नाम</strong></th>
+										<th th:onclick="'sortByFunction(\'houseNumber\');'"><strong>घर नं</strong></th>
+										<th th:onclick="'sortByFunction(\'tole\');'"><strong>टोल</strong></th>
+										<th th:onclick="'sortByFunction(\'phoneNumber\');'"><strong>फोन नं </strong></th>
+										<th th:onclick="'sortByFunction(\'kittaNumber\');'"><strong>कित्ता नं</strong></th>
 										<th><strong>फोटो</strong></th>
-										<th><strong>सदस्य संख्या</strong></th>
+										<th th:onclick="'sortByFunction(\'familySize\');'"><strong>सदस्य संख्या</strong></th>
 										<th><strong>कार्यहरू</strong></th>
 									</tr>
 								</thead>
@@ -217,6 +228,88 @@
 				}
 			});
 		}
+	
+		var sortBy = "";
+		var sortByOrder = 'DESC';
+	
+		function sortByFunction(sortStr) {
+				console.log("OutputtedVal--->" + sortStr);
+				sortBy = sortStr;
+				sortByOrder = (sortByOrder == 'DESC' ? 'ASC' : 'DESC');
+				console.log("sortBy--->" + sortBy);
+				console.log("sortByORDER--->" + sortByOrder);
+				
+				document.getElementById('sortedBySpan').innerHTML = sortBy;
+				
+				 $("#grid_previous").addClass("disabled");
+				currentPageNo = 0;
+				let searchKey = $("#search").val();
+				let wardNumber = $("#ward-wise-select").val();
+				let pageLimit = $("#page-limit-select").val();
+				console.log("ward-->" + wardNumber);
+				let url = contextPath + "/resident/sortBy?";
+				if(searchKey != ""){
+					url += "searchKey=" + searchKey + "&";
+				}
+				if(wardNumber != ""){
+					url += "wardNo=" + wardNumber + "&";
+				}
+				//url += "lastSeenId=" + lastItemId + "&";
+				//url += "action=next"+ "&";
+				url += "sortBy=" + sortBy + "&";
+				url += "sortByOrder=" + sortByOrder + "&";
+				url += "pageLimit=" + pageLimit;
+				console.log("URL--->" + url);
+				let finalUrl = encodeURI(url);
+						$.ajax({
+							url : finalUrl,
+							method: "POST",
+							contentType: "application/json"
+						}).done(function(data) {
+							let tablesData = "";
+							let count = 0;
+							if(data.length > 0) {
+								data.forEach(item => {
+									count += 1;
+									tablesData += `<tr><td>${count}</td>
+													<td>${item.houseOwner}</td>
+													<td>${item.houseNo}</td>
+													<td>${item.tole}</td>
+													<td>${item.phoneNo}</td>
+													<td>${item.kittaNo}</td>
+													<td> <img src="${item.imageUrl}" width="50px" height="50px"/></td>
+													<td>${item.totalFamilyMembers}</td>
+													<td>
+														<a href=\"\" class="btn btn-xs btn-info">Edit</a>
+														<a href=\"\" class="btn btn-xs btn-warning">Delete </a>
+														<a href=\"/resident/${item.filledId}/member\" class="btn btn-xs btn-danger">Add Member</a>
+														<a href=\"/resident/${item.filledId}\" class="btn btn-xs btn-success">Show Details</a>
+													</td> </tr>`;
+								});
+								$("#resident-body").empty();
+								$("#resident-body").append(tablesData);
+								if(data[pageLimit-1] != null){
+								lastItemId = data[pageLimit-1].id;
+								}else{
+									lastItemId = data[data.length-1].id;
+								}
+								console.log("LastItemIdUpdated--->"+ lastItemId);
+								firstItemId = data[0].id;
+								console.log("firstItemUpdated-->"+ firstItemId);
+								$("#grid_previous").addClass("disabled");
+								$("#grid_next").removeClass("disabled");
+							}else{
+								swal.fire({
+										  text: 'Sorry | No more Data!',
+										  icon: 'warning',
+										  confirmButtonText: 'OK'
+									});
+								$("#grid_next").addClass("disabled");
+							}
+						});
+
+				
+		}
 		
 	
 		$(function() {
@@ -233,13 +326,22 @@
 	    	        xhr.setRequestHeader(header, token);
 	    	    });
 	    	});
+
+			 document.getElementById('sortedBySpan').innerHTML = 'None';
 			
+			 $("#IdNumberColumn").on("click", function(event){
+				
+				 location.reload();
+				 
+			 });
+			 
 			$("#search").on("keypress", function(event) {
 				if(event.which == 13 && event.keyCode == 13) {
 					let searchKey = $(this).val();
 					let wardNumber = $("#ward-wise-select").val();
 					let pageLimit = $("#page-limit-select").val();
 					console.log("ward-->" + wardNumber);
+					currentPageNo = 0;
 					let finalUrl = encodeURI(contextPath + "/resident/search" + "?searchKey=" + encodeURIComponent(searchKey) + "&wardNo=" + wardNumber + "&pageSize=" + pageLimit);
 					if(searchKey === "") {
 						swal.fire({
@@ -304,7 +406,13 @@
 				let wardNumberz = $("#ward-wise-select").val();
 				let pageLimit = $("#page-limit-select").val();
 				console.log("ward-->" + wardNumber);
-				let finalUrl = encodeURI(contextPath + "/resident/ward" + "?wardNo=" + wardNumber + "&pageSize=" + pageLimit);
+				currentPageNo = 0;
+				let appurl = "";
+				if(sortBy != ""){
+					appurl += "&sortBy=" + sortBy + "&";
+					appurl += "sortByOrder=" + sortByOrder;
+				}
+				let finalUrl = encodeURI(contextPath + "/resident/ward" + "?wardNo=" + wardNumber + "&pageSize=" + pageLimit + appurl);
 						$.ajax({
 							url : finalUrl,
 							method: "POST",
@@ -355,7 +463,14 @@
 			let searchKey = $("#search").val();
 			//let pageLimit = $("#page-limit-select").val();
 			console.log("ward-->" + wardNumber);
-			let finalUrl = encodeURI(contextPath + "/resident/pageLimit" + "?wardNo=" + wardNumber + "&pageSize=" + pageLimit + "&searchKey=" + searchKey + "&lastSeenId=" + firstItemId);
+			currentPageNo = 0;
+			let appurl = "";
+			if(sortBy != ""){
+				appurl += "&sortBy=" + sortBy + "&";
+				appurl += "sortByOrder=" + sortByOrder;
+			}
+			
+			let finalUrl = encodeURI(contextPath + "/resident/pageLimit" + "?wardNo=" + wardNumber + "&pageSize=" + pageLimit + "&searchKey=" + searchKey + "&lastSeenId=" + firstItemId + appurl);
 					$.ajax({
 						url : finalUrl,
 						method: "POST",
@@ -396,6 +511,7 @@
 	    	   let pageCount = $("#page-limit-select").val();
 	    	   var lastItemId = residentList[pageCount-1].id;
 	    	   console.log("LastItemId--->" + lastItemId);
+	    	   var currentPageNo = 0;
 		
 		$("#grid_next").on("click", function(event) {
 			//$("#search").val("");
@@ -405,6 +521,9 @@
 				let wardNumber = $("#ward-wise-select").val();
 				let pageLimit = $("#page-limit-select").val();
 				console.log("ward-->" + wardNumber);
+				currentPageNo ++;
+				console.log("CurrentPageNo--->" + currentPageNo);
+				
 				//var lastItemId = residentList[pageLimit-1].id;
 				let url = contextPath + "/resident/nextLot?";
 				if(searchKey != ""){
@@ -415,6 +534,12 @@
 				}
 				url += "lastSeenId=" + lastItemId + "&";
 				url += "action=next"+ "&";
+				
+				if(sortBy != ""){
+					url += "sortBy=" + sortBy + "&";
+					url += "sortByOrder=" + sortByOrder + "&";
+				}
+				url += "currentPage=" + currentPageNo + "&";
 				url += "pageLimit=" + pageLimit;
 				console.log("URL--->" + url);
 				let finalUrl = encodeURI(url);
@@ -460,6 +585,7 @@
 										  confirmButtonText: 'OK'
 									});
 								$("#grid_next").addClass("disabled");
+								currentPageNo --;
 							}
 						});
 	});
@@ -474,6 +600,9 @@
 				let pageLimit = $("#page-limit-select").val();
 				console.log("ward-->" + wardNumber);
 				//var lastItemId = residentList[pageLimit-1].id;
+				currentPageNo --;
+				console.log("CurrentPageNo--->" + currentPageNo);
+				
 				let url = contextPath + "/resident/nextLot?";
 				if(searchKey != ""){
 					url += "searchKey=" + searchKey + "&";
@@ -483,6 +612,13 @@
 				}
 				url += "lastSeenId=" + firstItemId + "&";
 				url += "action=prev"+ "&";
+				
+				if(sortBy != ""){
+					url += "sortBy=" + sortBy + "&";
+					url += "sortByOrder=" + sortByOrder + "&";
+				}
+				url += "currentPage=" + currentPageNo + "&";
+				
 				url += "pageLimit=" + pageLimit;
 				console.log("URL--->" + url);
 				let finalUrl = encodeURI(url);
@@ -523,6 +659,7 @@
 										  confirmButtonText: 'OK'
 									});
 								$("#grid_previous").addClass("disabled");
+								currentPageNo ++;
 							}
 						});
 	});	

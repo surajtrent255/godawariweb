@@ -22,4 +22,5 @@ public interface ResidentService {
 	void deleteHouseholdByFamilyId(String familyId, String token);
 	List<ResidentDTO> getNextLotResidents(HttpServletRequest request,List<String> roles, int wardNumber, String token);
 	List<ResidentDTO> getResidentByPageLimit(HttpServletRequest request, String wardNo, String token);
+	List<ResidentDTO> getSortedResidents(HttpServletRequest request, String token);
 }

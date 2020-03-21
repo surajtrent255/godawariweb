@@ -100,6 +100,11 @@ public class ResidentController {
 		return residentService.getNextLotResidents(request, user.getRoles(), user.getWardNo(), user.getToken());
 	}
 	
+	@PostMapping("/sortBy")
+	public @ResponseBody List<ResidentDTO> getSortedResidents(@AuthenticationPrincipal UserDTO user, HttpServletRequest request) {
+		return residentService.getSortedResidents(request, user.getToken());
+	}
+	
 	//Returns the page for family member info edit
 	@GetMapping("/member/{memberId}")
 	public String editMemberInfoView(Model model, @PathVariable("memberId") String memberId, @AuthenticationPrincipal UserDTO user) {
