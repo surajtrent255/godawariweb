@@ -163,6 +163,7 @@
 				
 				<div class="ui stackable pagination menu pull-right">
 				<div class="paginate_button item previous disabled" id="grid_previous" href="#" aria-controls="grid" data-dt-idx="0" tabindex="0">Previous</div>
+				<a class="paginate_button item active" aria-controls="grid" data-dt-idx="1" tabindex="0" id="pageNumberPagination">1</a>
 				<!-- <a class="paginate_button item active" href="#" aria-controls="grid" data-dt-idx="1" tabindex="0">1</a>
 				<a class="paginate_button item " href="#" aria-controls="grid" data-dt-idx="2" tabindex="0">2</a>
 				<a class="paginate_button item " href="#" aria-controls="grid" data-dt-idx="3" tabindex="0">3</a>
@@ -298,6 +299,7 @@
 								console.log("firstItemUpdated-->"+ firstItemId);
 								$("#grid_previous").addClass("disabled");
 								$("#grid_next").removeClass("disabled");
+								document.getElementById("pageNumberPagination").innerHTML = currentPageNo + 1;
 							}else{
 								swal.fire({
 										  text: 'Sorry | No more Data!',
@@ -383,6 +385,7 @@
 									firstItemId = data[0].id;
 									$("#grid_previous").addClass("disabled");
 									$("#grid_next").removeClass("disabled");
+									document.getElementById("pageNumberPagination").innerHTML = currentPageNo + 1;
 									
 								} else {
 									swal.fire({
@@ -445,6 +448,7 @@
 								firstItemId = data[0].id;
 								$("#grid_previous").addClass("disabled");
 								$("#grid_next").removeClass("disabled");
+								document.getElementById("pageNumberPagination").innerHTML = currentPageNo + 1;
 							}else{
 								swal.fire({
 									  text: 'Sorry | No Data for this ward!',
@@ -501,6 +505,7 @@
 							lastItemId = data[data.length-1].id;
 							console.log("LastItemIdUpdated--->"+ lastItemId);
 							firstItemId = data[0].id;
+							document.getElementById("pageNumberPagination").innerHTML = currentPageNo + 1;
 						}
 					});
 });
@@ -578,6 +583,7 @@
 								console.log("LastItemIdUpdated--->"+ lastItemId);
 								firstItemId = data[0].id;
 								console.log("firstItemUpdated-->"+ firstItemId);
+								document.getElementById("pageNumberPagination").innerHTML = currentPageNo + 1;
 							}else{
 								swal.fire({
 										  text: 'Sorry | No more Data!',
@@ -652,6 +658,7 @@
 								firstItemId = data[0].id;
 								console.log("firstItemIdUpdated--->"+ firstItemId);
 								lastItemId = data[data.length-1].id;
+								document.getElementById("pageNumberPagination").innerHTML = currentPageNo + 1;
 							}else{
 								swal.fire({
 										  text: 'Sorry | No new Data!',
