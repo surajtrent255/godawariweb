@@ -48,7 +48,7 @@
 				</li>
 				<li sec:authorize="hasAnyRole('WARD_ADMIN')">
 					<a th:href="@{/ward/} + ${#authentication.principal.wardNo}"
-					class="waves-effect"> <i class="zmdi zmdi-format-list-numbered"></i> <span>Show Ward Details</span>
+					class="waves-effect"> <i class="zmdi zmdi-file-text"></i> <span>Ward Details</span>
 					</a>
 				</li>
 				<li sec:authorize="hasAnyRole('SUPER_ADMIN', 'CENTRAL_ADMIN')">
