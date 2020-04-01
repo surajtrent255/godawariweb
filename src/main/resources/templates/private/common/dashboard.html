@@ -40,7 +40,7 @@
 				<!--Start Dashboard Content-->
 <!-- 				<button class="add-member btn btn-primary mb-2" style="margin-left: 8px;" id="generateReport">Generate Latest Report</button> -->
 				<div th:if="${!#lists.isEmpty(populationReport) && populationReport != null && populationReport.get(0) != null}" class="row mt-3">
-					<div class="col-12 col-lg-6 col-xl-3">
+					<div class="col-12 col-lg-6 col-xl-2">
 						<div class="card gradient-deepblue">
 							<div class="card-body">
 								<h5 class="text-white mb-0"
@@ -59,7 +59,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-6 col-xl-3" >
+					<div class="col-12 col-lg-6 col-xl-2" >
 						<div class="card gradient-orange">
 							<div class="card-body">
 								<h5 class="text-white mb-0"
@@ -79,7 +79,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-6 col-xl-3">
+					<div class="col-12 col-lg-6 col-xl-2">
 						<div class="card gradient-ohhappiness">
 							<div class="card-body">
 								<h5 class="text-white mb-0"
@@ -99,7 +99,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-6 col-xl-3">
+					<div class="col-12 col-lg-6 col-xl-2">
 						<div class="card gradient-ibiza">
 							<div class="card-body">
 								<h5 class="text-white mb-0"
@@ -119,7 +119,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-6 col-xl-3">
+					<div class="col-12 col-lg-6 col-xl-2">
 						<div class="card gradient-deepblue">
 							<div class="card-body">
 								<h5 class="text-white mb-0"
@@ -139,7 +139,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-6 col-xl-3">
+					<div class="col-12 col-lg-6 col-xl-2">
 						<div class="card gradient-ibiza">
 							<div class="card-body">
 								<h5 class="text-white mb-0"
@@ -159,7 +159,6 @@
 							</div>
 						</div>
 					</div>
-					
 				</div>
 				<!--End Row-->
 
@@ -1037,22 +1036,26 @@
 		$(function() {
 			let populationReportExists = /*[[${#lists.isEmpty(populationReport)}]]*/;
 			if(!populationReportExists) {
-				let totalYouths = /*[[${populationReport.get(0).option3}]]*/ '0';
+				
 				let totalInfants = /*[[${populationReport.get(0).option1}]]*/ '0';
 				let totalChildrens = /*[[${populationReport.get(0).option2}]]*/ '0';
+				let totalYouths = /*[[${populationReport.get(0).option3}]]*/ '0';
+				let totalMidage = /*[[${populationReport.get(0).option4}]]*/ '0';
 				let totalOldage = /*[[${populationReport.get(0).option4}]]*/ '0';
+				let totalSeniorCitizens = /*[[${populationReport.get(0).option4}]]*/ '0';
+				
 				let totalMale = /*[[${populationReport.get(1).option1}]]*/ '0';
 				let totalFemale = /*[[${populationReport.get(1).option2}]]*/ '0';
 				let totalOthers = /*[[${populationReport.get(1).option3}]]*/ '0';
 				new Chart(document.getElementById("population-chart"), {
 				    type: 'bar',
 				    data: {
-				      labels: ["जम्मा शिसु", "जम्मा बालबालिका", "जम्मा युवा","जम्मा बृद्ध"],
+				      labels: ["जम्मा शिसु", "जम्मा बालबालिका", "जम्मा युवा", "जम्मा अधबैँसे", "जम्मा बृद्ध", "जम्मा जेष्ठ नागरिक"],
 				      datasets: [
 				        {
 				          label: "नगरपालिकाको जनसंख्या",
-				          backgroundColor: ["#4547e6", "#f98026","#50be69", "#f53343"],
-				          data: [totalInfants, totalChildrens, totalYouths, totalOldage]
+				          backgroundColor: ["#4547e6", "#f98026","#50be69", "#f53343", "#dc143c", "#ffd700"],
+				          data: [totalInfants, totalChildrens, totalYouths, totalMidage, totalOldage, totalSeniorCitizens]
 				        }
 				      ]
 				    },
