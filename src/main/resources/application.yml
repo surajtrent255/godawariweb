@@ -99,4 +99,4 @@ logging:
   loggin:
     level:
       root: ERROR
-  file: /home/ipalika/ipalika-logs/ipalika-rest-api.log  
+  file: /home/ipalika/ipalika-logs/ipalika-webapp.log  

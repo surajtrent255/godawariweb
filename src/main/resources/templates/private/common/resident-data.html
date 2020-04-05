@@ -514,7 +514,9 @@
 			var firstItemId = residentList[0].id;
 	    	   console.log("firstItemId--->" + firstItemId);
 	    	   let pageCount = $("#page-limit-select").val();
-	    	   var lastItemId = residentList[pageCount-1].id;
+	    	   //var lastItemId = residentList[pageCount-1].id;
+	    	   var lastItemId = residentList[residentList.length - 1].id;
+	    	   console.log("ResidentListSize--->" + residentList.length);
 	    	   console.log("LastItemId--->" + lastItemId);
 	    	   var currentPageNo = 0;
 		
