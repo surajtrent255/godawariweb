@@ -95,8 +95,8 @@
 }
 
 #surveyMap {
-	height: 50em;
-	width: 50em;
+	height: 70em;
+	width: 95em;
 }
 </style>
 </head>
@@ -111,15 +111,32 @@
 			th:if="${residentFullDetail != null && residentFullDetail.residentDetail != null}">
 			<div class="container-fluid" id="pjax-container">
 				<div class="row pt-2 pb-2">
-					<div class="col-sm-9">
+					<div class="col-sm-6">
 						<h4 class="page-title"
 							th:text="${residentFullDetail.residentDetail.answer1} + ' को पूर्ण विवरण'">Godawari
-							Nagarpalika Full Detail</h4>
+							Nagarpalika Full Detail</h4> 	
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
 							<li class="breadcrumb-item active" aria-current="page">Household
 								Members List</li>
 						</ol>
+					</div>
+					<div class="col-sm-6">
+						<div class="pull-right">
+						<!-- Button for showing the modal for Map Location  -->
+						<button id="view-location-btn"
+							class="block2-user-id btn btn-success">यस
+						स्थान मानचित्रमा हेर्नुहोस</button>
+						<!-- Button for adding family member  -->
+						<a th:href="@{/resident/} + ${residentFullDetail.residentDetail.filledId} +'/member/'"><button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-primary">
+							Add Family Member
+						</button></a>
+						
+						<!-- Button for printing data  -->
+<!-- 						<div class="btn-print"> -->
+							<button id="print" class="btn btn-primary">Print this page</button>
+<!-- 						</div> -->
+						</div>
 					</div>
 				</div>
 				<div class="saibu-display-form print table-responsive printForm">
@@ -170,12 +187,12 @@
 										</tr>
 									</tbody>
 								</table>
-								<!-- Button for showing the modal for Map Location  -->
-								<div>
-									<button id="view-location-btn"
-										class="block2-user-id btn btn-success pull-right">यस
-										स्थान मानचित्रमा हेर्नुहोस</button>
-								</div>
+							
+<!-- 								<div> -->
+<!-- 									<button id="view-location-btn" -->
+<!-- 										class="block2-user-id btn btn-success pull-right">यस -->
+<!-- 										स्थान मानचित्रमा हेर्नुहोस</button> -->
+<!-- 								</div> -->
 							</div>
 						</div>
 					</div>
@@ -252,9 +269,9 @@
 									</thead>
 								</table>
 							</div>
-												<a th:href="@{/resident/} + ${residentFullDetail.residentDetail.filledId} +'/member/'"><button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-primary pull-right">
-												Add Family Member
-												</button></a>
+<!-- 												<a th:href="@{/resident/} + ${residentFullDetail.residentDetail.filledId} +'/member/'"><button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-primary pull-right"> -->
+<!-- 												Add Family Member -->
+<!-- 												</button></a> -->
 						</div>
 					</div>
 					<div class="row">
@@ -420,8 +437,10 @@
 								</button>
 							</div>
 							<div class="modal-content-body">
-								<div class="row" style="margin: 5px 20px;">
-									<div style="margin: 20px auto;">
+								<div class="row">
+<!-- 								<div class="row" style="margin: 5px 20px;"> -->
+<!-- 									<div style="margin: 20px auto;"> -->
+									<div>
 										<div id="surveyMap"></div>
 									</div>
 								</div>
@@ -430,9 +449,9 @@
 					</div>
 				</div>
 
-				<div class="btn-print">
-					<button id="print" class="btn btn-primary">Print this page</button>
-				</div>
+<!-- 				<div class="btn-print"> -->
+<!-- 					<button id="print" class="btn btn-primary">Print this page</button> -->
+<!-- 				</div> -->
 			</div>
 		</div>
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
@@ -463,7 +482,7 @@
 		var geoLong = geoFields[1]; //Gets the longitude
 
 		//JS function for displaying the location of the household using leafletjs
-		const mymap = L.map('surveyMap').setView([ geoLat, geoLong ], 18);
+		const mymap = L.map('surveyMap').setView([ geoLat, geoLong ], 20);
 		var marker;
 		// 			var layerGroup = L.layerGroup().addTo(mymap);
 
@@ -487,7 +506,7 @@
 			$("#map-location-modal").modal("show");
 			setTimeout(function() {
 				mymap.invalidateSize();
-			}, 17)
+			}, 20)
 		});
 
 		//For canceling and hiding the Map modal
