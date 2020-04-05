@@ -395,7 +395,14 @@
 									<tbody>
 										<tr>
 											<td><strong>कागजातहरू</strong>:</td>
-											<td th:text="${residentFullDetail.residentDetail.answer46}"></td>
+											<td><span>नागरिकता</span><a th:href="${residentFullDetail.residentDetail.answer46}" target="blank"><img th:src="${residentFullDetail.residentDetail.answer46}" style="display: block; height: 300px; width: 300px"
+											class="img-thumbnail photo" onerror="this.onerror=null;this.src='http://localhost:8888/resource/no-image.png';"></a></td>
+											<td><span>नाता प्रमाण-पत्र</span><a th:href="${residentFullDetail.residentDetail.answer47}" target="blank"><img th:src="${residentFullDetail.residentDetail.answer47}" style="display: block; height: 300px; width: 300px"
+											class="img-thumbnail photo" onerror="this.onerror=null;this.src='http://localhost:8888/resource/no-image.png';"></a></td>
+											<td><span>पास भएको घरको नक्सा</span><a th:href="${residentFullDetail.residentDetail.answer48}" target="blank"><img th:src="${residentFullDetail.residentDetail.answer48}" style="display: block; height: 300px; width: 300px"
+											class="img-thumbnail photo" onerror="this.onerror=null;this.src='http://localhost:8888/resource/no-image.png';"></a></td>
+											<td><span>अन्य कागजात</span><a th:href="${residentFullDetail.residentDetail.answer49}" target="blank"><img th:src="${residentFullDetail.residentDetail.answer49}" style="display: block; height: 300px; width: 300px"
+											class="img-thumbnail photo" onerror="this.onerror=null;this.src='http://localhost:8888/resource/no-image.png';"></a></td>
 										</tr>
 									</tbody>
 								</table>
@@ -465,6 +472,10 @@
 		var geoCoordinates = /*[[${residentFullDetail.residentDetail.answer50}]]*/'0';
 
 		/*]]>*/
+		
+			/*<![CDATA[*/
+			var residentFullDetail = /*[[${residentFullDetail}]]*/'';
+			/*]]>*/
 		
 		$(function() {
 			var token = $("meta[name='_csrf']").attr("content");
