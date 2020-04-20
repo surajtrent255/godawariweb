@@ -1070,12 +1070,9 @@
 
 				</div>
 				<!--End Row-->
-
+				<!--Section for GIS map display -->
 				<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1OEhgn6qwXwI6RninEuRHIL9HJLRUURzt" width="640" height="480"></iframe>
-
-
 				<!--End Dashboard Content-->
-
 			</div>
 			<!-- End container-fluid-->
 
@@ -1155,8 +1152,8 @@
 				      datasets: [
 				        {
 				          label: "नगरपालिकाको जनसंख्या",
-				          backgroundColor: ["#4547e6", "#f98026","#50be69", "#f53343", "#dc143c", "#ffd700"],
-				          data: [totalInfants, totalChildrens, totalYouths, totalMidage, totalOldage, totalSeniorCitizens]
+				          backgroundColor: ["#4547e6", "#f98026", "#50be69", "#f53343", "#dc143c", "#ffd700"],
+				          data: [totalInfants, totalChildrens, totalYouths, totalMidage, totalOldage, totalSeniorCitizens],
 				        }
 				      ]
 				    },
@@ -1164,6 +1161,13 @@
 				      title: {
 				        display: true,
 				        text: 'उमेर समूह अनुसारको तथ्यांक'
+				      },
+				      scales: {
+				          yAxes: [{
+				              ticks: {
+				                  beginAtZero:true
+				              }
+				          }]
 				      }
 				    }
 				});
