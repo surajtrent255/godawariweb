@@ -20,9 +20,7 @@ import com.ishanitech.ipalikawebapp.dto.UserDTO;
 import com.ishanitech.ipalikawebapp.dto.WardDTO;
 import com.ishanitech.ipalikawebapp.service.WardService;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RequestMapping("/ward")
 @Controller
 public class WardController {

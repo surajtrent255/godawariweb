@@ -17,7 +17,7 @@ public interface FavouritePlacesService {
 
 	void addFavouritePlaceInfo(FavouritePlaceDTO favouritePlaceInfo, String token);
 
-	void addFavouritePlaceImage(MultipartFile file, String token);
+	void addFavouritePlaceImage(MultipartFile file, String imageName, String token);
 
 	List<String> getTypesofFavourtiePlaces();
 

@@ -54,8 +54,8 @@
 }
 
 #mapid {
-		height: 50em;
-		width: 50em;
+		height: 60em;
+		width: 85em;
 	}
 </style>
 <script th:src="@{/assets/js/jquery.min.js}"
@@ -285,18 +285,6 @@
 	<div th:replace="~{fragments/scripts :: scripts}">
 	</div>
 	<script th:src="@{/assets/customjs/savehousehold.js}" src="assets/customjs/savehousehold.js"></script>
-<!-- 	<script th:src="@{/assets/js/popper.min.js}" -->
-<!-- 		src="assets/js/popper.min.js"></script> -->
-
-<!-- 	<script th:src="@{/assets/js/bootstrap.min.js}" -->
-<!-- 		src="assets/js/bootstrap.min.js"></script> -->
-
-	<!-- simplebar js -->
-<!-- 	<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}" -->
-<!-- 		src="assets/plugins/simplebar/js/simplebar.js"></script> -->
-	
-<!-- 	<script th:src="@{/assets/js/transliteration.js}" -->
-<!-- 		src="assets/js/transliteration.js"></script> -->
 	<script th:src="@{/assets/plugins/nepali-datepicker/nepaliDatePicker.min.js}"
  		src="assets/plugins/nepali-datepicker/nepaliDatePicker.min.js"></script> 
 	
@@ -475,6 +463,7 @@
 				$("." + _c).hide();
 			}
 		});
+		
 		$("#survey_date").nepaliDatePicker({
 			dateFormat : "%y-%m-%d",
 			closeOnDateSelect : true

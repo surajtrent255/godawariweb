@@ -72,7 +72,7 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 	}
 
 	@Override
-	public void addFavouritePlaceImage(MultipartFile file, String token) {
+	public void addFavouritePlaceImage(MultipartFile file, String imageName, String token) {
 		String template = String.format("%s/image", FAVOURITE_PLACE_BASE_URL);
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();

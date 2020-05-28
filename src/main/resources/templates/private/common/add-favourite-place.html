@@ -95,8 +95,12 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="card-title">Fill up information about the place.</div>
-						<form name="favPlaceForm" id="favPlaceForm" method="POST"
-							th:action="@{/favourite-place}"	enctype="multipart/form-data" class="unicode">
+						
+						<input type="hidden" name="_token"
+							value="8c82ziy1cyPf0NeyqhEeRv0dAIMt2CyuvpgsRMOu"> <input
+							type="hidden" name="_method" value="post">
+<!-- 						<form name="favPlaceForm" id="favPlaceForm" method="POST" -->
+<!-- 							th:action="@{/favourite-place/image}"	enctype="multipart/form-data" class="unicode"> -->
 							<div class="form-group row">
 								<div class="col-md-4">
 									<label for="placeName">Place Name</label> <input type="text"
@@ -137,12 +141,12 @@
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
-									<label for="placeImage">Photo Of The Place</label> <input
+									<label for="placeImage">Photo Of The Place</label> 
+									<form th:id="favPlaceImg" th:name="favPlaceImg" enctype="multipart/form-data" useToken="true"><input
 										type="file" class="form-control" id="placeImage" name="placeImage" value="" data-event="change"
 										data-target="placeImage" accept="image/*" /> <a href=""
 										style="display: none" target="_blank" class="no-pjax"> <img
-										src="" style="display: none" class="img-thumbnail placeImage">
-									</a>
+										src="" style="display: none" class="img-thumbnail placeImage"></a></form>
 									<span class="error_form" id="placeImage_error_message"></span>
 								</div>
 							</div>
@@ -159,7 +163,7 @@
 									<i class="icon-lock"></i>  Add Place
 								</button>
 							</div>
-						</form>
+<!-- 						</form> -->
 					</div>
 				</div>
 
@@ -210,6 +214,48 @@
 		    });
 		});	
 	
+		//For displaying the selected image for uploading
+		$(function() {
+			var _t, _n, _d, _v;
+			$("input[data-event='change']").on("change", function() {
+				_t = this;
+				_c = $(this).data("target");
+				if (_t.files && _t.files[0]) {
+					var reader = new FileReader();
+					reader.onload = function(e) {
+						$('img.' + _c).attr('src', e.target.result).show();
+						$('img.' + _c).parent().show();
+					}
+					reader.readAsDataURL(_t.files[0]);
+				}
+			});
+			
+			$("#documents_copy").on("change", function() {
+				_v = $(this).val();
+				$(".documents_hide").hide();
+				$("div." + _v).show();
+
+			});
+			
+			$("[data-event='toggle']").on("change", function() {
+				_t = $(this);
+				_n = $(this).attr("name");
+				_d = $("[name='" + _n + "']").serializeArray();
+				_c = _t.data("target");
+				if (_d.length > 0 && _t.is(':checked')) {
+					$.each(_d, function(i, fd) {
+						if (fd.value == _t.data("value")) {
+							$("." + _c).show();
+						}
+					});
+				} else {
+					$("." + _c).hide();
+				}
+			});
+			
+		});
+		
+		
 		//For showing the Map modal	
 		$("#placeGPS").on("click", function(event) {
 			event.preventDefault();
@@ -233,6 +279,7 @@
 				$("#placeGPS").val(geoLat + ', ' + geoLng);
 			}
 		});
+		
 		const mymap = L.map('mapid').setView([ 27.614979, 85.363180 ], 17);
 		var layerGroup = L.layerGroup().addTo(mymap);
 		var marker;
@@ -240,8 +287,8 @@
 		const attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors';
 		var geoLocation;
 		var geoLocationTemp;
-		var geoLat
-		var geoLng
+		var geoLat;
+		var geoLng;
 		L.tileLayer('http://{s}.google.com/vt/lyrs=y,h&x={x}&y={y}&z={z}',{
 			attribution: 'Map data &copy; 2020 Google',
 		    maxZoom: 20,
@@ -278,6 +325,7 @@
 			var uniElement = $(".unicode input[type='text'], #grid_filter input");
 			control.makeTransliteratable(uniElement);
 			control.makeTransliteratable(['placeDescription']);
+			control.makeTransliteratable(['placeName']);
 		});
 		
 		//Form validation using jQuery//
@@ -399,6 +447,15 @@
 			} 
 			
 			
+// 			$("#placeImage").on("change", function(){
+// 				   var file = this.files[0],
+// 				       fileName = file.name,
+// 				       fileSize = file.size;
+// 				   alert("Uploading: "+fileName+" @ "+fileSize+"bytes");
+// 				   CustomFileHandlingFunction(file);
+// 			});
+			
+			
 		$(function() {
 			$("#add-favourite-btn").click(function(event) {
 				
@@ -429,7 +486,6 @@
 					let placeWard = $("#placeWard").val();
 					let placeType = $("#placeType").val();
 					let placeDescription = $("#placeDescription").val();
-// 					let placeImage = $("#placeImage").val();
 					let placeGPS = $("#placeGPS").val();
 					
 					let favPlaceInfo = {};
@@ -437,80 +493,70 @@
 					favPlaceInfo.placeWard = placeWard;
 					favPlaceInfo.placeType = placeType;
 					favPlaceInfo.placeDescription = placeDescription;
-					favPlaceInfo.placeGPs = placeGPS;
+					favPlaceInfo.placeGPS = placeGPS;
 					favPlaceInfo.filledId = timestamp;
 					
-					 
-// 					let myFile = {}; 
 					
-// 					var file = $(id).prop('files');
+					let file = $("#placeImage")[0].files[0];
+					let fileName = file.name;
+					let fileSize = file.size;
+					let fileExtension = fileName.split('.').pop();
 					
-// 					myFile.file = file;
-// 					myFile.extension = $(id).val().split('.').pop() ;
+					let placeImageName = "JPEG_place_" + timestamp + "." + fileExtension; 
 					
-// 					if(myFile.extension != ""){
-// 					myFiles.push(myFile);
-// 					}
-// 					console.log(myFile);
-					 
-					var imageName = "JPEG_" + timestamp + "." + $(id).val().split('.').pop();
+					favPlaceInfo.placeImage = placeImageName;
 					
-					favPlaceInfo.placeImage = imageName;
-					
-					var formData = new FormData();
-					
-					formData.append("placeImg", $('input[type=file]')[0].files[0]);
+					let form = document.getElementById("favPlaceImg");
 				
+					let formData = new FormData(form);
 					
-// 					var formId = "form" + myFiles[0].index;
-// 					var imgId = "answer" + myFiles[0].index;
-// 					console.log("FormId--------->" + formId);
-// 					var form = document.getElementById(formId);
-// 					var formData = new FormData(form);
-					
-// 					var formData = new FormData();
-// 					formData.append("imgIndex", imgId);
-// 					formData.append("extension", myFiles[0].extension);
-// 					formData.append("filledId", timestamp);
-// 					formData.append('placeImg', $('input[type=file]')[0].files[0]); 
-					
-// 					for (var pair of formData.entries()) {
-// 					    console.log(pair[0]+ ', ' + pair[1]); 
-// 					}
-					
-// 					var file = file = $(id).prop('files');
+					formData.append("imgIndex", "placeImage");
+					formData.append("fileName", placeImageName);
+					formData.append("filledId", timestamp);
+
 					
 					// Now create an ajax request to send member details to the server
 					$.ajax({
 						method : "POST",
-						url : contextPath + "/favourite-place/",
+						url : contextPath + "/favourite-place",
 						data : JSON.stringify(favPlaceInfo),
 						contentType : "application/json",
 						processData: false,
 						success : function(result) {
-							$.ajax({
-								method: "POST",
-								url : contextPath + "/favourite-place/image",
-								data: formData,
-								async: false,
-								contentType: false,
-								processData: false,
-								success: function(result) {
-									swal.fire(
-										{
-											text : "The place has been added",
-											icon : "success",
-											closeOnClickOutside : false,
-											closeOnEsc : false
-									}).then(function() {
-										window.location.href = contextPath + "/favourite-place/";
-									});
-								}
-								
+							swal.fire({
+								text: "Favourite place added successfully!",
+								icon: "success",
+								closeOnClickOutside: true,
+								closeOnEsc: true
+							})
+							.then(function() {
+								window.location.href = contextPath + '/favourite-place';
 							});
 						},
 						error : function(error) {
+// 							alert("Error here")
 						}
+					});
+					
+					$.ajax({
+						method: "POST",
+						url : contextPath + "/favourite-place/image",
+						data: formData,
+						async: false,
+						contentType: false,
+						processData: false,
+						success: function(result) {
+							swal.fire(
+								{
+									text : "The place has been added",
+									icon : "success",
+									closeOnClickOutside : false,
+									closeOnEsc : false
+							}).then(function() {
+								window.location.href =  contextPath + '/favourite-place';
+							});
+						}
+						
 					});
 				} else {
 					swal.fire({
@@ -518,6 +564,8 @@
 		            	text: "Please enter the required fields correctly :(",
 		        	});
 				}
+				
+
 			}) 
 		});
 	});
