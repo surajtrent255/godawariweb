@@ -446,16 +446,6 @@
 				}
 			} 
 			
-			
-// 			$("#placeImage").on("change", function(){
-// 				   var file = this.files[0],
-// 				       fileName = file.name,
-// 				       fileSize = file.size;
-// 				   alert("Uploading: "+fileName+" @ "+fileSize+"bytes");
-// 				   CustomFileHandlingFunction(file);
-// 			});
-			
-			
 		$(function() {
 			$("#add-favourite-btn").click(function(event) {
 				
@@ -534,7 +524,15 @@
 							});
 						},
 						error : function(error) {
-// 							alert("Error here")
+							swal.fire({
+								text: error.responseJSON.message,
+								icon: "error",
+								closeOnClickOutside: false,
+								closeOnEsc: false
+							})
+							.then(function() {
+								window.location.href = contextPath;
+							});
 						}
 					});
 					

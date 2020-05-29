@@ -193,7 +193,7 @@ public class FavouritePlacesController {
 	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SURVEYOR"})
 	@ResponseStatus(HttpStatus.OK)
 	@DeleteMapping("/{favPlaceId}")
-	public int deleteFavouritePlaceByPlaceId(@PathVariable("favPlaceId") String favPlaceId, @AuthenticationPrincipal UserDTO user) {
+	public @ResponseBody int deleteFavouritePlaceByPlaceId(@PathVariable("favPlaceId") String favPlaceId, @AuthenticationPrincipal UserDTO user) {
 		try {
 		favouritePlacesService.deleteFavouritePlacebyPlaceId(favPlaceId, user.getToken());
 		return 1;
