@@ -115,7 +115,7 @@
 												<option
 													th:each="ward, iteration : ${wardList}"
 													th:value="${iteration.index + 1}" th:text="${ward}"></option>
-											</select>
+										</select>
 									<span class="error_form" id="placeWard_error_message"></span>										
 								</div>
 							</div>
@@ -153,7 +153,7 @@
 							<div class="form-group row">
 								<div class="col-md-4">
 									<label for="placeGPS">Location</label> <input type="text"
-										id="placeGPS" name="placeGPs" placeholder="Click to add location"
+										id="placeGPS" name="placeGPS" placeholder="Click to add location"
 										class="form-control required" readonly>
 									<span class="error_form" id="placeGPS_error_message"></span>
 								</div>
@@ -168,9 +168,7 @@
 				</div>
 
 				<!-- Modal For GPS  -->
-				<div class="modal fade" id="map-location-modal"
-					data-keyboard="false" data-backdrop="false" role="dialog"
-					aria-hidden="true">
+				<div class="modal fade" id="map-location-modal" data-keyboard="false" data-backdrop="false" role="dialog" aria-hidden="true">
 					<div class="modal-dialog modal-lg modal-dialog-centered"
 						role="document">
 						<div class="modal-content" style="border-radius: 10px;">
@@ -189,7 +187,6 @@
 									<div style="margin: 20px auto;">
 										<div id="mapid"></div>
 									</div>
-
 								</div>
 							</div>
 						</div>

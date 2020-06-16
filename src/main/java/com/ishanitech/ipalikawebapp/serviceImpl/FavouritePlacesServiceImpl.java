@@ -1,6 +1,8 @@
 package com.ishanitech.ipalikawebapp.serviceImpl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -20,10 +22,7 @@ import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
 import com.ishanitech.ipalikawebapp.utilities.HttpUtils;
 
-import lombok.extern.slf4j.Slf4j;
 
-
-@Slf4j
 @Service
 public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 	private final RestTemplate restTemplate;
@@ -91,5 +90,25 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		Response<List<String>> favPlaceTypes = restTemplate.exchange(requestEntity, responseType).getBody();
 		return favPlaceTypes.getData();
 	}
+
+	@Override
+	public void editFavouritePlaceInfo(FavouritePlaceDTO favPlaceInfo, String favPlaceId, String token) {
+		String template = String.format("%s/{favPlaceId}", FAVOURITE_PLACE_BASE_URL);
+		Map<String, Object> urlValues = new HashMap<>();
+		urlValues.put("favPlaceId", favPlaceId);
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, urlValues);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.PUT, favPlaceInfo, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<String> responseType = new ParameterizedTypeReference<String>() {};
+		restTemplate.exchange(requestEntity, responseType);
+	}
+	
+	
+//	@Override
+//	public void addFavouritePlaceInfo(FavouritePlaceDTO favouritePlaceInfo, String token) {
+//		String template = String.format("%s/single", FAVOURITE_PLACE_BASE_URL);
+//		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+//		RequestEntity<FavouritePlaceDTO> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, favouritePlaceInfo, MediaType.APPLICATION_JSON, token, url);
+//		restTemplate.exchange(requestEntity, String.class);
+//	}
 
 }

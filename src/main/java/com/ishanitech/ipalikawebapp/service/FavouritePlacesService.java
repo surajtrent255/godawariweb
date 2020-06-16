@@ -21,4 +21,6 @@ public interface FavouritePlacesService {
 
 	List<String> getTypesofFavourtiePlaces();
 
+	void editFavouritePlaceInfo(FavouritePlaceDTO favPlaceDTO, String favPlaceId, String token);
+
 }
