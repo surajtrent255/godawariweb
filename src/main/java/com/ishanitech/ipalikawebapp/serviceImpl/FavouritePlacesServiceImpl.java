@@ -101,14 +101,17 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		ParameterizedTypeReference<String> responseType = new ParameterizedTypeReference<String>() {};
 		restTemplate.exchange(requestEntity, responseType);
 	}
-	
-	
-//	@Override
-//	public void addFavouritePlaceInfo(FavouritePlaceDTO favouritePlaceInfo, String token) {
-//		String template = String.format("%s/single", FAVOURITE_PLACE_BASE_URL);
-//		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
-//		RequestEntity<FavouritePlaceDTO> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, favouritePlaceInfo, MediaType.APPLICATION_JSON, token, url);
-//		restTemplate.exchange(requestEntity, String.class);
-//	}
+
+	@Override
+	public void addEditedFavouritePlaceImage(MultipartFile file, String imageName, String token) {
+		String template = String.format("%s/editImage", FAVOURITE_PLACE_BASE_URL);
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+		map.add("picture", file.getResource());
+		HttpHeaders headers = HttpUtils.createHeader(MediaType.MULTIPART_FORM_DATA, token);
+	    HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(map, headers);
+		restTemplate.postForLocation(url, requestEntity);
+		
+	}
 
 }

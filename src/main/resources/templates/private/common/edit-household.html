@@ -218,29 +218,6 @@
 							<!--Dynamic code ends  -->
 							
 							</div>
-<!-- 							<div class="row">
-								<div class="col-lg-4 col-md-4">
-									<div class="form-group form-label">
-										<label for="information_giver"><h5>विवरण दिने :</h5></label> <input
-											type="text" class="form-control" id="information_giver"
-											name="information_giver" value="">
-									</div>
-								</div>
-								<div class="col-lg-4 col-md-4">
-									<div class="form-group form-label">
-										<label for="survey_date"><h5>मिति :</h5></label> <input
-											type="text" class="form-control" id="survey_date"
-											name="survey_date" value="">
-									</div>
-								</div>
-								<div class="col-lg-4 col-md-4">
-									<div class="form-group form-label">
-										<label for="collector_name"><h5>तथ्यांक संकलन :</h5></label> <input
-											type="text" class="form-control" id="collector_name"
-											name="collector_name" value="">
-									</div>
-								</div>
-							</div> -->
 							<input class="btn btn-primary px-5"
 								name="category-submit-name" value="Edit House"
 								style="margin-top: 10px" id="household_submit_btn">
@@ -285,22 +262,10 @@
 	<div th:replace="~{fragments/scripts :: scripts}">
 	</div>
 	<script th:src="@{/assets/customjs/savehousehold.js}" src="assets/customjs/savehousehold.js"></script>
-<!-- 	<script th:src="@{/assets/js/popper.min.js}" -->
-<!-- 		src="assets/js/popper.min.js"></script> -->
 
-<!-- 	<script th:src="@{/assets/js/bootstrap.min.js}" -->
-<!-- 		src="assets/js/bootstrap.min.js"></script> -->
-
-	<!-- simplebar js -->
-<!-- 	<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}" -->
-<!-- 		src="assets/plugins/simplebar/js/simplebar.js"></script> -->
-	
-<!-- 	<script th:src="@{/assets/js/transliteration.js}" -->
-<!-- 		src="assets/js/transliteration.js"></script> -->
 	<script th:src="@{/assets/plugins/nepali-datepicker/nepaliDatePicker.min.js}"
  		src="assets/plugins/nepali-datepicker/nepaliDatePicker.min.js"></script> 
 	
-<!-- 	<script src="https://www.lalitpur15.org/datasys/public/js/app.js"></script> -->
 <script th:src="@{/assets/js/leaflet.js}"></script>
 
 	<div id="scripts">
@@ -912,15 +877,10 @@ $(function() {
 			 let answerNo = "residentFullDetail.answer" + index;
 			 let evalString = eval(answerNo);
 			 console.log("ImageName" + index + "---->" + evalString);
-			 
-			 //if(evalString.includes(".")){
-			 //$(id).val(evalString);
-			 //}
 			
 			 let className = ".photo" + index; 
 			 if(evalString.includes(".")){
 			 $(className).attr("src", evalString)
-			 //$(id).val(evalString);
 			 }
 		 }
 		 

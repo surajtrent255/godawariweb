@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,8 +64,6 @@ public class FavouritePlacesController {
 		model.addAttribute("favouritePlaceList", favouritePlacesService.getAllFavouritePlaces().getData());
 		return "public/favourite-place";
 	}
-	
-	
 	
 	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SURVEYOR"})
 	@PostMapping
@@ -153,59 +152,69 @@ public class FavouritePlacesController {
 			e.printStackTrace();
 		}
 		return "1";
-		
 	}
 	
-//	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SURVEYOR"})
-//	@PostMapping
-//	public String addFavouritePlace(@RequestParam(value = "favPhoto") MultipartFile file,
-//			@ModelAttribute(value = "favPlaceObj") FavouritePlaceDTO favouritePlaceInfo,
-//			@AuthenticationPrincipal UserDTO user) {
-//		Date presentDate = new Date();
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
-//        favouritePlaceInfo.setFilledId(dateFormat.format(presentDate));
-//        String imageFileName = "JPEG_" + favouritePlaceInfo.getFilledId() +".JPG";
-//        favouritePlaceInfo.setPlaceImage(imageFileName);
-//		file.getOriginalFilename().concat(imageFileName);
-//		System.out.println(file.getOriginalFilename());
-//		try {
-//			favouritePlacesService.addFavouritePlaceInfo(favouritePlaceInfo, user.getToken());
-//			favouritePlacesService.addFavouritePlaceImage(file, user.getToken());
-//			return "redirect:favourite-place/";
-//		} catch (Exception ex) {
-//			log.info(ex.getMessage());
-//			return "";
-//		}
-//	}
+	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SURVEYOR"})
+	@RequestMapping(value = "/editImage", method = RequestMethod.POST)
+	public @ResponseBody String addEditedImage(MultipartHttpServletRequest request, @AuthenticationPrincipal	UserDTO user) {
+		String inputTagName = request.getParameter("imgIndex");
+		String fileName = request.getParameter("fileName");
+		Path rootLocation = Paths.get(uploadDirectoryProperties.getTempFileUploadingDirectory());
+		try {
+			MultipartFile favPlaceImage = request.getFile(inputTagName);
+			
+			String imageName = fileName;
+			
+			//For copying the file to upload directory
+			Files.copy(favPlaceImage.getInputStream(), rootLocation.resolve(imageName));
+			
+			//For retrieving saved multipart file
+			File file = new File(uploadDirectoryProperties.getTempFileUploadingDirectory() + imageName);
+			FileItem fileItem = new DiskFileItem("mainFile", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length(), file.getParentFile());
+			
+			InputStream input = null;
+			OutputStream os = null;
+			
+			try {
+				input = new FileInputStream(file);
+				os = fileItem.getOutputStream();
+				IOUtils.copy(input, os);
+			} catch (IOException ex) {
+				
+			} finally {
+				if(input != null) {
+					input.close();
+				}
+				if(os != null) {
+					os.close();
+				}
+			}
+			
+			MultipartFile multipartFile = new CommonsMultipartFile(fileItem);
+			
+			favouritePlacesService.addEditedFavouritePlaceImage(multipartFile, imageName, user.getToken());
+			
+		} catch(Exception e) {
+			e.getMessage();
+			e.printStackTrace();
+		}
+		
+		try {
+			String imageName = fileName;
+			Path path = Paths.get(uploadDirectoryProperties.getTempFileUploadingDirectory() + imageName);
+			Files.delete(path);
+		} catch(NoSuchFileException e) {
+			System.out.println("No such file/directory exists");
+		} catch(DirectoryNotEmptyException e) {
+			System.out.println("Directory is not empty");
+		} catch(IOException e) {
+			System.out.println("Invalid Permissions.");
+			e.printStackTrace();
+		}
+		return "1";
+	}
 	
 	
-//	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SURVEYOR"})
-//	@PostMapping
-//	public @ResponseBody String addFavouritePlace(@RequestPart("favPlaceInfo") FavouritePlaceDTO favouritePlaceInfo,
-//			@RequestPart("placeImg") MultipartFile file, @AuthenticationPrincipal UserDTO user) {
-//		@ResponseBody
-//		public boolean executeSampleService(
-//		        @RequestPart("properties") @Valid ConnectionProperties properties,
-//		        @RequestPart("file") @Valid @NotNull @NotBlank MultipartFile file) {
-//		    return projectService.executeSampleService(properties, file);
-//		}
-//		Date presentDate = new Date();
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
-//        favouritePlaceInfo.setFilledId(dateFormat.format(presentDate));
-//        String imageFileName = "JPEG_" + favouritePlaceInfo.getFilledId() +".JPG";
-//        favouritePlaceInfo.setPlaceImage(imageFileName);
-//		file.getOriginalFilename().concat(imageFileName);
-//		System.out.println(file.getOriginalFilename());
-//		try {
-//			favouritePlacesService.addFavouritePlaceInfo(favouritePlaceInfo, user.getToken());
-//			favouritePlacesService.addFavouritePlaceImage(file, user.getToken());
-//			return "redirect:favourite-place/";
-//		} catch (Exception ex) {
-//			log.info(ex.getMessage());
-//			return "";
-//		}
-//	}
-
 	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SURVEYOR"})
 	@ResponseStatus(HttpStatus.OK)
 	@DeleteMapping("/{favPlaceId}")

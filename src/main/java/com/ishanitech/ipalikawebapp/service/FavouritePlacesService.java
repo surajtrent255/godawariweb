@@ -23,4 +23,6 @@ public interface FavouritePlacesService {
 
 	void editFavouritePlaceInfo(FavouritePlaceDTO favPlaceDTO, String favPlaceId, String token);
 
+	void addEditedFavouritePlaceImage(MultipartFile file, String imageName, String token);
+
 }

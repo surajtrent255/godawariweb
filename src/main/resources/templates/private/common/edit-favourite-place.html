@@ -273,7 +273,6 @@
 			
 		});
 		
-		
 		//For showing the Map modal	
 		$("#placeGPS").on("click", function(event) {
 			event.preventDefault();
@@ -359,7 +358,7 @@
 			$("#placeType").val(eval(favPlaceObj.placeType));
 			
 			let evalImgString = favPlaceObj.placeImage;
-			console.log(evalImgString);
+			
 			let className = ".placeImgDisplay";
 			if(evalImgString.includes(".")) {
 				$(className).attr("src", evalImgString);
@@ -533,16 +532,33 @@
 					
 // 					let placeImageName = "JPEG_place_" + timestamp + "." + fileExtension; 
 					
-// 					editFavPlaceInfo.placeImage = placeImageName;
+// 					editFavPlaceInfo.placeImage = favPlaceObj.placeImage;
 					
 // 					let form = document.getElementById("favPlaceImg");
 				
-// 				C\	let formData = new FormData(form);
+// 					let formData = new FormData(form);
 					
 // 					formData.append("imgIndex", "placeImage");
-// 					formData.append("fileName", placeImageName);
-// 					formData.append("filledId", timestamp);
+// 					formData.append("fileName", favPlaceObj.placeImage);
+// 					formData.append("filledId", favPlaceId);
 
+					let placeImageChecker = $("#placeImage").val();
+					
+					
+					if(placeImageChecker) {
+						let file = $("#placeImage")[0].files[0];
+						let fileName = file.name;
+						let fileSize = file.size;
+						let fileExtension = fileName.split('.').pop();
+						
+						let placeImageName = "JPEG_place_" + favPlaceId + "." + fileExtension; 
+						
+						editFavPlaceInfo.placeImage = placeImageName;
+					} else {
+						let evalString = favPlaceObj.placeImage;
+						var imageName = "JPEG_place_" + favPlaceId + "." + evalString.split('.').pop();
+						editFavPlaceInfo.placeImage = imageName;
+					}
 					
 					// Now create an ajax request to send member details to the server
 					$.ajax({
@@ -575,25 +591,44 @@
 						}
 					});
 					
-// 					$.ajax({
-// 						method: "POST",
-// 						url : contextPath + "/favourite-place/image",
-// 						data: formData,
-// 						async: false,
-// 						contentType: false,
-// 						processData: false,
-// 						success: function(result) {
-// 							swal.fire(
-// 								{
-// 									text : "The place has been added",
-// 									icon : "success",
-// 									closeOnClickOutside : false,
-// 									closeOnEsc : false
-// 							}).then(function() {
-// 								window.location.href =  contextPath + '/favourite-place';
-// 							});
-// 						}
-// 					});
+					
+					if(placeImageChecker) {
+						
+						let file = $("#placeImage")[0].files[0];
+						let fileName = file.name;
+						let fileSize = file.size;
+						let fileExtension = fileName.split('.').pop();
+					
+						let form = document.getElementById("favPlaceImg");
+						
+						let placeImageName = "JPEG_place_" + favPlaceId + "." + fileExtension;
+						
+						let formData = new FormData(form);
+						
+						formData.append("imgIndex", "placeImage");
+						formData.append("fileName", placeImageName);
+						formData.append("filledId", favPlaceId);
+									
+						$.ajax({
+							method: "POST",
+							url : contextPath + "/favourite-place/editImage",
+							data: formData,
+							async: false,
+							contentType: false,
+							processData: false,
+							success: function(result) {
+								swal.fire(
+									{
+										text : "The place has been added",
+										icon : "success",
+										closeOnClickOutside : false,
+										closeOnEsc : false
+								}).then(function() {
+									window.location.href =  contextPath + '/favourite-place';
+								});
+							}
+						});
+					}	
 				} else {
 					swal.fire({
 		            	icon: "info",

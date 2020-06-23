@@ -298,8 +298,6 @@ public class SurveyAnswerController {
             System.out.println("Invalid permissions."); 
             e.printStackTrace();
         }	
-		
-		
 		return "1";
 	}
 }
