@@ -275,6 +275,4 @@ public class ResidentServiceImpl implements ResidentService {
 		return residents;
 	}
 
-
-
 }
