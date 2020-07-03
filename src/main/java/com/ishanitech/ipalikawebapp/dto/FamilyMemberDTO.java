@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class FamilyMemberDTO {
+	private String id;
 	private String memberId;
     private String mainId;			//family Id (Form field id)
     private String name;
