@@ -141,7 +141,7 @@
 <!-- 											<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-warning" th:attr="onclick=|deleteResident('${resident.filledId}')|"> -->
 <!-- 												Delete -->
 <!-- 											</button> -->
-											<a href="#" th:href="@{/member/} + ${member.memberId} +'/member/'" class="btn btn-xs btn-danger">Show Member Details</a>
+											<a href="#" th:href="@{/member/details/} + ${member.memberId}" class="btn btn-xs btn-danger">Show Member Details</a>
 											<a href="#" th:href="@{/resident/} + ${member.mainId}" class="btn btn-xs btn-success">Show Household Details</a>
 										</td>
 									</tr>
@@ -303,7 +303,7 @@
 													<td>${item.education}</td>
 													<td>${item.maritalStatus}</td>
 													<td>
-														<a href=\"/member/${item.memberId}/member\" class="btn btn-xs btn-danger">Show Member Details</a>
+														<a href=\"/member/details/${item.memberId}\" class="btn btn-xs btn-danger">Show Member Details</a>
 														<a href=\"/resident/${item.mainId}\" class="btn btn-xs btn-success">Show Household Details</a>
 													</td> </tr>`;
 								});
@@ -389,7 +389,7 @@
 														<td>${item.education}</td>
 														<td>${item.maritalStatus}</td>
 														<td>
-															<a href=\"/member/${item.memberId}/member\" class="btn btn-xs btn-danger">Show Member Details</a>
+															<a href=\"/member/details/${item.memberId}\" class="btn btn-xs btn-danger">Show Member Details</a>
 															<a href=\"/resident/${item.mainId}\" class="btn btn-xs btn-success">Show Household Details</a>
 														</td> </tr>`;
 									});
@@ -448,7 +448,7 @@
 													<td>${item.education}</td>
 													<td>${item.maritalStatus}</td>
 													<td>
-														<a href=\"/member/${item.memberId}/member\" class="btn btn-xs btn-danger">Show Member Details</a>
+														<a href=\"/member/details/${item.memberId}\" class="btn btn-xs btn-danger">Show Member Details</a>
 														<a href=\"/resident/${item.mainId}\" class="btn btn-xs btn-success">Show Household Details</a>
 													</td> </tr>`;
 								});
@@ -503,7 +503,7 @@
 												<td>${item.education}</td>
 												<td>${item.maritalStatus}</td>
 												<td>
-													<a href=\"/member/${item.memberId}/member\" class="btn btn-xs btn-danger">Show Member Details</a>
+													<a href=\"/member/details/${item.memberId}\" class="btn btn-xs btn-danger">Show Member Details</a>
 													<a href=\"/resident/${item.mainId}\" class="btn btn-xs btn-success">Show Household Details</a>
 												</td> </tr>`;
 							});
@@ -573,7 +573,7 @@
 													<td>${item.education}</td>
 													<td>${item.maritalStatus}</td>
 													<td>
-														<a href=\"/member/${item.memberId}/member\" class="btn btn-xs btn-danger">Show Member Details</a>
+														<a href=\"/member/details/${item.memberId}\" class="btn btn-xs btn-danger">Show Member Details</a>
 														<a href=\"/resident/${item.mainId}\" class="btn btn-xs btn-success">Show Household Details</a>
 													</td> </tr>`;
 								});
@@ -649,7 +649,7 @@
 													<td>${item.education}</td>
 													<td>${item.maritalStatus}</td>
 													<td>
-														<a href=\"/member/${item.memberId}/member\" class="btn btn-xs btn-danger">Show Member Details</a>
+														<a href=\"/member/details/${item.memberId}\" class="btn btn-xs btn-danger">Show Member Details</a>
 														<a href=\"/resident/${item.mainId}\" class="btn btn-xs btn-success">Show Household Details</a>
 													</td> </tr>`;
 								});
