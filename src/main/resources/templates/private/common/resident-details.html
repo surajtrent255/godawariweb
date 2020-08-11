@@ -114,7 +114,7 @@
 					<div class="col-sm-6">
 						<h4 class="page-title"
 							th:text="${residentFullDetail.residentDetail.answer1} + ' को पूर्ण विवरण'">Godawari
-							Nagarpalika Full Detail</h4> 	
+							Nagarpalika Full Detail</h4>
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
 							<li class="breadcrumb-item active" aria-current="page">Household
@@ -123,19 +123,21 @@
 					</div>
 					<div class="col-sm-6">
 						<div class="pull-right">
-						<!-- Button for showing the modal for Map Location  -->
-						<button id="view-location-btn"
-							class="block2-user-id btn btn-success">यस
-						स्थान मानचित्रमा हेर्नुहोस</button>
-						<!-- Button for adding family member  -->
-						<a th:href="@{/resident/} + ${residentFullDetail.residentDetail.filledId} +'/member/'"><button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-primary">
-							Add Family Member
-						</button></a>
-						
-						<!-- Button for printing data  -->
-<!-- 						<div class="btn-print"> -->
-							<button id="print" class="btn btn-primary">Print this page</button>
-<!-- 						</div> -->
+							<!-- Button for showing the modal for Map Location  -->
+							<button id="view-location-btn"
+								class="block2-user-id btn btn-success">यस स्थान
+								मानचित्रमा हेर्नुहोस</button>
+							<!-- Button for adding family member  -->
+							<a
+								th:href="@{/resident/} + ${residentFullDetail.residentDetail.filledId} +'/member/'"><button
+									sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')"
+									class="btn btn-xs btn-primary">Add Family Member</button></a>
+
+							<!-- Button for printing data  -->
+							<!-- 						<div class="btn-print"> -->
+							<button id="print" class="btn btn-primary">Print this
+								page</button>
+							<!-- 						</div> -->
 						</div>
 					</div>
 				</div>
@@ -187,12 +189,12 @@
 										</tr>
 									</tbody>
 								</table>
-							
-<!-- 								<div> -->
-<!-- 									<button id="view-location-btn" -->
-<!-- 										class="block2-user-id btn btn-success pull-right">यस -->
-<!-- 										स्थान मानचित्रमा हेर्नुहोस</button> -->
-<!-- 								</div> -->
+
+								<!-- 								<div> -->
+								<!-- 									<button id="view-location-btn" -->
+								<!-- 										class="block2-user-id btn btn-success pull-right">यस -->
+								<!-- 										स्थान मानचित्रमा हेर्नुहोस</button> -->
+								<!-- 								</div> -->
 							</div>
 						</div>
 					</div>
@@ -252,9 +254,12 @@
 											<td><a href="#"
 												th:href="@{/resident/member/} + ${member.memberId}"
 												class="btn btn-xs btn-success">Edit Details</a>
-												<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteMemberInfo('${member.memberId}')|">
-												Delete
-												</button>
+												<button
+													sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')"
+													class="btn btn-xs btn-warning"
+													th:attr="onclick=|deleteMemberInfo('${member.memberId}')|">
+													Delete</button> <a href="#" th:data="${member.memberId}"
+												class="btn btn-xs btn-danger">Mark Demise</a>
 											<td>
 										</tr>
 									</tbody>
@@ -269,9 +274,9 @@
 									</thead>
 								</table>
 							</div>
-<!-- 												<a th:href="@{/resident/} + ${residentFullDetail.residentDetail.filledId} +'/member/'"><button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-primary pull-right"> -->
-<!-- 												Add Family Member -->
-<!-- 												</button></a> -->
+							<!-- 												<a th:href="@{/resident/} + ${residentFullDetail.residentDetail.filledId} +'/member/'"><button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-primary pull-right"> -->
+							<!-- 												Add Family Member -->
+							<!-- 												</button></a> -->
 						</div>
 					</div>
 					<div class="row">
@@ -395,14 +400,34 @@
 									<tbody>
 										<tr>
 											<td><strong>कागजातहरू</strong>:</td>
-											<td><span>नागरिकता</span><a th:href="${residentFullDetail.residentDetail.answer46}" target="blank"><img th:src="${residentFullDetail.residentDetail.answer46}" style="display: block; height: 300px; width: 300px"
-											class="img-thumbnail photo" th:onerror="'this.src=\'' + @{/assets/images/no-image.png} + '\';'"></a></td>
-											<td><span>नाता प्रमाण-पत्र</span><a th:href="${residentFullDetail.residentDetail.answer47}" target="blank"><img th:src="${residentFullDetail.residentDetail.answer47}" style="display: block; height: 300px; width: 300px"
-											class="img-thumbnail photo" th:onerror="'this.src=\'' + @{/assets/images/no-image.png} + '\';'"></a></td>
-											<td><span>पास भएको घरको नक्सा</span><a th:href="${residentFullDetail.residentDetail.answer48}" target="blank"><img th:src="${residentFullDetail.residentDetail.answer48}" style="display: block; height: 300px; width: 300px"
-											class="img-thumbnail photo" th:onerror="'this.src=\'' + @{/assets/images/no-image.png} + '\';'"></a></td>
-											<td><span>अन्य कागजात</span><a th:href="${residentFullDetail.residentDetail.answer49}" target="blank"><img th:src="${residentFullDetail.residentDetail.answer49}" style="display: block; height: 300px; width: 300px"
-											class="img-thumbnail photo" th:onerror="'this.src=\'' + @{/assets/images/no-image.png} + '\';'"></a></td>
+											<td><span>नागरिकता</span><a
+												th:href="${residentFullDetail.residentDetail.answer46}"
+												target="blank"><img
+													th:src="${residentFullDetail.residentDetail.answer46}"
+													style="display: block; height: 300px; width: 300px"
+													class="img-thumbnail photo"
+													th:onerror="'this.src=\'' + @{/assets/images/no-image.png} + '\';'"></a></td>
+											<td><span>नाता प्रमाण-पत्र</span><a
+												th:href="${residentFullDetail.residentDetail.answer47}"
+												target="blank"><img
+													th:src="${residentFullDetail.residentDetail.answer47}"
+													style="display: block; height: 300px; width: 300px"
+													class="img-thumbnail photo"
+													th:onerror="'this.src=\'' + @{/assets/images/no-image.png} + '\';'"></a></td>
+											<td><span>पास भएको घरको नक्सा</span><a
+												th:href="${residentFullDetail.residentDetail.answer48}"
+												target="blank"><img
+													th:src="${residentFullDetail.residentDetail.answer48}"
+													style="display: block; height: 300px; width: 300px"
+													class="img-thumbnail photo"
+													th:onerror="'this.src=\'' + @{/assets/images/no-image.png} + '\';'"></a></td>
+											<td><span>अन्य कागजात</span><a
+												th:href="${residentFullDetail.residentDetail.answer49}"
+												target="blank"><img
+													th:src="${residentFullDetail.residentDetail.answer49}"
+													style="display: block; height: 300px; width: 300px"
+													class="img-thumbnail photo"
+													th:onerror="'this.src=\'' + @{/assets/images/no-image.png} + '\';'"></a></td>
 										</tr>
 									</tbody>
 								</table>
@@ -425,6 +450,7 @@
 						</div>
 					</div>
 				</div>
+
 				<!-- Modal View For Map Location Display-->
 				<div class="modal fade" id="map-location-modal"
 					data-keyboard="false" data-backdrop="false" role="dialog"
@@ -445,8 +471,8 @@
 							</div>
 							<div class="modal-content-body">
 								<div class="row">
-<!-- 								<div class="row" style="margin: 5px 20px;"> -->
-<!-- 									<div style="margin: 20px auto;"> -->
+									<!-- 								<div class="row" style="margin: 5px 20px;"> -->
+									<!-- 									<div style="margin: 20px auto;"> -->
 									<div>
 										<div id="surveyMap"></div>
 									</div>
@@ -456,9 +482,54 @@
 					</div>
 				</div>
 
-<!-- 				<div class="btn-print"> -->
-<!-- 					<button id="print" class="btn btn-primary">Print this page</button> -->
-<!-- 				</div> -->
+				<!-- 				<div class="btn-print"> -->
+				<!-- 					<button id="print" class="btn btn-primary">Print this page</button> -->
+				<!-- 				</div> -->
+
+				<div class="modal fade" id="deth-record-modal" data-keyboard="false"
+					data-backdrop="false" role="dialog" aria-hidden="true">
+					<div class="modal-dialog modal-lg modal-dialog-centered"
+						role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Death Record.</h5>
+							</div>
+							<div class="modal-body">
+								<form>
+									<input type="hidden" id="memberId" name="memberId" />
+									<div class="form-group">
+										<label for="regNumber" class="control-label">Registration Number</label>
+										<div class="row">
+											<div class="col-md-6">
+												<input type="text" class="form-control" id="regNumber">
+											</div>
+											<div class="col-md-4">
+												<button class=" btn btn-success" id="regCodeBtn">Generate Code</button>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="deathCause" class="control-label">Death Cause</label>
+										<input type="text" class="form-control" id="deathCause">
+									</div>
+									<div class="form-group">
+										<label for="date" class="control-label">Date</label>
+										<input type="date" class="form-control" id="date" />
+									</div>
+									<div class="form-group">
+										<label for="place" class="control-label">Place</label>
+										<input type="text" class="form-control" id="place">
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Close</button>
+								<button type="button" id="death-record-submit-btn" class="btn btn-primary">Submit</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
@@ -475,8 +546,9 @@
 		
 			/*<![CDATA[*/
 			var residentFullDetail = /*[[${residentFullDetail}]]*/'';
+			
 			/*]]>*/
-		
+		var token = /*[[${#authentication.principal.token}]]*/ '';
 		$(function() {
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
@@ -536,7 +608,86 @@
 			});
 		});
 		
+		//converts date to mm-dd-yyyy form
+		function convertDate(rawDate) {
+			let date = rawDate.split("/");
+			let arrayLength = date.length;
+			let finalDate = "";
+			for(let i = 0; i < arrayLength; i++) {
+				if(i == (arrayLength -1)) {
+					finalDate += date[i];
+				} else {
+					finalDate += date[i] + "-";
+				}
+			}
+			return finalDate;
+		}
 		
+		//Set death record request
+		$("#grid td").on('click', "a", function(event) {
+			if($(this).text() === 'Mark Demise') {
+				let memberId = $(this).attr("data") || false;
+				$("#memberId").val(memberId);
+				$("#deth-record-modal").modal("show");
+			}
+		});
+		
+		$("#death-record-submit-btn").on("click", function(event) {
+			event.preventDefault();
+			var memberId = $("#memberId").val();
+			var registrationNumber = $("#regNumber").val();
+			var deathCause =  $("#deathCause").val();
+			var demiseDate =  $("#date").val();
+			var place =  $("#place").val();
+			
+			let deathRecord = {};
+			deathRecord.memberId = memberId;
+			deathRecord.registrationNumber = registrationNumber;
+			deathRecord.deathCause = deathCause;
+			deathRecord.demiseDate = convertDate(demiseDate);
+			deathRecord.place = place;
+			
+			$.ajax({
+				url: "http://localhost:8888/resident/member/dead",
+				method: "POST",
+				contentType: "Application/Json",
+				headers: {
+					"Authorization": token
+				},
+				data: JSON.stringify(deathRecord),
+				success: function(data) {
+					swal.fire({
+						  text: "Member marked as demise!",
+						  icon: "success",
+						  buttons: true,
+						  dangerMode: true,
+						})
+						.then((willDelete) => {
+						 location.reload();
+					});
+				},
+				error: function(data) {
+					console.log(data);
+				}
+			});
+		});
+		
+		//For canceling and hiding the Map modal
+		$("#deth-record-cancel").on("click", function(event) {
+			$("#deth-record-modal").modal("hide");
+		});
+		
+		
+		//Generate Random Code For Registration.
+		function generatePassword() {
+			return (Math.random().toString(36).slice(2)
+					+ Math.random().toString(36).toUpperCase().slice(2)).toUpperCase();
+		}
+		
+		$("#regCodeBtn").on("click", function(event) {
+			event.preventDefault();
+			$("#regNumber").val(generatePassword());
+		});
 		
 		// For deleting favPlace
 		function deleteMemberInfo(memberId) {
