@@ -96,8 +96,32 @@
 	<script th:inline="javascript">
 			/*<![CDATA[*/
 			var geoCoordinates = /*[[${favouritePlaceInfo.placeGPS}]]*/ '0';
+			var placeType =  /*[[${favouritePlaceInfo.placeType}]]*/ '0';
 
 			/*]]>*/
+			
+			
+			var placeIcon = L.Icon.extend({
+			    options: {
+			        shadowUrl: '/assets/images/markers/shadow.png',
+			        iconSize:     [38, 95],
+			        shadowSize:   [50, 64],
+			        iconAnchor:   [22, 94],
+			        shadowAnchor: [4, 62],
+			        popupAnchor:  [-3, -76]
+			    }
+			});
+			
+			var templeIcon = new placeIcon({iconUrl: '/assets/images/markers/temple.png'}),
+		    parkIcon = new placeIcon({iconUrl: '/assets/images/markers/park.png'}),
+		    pondIcon = new placeIcon({iconUrl: '/assets/images/markers/pond.png'}),
+		    wellIcon = new placeIcon({iconUrl: '/assets/images/markers/wells.png'}),
+		    statueIcon = new placeIcon({iconUrl: '/assets/images/markers/statue.png'}),
+		    schoolIcon = new placeIcon({iconUrl: '/assets/images/markers/school.png'}),
+		    organizationIcon = new placeIcon({iconUrl: '/assets/images/markers/organization.png'}),
+		    guthiIcon = new placeIcon({iconUrl: '/assets/images/markers/guthi.png'});
+
+			
 // 			Splitting the location coordinates into latitude and longitude
 			var geoFields = geoCoordinates.split(', ');
 			var geoLat = geoFields[0];		//Gets the latitude
@@ -109,7 +133,46 @@
 			const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 			const tiles = L.tileLayer(tileUrl, {attribution});
 			tiles.addTo(mymap);
-			marker = L.marker([geoLat, geoLong]).addTo(mymap);		
+// 			marker = L.marker([geoLat, geoLong]).addTo(mymap);		
+
+			var placeType  = placeType.toLowerCase();
+			switch(placeType) {
+				case "temple":
+				L.marker([geoLat, geoLong], {icon: templeIcon}).addTo(mymap);
+				break;
+				
+				case "park":
+				L.marker([geoLat, geoLong], {icon: parkIcon}).addTo(mymap);
+				break;
+				
+				case "pond":
+				L.marker([geoLat, geoLong], {icon: pondIcon}).addTo(mymap);
+				break;
+				
+				case "well/watches":
+				L.marker([geoLat, geoLong], {icon: wellIcon}).addTo(mymap);
+				break;
+
+				case "statue":
+				L.marker([geoLat, geoLong], {icon: statueIcon}).addTo(mymap);
+				break;
+				
+				case "school":
+				L.marker([geoLat, geoLong], {icon: schoolIcon}).addTo(mymap);
+				break;
+				
+				case "organization":
+				L.marker([geoLat, geoLong], {icon: organizationIcon}).addTo(mymap);
+				break;
+				
+				case "guthi":
+				L.marker([geoLat, geoLong], {icon: guthiIcon}).addTo(mymap);
+				break;
+				
+				default:
+				marker = L.marker([geoLat, geoLong]).addTo(mymap);		
+			}
+		
 	</script>
 </body>
 </html>
