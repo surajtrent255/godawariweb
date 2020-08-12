@@ -266,26 +266,30 @@
 						</div>
 					</div>
 
-					<div class="col-12 col-lg-4" th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
+					<div class="col-12 col-lg-4" th:if="${!#lists.isEmpty(extraReport) && extraReport != null}">
 						<div class="card gradient-violet">
 							<div class="card-body">
 								<p class="text-white">जम्मा घरधुरी</p>
 								<h4 class="mb-0 text-white">
-									899 <small class="small-font text-white">100% <i
-										class="zmdi zmdi-long-arrow-up"></i></small>
+									<span th:if="${extraReport.get(1) != null}" th:text="${extraReport.get(1).data}">3998</span>
+									 <small class="small-font text-white">100% <i
+										class="zmdi zmdi-long-arrow-up"></i>
+									 </small>
 								</h4>
 							</div>
 
 						</div>
 					</div>
 
-					<div class="col-12 col-lg-4" th:if="${!#lists.isEmpty(populationReport) && populationReport != null}">
+					<div class="col-12 col-lg-4" th:if="${!#lists.isEmpty(extraReport) && extraReport != null}">
 						<div class="card gradient-orange">
 							<div class="card-body">
 								<p class="text-white">मृत्यु संख्या</p>
 								<h4 class="mb-0 text-white">
-									0 <small class="small-font text-white">0% <i
-										class="zmdi zmdi-long-arrow-up"></i></small>
+									<span th:if="${extraReport.get(0) != null}" th:text="${extraReport.get(1).data}">3998</span>
+									 <small class="small-font text-white">100% <i
+										class="zmdi zmdi-long-arrow-up"></i>
+									 </small>
 								</h4>
 							</div>
 

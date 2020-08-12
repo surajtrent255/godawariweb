@@ -1,9 +1,7 @@
 package com.ishanitech.ipalikawebapp.serviceImpl;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ishanitech.ipalikawebapp.configs.properties.RestApiProperties;
+import com.ishanitech.ipalikawebapp.dto.ExtraReport;
 import com.ishanitech.ipalikawebapp.dto.PopulationReport;
 import com.ishanitech.ipalikawebapp.dto.QuestionReport;
 import com.ishanitech.ipalikawebapp.dto.Response;
@@ -55,6 +54,15 @@ public class ReportServiceImpl implements ReportService {
 		RequestEntity requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, MediaType.APPLICATION_JSON, token, url);
 		ParameterizedTypeReference<String> responseType = new ParameterizedTypeReference<String>() {};
 		restTemplate.exchange(requestEntity, responseType);
+	}
+
+	@Override
+	public List<ExtraReport> getExtraReport(String token) {
+		String template =  REPORT_BASE + "{extraReport}";
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, Collections.singletonMap("extraReport", "extra"));
+		RequestEntity request = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<List<ExtraReport>>> bean = new ParameterizedTypeReference<Response<List<ExtraReport>>>() {};
+		return restTemplate.exchange(request, bean).getBody().getData();
 	}
 	
 	

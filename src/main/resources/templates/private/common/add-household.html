@@ -653,18 +653,11 @@
 					 }
 				 
 				let codeToExecute = "houseHoldInfo.answer" + index + "= answer[" + index + "]";
-				console.log(codeToExecute);
 				eval(codeToExecute);
 				 
 			}
 			
-			console.log(myFiles);
-			
 			houseHoldInfo.filledId = timestamp;
-			
-			console.log(houseHoldInfo);
-			
-			console.log(contextPath);
 			
 			var confirmProceed = true;
 			
@@ -676,18 +669,12 @@
 				}
 			}
 			
-			console.dir(proceedSave);
 			
 			if(confirmProceed){
 				var endTime = new Date().getTime();
-				console.log("endTime---->" + endTime);
-				
 				var diff = endTime - startTime;
 				var duration = Math.round((diff/1000)/60 * 100)/100 + " min";
-				console.log("duration---->" + duration);
-				
 				houseHoldInfo.duration = duration;
-				
 				
 				
 			$.ajax({
@@ -735,10 +722,8 @@
 			
 			if(confirmProceed){
 			while(imgindex < myFiles.length){
-				console.log("Index--------->" + myFiles[imgindex].index);
 				var formId = "form" + myFiles[imgindex].index;
 				var imgId = "answer" + myFiles[imgindex].index;
-				console.log("FormId--------->" + formId);
 				var form = document.getElementById(formId);
 				var formData = new FormData(form);
 				
@@ -746,11 +731,6 @@
 				formData.append("questionId", myFiles[imgindex].questionId);
 				formData.append("extension", myFiles[imgindex].extension);
 				formData.append("filledId", timestamp);
-				
-				
-				for (var pair of formData.entries()) {
-				    console.log(pair[0]+ ', ' + pair[1]); 
-				}
 				
 			$.ajax({
 				method: "POST",

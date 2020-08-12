@@ -27,6 +27,7 @@ public class ReportController {
 	public String getDashboardView(Model model, @AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("populationReport", reportService.getPopulationReport(user.getToken()));
 		model.addAttribute("questionReport", reportService.getQuestionReport(user.getToken()));
+		model.addAttribute("extraReport", reportService.getExtraReport(user.getToken()));
 		return "private/common/dashboard";
 	}
 	
