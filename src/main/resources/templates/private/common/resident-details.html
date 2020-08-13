@@ -661,8 +661,8 @@
 			subdomains : [ 'mt0', 'mt1', 'mt2', 'mt3' ]
 		}).addTo(mymap);
 
-		marker = L.marker([ geoLat, geoLong ]).addTo(mymap);
-
+		marker = L.marker([ geoLat, geoLong ]).addTo(mymap).bindPopup("Record ID = " + residentFullDetail.residentDetail.filledId);
+		
 		//For showing the Map modal	
 		$("#view-location-btn").on("click", function(event) {
 			event.preventDefault();
