@@ -636,12 +636,12 @@
 					console.log(myFile);
 					
 					if($(id).val() != ""){
-					var imageName = "JPEG_" + residentFullDetail.filledId + "_" +questionAndOptions[questionAndOption].id + "." + $(id).val().split('.').pop();
+					var imageName = "JPEG_" + residentFullDetail.filledId + "_" + "1_" +questionAndOptions[questionAndOption].id + "." + $(id).val().split('.').pop();
 					}else{
 						let answerNo = "residentFullDetail.answer" + index;
 						let evalString = eval(answerNo);
 						console.log("ImageName" + index + "---->" + evalString);
-						var imageName = "JPEG_" + residentFullDetail.filledId + "_" +questionAndOptions[questionAndOption].id + "." + evalString.split('.').pop();
+						var imageName = "JPEG_" + residentFullDetail.filledId + "_" + "1_" +questionAndOptions[questionAndOption].id + "." + evalString.split('.').pop();
 					}
 					
 					
@@ -902,10 +902,7 @@ $(function() {
 				
 				$(idString).val(res[optionindex - 1]);
 				
-				/* for(var i = 1; i< 8; i++){
-					var idofoption = "#dropdownoption" + index + optionindex + i;
-					$(idofoption).attr("hidden", true);
-				} */
+				
 				
 			 }		 
 		 }

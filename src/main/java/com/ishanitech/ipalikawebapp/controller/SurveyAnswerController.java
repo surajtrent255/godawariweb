@@ -114,7 +114,7 @@ public class SurveyAnswerController {
 			MultipartFile ourImage = request.getFile(inputTagName);
 			//ourImage.getOriginalFilename().replace(ourImage.getOriginalFilename(), "JPEG_" + filledId + "_" + questionId + "." + extension);
 			
-			String imageName = "JPEG_" + filledId + "_" + questionId + "." + extension;
+			String imageName = "JPEG_" + filledId + "_" + "1_"+ questionId + "." + extension;
 			//ourImage.getOriginalFilename().concat(imageName);
 			System.out.println("GeneratedImageName----->" + imageName);
 			System.out.println(ourImage.getSize());
@@ -161,7 +161,7 @@ public class SurveyAnswerController {
 	
 		try
         { 
-			String imageName = "JPEG_" + filledId + "_" + questionId + "." + extension;
+			String imageName = "JPEG_" + filledId + "_" + "1_"+ questionId + "." + extension;
 			//for testing purpose
 			File file = new File(uploadDirectoryProperties.getTempFileUploadingDirectory() + imageName);
 			Path path = Paths.get(uploadDirectoryProperties.getTempFileUploadingDirectory() + imageName);
@@ -224,7 +224,7 @@ public class SurveyAnswerController {
 			MultipartFile ourImage = request.getFile(inputTagName);
 			//ourImage.getOriginalFilename().replace(ourImage.getOriginalFilename(), "JPEG_" + filledId + "_" + questionId + "." + extension);
 			
-			String imageName = "JPEG_" + filledId + "_" + questionId + "." + extension;
+			String imageName = "JPEG_" + filledId + "_" + "1_" + questionId + "." + extension;
 			//ourImage.getOriginalFilename().concat(imageName);
 			System.out.println("GeneratedImageName----->" + imageName);
 			System.out.println(ourImage.getSize());
@@ -271,7 +271,7 @@ public class SurveyAnswerController {
 	
 		try
         { 
-			String imageName = "JPEG_" + filledId + "_" + questionId + "." + extension;
+			String imageName = "JPEG_" + filledId + "_" +  "1_" + questionId + "." + extension;
 			//for testing purpose
 			File file = new File(uploadDirectoryProperties.getTempFileUploadingDirectory() + imageName);
 			Path path = Paths.get(uploadDirectoryProperties.getTempFileUploadingDirectory() + imageName);
