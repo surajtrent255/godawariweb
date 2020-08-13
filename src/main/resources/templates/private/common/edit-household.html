@@ -184,6 +184,23 @@
 										</div>
 									</div>
 									
+									<div class="form-group form-label water_source" th:if="${questionAndOption.type} == 'RADIO_M'">
+										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h5>
+											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h5></label>
+										<div class="form-group form-radio  ">
+											<label th:each="option, indx : ${questionAndOption.options}"><span th:text="${option}"></span><select th:id="'dropdown' + ${i.index + 1} + ${indx.index + 1}">
+											<option value="" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '0'"></option>
+											<option value="1" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '1'">पुरुष</option>
+											<option value="2" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '2'">महिला</option>
+											<!-- <option value="3" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '3'">3</option>
+											<option value="4" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '4'">4</option>
+											<option value="5" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '5'">5</option>
+											<option value="6" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '6'">6</option>
+											<option value="7" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '7'">7</option> -->
+											</select></label>
+										</div>
+									</div>
+									
 									<div class="form-group form-label" th:if="${questionAndOption.type} == 'GPS'">
 										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h5>
 											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h5></label> <input type="text"
@@ -572,7 +589,7 @@
 						 $(questId).css('color', 'red');
 					 }
 				}
-				 else if(questionAndOptions[questionAndOption].type === "RATING_M"){
+				 else if(questionAndOptions[questionAndOption].type === "RATING_M" || questionAndOptions[questionAndOption].type === "RADIO_M"){
 					 let rating_answer = "";
 					 let booleanForRatingM = true;
 					 for(var option in questionAndOptions[questionAndOption].options){
@@ -870,6 +887,25 @@ $(function() {
 					var idofoption = "#dropdownoption" + index + optionindex + i;
 					$(idofoption).attr("hidden", true);
 				}
+				
+			 }		 
+		 }
+		 else if(questionAndOptions[questionAndOption].type === "RADIO_M"){
+			 let answerNo = "residentFullDetail.answer" + index;
+			 let evalString = eval(answerNo);
+		
+			 var res = evalString.split(",");
+			 
+			 for(var option in questionAndOptions[questionAndOption].options){
+					let optionindex = parseInt(Object.keys(questionAndOptions[questionAndOption].options).indexOf(option)) + 1;
+				var idString = "#dropdown" + index + optionindex ;
+				
+				$(idString).val(res[optionindex - 1]);
+				
+				/* for(var i = 1; i< 8; i++){
+					var idofoption = "#dropdownoption" + index + optionindex + i;
+					$(idofoption).attr("hidden", true);
+				} */
 				
 			 }		 
 		 }
