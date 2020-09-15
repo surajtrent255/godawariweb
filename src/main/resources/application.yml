@@ -85,7 +85,7 @@ com:
 spring:
   profiles: ishani-prod
 server:
-  port: 9191
+  port: 80
   
 rest-api:
   protocol: http
