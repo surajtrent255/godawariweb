@@ -77,7 +77,7 @@ rest-api:
   
 com:
   ipalika:
-    tempFileUploadingDirectory: /home/ishani/Pictures/ 
+    tempFileUploadingDirectory: /archiesoft/ipalika/
     
 ---
 
@@ -93,10 +93,10 @@ rest-api:
   port: 8888
   
 com:
-  tempFileUploadingDirectory: /home/ishani/Pictures/
+  tempFileUploadingDirectory: /archiesoft/ipalika/
 
 logging:
   loggin:
     level:
       root: ERROR
-  file: /home/ipalika/ipalika-logs/ipalika-webapp.log  
+  file: /archiesoft/ipalika/webapp/logs/ipalika-webapp.log  
