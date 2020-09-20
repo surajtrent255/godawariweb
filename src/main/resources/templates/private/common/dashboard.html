@@ -39,7 +39,7 @@
 				<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-primary" th:attr="onclick=|generateReport()|">Generate Latest Report</button>
 				<!--Start Dashboard Content-->
 <!-- 				<button class="add-member btn btn-primary mb-2" style="margin-left: 8px;" id="generateReport">Generate Latest Report</button> -->
-				<div th:if="${!#lists.isEmpty(populationReport) && populationReport != null && populationReport.get(0) != null}" class="row mt-3">
+				<div th:if="${populationReport != null}" class="row mt-3">
 					<div class="col-12 col-lg-6 col-xl-2">
 						<div class="card gradient-deepblue">
 							<div class="card-body">
@@ -200,7 +200,7 @@
 				</div>
 				<!--End Row-->
 
-				<div class="row" th:if="${!#lists.isEmpty(populationReport) && populationReport != null}">
+				<div class="row" th:if="${populationReport != null}">
 					<div class="col-12 col-lg-4">
 						<div class="card">
 							<div class="card-body">
@@ -252,7 +252,7 @@
 				</div>
 
 				<div class="row">
-					<div class="col-12 col-lg-4" th:if="${!#lists.isEmpty(populationReport) && populationReport != null && populationReport.get(0) != null}">
+					<div class="col-12 col-lg-4" th:if="${populationReport != null && populationReport.get(0) != null}">
 						<div class="card bg-warning">
 							<div class="card-body">
 								<p class="text-white">जम्मा जनसंख्या</p>
@@ -1136,19 +1136,16 @@
 		}
 	
 		$(function() {
-			let populationReportExists = /*[[${#lists.isEmpty(populationReport)}]]*/;
-			if(!populationReportExists) {
+				let totalInfants = /*[[${totalInfants}]]*/ 0;
+				let totalChildrens = /*[[${totalChildrens}]]*/ 0;
+				let totalYouths = /*[[${totalYouths}]]*/ 0;
+				let totalMidage = /*[[${totalMidage}]]*/ 0;
+				let totalOldage = /*[[${totalOldage}]]*/ 0;
+				let totalSeniorCitizens = /*[[${totalSeniorCitizens}]]*/ 0;
 				
-				let totalInfants = /*[[${populationReport.get(0).option1}]]*/ '0';
-				let totalChildrens = /*[[${populationReport.get(0).option2}]]*/ '0';
-				let totalYouths = /*[[${populationReport.get(0).option3}]]*/ '0';
-				let totalMidage = /*[[${populationReport.get(0).option4}]]*/ '0';
-				let totalOldage = /*[[${populationReport.get(0).option5}]]*/ '0';
-				let totalSeniorCitizens = /*[[${populationReport.get(0).option6}]]*/ '0';
-				
-				let totalMale = /*[[${populationReport.get(1).option1}]]*/ '0';
-				let totalFemale = /*[[${populationReport.get(1).option2}]]*/ '0';
-				let totalOthers = /*[[${populationReport.get(1).option3}]]*/ '0';
+				let totalMale = /*[[${totalMale}]]*/ 0;
+				let totalFemale = /*[[${totalFemale}]]*/ 0;
+				let totalOthers = /*[[${totalOthers}]]*/ 0;
 				new Chart(document.getElementById("population-chart"), {
 				    type: 'bar',
 				    data: {
@@ -1194,7 +1191,6 @@
 				      }
 				    }
 				});
-			}
 		});
 		
 		

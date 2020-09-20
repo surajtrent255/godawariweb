@@ -86,8 +86,8 @@ public class SurveyAnswerController {
 	@PostMapping("/household")
 	public @ResponseBody
     int addHouseHold(@RequestBody AnswerDTO answerDto, @AuthenticationPrincipal UserDTO user, HttpServletRequest httpServletRequest) {
-        System.out.println(answerDto.toString());
-       
+        
+       log.info("AnserDTO : " + answerDto.toString());
         answerDto.setEntryDate(LocalDateTime.now().toString());
         answerDto.setAddedBy(user.getUserId());
         
