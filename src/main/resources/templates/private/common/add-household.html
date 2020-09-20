@@ -93,7 +93,7 @@
 							<div class="row">
 							<!-- dynamic code begins -->
 							
-							<div class="col-lg-3 col-md-4" th:each="questionAndOption, i : ${questionAndOptions}">
+							<div class="col-lg-3 col-md-4" th:each="questionAndOption : ${questionAndOptions}">
 									<div class="form-group form-label" th:if="${questionAndOption.type == 'TEXT' || questionAndOption.type == 'MULTI_TEXT'}">
 										<label th:for="${questionAndOption.id}">
 											<h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${questionAndOption.questionId}"></h5>

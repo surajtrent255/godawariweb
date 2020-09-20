@@ -22,7 +22,7 @@ public class FormDetail {
 	private int uuid;
 	@JsonIgnore
     private int formId;
-	
+
     private int questionId;
     private String id;
     private String grouping;
