@@ -93,137 +93,137 @@
 							<div class="row">
 							<!-- dynamic code begins -->
 							
-							<div class="col-lg-3 col-md-4" th:each="questionAndOption, i : ${questionAndOptions}">
+							<div class="col-lg-3 col-md-4" th:each="questionAndOption : ${questionAndOptions}">
 									<div class="form-group form-label" th:if="${questionAndOption.type == 'TEXT' || questionAndOption.type == 'MULTI_TEXT'}">
 										<label th:for="${questionAndOption.id}">
-											<h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h5>
-											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h5>
-										</label> <input type="text" class="form-control  " th:id="'answer' + ${i.index + 1}"
-											th:name="'answer' + ${i.index + 1}" value="">
+											<h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${questionAndOption.questionId}"></h5>
+											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${questionAndOption.questionId}"></h5>
+										</label> <input type="text" class="form-control  " th:id="'answer' + ${questionAndOption.questionId}"
+											th:name="'answer' + ${questionAndOption.questionId}" value="">
 									</div>
 									<div class="form-group form-label" th:if="${questionAndOption.type} == 'NUMBER'">
 										<label th:for="${questionAndOption.id}">
-											<h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h5>
-											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h5>
-										</label> <input type="number" class="form-control  " th:id="'answer' + ${i.index + 1}"
-											th:name="'answer' + ${i.index + 1}" value="">
+											<h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${questionAndOption.questionId}"></h5>
+											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${questionAndOption.questionId}"></h5>
+										</label> <input type="number" class="form-control  " th:id="'answer' + ${questionAndOption.questionId}"
+											th:name="'answer' + ${questionAndOption.questionId}" value="">
 									</div>
  
 									<div class="form-group form-label" th:if="${questionAndOption.type== 'RADIO' || questionAndOption.type == 'RADIO_D'}">
-										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h5>
-											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h5></label> <select
-											class="form-control" th:id="'answer' + ${i.index + 1}"
-											th:name="'answer' + ${i.index + 1}">
+										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${questionAndOption.questionId}"></h5>
+											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${questionAndOption.questionId}"></h5></label> <select
+											class="form-control" th:id="'answer' + ${questionAndOption.questionId}"
+											th:name="'answer' + ${questionAndOption.questionId}">
 											<option value=""></option>
 											<option th:value="${indx.index}" th:each="option, indx : ${questionAndOption.options}" th:text="${option}"></option>
 										</select>
 									</div>
 									<div class="form-group form-label" th:if="${questionAndOption.type == 'DROPDOWN'}">
-										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h5>
-											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h5></label> <select
-											class="form-control" th:id="'answer' + ${i.index + 1}"
-											th:name="'answer' + ${i.index + 1}">
+										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${questionAndOption.questionId}"></h5>
+											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${questionAndOption.questionId}"></h5></label> <select
+											class="form-control" th:id="'answer' + ${questionAndOption.questionId}"
+											th:name="'answer' + ${questionAndOption.questionId}">
 											<!-- <option value=""></option> -->
 											<option th:value="${indx.index}" th:each="option, indx : ${questionAndOption.options}" th:text="${option}"></option>
 										</select>
 									</div>
 									<div class="form-group form-label water_source" th:if="${questionAndOption.type} == 'CHECKBOX'">
-										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h5>
-											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h5></label>
+										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${questionAndOption.questionId}"></h5>
+											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${questionAndOption.questionId}"></h5></label>
 										<div class="form-group form-radio  ">
-											<label th:each="option, indx : ${questionAndOption.options}"><input type="checkbox" th:class="'checkboxgroup' + ${i.index + 1}" name="water_source[]"
+											<label th:each="option, indx : ${questionAndOption.options}"><input type="checkbox" th:class="'checkboxgroup' + ${questionAndOption.questionId}" name="water_source[]"
 												th:value="${indx.index}" data-event="toggle"
-												data-target="water_source_other" data-value="3"th:id="'answer' + ${i.index + 1}"
-											th:name="'answer' + ${i.index + 1}"><span th:text="${option}"></span></label>
+												data-target="water_source_other" data-value="3"th:id="'answer' + ${questionAndOption.questionId}"
+											th:name="'answer' + ${questionAndOption.questionId}"><span th:text="${option}"></span></label>
 										</div>
 									</div>
 									<div class="form-group form-label" th:if="${questionAndOption.type} == 'IMAGE'">
-										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h5>
-											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h5></label> 
-											<form th:id="'form' + ${i.index + 1}" th:name="'form' + ${i.index + 1}" enctype="multipart/form-data" useToken="true">
+										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${questionAndOption.questionId}"></h5>
+											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${questionAndOption.questionId}"></h5></label> 
+											<form th:id="'form' + ${questionAndOption.questionId}" th:name="'form' + ${questionAndOption.questionId}" enctype="multipart/form-data" useToken="true">
 											<input type="file"
-											class="form-control  " th:id="'answer' + ${i.index + 1}"
-											th:name="'answer' + ${i.index + 1}" value=""
-											data-event="change" th:data-target="'photo' + ${i.index + 1}" accept="image/*"></form>
+											class="form-control  " th:id="'answer' + ${questionAndOption.questionId}"
+											th:name="'answer' + ${questionAndOption.questionId}" value=""
+											data-event="change" th:data-target="'photo' + ${questionAndOption.questionId}" accept="image/*"></form>
 										
 										<a href="" style="display: none" target="_blank"
 											class="no-pjax">
-											<img src="" style="display: none" th:class="'photo' + ${i.index + 1} + ' img-thumbnail'"
+											<img src="" style="display: none" th:class="'photo' + ${questionAndOption.questionId} + ' img-thumbnail'"
 											class="img-thumbnail photo"></a>
 									</div>
 									
 									<div class="form-group form-label foreign_study" th:if="${questionAndOption.type} == 'CHECKBOX_N'">
-										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h5>
-											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h5> </label>
+										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${questionAndOption.questionId}"></h5>
+											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${questionAndOption.questionId}"></h5> </label>
 										<div class="form-group form-radio  ">
 											<label th:each="option,indx : ${questionAndOption.options}"> <input type="checkbox"
-												th:name="'foreign_study[' + ${indx.index}+ ${i.index + 1} +']'" th:class="'checkboxgroup' + ${i.index + 1}" th:value="${indx.index}" data-event="toggle"
+												th:name="'foreign_study[' + ${indx.index}+ ${questionAndOption.questionId} +']'" th:class="'checkboxgroup' + ${questionAndOption.questionId}" th:value="${indx.index}" data-event="toggle"
 												th:data-target="'foreign_study_source_' + ${indx.index} + ${questionAndOption.id}" th:data-value="${indx.index}"><span th:text = "${option}"></span>
 												<input type="number" th:name="'foreign_study_source_count[' + ${indx.index} + ${questionAndOption.id} + ']'"
 												class = "numeric" th:class="'foreign_study_source_' + ${indx.index} + ${questionAndOption.id}"
 												placeholder="संख्या खुलाउनु होस्" value="1"
-												style="width: 50px; display: none" th:id="'chkboxn' + ${i.index + 1} + ${indx.index}">
+												style="width: 50px; display: none" th:id="'chkboxn' + ${questionAndOption.questionId} + ${indx.index}">
 											</label> 
 										</div>
 									</div>
 									
 									<div class="form-group form-label water_source" th:if="${questionAndOption.type} == 'RATING_M'">
-										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h5>
-											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h5></label>
+										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${questionAndOption.questionId}"></h5>
+											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${questionAndOption.questionId}"></h5></label>
 										<div class="form-group form-radio  ">
-											<label th:each="option, indx : ${questionAndOption.options}"><span th:text="${option}"></span><select th:id="'dropdown' + ${i.index + 1} + ${indx.index + 1}">
-											<option value="" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '0'"></option>
-											<option value="1" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '1'">1</option>
-											<option value="2" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '2'">2</option>
-											<option value="3" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '3'">3</option>
-											<option value="4" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '4'">4</option>
-											<option value="5" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '5'">5</option>
-											<option value="6" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '6'">6</option>
-											<option value="7" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '7'">7</option>
+											<label th:each="option, indx : ${questionAndOption.options}"><span th:text="${option}"></span><select th:id="'dropdown' + ${questionAndOption.questionId} + ${indx.index + 1}">
+											<option value="" th:id="'dropdownoption' + ${questionAndOption.questionId} + ${indx.index+1} + '0'"></option>
+											<option value="1" th:id="'dropdownoption' + ${questionAndOption.questionId} + ${indx.index+1} + '1'">1</option>
+											<option value="2" th:id="'dropdownoption' + ${questionAndOption.questionId} + ${indx.index+1} + '2'">2</option>
+											<option value="3" th:id="'dropdownoption' + ${questionAndOption.questionId} + ${indx.index+1} + '3'">3</option>
+											<option value="4" th:id="'dropdownoption' + ${questionAndOption.questionId} + ${indx.index+1} + '4'">4</option>
+											<option value="5" th:id="'dropdownoption' + ${questionAndOption.questionId} + ${indx.index+1} + '5'">5</option>
+											<option value="6" th:id="'dropdownoption' + ${questionAndOption.questionId} + ${indx.index+1} + '6'">6</option>
+											<option value="7" th:id="'dropdownoption' + ${questionAndOption.questionId} + ${indx.index+1} + '7'">7</option>
 											</select></label>
 										</div>
 									</div>
 									
 										<div class="form-group form-label water_source" th:if="${questionAndOption.type} == 'RADIO_M'">
-										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h5>
-											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h5></label>
+										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${questionAndOption.questionId}"></h5>
+											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${questionAndOption.questionId}"></h5></label>
 										<div class="form-group form-radio  ">
-											<label th:each="option, indx : ${questionAndOption.options}"><span th:text="${option}"></span><select th:id="'dropdown' + ${i.index + 1} + ${indx.index + 1}">
-											<option value="" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '0'"></option>
-											<option value="1" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '1'">पुरुष</option>
-											<option value="2" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '2'">महिला</option>
-											<!-- <option value="3" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '3'">3</option>
-											<option value="4" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '4'">4</option>
-											<option value="5" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '5'">5</option>
-											<option value="6" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '6'">6</option>
-											<option value="7" th:id="'dropdownoption' + ${i.index + 1} + ${indx.index+1} + '7'">7</option> -->
+											<label th:each="option, indx : ${questionAndOption.options}"><span th:text="${option}"></span><select th:id="'dropdown' + ${questionAndOption.questionId} + ${indx.index + 1}">
+											<option value="" th:id="'dropdownoption' + ${questionAndOption.questionId} + ${indx.index+1} + '0'"></option>
+											<option value="1" th:id="'dropdownoption' + ${questionAndOption.questionId} + ${indx.index+1} + '1'">पुरुष</option>
+											<option value="2" th:id="'dropdownoption' + ${questionAndOption.questionId} + ${indx.index+1} + '2'">महिला</option>
+											<!-- <option value="3" th:id="'dropdownoption' + ${questionAndOption.questionId} + ${indx.index+1} + '3'">3</option>
+											<option value="4" th:id="'dropdownoption' + ${questionAndOption.questionId} + ${indx.index+1} + '4'">4</option>
+											<option value="5" th:id="'dropdownoption' + ${questionAndOption.questionId} + ${indx.index+1} + '5'">5</option>
+											<option value="6" th:id="'dropdownoption' + ${questionAndOption.questionId} + ${indx.index+1} + '6'">6</option>
+											<option value="7" th:id="'dropdownoption' + ${questionAndOption.questionId} + ${indx.index+1} + '7'">7</option> -->
 											</select></label>
 										</div>
 									</div>
 									
 									<div class="form-group form-label" th:if="${questionAndOption.type} == 'GPS'">
-										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h5>
-											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h5></label> <input type="text"
+										<label th:for="${questionAndOption.id}"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${questionAndOption.questionId}"></h5>
+											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${questionAndOption.questionId}"></h5></label> <input type="text"
 										id="placeGPS" name="favLocation"
 										placeholder="Click to add location"
-										class="form-control required" readonly><input type="hidden" th:id="'answer' + ${i.index + 1}"
-											th:name="'answer' + ${i.index + 1}">
+										class="form-control required" readonly><input type="hidden" th:id="'answer' + ${questionAndOption.questionId}"
+											th:name="'answer' + ${questionAndOption.questionId}">
 
 									</div>
 									<div class="form-group form-label" th:if="${questionAndOption.type== 'DISTRICT'}">
-										<label for="caste"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h5>
-											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h5></label> <select
-											class="form-control" th:id="'answer' + ${i.index + 1}"
-											th:name="'answer' + ${i.index + 1}">
+										<label for="caste"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${questionAndOption.questionId}"></h5>
+											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${questionAndOption.questionId}"></h5></label> <select
+											class="form-control" th:id="'answer' + ${questionAndOption.questionId}"
+											th:name="'answer' + ${questionAndOption.questionId}">
 											<option value=""></option>
 											<option th:value="${indx.index}" th:each="option, indx : ${districts}" th:text="${option}"></option>
 										</select>
 									</div>
 									<div class="form-group form-label" th:if="${questionAndOption.type== 'WARD'}">
-										<label for="caste"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${i.index + 1}"></h5>
-											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${i.index + 1}"></h5></label> <select
-											class="form-control" th:id="'answer' + ${i.index + 1}"
-											th:name="'answer' + ${i.index + 1}">
+										<label for="caste"><h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${questionAndOption.questionId}"></h5>
+											<h5 th:if="${questionAndOption.isRequired} == 1" th:text="${questionAndOption.desc}" th:id="'question' + ${questionAndOption.questionId}"></h5></label> <select
+											class="form-control" th:id="'answer' + ${questionAndOption.questionId}"
+											th:name="'answer' + ${questionAndOption.questionId}">
 											<option value=""></option>
 											<option th:value="${indx.index}" th:each="option, indx : ${wards}" th:text="${option}"></option>
 										</select>
@@ -536,7 +536,7 @@
 			for (var questionAndOption in questionAndOptions){
 				 //console.log("hwelett packardd!");
 				 //console.log(Object.keys(questionAndOptions).indexOf(questionAndOption));
-				 let index = parseInt(Object.keys(questionAndOptions).indexOf(questionAndOption)) + 1;
+				 let index = questionAndOptions[questionAndOption].questionId;
 				 var id = '#answer' + index;
 				 var questId = '#question' + index;
 				 console.log(id);
