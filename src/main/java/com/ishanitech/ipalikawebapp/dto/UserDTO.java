@@ -1,6 +1,7 @@
 package com.ishanitech.ipalikawebapp.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
@@ -22,5 +23,6 @@ public class UserDTO extends Dto implements Serializable {
 	private boolean firstLogin;
 	private boolean expired;
 	private int wardNo;
+	private Date registeredDate;
 	private List<String> roles;
 }

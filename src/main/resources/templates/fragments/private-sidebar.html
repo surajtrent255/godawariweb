@@ -52,6 +52,11 @@
 					</a>
 				</li>
 				<li sec:authorize="hasAnyRole('SUPER_ADMIN', 'CENTRAL_ADMIN')">
+					<a th:href="@{/user/userList}"
+					class="waves-effect"> <i class="zmdi zmdi-assignment-account"></i> <span>User List</span>
+					</a>
+				</li>
+				<li sec:authorize="hasAnyRole('SUPER_ADMIN', 'CENTRAL_ADMIN')">
 					<a th:href="@{/user/add}"
 					class="waves-effect"> <i class="zmdi zmdi-account-add"></i> <span>Add User</span>
 					</a>

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ishanitech.ipalikawebapp.configs.properties.RestApiProperties;
+import com.ishanitech.ipalikawebapp.dto.FavouritePlaceDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.RoleDTO;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
@@ -93,5 +94,15 @@ public class UserServiceImpl implements UserService {
 		RequestEntity requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, "http://localhost:8888/role/");
 		ParameterizedTypeReference<Response<List<RoleDTO>>> responseType = new ParameterizedTypeReference<Response<List<RoleDTO>>>(){};
 		return restTemplate.exchange(requestEntity, responseType).getBody();
+	}
+
+	@Override
+	public Response<List<UserDTO>> getAllUserInfo(String token) {
+		String template = String.format("%s", USER_BASE_URL);
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity<List<UserDTO>> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<List<UserDTO>>> responseType = new ParameterizedTypeReference<Response<List<UserDTO>>>() {};
+		Response<List<UserDTO>> userList = restTemplate.exchange(requestEntity, responseType).getBody();
+		return userList;
 	}
 }

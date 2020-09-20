@@ -16,4 +16,5 @@ public interface UserService {
 	public void changePassword(String newPassword, int userId, String token);
 	public void updateUserInfoByUserId(Map<String, Object> updates, int userId, String token);
 	public void disableUser(int userId, String token);
+	public Response<List<UserDTO>> getAllUserInfo(String token);
 }

@@ -119,4 +119,11 @@ public class UserController {
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		return new Response<String>("Successfully updated information");
 	}
+	
+	@Secured({"ROLE_SUPER_ADMIN", "ROLE_CENTRAL_ADMIN"})
+	@GetMapping("/userList")
+	public String getUserListPage(Model model, @AuthenticationPrincipal UserDTO loggedInUser) {
+		model.addAttribute("userInfo", userService.getAllUserInfo(loggedInUser.getToken()).getData());
+		return "private/common/user-list";
+	}
 }
