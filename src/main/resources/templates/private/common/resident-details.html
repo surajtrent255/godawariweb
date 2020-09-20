@@ -314,7 +314,7 @@
 											<td th:text="${residentFullDetail.residentDetail.answer21}"></td>
 										</tr>
 										<tr>
-											<td>१६. <strong>घरको बनोैट</strong>:
+											<td>१६. <strong>घरको छानाको प्रकार</strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer22}"></td>
 											<td>१७. <strong>घरको जगको प्रकार</strong>:
@@ -322,151 +322,182 @@
 											<td th:text="${residentFullDetail.residentDetail.answer23}"></td>
 										</tr>
 										<tr>
-											<td>१८. <strong>सडकको भौतिक अवस्था</strong>:
+											<td>१८. <strong>घर भुकम्प प्रतिरोधात्मक</strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer24}"></td>
-											<td>१९. <strong>बैदेशिक रोजगार</strong>:
+											<td>१९. <strong>तपाईको घर वा परिवारलाई २०७२ सालको भुकम्पले के-कस्तो क्षेती पुर्यायो?</strong>:
 											</td>
-											<td th:text="${residentFullDetail.residentDetail.answer32}"></td>
+											<td th:text="${residentFullDetail.residentDetail.answer25}"></td>
 										</tr>
 										<tr>
-											<td>२०. <strong>बैदेशिक अध्ययन</strong>:
+											<td>२०. <strong>घर क्षती भएको भए पुनः निर्माण गर्नु भयो?</strong>:
 											</td>
-											<td th:text="${residentFullDetail.residentDetail.answer33}"></td>
-											<td>२१. <strong>१६ वर्ष सम्मका बालबालिका<br>अन्य
-													ठाउँमा काम गर्न गएका छन
+											<td th:text="${residentFullDetail.residentDetail.answer26}"></td>
+											<td>२१. <strong>तपाईको घर परिवारलाई अहिले कुनै प्रकारको जोखिम छ?<br>
 											</strong>:
 											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer27}"></td>
+										</tr>
+										<tr>
+											<td>२२. <strong>जोखिमको समयमा सबैभन्दा पहिलो उद्धार कसले गरेको थियो? <br>
+											</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer28}"></td>
+											<td>२३. <strong>पछिल्लो ५ वर्षमा तपाईको घर परिवारले कस्तो किसिमका जोखिम सामना गर्नु पर्यो?</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer29}"></td>
+										</tr>
+										<tr>
+											<td>२४. <strong>तपाईको विचारमा यस क्षेत्रमा तलका मध्ये कुन-कुन जोखिमको खतरा उच्च छ? (१ देखि ७ सम्म स्तरीकरण गर्नुहोस्। १ लाई उच्च र ७ लाई न्युन जोखिम मान्नुहोस्) </strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer30}"></td>
+											<td>२५. <strong>भविष्यमा हुन सक्ने जोखिम नियन्त्रणको लागि के-कस्तो पुर्व तयारी गर्नु भएको छ?</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer31}"></td>
+										</tr>
+										<tr>
+											<td>२६. <strong>वैदेशिक रोजगार</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer32}"></td>
+											<td>२७. <strong>वैदेशिक अध्ययन</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer33}"></td>
+										</tr>
+										<tr>
+											<td>२८. <strong>१६ वर्ष सम्मका बालबालिका अन्य ठाँउमा काम गर्न गएका छन्?</strong>:
+											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer34}"></td>
-										</tr>
-										<tr>
-											<td>२२. <strong>घरबाट उत्पादन भएको <br>पोहोरका
-													व्यवस्था
-											</strong></td>
-											<td th:text="${residentFullDetail.residentDetail.answer35}"></td>
-											<td>२३. <strong>बती</strong>:
-											</td>
-											<td th:text="${residentFullDetail.residentDetail.answer36}"></td>
-										</tr>
-										<tr>
-											<td>२४. <strong>खाना पकाउन प्रयोग हुने इन्धन</strong>:
-											</td>
-											<td th:text="${residentFullDetail.residentDetail.answer37}"></td>
-											<td>२५. <strong>संचार सुविधा</strong>:
-											</td>
-											<td th:text="${residentFullDetail.residentDetail.answer38}"></td>
-										</tr>
-										<tr>
-											<td>२६. <strong>घर जग्गाको विवरण</strong>:
-											</td>
-											<td th:text="${residentFullDetail.residentDetail.answer39}"></td>
-											<td>२७. <strong>वार्षिक आम्दानी</strong>:
-											</td>
-											<td th:text="${residentFullDetail.residentDetail.answer40}"></td>
-										</tr>
-										<tr>
-											<td>२८. <strong>वार्षिक खर्च</strong>:
-											</td>
-											<td th:text="${residentFullDetail.residentDetail.answer41}"></td>
-											<td>२९. <strong>चौपाया तथा पशुपंशी</strong>:
-											</td>
-											<td th:text="${residentFullDetail.residentDetail.answer42}"></td>
-										</tr>
-										<tr>
-											<td>३०. <strong>आफ्नो उत्पादन तथा आय स्रोतले
-													कति महिना खान पुग्छ?</strong>:
-											</td>
-											<td th:text="${residentFullDetail.residentDetail.answer43}"></td>
-											<td>३१. <strong>सिप तालिम पहिला लिनुभएको छ? </strong>:
-											</td>
-											<td th:text="${residentFullDetail.residentDetail.answer44}"></td>
-										</tr>
-										<tr>
-											<td>३२. <strong>भविष्यमा कस्तो सिप तालिम गर्नु
-													पर्ला? </strong>:
-											</td>
-											<td colspan="3"
-												th:text="${residentFullDetail.residentDetail.answer45}"></td>
-										</tr>
-										<tr>
-											<td>३३ . <strong>तपाईको परिवारमा १८ वर्षभन्दा कम उमेरका भिन्न शारीरिक तथा मानसिक क्षमता भएका(अपाङ्ग) सदस्यहरु (बालक)</strong>:
+											<td>२९. <strong>तपाईको परिवारमा १८ वर्षभन्दा कम उमेरका भिन्न शारीरिक तथा मानसिक क्षमता भएका(अपाङ्ग) सदस्यहरु (बालक)</strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer52}"></td>
-											<td>३४ . <strong>तपाईको परिवारमा १८ वर्षभन्दा कम उमेरका भिन्न शारीरिक तथा मानसिक क्षमता भएका(अपाङ्ग) सदस्यहरु (बालिका)</strong>:
+										</tr>
+										<tr>
+											<td>३०. <strong>तपाईको परिवारमा १८ वर्षभन्दा कम उमेरका भिन्न शारीरिक तथा मानसिक क्षमता भएका(अपाङ्ग) सदस्यहरु (बालिका)</strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer53}"></td>
-										</tr>
-										<tr>
-											<td>३५ . <strong>परिवारको कुनै सदस्य विरामी भएमा उपचारका लागि सबैभन्दा पहिला कहाँ जानुहुन्छ?</strong>:
+											<td>३१. <strong>परिवारको कुनै सदस्य विरामी भएमा उपचारका लागि सबैभन्दा पहिला कहाँ जानुहुन्छ? </strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer54}"></td>
-											<td>३६ . <strong>बिचैमा विद्यालय जान छोडेका ६ - १५ वर्ष उमेर समुहका बालबालिकाहरुका संख्या</strong>:
+										</tr>
+										<tr>
+											<td>३२. <strong>बिचैमा विद्यालय जान छोडेका ६ - १५ वर्ष उमेर समुहका बालबालिकाहरुका संख्या </strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer55}"></td>
-										</tr>
-										<tr>
-											<td>३७ . <strong>बाल विकास केन्द्र वा पुर्व प्रा.वि. तहमा जाने ३ देखि ५ वर्षसम्मका बालबालिका संख्या</strong>:
+											<td>३३. <strong>बाल विकास केन्द्र वा पुर्व प्रा.वि. तहमा जाने ३ देखि ५ वर्षसम्मका बालबालिका संख्या </strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer56}"></td>
-											<td>३८ . <strong>तपाईको परिवारमा बालबालिकाले गल्ति गरेमा के गर्नु हुन्छ?</strong>:
+										</tr>
+										<tr>
+											<td>३४. <strong>तपाईको परिवारमा बालबालिकाले गल्ति गरेमा के गर्नु हुन्छ?</strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer57}"></td>
-										</tr>
-										<tr>
-											<td>३९ .<strong>तपाईको घरमा छोरा र छोरीमा कुनै फरक व्यवहार गर्ने गर्नुभएको छ?</strong>:
+											<td>३५. <strong>तपाईको परिवारका कुनै बालबालिका सडक बालबालिकाको रुपमा रहेका छन्?</strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer58}"></td>
-											<td>४० .<strong>तपाईको परिवारका बालबालिकाहरुले विद्यालयमा गल्ती गरेमा विद्यालयमा निम्न यातना पाउने गरेका छन् ?</strong>:
+										</tr>
+										<tr>
+											<td>३६. <strong>तपाईको परिवारका बालबालिका पढ्ने विद्यालायमा भिन्न शारीरिक क्षमता भएका विद्यार्थीका लागि विशेष शिक्षाको सुविधा छ?</strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer59}"></td>
-										</tr>
-										<tr>
-											<td>४१ .<strong>तपाईले बालबालिकालाई वर्षमा कति जोर लुगा दिनुहुन्छ? (सरदर)</strong>:
+											<td>३७. <strong>एक वर्षभित्र तपाईको परिवारमा महिला तथा बालबालिका उपर हिंसा सम्बन्धी निम्न कुनै घटना घटेका छन/छैनन्?</strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer60}"></td>
-											<td>४२ .<strong>तपाईको परिवारको बालबालिकाहरुमा यौनशोषणको कुनै घटना घटेको छ?</strong>:
-											</td>
-											<td th:text="${residentFullDetail.residentDetail.answer61}"></td>
 										</tr>
 										<tr>
-											<td>४३ .<strong>तपाईलाई बाल अधिकारको बारेमा जानकारी छ?</strong>:
+											<td>३८. <strong>बितेको १ वर्षभित्र तपाईको परिवारमा ५ वर्षमुनिका कुनै बालबालिकाको मृत्यु भएको छ?</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer61}"></td>
+											<td>३९. <strong>घरबाट उत्पादन भएको फोहोरको ब्यबस्था</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer35}"></td>
+										</tr>
+										<tr>
+											<td>४०.<strong>बत्ती</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer36}"></td>
+											<td>४१.<strong>खाना पकाउन पर्योग हुने इन्धन ?</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer37}"></td>
+										</tr>
+										<tr>
+											<td>४२.<strong>सञ्चार सुविधा</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer38}"></td>
+											<td>४३.<strong>घर जग्गाको विवरण?</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer39}"></td>
+										</tr>
+										<tr>
+											<td>४४.<strong>वार्षिक आम्दानी</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer40}"></td>
+											<td>४५.<strong>वार्षिक खर्च</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer41}"></td>
+										</tr>
+										<tr>
+											<td>४६.<strong>पशुपन्छी पालेको </strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer62}"></td>
-											<td>४४ .<strong>परिवारमा बालबालिकासँग सम्बन्धित कुनै विषयमा निर्णय गर्दा उनीहरुलाई पनि सहभागी गराउने गर्नु भएको छ?</strong>:
+											<td>४७.<strong>व्यवसाय दर्ता भएको </strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer63}"></td>
 										</tr>
 										<tr>
-											<td>४५ .<strong>तपाईको परिवारका कुनै बालबालिका बालगृह वा कुनै संस्थामा बसेका छन्?</strong>:
+											<td>४८.<strong>चौपाया तथा पशुपंक्षी</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer42}"></td>
+											<td>४९.<strong>पशुपन्छी पालनको किसिम</strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer64}"></td>
-											<td>४६ .<strong>तपाईको परिवारका कुनै बालबालिका सडक बालबालिकाको रुपमा रहेका छन्?</strong>:
+										</tr>
+										<tr>
+											<td>५०.<strong>पशुपन्छीलाई रोग विरुद्ध खोप लगाउनु भएको</strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer65}"></td>
-										</tr>
-										<tr>
-											<td>४७ .<strong>तपाईको परिवारका बालबालिकाहरु ‍बाल क्लव/संगठन आदिमा आवद्धता रहेको छ? (सकेसम्म सम्बन्धित बालबालिकाहरुसँग पनि सोध्ने)</strong>:
+											<td>५१.<strong>पशुपन्छी पालन समुह आवद्धताः</strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer66}"></td>
-											<td>४८ .<strong>तपाईलाई बालरोग तथा खोपहरुको जानकारी छ?</strong>:
+										</tr>
+										<tr>
+											<td>५२.<strong>व्यवसाय गर्न प्रयोग भएको जग्गाको विवरणः</strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer67}"></td>
-										</tr>
-										<tr>
-											<td>४९ .<strong>तपाईको परिवारका बालबालिका पढ्ने विद्यालायमा अपाङ्गता भएका विद्यार्थीका लागि विशेष शिक्षाको सुविधा छ?</strong>:
+											<td>५३.<strong>गोठको प्रकार</strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer68}"></td>
-											<td>५०.<strong>तपाईको परिवारमा निम्न कार्यहरु प्राय कसले गर्दछ? (महिला वा पुरुष)</strong>:
-											</td>
-											<td th:text="${residentFullDetail.residentDetail.answer69}"></td>
 										</tr>
 										<tr>
-											<td>५१ .<strong>एक वर्षभित्र तपाईको परिवारमा महिला तथा बालबालिका उपर हिंसा सम्बन्धी निम्न कुनै घटना घटेका छन/छैनन्?</strong>:
+											<td>५४.<strong>पशुपन्छीलाई आवश्यक खाद्यान्न</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer69}"></td>
+											<td>५५.<strong>काम गर्ने कर्मचारीहरु</strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer70}"></td>
-											<td>५२ .<strong>बितेको १ वर्षभित्र तपाईको परिवारमा ५ वर्षमुनिका कुनै बालबालिकाको मृत्यु भएको छ?</strong>:
+										</tr>
+										<tr>
+											<td>५६.<strong>पशुपन्छी पालनमा जम्मा वार्षिक खर्च</strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer71}"></td>
+											<td>५७.<strong>पशुपन्छी पालनबाट वार्षिक आम्दानी</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer72}"></td>
+										</tr>
+										<tr>
+											<td>५८.<strong>पशु बिमा गर्नुभएको </strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer73}"></td>
+											<td>५९.<strong>आफ्नो उत्पादन तथा आय स्रोतले कति महिना खान पुग्छ?</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer43}"></td>
+										</tr>
+										<tr>
+											<td>६०.<strong>सिप तालिम पहिला लिनुभएको छ? </strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer44}"></td>
+											<td>६१.<strong>भविष्यमा कस्तो सिप तालिम गर्नु पर्ला?</strong>:
+											</td>
+											<td th:text="${residentFullDetail.residentDetail.answer45}"></td>
 										</tr>
 									</tbody>
 								</table>
