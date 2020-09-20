@@ -55,7 +55,7 @@
 								th:value="${#authentication.principal.userId}">
 							<div class="form-group row">
 								<div class="col-md-4">
-									<label for="input-1">नाम</label> <input id="name" type="text"
+									<label for="input-1">पुरा नाम</label> <input id="name" type="text"
 										class="form-control " name="name"
 										th:value="${#authentication.principal.fullName}" required
 										autocomplete="name" autofocus placeholder="Enter Your Name">
@@ -66,9 +66,10 @@
 									<label for="username">युसर नाम</label> <input id="username"
 										type="text" class="form-control " name="username"
 										th:value="${#authentication.principal.username}" required
-										placeholder="Enter your username">
+										placeholder="Enter your username" disabled>
 								</div>
 							</div>
+							
 							<div class="form-group row">
 								<div class="col-md-4">
 									<label for="email">इमेल</label> <input id="email" type="email"
@@ -113,11 +114,9 @@
 				 $("#profile-update-form").on("submit", function(event) {
 					event.preventDefault();
 					let userId = $("#userId").val();
-					let username = $("#username").val();
 					let mobileNumber = $("#mobile").val();
 					let fullName = $("#name").val();
 					let userInfo = {
-						"username": username,
 						"mobileNumber": mobileNumber,
 						"fullName": fullName
 					};

@@ -5,9 +5,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -96,7 +101,6 @@ public class UserController {
 	public@ResponseBody  Response<String> changePassword(@RequestBody String newPassword, 
 			@PathVariable("userId") int userId, 
 			@AuthenticationPrincipal UserDTO loggedInUser) {
-		log.info("Called");
 		userService.changePassword(newPassword, userId, UserDetailsUtil.getToken(loggedInUser));
 		return new Response<String>("Successfully changed the password");
 	}
@@ -106,6 +110,13 @@ public class UserController {
 			@RequestBody Map<String, Object> updates,
 			@AuthenticationPrincipal UserDTO loggedInUser) {
 		userService.updateUserInfoByUserId(updates, userId, UserDetailsUtil.getToken(loggedInUser));
+		
+		UserDTO user = loggedInUser; // Assign login user to new userDTO
+		user.setFullName((String)updates.get("fullName")); // update full name of new userDTO
+		// Create a new authentication object
+		Authentication auth = new UsernamePasswordAuthenticationToken(loggedInUser, null ,SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+		// Set out new auth object to security context holder. This will update our previous authentication principal and we don't have to logout from application.
+		SecurityContextHolder.getContext().setAuthentication(auth);
 		return new Response<String>("Successfully updated information");
 	}
 }
