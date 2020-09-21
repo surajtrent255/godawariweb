@@ -225,7 +225,7 @@
 											<th><strong>पेशा</strong></th>
 											<th><strong>मतदाता<br> परिचयपत्र
 											</strong></th>
-											<th><strong>स्थायी ठेगाना</strong></th>
+<!-- 											<th><strong>स्थायी ठेगाना</strong></th> -->
 											<th><strong>स्वास्थ्य अवस्था</strong></th>
 											<th><strong>कार्यहरू</strong></th>
 										</tr>
@@ -242,8 +242,8 @@
 											<td th:text="${member.education}"></td>
 											<td th:text="${member.occupation}"></td>
 											<td th:text="${member.voterCard} == 'true' ? 'छ' : 'छैन'"></td>
-											<td
-												th:text="${member.address} == 1 ? 'स्थायी जन्म' : 'बसाई सराई' "></td>
+<!-- 											<td -->
+<!-- 												th:text="${member.address} == 1 ? 'स्थायी जन्म' : 'बसाई सराई' "></td> -->
 											<td th:text="${member.healthCondition}"></td>
 											<td><a href="#"
 												th:href="@{/resident/member/} + ${member.memberId}"
@@ -342,7 +342,7 @@
 											<td th:text="${residentFullDetail.residentDetail.answer29}"></td>
 										</tr>
 										<tr>
-											<td>२४. <strong>तपाईको विचारमा यस क्षेत्रमा तलका मध्ये कुन-कुन जोखिमको खतरा उच्च छ? (१ देखि ७ सम्म स्तरीकरण गर्नुहोस्। १ लाई उच्च र ७ लाई न्युन जोखिम मान्नुहोस्) </strong>:
+											<td>२४. <strong>तपाईको विचारमा यस क्षेत्रमा तलका मध्ये कुन-कुन जोखिमको खतरा उच्च छ?<br> (१ देखि ७ सम्म स्तरीकरण गर्नुहोस्। १ लाई उच्च र ७ लाई न्युन जोखिम मान्नुहोस्) </strong>:
 											</td>
 											<td th:text="${residentFullDetail.residentDetail.answer30}"></td>
 											<td>२५. <strong>भविष्यमा हुन सक्ने जोखिम नियन्त्रणको लागि के-कस्तो पुर्व तयारी गर्नु भएको छ?</strong>:

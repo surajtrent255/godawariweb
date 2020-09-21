@@ -17,7 +17,6 @@ public class FamilyMemberDTO {
     private String gender;
     private String maritalStatus;
     private String voterCard;
-    private String address;
     private String healthCondition;
     private String dateOfBirthAD;
     private String dateOfBirthBS;

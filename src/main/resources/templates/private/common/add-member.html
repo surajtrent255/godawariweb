@@ -198,17 +198,17 @@
 											<span class="error_form" id="voterCard_error_message"></span>
 										</div>
 									</div>
-									<div class="col-md-4 col-lg-4 mb-2">
-										<div class="padding">
-											<label><h4>स्थायी ठेगाना :</h4></label> <select
-												class="form-control required" name="migration"
-												id="migration">
-												<option value="1">स्थायी जन्म</option>
-												<option value="2">बसाई सराई</option>
-											</select>
-											<span class="error_form" id="migration_error_message"></span>
-										</div>
-									</div>
+<!-- 									<div class="col-md-4 col-lg-4 mb-2"> -->
+<!-- 										<div class="padding"> -->
+<!-- 											<label><h4>स्थायी ठेगाना :</h4></label> <select -->
+<!-- 												class="form-control required" name="migration" -->
+<!-- 												id="migration"> -->
+<!-- 												<option value="1">स्थायी जन्म</option> -->
+<!-- 												<option value="2">बसाई सराई</option> -->
+<!-- 											</select> -->
+<!-- 											<span class="error_form" id="migration_error_message"></span> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
 									<div class="col-md-4 col-lg-4 mb-2">
 										<div class="padding">
 											<label for="health"><h4>स्वास्थ्य अवस्था :</h4></label> <input
@@ -448,7 +448,7 @@
 			$("#education_error_message").hide();
 			$("#occupation_error_message").hide();
 			$("#voterCard_error_message").hide();
-			$("#migration_error_message").hide();
+// 			$("#migration_error_message").hide();
 			$("#health_error_message").hide();
 			
 			
@@ -461,7 +461,7 @@
 			let error_education = false;
 			let error_occupation = false;
 			let error_voterCard = false;
-			let error_migration = false;
+// 			let error_migration = false;
 			let error_health = false;
 			
 			
@@ -501,9 +501,9 @@
 				check_voterCard();
 			});
 			
-			$("#migration").focusout(function(){
-				check_migration();
-			});
+// 			$("#migration").focusout(function(){
+// 				check_migration();
+// 			});
 			
 			$("#health").focusout(function() {
 				check_health();
@@ -627,18 +627,18 @@
 				}
 			}
 			
-			function check_migration() {
-				let migration = $("#migration").val();
-				if(migration !== '') {
-					$("#migration_error_message").hide();
-					$("#migration").css("border-bottom", "2px solid #34F458");
-				} else {
-					$("#migration_error_message").html("Please specify the migration status!");
-					$("#migration_error_message").show();
-					$("#migration").css("border-bottom", "2px solid #F90A0A");
-					error_migration = true;
-				}
-			}
+// 			function check_migration() {
+// 				let migration = $("#migration").val();
+// 				if(migration !== '') {
+// 					$("#migration_error_message").hide();
+// 					$("#migration").css("border-bottom", "2px solid #34F458");
+// 				} else {
+// 					$("#migration_error_message").html("Please specify the migration status!");
+// 					$("#migration_error_message").show();
+// 					$("#migration").css("border-bottom", "2px solid #F90A0A");
+// 					error_migration = true;
+// 				}
+// 			}
 			
 			function check_health() {
 				let health = $("#health").val();
@@ -667,7 +667,7 @@
 			error_edcuation = false;
 			error_occupation = false;
 			error_voterCard = false;
-			error_migration = false;
+// 			error_migration = false;
 			error_health = false;
 				
 				
@@ -680,11 +680,11 @@
 			check_education();
 			check_occupation();
 			check_voterCard();
-			check_migration();
+// 			check_migration();
 			check_health();
 				
 			if(error_name === false && error_relation === false && error_gender === false && error_age === false && error_dateOfBirthBS === false && error_maritalStatus === false &&
-					error_education === false && error_occupation === false && error_voterCard === false && error_migration === false && error_health === false) {
+					error_education === false && error_occupation === false && error_voterCard === false && error_health === false) {
 					
 					//Getting the data from the form	
 					let memberName = $("#name").val();
@@ -697,7 +697,7 @@
 					let education = $("#education").val();
 					let occupation = $("#occupation").val();
 					let voterCard = $("#voter_card").val();
-					let migration = $("#migration").val();
+// 					let migration = $("#migration").val();
 					let healthStatus = $("#health").val();
 					let familyId = mainId;
 					
@@ -717,7 +717,7 @@
 					else if(voterCard == 0) {
 						memberInfo.voterCard = "false";
 					}
-					memberInfo.address = migration;
+// 					memberInfo.address = migration;
 					memberInfo.healthCondition = healthStatus;
 					memberInfo.mainId = familyId;
 
