@@ -312,7 +312,7 @@
 	
 		$(function() {
 			for (var questionAndOption in questionAndOptions){
-				let questionindex = parseInt(Object.keys(questionAndOptions).indexOf(questionAndOption)) + 1;
+				let questionindex = questionAndOptions[questionAndOption].questionId;
 				if(questionAndOptions[questionAndOption].type === "RATING_M"){
 					for(var option in questionAndOptions[questionAndOption].options){
 						let optionindex = parseInt(Object.keys(questionAndOptions[questionAndOption].options).indexOf(option)) + 1;
