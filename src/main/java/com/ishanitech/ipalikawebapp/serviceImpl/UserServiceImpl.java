@@ -21,6 +21,10 @@ import com.ishanitech.ipalikawebapp.service.UserService;
 import com.ishanitech.ipalikawebapp.utilities.HttpUtils;
 
 
+import lombok.extern.slf4j.Slf4j;
+
+
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 	private final RestTemplate restTemplate;
@@ -116,4 +120,38 @@ public class UserServiceImpl implements UserService {
 		Response<Map<String, Boolean>> result = restTemplate.exchange(requestEntity, responseType).getBody();
 		return result.getData();
 	}
+	
+	public Response<UserDTO> getUserInfoByUserId(int userId, String token) {
+		String template = String.format("%s/{userId}", USER_BASE_URL);
+		Map<String, Object> urlVariables = new HashMap<>();
+		urlVariables.put("userId", userId);
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, urlVariables);
+		RequestEntity<UserDTO> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<UserDTO>> responseType = new ParameterizedTypeReference<Response<UserDTO>>() {};
+		Response<UserDTO> userList = restTemplate.exchange(requestEntity, responseType).getBody();
+		return userList;
+	}
+	
+	@Override
+	public void updateUserInfoByUserIdByAdmin(Map<String, Object> updates, int userId, String token) {
+		/*
+		 * restTemplate.patchForObject("http://localhost:8888/user/" + userId,
+		 * HttpUtils.createRequestEntityWithHeadersAndToken(updates,
+		 * MediaType.APPLICATION_JSON, token), String.class);
+		 */
+		RequestEntity<Map<String, Object>> requestEntity = HttpUtils.createRequestEntity(HttpMethod.PATCH, updates, MediaType.APPLICATION_JSON, token, "http://localhost:8888/user/edit/" + userId);
+		restTemplate.exchange(requestEntity, String.class);
+	}
+	
+	@Override
+	public void changePasswordByAdmin(String newPassword, int userId, String token) {
+		Map<String, Object> urlVariables = new HashMap<>();
+		urlVariables.put("userId", userId);
+		urlVariables.put("password", "pass-reset-admin");
+		String template =  USER_BASE_URL + "/{userId}/{password}";
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, urlVariables);
+		RequestEntity<String> requestEntity = HttpUtils.createRequestEntity(HttpMethod.PUT, newPassword, MediaType.APPLICATION_JSON, token, url);
+		restTemplate.exchange(requestEntity, String.class).getBody();
+	}
+	
 }

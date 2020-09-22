@@ -15,7 +15,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.ishanitech.ipalikawebapp.configs.properties.RestApiProperties;
 import com.ishanitech.ipalikawebapp.dto.FamilyMemberDTO;
-import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.RoleWardDTO;
 import com.ishanitech.ipalikawebapp.service.MemberService;

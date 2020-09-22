@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ishanitech.ipalikawebapp.configs.properties.RestApiProperties;
 import com.ishanitech.ipalikawebapp.dto.AnswerDTO;
-import com.ishanitech.ipalikawebapp.dto.FavouritePlaceDTO;
 import com.ishanitech.ipalikawebapp.service.SurveyAnswerService;
 import com.ishanitech.ipalikawebapp.utilities.HttpUtils;
 

@@ -89,9 +89,13 @@
 										<td th:text="${user.registeredDate}"></td>
 										<td th:text="${user.roles[0]}"></td>
 										<td>
-<!-- 											<a sec:authorize="hasAnyRole('CENTRAL_ADMIN')" href="#" -->
-<!-- 											th:href="@{/ward/edit/} + ${ward.wardNumber}" -->
-<!-- 											class="btn btn-xs btn-warning">Edit Details</a> -->
+											<a sec:authorize="hasAnyRole('SUPER_ADMIN')" href="#"
+											th:href="@{/super-admin/edit/} + ${user.userId}"
+											class="btn btn-xs btn-warning">Edit Info</a>
+											
+											<a sec:authorize="hasAnyRole('SUPER_ADMIN')" href="#"
+											th:href="@{/super-admin/password/} + ${user.userId}"
+											class="btn btn-xs btn-warning">Change Password</a>
 											
 											<button sec:authorize="hasAnyRole('SUPER_ADMIN', 'CENTRAL_ADMIN')" class="btn btn-xs btn-danger" th:attr="onclick=|disableUser('${user.userId}')|">
 												Disable User
