@@ -9,18 +9,17 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ishanitech.ipalikawebapp.configs.properties.RestApiProperties;
-import com.ishanitech.ipalikawebapp.dto.FavouritePlaceDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.RoleDTO;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
 import com.ishanitech.ipalikawebapp.dto.UserRegistrationDTO;
 import com.ishanitech.ipalikawebapp.service.UserService;
 import com.ishanitech.ipalikawebapp.utilities.HttpUtils;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -104,5 +103,17 @@ public class UserServiceImpl implements UserService {
 		ParameterizedTypeReference<Response<List<UserDTO>>> responseType = new ParameterizedTypeReference<Response<List<UserDTO>>>() {};
 		Response<List<UserDTO>> userList = restTemplate.exchange(requestEntity, responseType).getBody();
 		return userList;
+	}
+
+	@Override
+	public Map<String, Boolean> checkPotentialDuplicateColumns(Map<String, String> params, String token) {
+		String template = String.format("%s/%s",USER_BASE_URL, "duplicate");
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity<Map<String, String>> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, params, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<Map<String, Boolean>>> responseType = new ParameterizedTypeReference<Response<Map<String,Boolean>>>() {
+		};
+		
+		Response<Map<String, Boolean>> result = restTemplate.exchange(requestEntity, responseType).getBody();
+		return result.getData();
 	}
 }

@@ -17,4 +17,6 @@ public interface UserService {
 	public void updateUserInfoByUserId(Map<String, Object> updates, int userId, String token);
 	public void disableUser(int userId, String token);
 	public Response<List<UserDTO>> getAllUserInfo(String token);
+	
+	public Map<String, Boolean> checkPotentialDuplicateColumns(Map<String, String> params, String token);
 }

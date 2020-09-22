@@ -126,4 +126,10 @@ public class UserController {
 		model.addAttribute("userInfo", userService.getAllUserInfo(loggedInUser.getToken()).getData());
 		return "private/common/user-list";
 	}
+	
+	
+	@PostMapping(value = "/duplicate")
+	public @ResponseBody Map<String, Boolean> checkValuesForPotentialDuplicates(@AuthenticationPrincipal UserDTO user, @RequestBody Map<String, String> paramToCheck) {
+		return userService.checkPotentialDuplicateColumns(paramToCheck, user.getToken());
+	}
 }
