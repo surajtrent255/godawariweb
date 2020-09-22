@@ -87,7 +87,7 @@
 								<div class="col-md-4">
 									<label for="mobile">मोबाईल नम्बर</label> <input id="mobile"
 										type="text" class="form-control " name="mobile"
-										placeholder="Enter Your Mobile Number" required>
+										placeholder="Enter Your Mobile Number" required title="Mobile number should be of 10 digits" pattern="[1-9]{1}[0-9]{9}">
 								</div>
 							</div>
 							<div class="form-group row">
@@ -109,7 +109,7 @@
 							</div>
 							<div class="form-group">
 								<button type="submit" class="btn btn-primary px-5">
-									<i class="icon-lock"></i> परिवर्तन गर्नुहोस
+									<i class="icon-lock"></i>  युसर बनाउनुहोस
 								</button>
 							</div>
 						</form>
@@ -194,7 +194,7 @@
 		            $("#password_strength").html(strength);
 		            $("#password_strength").css("color", color);
 		        });
-				
+								
 				 $("#user-add-form").on("submit", function(event) {
 					event.preventDefault();
 					let email = $("#email").val();
@@ -209,7 +209,7 @@
 						});
 						return;
 					}
-					
+
 					let mobileNumber = $("#mobile").val();
 					let fullName = $("#name").val();
 					let accountType = $("#account-type").val();
