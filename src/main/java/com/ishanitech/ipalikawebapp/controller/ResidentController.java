@@ -138,4 +138,12 @@ public class ResidentController {
 		residentService.deleteHouseholdByFamilyId(familyId, user.getToken());
 		return new Response<String>("Household Removed successfully");
 	}
+	
+	
+	@GetMapping("getTotalHouseCount/{wardNo}")
+	public @ResponseBody Response<String> getTotalHouseCountByWard(@PathVariable("wardNo") String wardNo, Model model, @AuthenticationPrincipal UserDTO user) {
+		//Response<ResidentDetailDTO> residentResponse = (Response<ResidentDetailDTO>) residentService.getResidentFullDetail(filledId, user.getToken());
+		
+		return new Response<String>(residentService.getTotalHouseCountByWard(wardNo, user.getToken()));
+	}
 }

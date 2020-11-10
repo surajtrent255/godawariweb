@@ -121,6 +121,22 @@
 							</div>
 						</div>
 						
+						
+						<div class="row">												
+							
+							<div class="col-md-3">
+								<div class="ui">
+									<label>
+										Total House Count:&nbsp;<span class="ui" id="totalHouseCount">
+											
+										</span>
+									</label>
+								</div>
+							</div>
+							
+					
+						</div>
+						
 						<div class="table-responsive household-list padding-panel">
 							<table th:if="${residentList.size() > 0}" class="table table-striped table-hover" id="grid">
 								<thead>
@@ -458,6 +474,16 @@
 								$("#grid_previous").addClass("disabled");
 								$("#grid_next").removeClass("disabled");
 								document.getElementById("pageNumberPagination").innerHTML = currentPageNo + 1;
+								
+								let houseCountUrl = encodeURI(contextPath + "resident/getTotalHouseCount/" + wardNumber);
+								 $.ajax({url: houseCountUrl, success: function(result){
+								 	console.log("HouseCountUrl---->" + houseCountUrl);
+								 	console.log("Resutl---->" + result);
+     								document.getElementById("totalHouseCount").innerHTML = result.data;
+  								}});
+								
+								
+								
 							}else{
 								swal.fire({
 									  text: 'Sorry | No Data for this ward!',
@@ -465,6 +491,7 @@
 									  confirmButtonText: 'OK'
 								});
 								$("#resident-body").empty();
+								document.getElementById("totalHouseCount").innerHTML = 0;
 							}
 						});
 	});
