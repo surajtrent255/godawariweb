@@ -66,7 +66,7 @@
 						<i class="zmdi zmdi-layers"></i> <span>Data</span>
 					</a>
 				</li>
-				<li sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')">
+				<li sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN')">
 					<a th:href="@{/member}" class="waves-effect">
 						<i class="zmdi zmdi-assignment"></i> <span>Member Data</span>
 					</a>

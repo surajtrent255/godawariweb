@@ -71,7 +71,7 @@
 								</div>
 							</div>
 							<div class="col-md-3">
-								<div class="ui" sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'SURVEYOR')">
+								<div class="ui" sec:authorize="hasAnyRole('CENTRAL_ADMIN')">
 									<label >Ward&nbsp;
 										<select id="ward-wise-select" class="ui input">
 											<option value=""></option>
@@ -80,11 +80,20 @@
 									</label>
 								</div>
 								
-								<div class="ui" sec:authorize="hasAnyRole('WARD_ADMIN') && !hasAnyRole('CENTRAL_ADMIN', 'SURVEYOR')">
+								<div class="ui" sec:authorize="hasAnyRole('WARD_ADMIN') && !hasAnyRole('CENTRAL_ADMIN', 'SURYEVOR')">
 									<label >Ward&nbsp;
 										<select id="ward-wise-select" class="ui input">
 											<!-- <option value=""></option> -->
 											<option th:value="${loggedInUserWard}" th:text="${loggedInUserWard}"></option>
+										</select>
+									</label>
+								</div>
+								
+								<div class="ui" sec:authorize="hasAnyRole('SURVEYOR') && !hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN')" style="display: none;">
+									<label >Ward&nbsp;
+										<select id="ward-wise-select" class="ui input">
+											<option value=""></option>
+											<option th:value="${indx.index} + 1" th:each="option, indx : ${wards}" th:text="${option}"></option>
 										</select>
 									</label>
 								</div>
