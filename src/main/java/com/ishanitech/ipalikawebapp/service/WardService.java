@@ -10,7 +10,7 @@ import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.WardDTO;
 
 public interface WardService {
-	List<Integer> getAllWards(String token);
+	List<Integer> getAllWards();
 
 	void addWard(WardDTO wardInfo, String token);
 

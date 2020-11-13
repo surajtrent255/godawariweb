@@ -58,6 +58,55 @@
 				</div>
 
 				<div class="row">
+<!-- 					<div class="row"> -->
+							<div class="col-md-3">
+								<div class="ui">
+									<label >Show&nbsp;
+										<select id="page-limit-select" class="ui input">
+											<option value="10">10</option>
+											<option value="25">25</option>
+											<option value="50">50</option>
+											<option value="100">100</option>
+											<!-- 10 25 50 100 -->
+										</select>&nbsp;
+										 entries
+									</label>
+								</div>
+							</div>
+							
+							<div class="col-md-3">
+								<div class="ui">
+									<label >Ward&nbsp;
+										<select id="ward-wise-select" class="ui input">
+											<option value=""></option>
+											<option th:value="${indx.index} + 1" th:each="option, indx : ${wards}" th:text="${option}"></option>
+										</select>
+									</label>
+								</div>
+							</div>
+							
+							
+							<div class="col-md-3">
+								<div class="ui">
+									<label >Place Type&nbsp;
+										<select id="placeType-wise-select" class="ui input">
+											<option value=""></option>
+											<option th:value="${indx.index} + 1" th:each="option, indx : ${placeTypes}" th:text="${option}"></option>
+										</select>
+									</label>
+								</div>
+							</div>
+							
+							<div class="col-md-3">
+								<div class="ui pull-right">
+									<label>
+										Search:&nbsp;<span class="ui input">
+											<input type="text" id="search" placeholder="स्थलको नामबाट खोज्नुहोस" />
+										</span>
+									</label>
+								</div>
+							</div>
+						</div>
 					<div class="col-lg-12 col-md-12">
 						<div class="table-responsive favourite-place-list padding-panel">
 							<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#" th:href="@{/favourite-place/add}"
@@ -109,7 +158,7 @@
 							</table>
 						</div>
 					</div>
-				</div>
+<!-- 				</div> -->
 
 			</div>
 		</div>

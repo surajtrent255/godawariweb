@@ -30,9 +30,9 @@ public class WardServiceImpl implements WardService {
 	}
 
 	@Override
-	public List<Integer> getAllWards(String token) {
+	public List<Integer> getAllWards() {
 		String url = HttpUtils.createRequestUrl(restApiProperties, BASE_WARD_ADDRESS, null);
-		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
 		ParameterizedTypeReference<Response<List<Integer>>> responseType = new ParameterizedTypeReference<Response<List<Integer>>>() {
 		};
 		return restTemplate.exchange(requestEntity, responseType).getBody().getData();

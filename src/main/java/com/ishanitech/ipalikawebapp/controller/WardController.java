@@ -70,7 +70,7 @@ public class WardController {
 		return new Response<String>("Ward removed successfully!");
 	}
 	
-	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN"})
+	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SUPER_ADMIN"})
 	@GetMapping("/edit/{wardNumber}")
 	public String getWardEditView(@PathVariable("wardNumber") int wardNo, @AuthenticationPrincipal UserDTO user, Model model) {
 		if(user.getRoles().contains("WARD_ADMIN")) {
@@ -83,7 +83,7 @@ public class WardController {
 		return "private/common/edit-ward";
 	}
 	
-	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN"})
+	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SUPER_ADMIN"})
 	@PutMapping("/{wardNumber}")
 	public @ResponseBody Response<String> editWard(@RequestBody WardDTO wardInfo, @PathVariable("wardNumber") int wardNo, @AuthenticationPrincipal UserDTO user) {
 		if(user.getRoles().contains("WARD_ADMIN")) {

@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +39,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.ishanitech.ipalikawebapp.configs.properties.UploadDirectoryProperties;
 import com.ishanitech.ipalikawebapp.dto.FavouritePlaceDTO;
+import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
 import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
@@ -61,6 +64,8 @@ public class FavouritePlacesController {
 	
 	@GetMapping
 	public String getFavouritePlaces(Model model) {
+		model.addAttribute("wards", wardService.getAllWards());
+		model.addAttribute("placeTypes", favouritePlacesService.getTypesofFavourtiePlaces());
 		model.addAttribute("favouritePlaceList", favouritePlacesService.getAllFavouritePlaces().getData());
 		return "public/favourite-place";
 	}
@@ -240,7 +245,7 @@ public class FavouritePlacesController {
 	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SURVEYOR"})
 	@GetMapping("/add")
 	public String getFavouritePlaceEntryView(Model model, @AuthenticationPrincipal UserDTO user) {
-		model.addAttribute("wardList", wardService.getAllWards(user.getToken()));
+		model.addAttribute("wardList", wardService.getAllWards());
 		model.addAttribute("placeTypes", favouritePlacesService.getTypesofFavourtiePlaces());
 		return "private/common/add-favourite-place";
 	}
@@ -248,11 +253,26 @@ public class FavouritePlacesController {
 	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SURVEYOR"})
 	@GetMapping("/edit/{favPlaceId}")
 	public String getFavouritePlaceEditView(@PathVariable("favPlaceId") String favPlaceId, Model model, @AuthenticationPrincipal UserDTO user) {
-		model.addAttribute("wardList", wardService.getAllWards(user.getToken()));
+		model.addAttribute("wardList", wardService.getAllWards());
 		model.addAttribute("placeTypes", favouritePlacesService.getTypesofFavourtiePlaces());
 		model.addAttribute("favPlaceObj", favouritePlacesService.getFavouritePlaceByPlaceId(favPlaceId).getData());
 		model.addAttribute("favPlaceId", favPlaceId);
 		return "private/common/edit-favourite-place";
+	}
+	
+	
+	@PostMapping("/search")
+	public @ResponseBody List<FavouritePlaceDTO> getFavouritePlaceBySearchKey(HttpServletRequest request, @RequestParam("searchKey") String searchKey, @RequestParam("wardNo") String wardNo) {
+		log.info("WardNo---->" + wardNo);
+		return favouritePlacesService.searchResidentByKey(request, searchKey, wardNo);
+	}
+	
+	
+	@PostMapping("/ward")
+	public @ResponseBody List<FavouritePlaceDTO> getFavouritePlaceByWard(@RequestParam("wardNo") String wardNo, HttpServletRequest request) {
+		log.info("WardNo---->" + wardNo);
+		log.info("PagedLimited---->" + request.getParameter("pageSize"));
+		return favouritePlacesService.searchFavouritePlaceByWard(request, wardNo);
 	}
 	
 }

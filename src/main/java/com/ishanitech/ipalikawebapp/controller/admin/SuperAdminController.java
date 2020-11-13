@@ -61,7 +61,7 @@ public class SuperAdminController {
 		}
 		
 		model.addAttribute("roles", roles);
-		model.addAttribute("wards", wardService.getAllWards(user.getToken()));
+		model.addAttribute("wards", wardService.getAllWards());
 		
 		return "private/super-admin/edit-user-info";
 	}

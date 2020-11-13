@@ -67,7 +67,7 @@ public class UserController {
 		}
 		
 		model.addAttribute("roles", roles);
-		model.addAttribute("wards", wardService.getAllWards(user.getToken()));
+		model.addAttribute("wards", wardService.getAllWards());
 		return "private/common/add-user";
 	}
 	

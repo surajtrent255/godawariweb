@@ -41,7 +41,7 @@ public class MemberController {
 	public String getMemberDataListView(Model model, @AuthenticationPrincipal UserDTO user) {
 		Response<List<FamilyMemberDTO>> memberResponse = (Response<List<FamilyMemberDTO>>) memberService.getMemberDataList(user.getToken(), user.getRoles(), user.getWardNo());
 		model.addAttribute("memberList", memberResponse.getData());
-		model.addAttribute("wards", wardService.getAllWards(user.getToken()));
+		model.addAttribute("wards", wardService.getAllWards());
 		model.addAttribute("loggedInUserWard", user.getWardNo());
 		return "private/common/family-member-data";
 	}

@@ -2,6 +2,8 @@ package com.ishanitech.ipalikawebapp.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ishanitech.ipalikawebapp.dto.FavouritePlaceDTO;
@@ -24,5 +26,9 @@ public interface FavouritePlacesService {
 	void editFavouritePlaceInfo(FavouritePlaceDTO favPlaceDTO, String favPlaceId, String token);
 
 	void addEditedFavouritePlaceImage(MultipartFile file, String imageName, String token);
+
+	List<FavouritePlaceDTO> searchFavouritePlaceByWard(HttpServletRequest request, String wardNo);
+
+	List<FavouritePlaceDTO> searchResidentByKey(HttpServletRequest request, String searchKey, String wardNo);
 
 }

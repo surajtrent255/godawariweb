@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -112,6 +114,18 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 	    HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(map, headers);
 		restTemplate.postForLocation(url, requestEntity);
 		
+	}
+
+	@Override
+	public List<FavouritePlaceDTO> searchFavouritePlaceByWard(HttpServletRequest request, String wardNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<FavouritePlaceDTO> searchResidentByKey(HttpServletRequest request, String searchKey, String wardNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
