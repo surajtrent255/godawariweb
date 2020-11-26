@@ -1074,6 +1074,73 @@
 
 				</div>
 				<!--End Row-->
+				
+				<!--Added for Krishi Dashboard-->
+				<h4>कृषि तथा पशुपालन</h4>
+				<div class="row">
+					<div class="col-12 col-lg-3" th:if="${!#lists.isEmpty(extraReport) && extraReport != null}">
+						
+						<div class="card bg-warning">
+							<div class="card-body">
+								<p class="text-white">कृषि फर्म </p>
+								<h4 class="mb-0 text-white">
+									<span th:text="${extraReport.get(5).data}">3998</span>
+									 <small class="small-font text-white">100% <i
+										class="zmdi zmdi-long-arrow-up"></i></small>
+								</h4>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-12 col-lg-3" th:if="${!#lists.isEmpty(extraReport) && extraReport != null}">
+						<div class="card gradient-violet">
+							<div class="card-body">
+								<p class="text-white">मौरीपालन</p>
+								<h4 class="mb-0 text-white">
+									<span th:if="${extraReport.get(4) != null}" th:text="${extraReport.get(4).data}">3998</span>
+									 <small class="small-font text-white">100% <i
+										class="zmdi zmdi-long-arrow-up"></i>
+									 </small>
+								</h4>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-12 col-lg-3" th:if="${!#lists.isEmpty(extraReport) && extraReport != null}">
+						<div class="card gradient-orange">
+							<div class="card-body">
+								<p class="text-white">कृषिबाली</p>
+								<h4 class="mb-0 text-white">
+									<span th:if="${extraReport.get(3).data != null}" th:text="${extraReport.get(3).data}">3998</span>
+									 <small class="small-font text-white" th:text="${#numbers.formatDecimal((extraReport.get(3).data/extraReport.get(1).data) * 100, 0, 2) + '%'}">100% <i
+										class="zmdi zmdi-long-arrow-up"></i>
+									 </small>
+								</h4>
+							</div>
+
+						</div>
+					</div>
+					
+					<div class="col-12 col-lg-3" th:if="${!#lists.isEmpty(extraReport) && extraReport != null}">
+						<div class="card bg-success">
+							<div class="card-body">
+								<p class="text-white">पशुपन्छि पाल्ने</p>
+								<h4 class="mb-0 text-white">
+									<span th:text="${extraReport.get(2).data}">3998</span>
+									 <small class="small-font text-white" th:text="${#numbers.formatDecimal((extraReport.get(2).data/extraReport.get(1).data) * 100, 0, 2) + '%'}">100% <i
+										class="zmdi zmdi-long-arrow-up"></i></small>
+								</h4>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				
+				<!--Added for Krishi Dashboard ends-->
+				
+				
 				<!--Section for GIS map display -->
 				<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1OEhgn6qwXwI6RninEuRHIL9HJLRUURzt" width="100%" height="600"></iframe>
 				<!--End Dashboard Content-->
