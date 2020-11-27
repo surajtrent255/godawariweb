@@ -24,7 +24,10 @@ import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
 import com.ishanitech.ipalikawebapp.utilities.HttpUtils;
 
+import lombok.extern.slf4j.Slf4j;
 
+
+@Slf4j
 @Service
 public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 	private final RestTemplate restTemplate;
@@ -118,14 +121,173 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 
 	@Override
 	public List<FavouritePlaceDTO> searchFavouritePlaceByWard(HttpServletRequest request, String wardNo) {
-		// TODO Auto-generated method stub
-		return null;
+		String template = String.format("%s/search/ward", FAVOURITE_PLACE_BASE_URL);
+		Map<String, Object> uriVariables = new HashMap<String, Object>();
+		uriVariables.put("rootAddress", template);
+		log.info("template######" + template);
+		uriVariables.put("wardNo", wardNo);
+		log.info("ward#######" + wardNo);
+		uriVariables.put("pageSize", request.getParameter("pageSize"));
+		log.info("pageSize######" + request.getParameter("pageSize"));
+		uriVariables.put("sortBy", request.getParameter("sortBy"));
+		log.info("sortBy######" + request.getParameter("sortBy"));
+		uriVariables.put("sortByOrder", request.getParameter("sortByOrder"));
+		log.info("sortByOrder#########" + request.getParameter("sortByOrder"));
+		uriVariables.put("placeType", request.getParameter("placeType"));
+		log.info("placeType#######this is called" + request.getParameter("placeType"));
+		String url = HttpUtils.createRequestUrlWithWardStringFavPlace(restApiProperties, uriVariables);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
+		ParameterizedTypeReference<Response<List<FavouritePlaceDTO>>> responseType = new ParameterizedTypeReference<Response<List<FavouritePlaceDTO>>>() {
+		};
+		List<FavouritePlaceDTO> favouritePlaces = restTemplate.exchange(requestEntity, responseType).getBody().getData();
+		return favouritePlaces;
 	}
 
 	@Override
-	public List<FavouritePlaceDTO> searchResidentByKey(HttpServletRequest request, String searchKey, String wardNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<FavouritePlaceDTO> searchFavouritePlaceByKey(HttpServletRequest request, String searchKey, String wardNo, String placeType) {
+		String template = String.format("%s/search", FAVOURITE_PLACE_BASE_URL);
+		Map<String, Object> uriVariables = new HashMap<String, Object>();
+		uriVariables.put("rootAddress", template);
+		log.info("template######" + template);
+		uriVariables.put("queryParamName", "searchKey");
+		uriVariables.put("keyword", searchKey);
+		log.info("keyword######" + searchKey);
+		uriVariables.put("wardNo", wardNo);
+		log.info("ward#######" + wardNo);
+		uriVariables.put("pageSize", request.getParameter("pageSize"));
+		log.info("pageSize######" + request.getParameter("pageSize"));
+		uriVariables.put("placeType", placeType);
+		log.info("placeType#######" + placeType);
+		
+		String url = HttpUtils.createRequestUrlWithQueryStringFavPlace(restApiProperties, uriVariables);
+		log.info("final url" + url);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
+		ParameterizedTypeReference<Response<List<FavouritePlaceDTO>>> responseType = new ParameterizedTypeReference<Response<List<FavouritePlaceDTO>>>() {
+		};
+		List<FavouritePlaceDTO> favouritePlaces = restTemplate.exchange(requestEntity, responseType).getBody().getData();
+		return favouritePlaces;
+	}
+
+	@Override
+	public List<FavouritePlaceDTO> searchFavouritePlaceByPlaceType(HttpServletRequest request, String placeType) {
+		String template = String.format("%s/search/placeType", FAVOURITE_PLACE_BASE_URL);
+		Map<String, Object> uriVariables = new HashMap<String, Object>();
+		uriVariables.put("rootAddress", template);
+		log.info("template######" + template);
+		uriVariables.put("wardNo", request.getParameter("wardNo"));
+		log.info("ward#######" + request.getParameter("wardNo"));
+		uriVariables.put("pageSize", request.getParameter("pageSize"));
+		log.info("pageSize######" + request.getParameter("pageSize"));
+		uriVariables.put("sortBy", request.getParameter("sortBy"));
+		log.info("sortBy######" + request.getParameter("sortBy"));
+		uriVariables.put("sortByOrder", request.getParameter("sortByOrder"));
+		log.info("sortByOrder#########" + request.getParameter("sortByOrder"));
+		uriVariables.put("placeType", placeType);
+		log.info("placeType#######this is called" + placeType);
+		
+		String url = HttpUtils.createRequestUrlWithWardStringFavPlace(restApiProperties, uriVariables);
+		log.info("final url" + url);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
+		ParameterizedTypeReference<Response<List<FavouritePlaceDTO>>> responseType = new ParameterizedTypeReference<Response<List<FavouritePlaceDTO>>>() {
+		};
+		List<FavouritePlaceDTO> favouritePlaces = restTemplate.exchange(requestEntity, responseType).getBody().getData();
+		return favouritePlaces;
+	}
+
+	@Override
+	public List<FavouritePlaceDTO> getFavouritePlaceByPageLimit(HttpServletRequest request, String wardNo) {
+		String template = String.format("%s/pageLimit", FAVOURITE_PLACE_BASE_URL);
+		Map<String, Object> uriVariables = new HashMap<String, Object>();
+		uriVariables.put("rootAddress", template);
+		log.info("template######" + template);
+		uriVariables.put("wardNo", wardNo);
+		log.info("wardNo######" + wardNo);
+		uriVariables.put("pageSize", request.getParameter("pageSize"));
+		log.info("pageSize######" + request.getParameter("pageSize"));
+		uriVariables.put("searchKey", request.getParameter("searchKey"));
+		log.info("searchKey######" + request.getParameter("searchKey"));
+		uriVariables.put("lastSeenId", request.getParameter("lastSeenId"));
+		log.info("lastSeenId######" + request.getParameter("lastSeenId"));
+		uriVariables.put("sortBy", request.getParameter("sortBy"));
+		log.info("sortBy######" + request.getParameter("sortBy"));
+		uriVariables.put("sortByOrder", request.getParameter("sortByOrder"));
+		log.info("sortByOrder######" + request.getParameter("sortyByOrder"));
+		uriVariables.put("placeType", request.getParameter("placeType"));
+		log.info("placeType######" + request.getParameter("placeType"));
+		
+		String url = HttpUtils.createRequestUrlWithPageLimitFavPlace(restApiProperties, uriVariables);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
+		ParameterizedTypeReference<Response<List<FavouritePlaceDTO>>> responseType = new ParameterizedTypeReference<Response<List<FavouritePlaceDTO>>>() {
+		};
+		List<FavouritePlaceDTO> favouritePlaces = restTemplate.exchange(requestEntity, responseType).getBody().getData();
+		return favouritePlaces;
+	}
+
+	@Override
+	public List<FavouritePlaceDTO> getNextLotFavouritePlace(HttpServletRequest request) {
+		String endPoint = "?";
+		if(request.getParameter("searchKey") != null) {
+			endPoint += "searchKey=" + request.getParameter("searchKey") + "&";
+		}
+		if(request.getParameter("wardNo") != null) {
+			endPoint += "wardNo=" + request.getParameter("wardNo") + "&";
+		}
+		if(request.getParameter("placeType") != null) {
+			endPoint += "placeType=" + request.getParameter("placeType") + "&";
+		}
+		if(request.getParameter("sortBy") != null) {
+			endPoint += "sortBy=" + request.getParameter("sortBy") + "&";
+			endPoint += "sortByOrder=" + request.getParameter("sortByOrder") + "&";
+		}
+		
+		endPoint += "last_seen=" + request.getParameter("lastSeenId") + "&";
+		endPoint += "action=" + request.getParameter("action") + "&";
+		endPoint += "currentPage=" + request.getParameter("currentPage") + "&";
+		endPoint += "pageSize=" + request.getParameter("pageLimit");
+		log.info("SearchKEy---->"+ request.getParameter("searchKey"));
+		log.info("WardNo---->"+ request.getParameter("wardNo"));
+		log.info("PageLimit---->"+ request.getParameter("pageLimit"));
+		log.info("final url###############" + endPoint);
+		String template = String.format("%s/nextLot" + endPoint, FAVOURITE_PLACE_BASE_URL);
+		
+		Map<String, Object> uriVariables = new HashMap<String, Object>();
+		uriVariables.put("rootAddress", template);
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, uriVariables);
+		log.info("URL--->" + url);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
+		ParameterizedTypeReference<Response<List<FavouritePlaceDTO>>> responseType = new ParameterizedTypeReference<Response<List<FavouritePlaceDTO>>>() {
+		};
+		List<FavouritePlaceDTO> favouritePlaces = restTemplate.exchange(requestEntity, responseType).getBody().getData();
+		return favouritePlaces;
+	}
+
+	@Override
+	public List<FavouritePlaceDTO> getSortedFavouritePlace(HttpServletRequest request) {
+		String endPoint = "?";
+		if(request.getParameter("searchKey") != null) {
+			endPoint += "searchKey=" + request.getParameter("searchKey") + "&";
+		}
+		if(request.getParameter("wardNo") != null) {
+			endPoint += "wardNo=" + request.getParameter("wardNo") + "&";
+		}
+		if(request.getParameter("placeType") != null) {
+			endPoint += "placeType=" + request.getParameter("placeType") + "&";
+		}
+		endPoint += "sortBy=" + request.getParameter("sortBy") + "&";
+		endPoint += "sortByOrder=" + request.getParameter("sortByOrder") + "&";
+		endPoint += "pageSize=" + request.getParameter("pageLimit");
+		
+		String template = String.format("%s/sortBy" + endPoint, FAVOURITE_PLACE_BASE_URL);
+		
+		Map<String, Object> uriVariables = new HashMap<String, Object>();
+		uriVariables.put("rootAddress", template);
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, uriVariables);
+		log.info("URL--->" + url);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
+		ParameterizedTypeReference<Response<List<FavouritePlaceDTO>>> responseType = new ParameterizedTypeReference<Response<List<FavouritePlaceDTO>>>() {
+		};
+		List<FavouritePlaceDTO> favouritePlaces = restTemplate.exchange(requestEntity, responseType).getBody().getData();
+		return favouritePlaces;
 	}
 
 }

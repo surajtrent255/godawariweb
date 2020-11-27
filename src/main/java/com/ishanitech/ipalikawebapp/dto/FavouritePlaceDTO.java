@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class FavouritePlaceDTO {
 
+	private int id;
 	private String filledId;
     private String placeName;
     private String placeDescription;

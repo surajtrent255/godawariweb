@@ -59,7 +59,7 @@
 
 				<div class="row">
 <!-- 					<div class="row"> -->
-							<div class="col-md-3">
+							<div class="col-md-2">
 								<div class="ui">
 									<label >Show&nbsp;
 										<select id="page-limit-select" class="ui input">
@@ -74,7 +74,7 @@
 								</div>
 							</div>
 							
-							<div class="col-md-3">
+							<div class="col-md-2">
 								<div class="ui">
 									<label >Ward&nbsp;
 										<select id="ward-wise-select" class="ui input">
@@ -86,7 +86,7 @@
 							</div>
 							
 							
-							<div class="col-md-3">
+							<div class="col-md-2">
 								<div class="ui">
 									<label >Place Type&nbsp;
 										<select id="placeType-wise-select" class="ui input">
@@ -97,7 +97,18 @@
 								</div>
 							</div>
 							
-							<div class="col-md-3">
+							
+							<div class="col-md-2">
+								<div class="ui">
+									<label>
+										Sorted By:&nbsp;<span class="ui" id="sortedBySpan">
+										</span>
+									</label>
+								</div>
+							</div>
+
+							
+							<div class="col-md-2">
 								<div class="ui pull-right">
 									<label>
 										Search:&nbsp;<span class="ui input">
@@ -129,9 +140,6 @@
 										<td th:text="${favPlace.placeName}"></td>
 										<td th:text="${favPlace.placeWard}"></td>
 										<td>
-<!-- 											<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-warning" th:href="@{/favourite-place/edit/} + ${favPlace.filledId}"> -->
-<!-- 												Edit -->
-<!-- 											</button> -->
 											
 											<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#"
 											th:href="@{/favourite-place/edit/} + ${favPlace.filledId}"
@@ -160,6 +168,11 @@
 					</div>
 <!-- 				</div> -->
 
+						<div class="ui stackable pagination menu pull-right">
+				<div class="paginate_button item previous disabled" id="grid_previous" href="#" aria-controls="grid" data-dt-idx="0" tabindex="0">Previous</div>
+				<a class="paginate_button item active" aria-controls="grid" data-dt-idx="1" tabindex="0" id="pageNumberPagination">1</a>
+				<a class="paginate_button item next" id="grid_next" href="#" aria-controls="grid" data-dt-idx="8" tabindex="0">Next</a></div>
+
 			</div>
 		</div>
 		<a href="javaScript:void();" class="back-to-top"><i
@@ -170,6 +183,11 @@
 	<div th:replace="~{fragments/scripts :: scripts}">
 	</div>
 	<script th:inline="javascript">
+		
+	/*<![CDATA[*/
+	var favPlaceList = /*[[${favouritePlaceList}]]*/'';
+	/*]]>*/
+	
 		$(function() {
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
@@ -207,6 +225,468 @@
 				}
 			});
 		}
+		
+		var sortBy = "";
+		var sortByOrder = 'DESC';
+		
+		
+		
+		function sortByFunction(sortStr) {
+			console.log("OutputtedVal--->" + sortStr);
+			sortBy = sortStr;
+			sortByOrder = (sortByOrder == 'DESC' ? 'ASC' : 'DESC');
+			console.log("sortBy--->" + sortBy);
+			console.log("sortByORDER--->" + sortByOrder);
+			
+			document.getElementById('sortedBySpan').innerHTML = sortBy;
+			
+			$("#grid_previous").addClass("disabled");
+			currentPageNo = 0;
+			let searchKey = $("#search").val();
+			let wardNumber = $("#ward-wise-select").val();
+			let pageLimit = $("#page-limit-select").val();
+			let placeType = $("#placeType-wise-select").val();
+			console.log("ward-->" + wardNumber);
+			let url = contextPath + "/favourite-place/sortBy?";
+			if(searchKey != ""){
+				url += "searchKey=" + searchKey + "&";
+			}
+			if(wardNumber != ""){
+				url += "wardNo=" + wardNumber + "&";
+			}
+			if(placeType != "") {
+				url += "placeType=" + placeType + "&";
+			}
+			url += "sortBy=" + sortBy + "&";
+			url += "sortByOrder=" + sortByOrder + "&";
+			url += "pageLimit=" + pageLimit + "&";
+			url += "placeType=" + placeType;
+			console.log("URL--->" + url);
+			let finalUrl = encodeURI(url);
+					$.ajax({
+						url : finalUrl,
+						method: "GET",
+						contentType: "application/json"
+					}).done(function(data) {
+						let tablesData = "";
+						let count = 0;
+						if(data.length > 0) {
+							data.forEach(item => {
+								count += 1;
+								tablesData += `<tr><td>${count}</td>
+												<td>${item.placeName}</td>
+												<td>${item.placeWard}</td>
+												<td>
+													<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#" th:href="@{/favourite-place/edit/} + ${item.filledId}" class="btn btn-xs btn-warning">Edit Details</a>
+													<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteFavouritePlace('${item.filledId}')|">Delete </button>
+													<a href="#" th:href="@{/favourite-place/} + ${item.filledId}" class="btn btn-xs btn-success">Show Details</a>
+												</td> </tr>`;
+							});
+							$("#favourite-place-body").empty();
+							$("#favourite-place-body").append(tablesData);
+							if(data[pageLimit-1] != null){
+							lastItemId = data[pageLimit-1].id;
+							}else{
+								lastItemId = data[data.length-1].id;
+							}
+							console.log("LastItemIdUpdated--->"+ lastItemId);
+							firstItemId = data[0].id;
+							console.log("firstItemUpdated-->"+ firstItemId);
+							$("#grid_previous").addClass("disabled");
+							$("#grid_next").removeClass("disabled");
+							document.getElementById("pageNumberPagination").innerHTML = currentPageNo + 1;
+						}else{
+							swal.fire({
+								text: 'माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण भेटीएन!',
+								icon: 'warning',
+								confirmButtonText: 'OK'
+							});
+							$("#grid_next").addClass("disabled");
+						}
+					});
+
+			
+	}
+	
+
+	$(function() {
+		function fixedEncodeURIComponent(str) {
+//				  return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+			    return '%' + c.charCodeAt(0).toString(16);
+			  //});
+		}
+
+		 document.getElementById('sortedBySpan').innerHTML = 'None';
+		
+		 $("#IdNumberColumn").on("click", function(event){
+			 location.reload();
+		 });
+		 
+	$("#search").on("keypress", function(event) {
+			if(event.which == 13 && event.keyCode == 13) {
+				let searchKey = $(this).val();
+				let wardNumber = $("#ward-wise-select").val();
+				let pageLimit = $("#page-limit-select").val();
+				let placeType = $("#placeType-wise-select").val();
+				console.log("ward-->" + wardNumber);
+				currentPageNo = 0;
+				let finalUrl = encodeURI(contextPath + "/favourite-place/search" + "?searchKey=" + encodeURIComponent(searchKey) + "&wardNo=" + wardNumber + "&pageSize=" + pageLimit + "&placeType=" + placeType);
+				if(searchKey === "") {
+					swal.fire({
+						  text: 'कृपया नाम दिन नभुल्नुहोला!',
+						  icon: 'info',
+						  confirmButtonText: 'OK'
+					});
+				} else {
+					if(searchKey) {
+						$.ajax({
+							url : finalUrl,
+							method: "GET",
+							contentType: "application/json"
+						}).done(function(data) {
+							let tablesData = "";
+							let count = 0;
+							if(data.length > 0) {
+								data.forEach(item => {
+									count += 1;
+									tablesData += `<tr><td>${count}</td>
+													<td>${item.placeName}</td>
+													<td>${item.placeWard}</td>
+													<td>
+													<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#" th:href="@{/favourite-place/edit/} + ${item.filledId}" class="btn btn-xs btn-warning">Edit Details</a>
+													<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteFavouritePlace('${item.filledId}')|">Delete </button>
+													<a href="#" th:href="@{/favourite-place/} + ${item.filledId}" class="btn btn-xs btn-success">Show Details</a>
+													</td> </tr>`;
+								});
+								$("#favourite-place-body").empty();
+								$("#favourite-place-body").append(tablesData);
+								lastItemId = data[data.length-1].id;
+								console.log("LastItemIdUpdated--->"+ lastItemId);
+								firstItemId = data[0].id;
+								$("#grid_previous").addClass("disabled");
+								$("#grid_next").removeClass("disabled");
+								document.getElementById("pageNumberPagination").innerHTML = currentPageNo + 1;
+								
+							} else {
+								swal.fire({
+									  text: 'माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण भेटीएन!',
+									  icon: 'warning',
+									  confirmButtonText: 'OK'
+								});
+							}
+						}).fail(function(data) {
+							alert(data);
+						});
+					}
+				}
+			}
+		});
+	});
+	
+	$("#ward-wise-select").on("change", function(event) {
+			$("#search").val("");
+			let wardNumber = $(this).val();
+			let pageLimit = $("#page-limit-select").val();
+			let placeType = $("#placeType-wise-select").val();
+			console.log("ward-->" + wardNumber);
+			currentPageNo = 0;
+			let appurl = "";
+			if(sortBy != ""){
+				appurl += "&sortBy=" + sortBy + "&";
+				appurl += "sortByOrder=" + sortByOrder;
+			}
+			let finalUrl = encodeURI(contextPath + "/favourite-place/ward" + "?wardNo=" + wardNumber + "&pageSize=" + pageLimit + "&placeType=" + placeType + appurl);
+					$.ajax({
+						url : finalUrl,
+						method: "GET",
+						contentType: "application/json"
+					}).done(function(data) {
+						let tablesData = "";
+						let count = 0;
+						if(data.length > 0) {
+							data.forEach(item => {
+								count += 1;
+								tablesData += `<tr><td>${count}</td>
+												<td>${item.placeName}</td>
+												<td>${item.placeWard}</td>
+												<td>
+													<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#" th:href="@{/favourite-place/edit/} + ${item.filledId}" class="btn btn-xs btn-warning">Edit Details</a>
+													<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteFavouritePlace('${item.filledId}')|">Delete </button>
+													<a href="#" th:href="@{/favourite-place/} + ${item.filledId}" class="btn btn-xs btn-success">Show Details</a>
+												</td> </tr>`;
+							});
+							$("#favourite-place-body").empty();
+							$("#favourite-place-body").append(tablesData);
+							lastItemId = data[data.length-1].id;
+							console.log("LastItemIdUpdated--->"+ lastItemId);
+							firstItemId = data[0].id;
+							$("#grid_previous").addClass("disabled");
+							$("#grid_next").removeClass("disabled");
+							document.getElementById("pageNumberPagination").innerHTML = currentPageNo + 1;
+							
+						}else{
+							swal.fire({
+								  text: 'माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण भेटीएन!',
+								  icon: 'warning',
+								  confirmButtonText: 'OK'
+							});
+						}
+					});
+	});
+	
+	
+	
+	$("#placeType-wise-select").on("change", function(event) {
+		$("#search").val("");
+		let placeType = $(this).val();
+		let wardNumber = $("#ward-wise-select").val();
+		let pageLimit = $("#page-limit-select").val();
+		console.log("placeType-->" + placeType);
+		currentPageNo = 0;
+		let appurl = "";
+		if(sortBy != ""){
+			appurl += "&sortBy=" + sortBy + "&";
+			appurl += "sortByOrder=" + sortByOrder;
+		}
+		let finalUrl = encodeURI(contextPath + "/favourite-place/placeType" + "?wardNo=" + wardNumber + "&pageSize=" + pageLimit + "&placeType=" + placeType + appurl);
+				$.ajax({
+					url : finalUrl,
+					method: "GET",
+					contentType: "application/json"
+				}).done(function(data) {
+					let tablesData = "";
+					let count = 0;
+					if(data.length > 0) {
+						data.forEach(item => {
+							count += 1;
+							tablesData += `<tr><td>${count}</td>
+											<td>${item.placeName}</td>
+											<td>${item.placeWard}</td>
+											<td>
+												<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#" th:href="@{/favourite-place/edit/} + ${item.filledId}" class="btn btn-xs btn-warning">Edit Details</a>
+												<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteFavouritePlace('${item.filledId}')|">Delete </button>
+												<a href="#" th:href="@{/favourite-place/} + ${item.filledId}" class="btn btn-xs btn-success">Show Details</a>
+											</td> </tr>`;
+					});
+					$("#favourite-place-body").empty();
+					$("#favourite-place-body").append(tablesData);
+					lastItemId = data[data.length-1].id;
+					console.log("LastItemIdUpdated--->"+ lastItemId);
+					firstItemId = data[0].id;
+					$("#grid_previous").addClass("disabled");
+					$("#grid_next").removeClass("disabled");
+					document.getElementById("pageNumberPagination").innerHTML = currentPageNo + 1;
+				}else{
+				swal.fire({
+				  text: 'माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण भेटीएन!',
+				  icon: 'warning',
+				  confirmButtonText: 'OK'
+				});
+			}
+		});
+	});
+	
+	
+	var firstItemId = favPlaceList[0].id + "";
+    console.log("firstItemId--->" + firstItemId);
+    let pageCount = $("#page-limit-select").val();
+    var lastItemId = favPlaceList[favPlaceList.length - 1].id + "";
+    console.log("FavouritePlaceListSize--->" + favPlaceList.length);
+    console.log("LastItemId--->" + lastItemId);
+    var currentPageNo = 0;
+	
+	
+	$("#page-limit-select").on("change", function(event) {
+		let pageLimit = $(this).val();
+		let wardNumber = $("#ward-wise-select").val();
+		let searchKey = $("#search").val();
+		let placeType = $("#placeType-wise-select").val();
+		console.log("ward-->" + wardNumber);
+		currentPageNo = 0;
+		let appurl = "";
+		if(sortBy != ""){
+			appurl += "&sortBy=" + sortBy + "&";
+			appurl += "sortByOrder=" + sortByOrder;
+		}
+		
+		let finalUrl = encodeURI(contextPath + "/favourite-place/pageLimit" + "?wardNo=" + wardNumber + "&pageSize=" + pageLimit + "&placeType=" + placeType + "&searchKey=" + searchKey + "&lastSeenId=" + firstItemId + appurl);
+				$.ajax({
+					url : finalUrl,
+					method: "GET",
+					contentType: "application/json"
+				}).done(function(data) {
+					let tablesData = "";
+					let count = 0;
+					if(data.length > 0) {
+						data.forEach(item => {
+							count += 1;
+							tablesData += `<tr><td>${count}</td>
+											<td>${item.placeName}</td>
+											<td>${item.placeWard}</td>
+											<td>
+												<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#" th:href="@{/favourite-place/edit/} + ${item.filledId}" class="btn btn-xs btn-warning">Edit Details</a>
+												<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteFavouritePlace('${item.filledId}')|">Delete </button>
+												<a href="#" th:href="@{/favourite-place/} + ${item.filledId}" class="btn btn-xs btn-success">Show Details</a>
+											</td> </tr>`;
+						});
+						$("#favourite-place-body").empty();
+						$("#favourite-place-body").append(tablesData);
+						lastItemId = data[data.length-1].id;
+						console.log("LastItemIdUpdated--->"+ lastItemId);
+						firstItemId = data[0].id;
+						document.getElementById("pageNumberPagination").innerHTML = currentPageNo + 1;
+					}
+				});
+	});
+	
+
+
+	
+	$("#grid_next").on("click", function(event) {
+			$("#grid_previous").removeClass("disabled");
+			let searchKey = $("#search").val();
+			let wardNumber = $("#ward-wise-select").val();
+			let pageLimit = $("#page-limit-select").val();
+			let placeType = $("#placeType-wise-select").val();
+			console.log("ward-->" + wardNumber);
+			currentPageNo ++;
+			console.log("CurrentPageNo--->" + currentPageNo);
+			
+			let url = contextPath + "/favourite-place/nextLot?";
+			if(searchKey != ""){
+				url += "searchKey=" + searchKey + "&";
+			}
+			if(wardNumber != ""){
+				url += "wardNo=" + wardNumber + "&";
+			}
+			if(placeType != "") {
+				url += "placeType=" + placeType + "&";
+			}
+			
+			url += "lastSeenId=" + lastItemId + "&";
+			url += "action=next"+ "&";
+			
+			if(sortBy != ""){
+				url += "sortBy=" + sortBy + "&";
+				url += "sortByOrder=" + sortByOrder + "&";
+			}
+			url += "currentPage=" + currentPageNo + "&";
+			url += "pageLimit=" + pageLimit;
+			console.log("URL--->" + url);
+			let finalUrl = encodeURI(url);
+					$.ajax({
+						url : finalUrl,
+						method: "GET",
+						contentType: "application/json"
+					}).done(function(data) {
+						let tablesData = "";
+						let count = 0;
+						if(data.length > 0) {
+							data.forEach(item => {
+								count += 1;
+								tablesData += `<tr><td>${count}</td>
+												<td>${item.placeName}</td>
+												<td>${item.placeWard}</td>
+												<td>
+													<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#" th:href="@{/favourite-place/edit/} + ${item.filledId}" class="btn btn-xs btn-warning">Edit Details</a>
+													<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteFavouritePlace('${item.filledId}')|">Delete </button>
+													<a href="#" th:href="@{/favourite-place/} + ${item.filledId}" class="btn btn-xs btn-success">Show Details</a>
+												</td> </tr>`;
+							});
+							$("#favourite-place-body").empty();
+							$("#favourite-place-body").append(tablesData);
+							if(data[pageLimit-1] != null){
+							lastItemId = data[pageLimit-1].id;
+							}else{
+								lastItemId = data[data.length-1].id;
+							}
+							console.log("LastItemIdUpdated--->"+ lastItemId);
+							firstItemId = data[0].id;
+							console.log("firstItemUpdated-->"+ firstItemId);
+							document.getElementById("pageNumberPagination").innerHTML = currentPageNo + 1;
+						}else{
+							swal.fire({
+								text: 'माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण भेटीएन!',
+								icon: 'warning',
+								confirmButtonText: 'OK'
+							});
+							$("#grid_next").addClass("disabled");
+							currentPageNo --;
+						}
+					});
+});
+
+
+	$("#grid_previous").on("click", function(event) {
+			$("#grid_next").removeClass("disabled");
+			let searchKey = $("#search").val();
+			let wardNumber = $("#ward-wise-select").val();
+			let pageLimit = $("#page-limit-select").val();
+			let placeType = $("#placeType-wise-select").val();
+			console.log("ward-->" + wardNumber);
+			currentPageNo --;
+			console.log("CurrentPageNo--->" + currentPageNo);
+			
+			let url = contextPath + "/favourite-place/nextLot?";
+			if(searchKey != ""){
+				url += "searchKey=" + searchKey + "&";
+			}
+			if(wardNumber != ""){
+				url += "wardNo=" + wardNumber + "&";
+			}
+			if(placeType != "") {
+				url += "placeType=" + placeType + "&";
+			}
+			
+			url += "lastSeenId=" + firstItemId + "&";
+			url += "action=prev"+ "&";
+			
+			if(sortBy != ""){
+				url += "sortBy=" + sortBy + "&";
+				url += "sortByOrder=" + sortByOrder + "&";
+			}
+			url += "currentPage=" + currentPageNo + "&";
+			
+			url += "pageLimit=" + pageLimit;
+			console.log("URL--->" + url);
+			let finalUrl = encodeURI(url);
+					$.ajax({
+						url : finalUrl,
+						method: "GET",
+						contentType: "application/json"
+					}).done(function(data) {
+						let tablesData = "";
+						let count = 0;
+						if(data.length > 0) {
+							data.forEach(item => {
+								count += 1;
+								tablesData += `<tr><td>${count}</td>
+												<td>${item.placeName}</td>
+												<td>${item.placeWard}</td>
+												<td>
+													<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#" th:href="@{/favourite-place/edit/} + ${item.filledId}" class="btn btn-xs btn-warning">Edit Details</a>
+													<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteFavouritePlace('${item.filledId}')|">Delete </button>
+													<a href="#" th:href="@{/favourite-place/} + ${item.filledId}" class="btn btn-xs btn-success">Show Details</a>
+												</td> </tr>`;
+							});
+							$("#favourite-place-body").empty();
+							$("#favourite-place-body").append(tablesData);
+							firstItemId = data[0].id;
+							console.log("firstItemIdUpdated--->"+ firstItemId);
+							lastItemId = data[data.length-1].id;
+							document.getElementById("pageNumberPagination").innerHTML = currentPageNo + 1;
+						}else{
+							swal.fire({
+								text: 'माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण भेटीएन!',
+								icon: 'warning',
+								confirmButtonText: 'OK'
+							});
+							$("#grid_previous").addClass("disabled");
+							currentPageNo ++;
+						}
+					});
+			});	
+		
 	</script>
 </body>
 </html>

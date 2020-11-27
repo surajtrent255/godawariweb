@@ -39,7 +39,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.ishanitech.ipalikawebapp.configs.properties.UploadDirectoryProperties;
 import com.ishanitech.ipalikawebapp.dto.FavouritePlaceDTO;
-import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
 import com.ishanitech.ipalikawebapp.service.FavouritePlacesService;
@@ -261,18 +260,42 @@ public class FavouritePlacesController {
 	}
 	
 	
-	@PostMapping("/search")
-	public @ResponseBody List<FavouritePlaceDTO> getFavouritePlaceBySearchKey(HttpServletRequest request, @RequestParam("searchKey") String searchKey, @RequestParam("wardNo") String wardNo) {
-		log.info("WardNo---->" + wardNo);
-		return favouritePlacesService.searchResidentByKey(request, searchKey, wardNo);
+	@GetMapping("/search")
+	public @ResponseBody List<FavouritePlaceDTO> getFavouritePlaceBySearchKey(HttpServletRequest request, @RequestParam("searchKey") String searchKey, @RequestParam("wardNo") String wardNo, @RequestParam("placeType") String placeType) {
+		log.info("searchKey----->" + searchKey);
+		log.info("wardNo----->" + wardNo);
+		return favouritePlacesService.searchFavouritePlaceByKey(request, searchKey, wardNo, placeType);
 	}
 	
 	
-	@PostMapping("/ward")
+	@GetMapping("/ward")
 	public @ResponseBody List<FavouritePlaceDTO> getFavouritePlaceByWard(@RequestParam("wardNo") String wardNo, HttpServletRequest request) {
 		log.info("WardNo---->" + wardNo);
 		log.info("PagedLimited---->" + request.getParameter("pageSize"));
 		return favouritePlacesService.searchFavouritePlaceByWard(request, wardNo);
 	}
+	
+	@GetMapping("/placeType")
+	public @ResponseBody List<FavouritePlaceDTO> getFavouritePlaceByPlaceType(@RequestParam("placeType") String placeType, HttpServletRequest request) {
+		log.info("PagedLimited---->" + request.getParameter("pageSize"));
+		return favouritePlacesService.searchFavouritePlaceByPlaceType(request, placeType);
+	}
+	
+	@GetMapping("/pageLimit")
+	public @ResponseBody List<FavouritePlaceDTO> getFavouritePlaceByPageLimit(@RequestParam("wardNo") String wardNo,HttpServletRequest request) {
+		log.info("PagedLimited---->" + request.getParameter("pageSize"));
+		return favouritePlacesService.getFavouritePlaceByPageLimit(request, wardNo);
+	}
+	
+	@GetMapping("/nextLot")
+	public @ResponseBody List<FavouritePlaceDTO> getNextLotResidents(HttpServletRequest request) {
+		return favouritePlacesService.getNextLotFavouritePlace(request);
+	}
+	
+	@GetMapping("/sortBy")
+	public @ResponseBody List<FavouritePlaceDTO> getSortedResidents(HttpServletRequest request) {
+		return favouritePlacesService.getSortedFavouritePlace(request);
+	}
+	
 	
 }

@@ -277,19 +277,14 @@ public class ResidentServiceImpl implements ResidentService {
 
 	@Override
 	public String getTotalHouseCountByWard(String wardNo, String token) {
-	
 		String template = String.format("ward/totalHouseCount/" + wardNo);
-		
 		Map<String, Object> uriVariables = new HashMap<String, Object>();
 		uriVariables.put("rootAddress", template);
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, uriVariables);
-		log.info("URL--->" + url);
 		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
 		ParameterizedTypeReference<Response<Integer>> responseType = new ParameterizedTypeReference<Response<Integer>>() {
 		};
 		Integer totalHouseCount = restTemplate.exchange(requestEntity, responseType).getBody().getData();
-		
-		System.out.println("TotalHouseCount--->"+ totalHouseCount);
 		return totalHouseCount.toString();
 	}
 

@@ -29,6 +29,14 @@ public interface FavouritePlacesService {
 
 	List<FavouritePlaceDTO> searchFavouritePlaceByWard(HttpServletRequest request, String wardNo);
 
-	List<FavouritePlaceDTO> searchResidentByKey(HttpServletRequest request, String searchKey, String wardNo);
+	List<FavouritePlaceDTO> searchFavouritePlaceByKey(HttpServletRequest request, String searchKey, String wardNo, String placeType);
+
+	List<FavouritePlaceDTO> searchFavouritePlaceByPlaceType(HttpServletRequest request, String placeType);
+
+	List<FavouritePlaceDTO> getFavouritePlaceByPageLimit(HttpServletRequest request, String wardNo);
+
+	List<FavouritePlaceDTO> getNextLotFavouritePlace(HttpServletRequest request);
+
+	List<FavouritePlaceDTO> getSortedFavouritePlace(HttpServletRequest request);
 
 }

@@ -118,4 +118,37 @@ public class HttpUtils {
 				.query("wardNo={wardNo}" + "&pageSize={pageSize}" + "&searchKey={searchKey}" + "&lastSeenId={lastSeenId}" + "&sortBy={sortBy}" + "&sortByOrder={sortByOrder}").buildAndExpand(uriVariables).encode();
 		return uriComponent.toUriString();
 	}
+	
+	
+	public static String createRequestUrlWithQueryStringFavPlace(RestApiProperties restApiProperties, Map<String, Object> uriVariables) {
+		UriComponents uriComponent = UriComponentsBuilder.newInstance()
+				.scheme(restApiProperties.getProtocol())
+				.host(restApiProperties.getDomain())
+				.port(restApiProperties.getPort())
+				.path("/{rootAddress}")
+				.query("{queryParamName}={keyword}" + "&wardNo={wardNo}"+ "&placeType={placeType}" + "&pageSize={pageSize}").buildAndExpand(uriVariables).encode();
+		return uriComponent.toUriString();
+	}
+	
+	public static String createRequestUrlWithWardStringFavPlace(RestApiProperties restApiProperties, Map<String, Object> uriVariables) {
+		UriComponents uriComponent = UriComponentsBuilder.newInstance()
+				.scheme(restApiProperties.getProtocol())
+				.host(restApiProperties.getDomain())
+				.port(restApiProperties.getPort())
+				.path("/{rootAddress}")
+				.query("wardNo={wardNo}" + "&placeType={placeType}" + "&pageSize={pageSize}" + "&sortBy={sortBy}" + "&sortByOrder={sortByOrder}").buildAndExpand(uriVariables).encode();
+		return uriComponent.toUriString();
+	}
+	
+	
+	public static String createRequestUrlWithPageLimitFavPlace(RestApiProperties restApiProperties,
+			Map<String, Object> uriVariables) {
+		UriComponents uriComponent = UriComponentsBuilder.newInstance()
+				.scheme(restApiProperties.getProtocol())
+				.host(restApiProperties.getDomain())
+				.port(restApiProperties.getPort())
+				.path("/{rootAddress}")
+				.query("wardNo={wardNo}" + "&placeType={placeType}" + "&pageSize={pageSize}" + "&searchKey={searchKey}" + "&lastSeenId={lastSeenId}" + "&sortBy={sortBy}" + "&sortByOrder={sortByOrder}").buildAndExpand(uriVariables).encode();
+		return uriComponent.toUriString();
+	}
 }
