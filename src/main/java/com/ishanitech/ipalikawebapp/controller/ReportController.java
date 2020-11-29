@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ishanitech.ipalikawebapp.dto.AgriculturalFarmDTO;
+import com.ishanitech.ipalikawebapp.dto.BeekeepingDTO;
 import com.ishanitech.ipalikawebapp.dto.PopulationReport;
+import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
 import com.ishanitech.ipalikawebapp.service.ReportService;
 
@@ -65,4 +68,32 @@ public class ReportController {
 		reportService.generateReport(user.getToken());
 		return "private/common/dashboard";
 	}
+	
+	
+	@GetMapping("/beekeeping")
+	public String getBeekeepingReportView(@AuthenticationPrincipal UserDTO user, Model model) {
+		Response<List<BeekeepingDTO>> reportResponse = reportService.getBeekeepingInfo(user.getToken());
+		model.addAttribute("beekeepingList", reportResponse.getData());
+		return "private/common/report-beekeeping";
+	}
+	
+	@GetMapping("/agriculturalFarm")
+	public String getAgriculturalFarmReportView(@AuthenticationPrincipal UserDTO user, Model model) {
+		Response<List<AgriculturalFarmDTO>> reportResponse = reportService.getAgriculturalFarmInfo(user.getToken());
+		model.addAttribute("agriculturalFarmList", reportResponse.getData());
+		return "private/common/report-agricultural-farm";
+	}
+	
+	@GetMapping("/agriculturalCrop")
+	public String getAgriculturalCropReportView(@AuthenticationPrincipal UserDTO user, Model model) {
+		model.addAttribute("agriculturalCropReport", reportService.getQuestionReport(user.getToken()));
+		return "private/common/report-agricultural-crop";
+	}
+	
+	@GetMapping("/animals")
+	public String getAnimalsReportView(@AuthenticationPrincipal UserDTO user, Model model) {
+		model.addAttribute("animalsReport", reportService.getQuestionReport(user.getToken()));
+		return "private/common/report-animal";
+	}
+	
 }

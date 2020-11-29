@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ishanitech.ipalikawebapp.configs.properties.RestApiProperties;
+import com.ishanitech.ipalikawebapp.dto.AgriculturalFarmDTO;
+import com.ishanitech.ipalikawebapp.dto.BeekeepingDTO;
 import com.ishanitech.ipalikawebapp.dto.ExtraReport;
 import com.ishanitech.ipalikawebapp.dto.PopulationReport;
 import com.ishanitech.ipalikawebapp.dto.QuestionReport;
@@ -63,6 +65,26 @@ public class ReportServiceImpl implements ReportService {
 		RequestEntity request = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
 		ParameterizedTypeReference<Response<List<ExtraReport>>> bean = new ParameterizedTypeReference<Response<List<ExtraReport>>>() {};
 		return restTemplate.exchange(request, bean).getBody().getData();
+	}
+
+	@Override
+	public Response<List<BeekeepingDTO>> getBeekeepingInfo(String token) {
+		String template = String.format("%s/%s", REPORT_BASE, "beekeeping");
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<List<BeekeepingDTO>>> responseType = new ParameterizedTypeReference<Response<List<BeekeepingDTO>>>() {};
+		Response<List<BeekeepingDTO>> beekeepingInfo = restTemplate.exchange(requestEntity, responseType).getBody();
+		return beekeepingInfo;
+	}
+
+	@Override
+	public Response<List<AgriculturalFarmDTO>> getAgriculturalFarmInfo(String token) {
+		String template = String.format("%s/%s", REPORT_BASE, "agriculturalFarm");
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<List<AgriculturalFarmDTO>>> responseType = new ParameterizedTypeReference<Response<List<AgriculturalFarmDTO>>>() {};
+		Response<List<AgriculturalFarmDTO>> agriculturalFarmInfo = restTemplate.exchange(requestEntity, responseType).getBody();
+		return agriculturalFarmInfo;
 	}
 	
 	

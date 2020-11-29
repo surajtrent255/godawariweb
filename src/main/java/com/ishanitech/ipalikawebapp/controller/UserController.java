@@ -31,9 +31,7 @@ import com.ishanitech.ipalikawebapp.service.UserService;
 import com.ishanitech.ipalikawebapp.service.WardService;
 import com.ishanitech.ipalikawebapp.utilities.UserDetailsUtil;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RequestMapping("/user")
 @Controller
 public class UserController {

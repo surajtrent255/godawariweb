@@ -1,6 +1,5 @@
 package com.ishanitech.ipalikawebapp.dto;
 
-import java.util.List;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

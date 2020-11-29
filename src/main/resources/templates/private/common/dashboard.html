@@ -1078,7 +1078,7 @@
 				<!--Added for Krishi Dashboard-->
 				<h4>कृषि तथा पशुपालन</h4>
 				<div class="row">
-					<div class="col-12 col-lg-3" th:if="${!#lists.isEmpty(extraReport) && extraReport != null}">
+					<div class="col-12 col-lg-3" th:if="${!#lists.isEmpty(extraReport) && extraReport != null}" th:attr="onclick=|getAgriculturalFarmReport()|">
 						
 						<div class="card bg-warning">
 							<div class="card-body">
@@ -1093,7 +1093,7 @@
 						</div>
 					</div>
 
-					<div class="col-12 col-lg-3" th:if="${!#lists.isEmpty(extraReport) && extraReport != null}">
+					<div class="col-12 col-lg-3" th:if="${!#lists.isEmpty(extraReport) && extraReport != null}" th:attr="onclick=|getBeekeepingReport()|">
 						<div class="card gradient-violet">
 							<div class="card-body">
 								<p class="text-white">मौरीपालन</p>
@@ -1104,11 +1104,10 @@
 									 </small>
 								</h4>
 							</div>
-
 						</div>
 					</div>
 
-					<div class="col-12 col-lg-3" th:if="${!#lists.isEmpty(extraReport) && extraReport != null}">
+					<div class="col-12 col-lg-3" th:if="${!#lists.isEmpty(extraReport) && extraReport != null}" th:attr="onclick=|getAgriculturalCropReport()|">
 						<div class="card gradient-orange">
 							<div class="card-body">
 								<p class="text-white">कृषिबाली</p>
@@ -1123,7 +1122,7 @@
 						</div>
 					</div>
 					
-					<div class="col-12 col-lg-3" th:if="${!#lists.isEmpty(extraReport) && extraReport != null}">
+					<div class="col-12 col-lg-3" th:if="${!#lists.isEmpty(extraReport) && extraReport != null}" th:attr="onclick=|getAnimalsReport()|">
 						<div class="card bg-success">
 							<div class="card-body">
 								<p class="text-white">पशुपन्छि पाल्ने</p>
@@ -1195,6 +1194,97 @@
 							closeOnEsc : false
 						}).then(function() {
 							window.location.href = contextPath + "/report";
+						});
+				},
+				error : function(error) {
+				}
+			});
+		}
+		
+		function getBeekeepingReport() {
+			$.ajax({
+				method : "GET",
+				url : contextPath + "/report/beekeeping",
+				contentType : "Application/Json",
+				success : function(result) {
+					swal.fire(
+						{
+							text : "The beekeeping report has been generated",
+							icon : "success",
+							closeOnClickOutside : false,
+							closeOnEsc : false
+						})
+						.then(function() {
+							window.location.href = contextPath + "/report/beekeeping";
+						});
+				},
+				error : function(error) {
+				}
+			});
+		}
+		
+		
+		function getAgriculturalFarmReport() {
+			$.ajax({
+				method : "GET",
+				url : contextPath + "/report/agriculturalFarm",
+				contentType : "Application/Json",
+				success : function(result) {
+					swal.fire(
+						{
+							text : "The Agricultural Farm report has been generated",
+							icon : "success",
+							closeOnClickOutside : false,
+							closeOnEsc : false
+						})
+						.then(function() {
+							window.location.href = contextPath + "/report/agriculturalFarm";
+						});
+				},
+				error : function(error) {
+				}
+			});
+		}
+		
+		
+		function getAgriculturalCropReport() {
+			$.ajax({
+				method : "GET",
+				url : contextPath + "/report/agriculturalCrop",
+				contentType : "Application/Json",
+				success : function(result) {
+					swal.fire(
+						{
+							text : "The Agricultural Crop report has been generated",
+							icon : "success",
+							closeOnClickOutside : false,
+							closeOnEsc : false
+						})
+						.then(function() {
+							window.location.href = contextPath + "/report/agriculturalCrop";
+						});
+				},
+				error : function(error) {
+				}
+			});
+		}
+		
+		
+		function getAnimalsReport() {
+			$.ajax({
+				method : "GET",
+				url : contextPath + "/report/animals",
+				contentType : "Application/Json",
+				success : function(result) {
+					swal.fire(
+						{
+							text : "The Animals report has been generated",
+							icon : "success",
+							closeOnClickOutside : false,
+							closeOnEsc : false
+						})
+						.then(function() {
+							window.location.href = contextPath + "/report/animals";
 						});
 				},
 				error : function(error) {
