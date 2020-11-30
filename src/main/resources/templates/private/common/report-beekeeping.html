@@ -148,7 +148,7 @@
 						
 <!-- 										<td th:text="${report.yearlyProduction}"></td> -->
 										<td>
-											<span th:if="${report.yearlyProduction} != ''" th:text="${report.yearlyProduction}"></span>
+											<span th:if="${report.yearlyProduction} != ''" th:text="${report.yearlyProduction} + '&nbsp;'  + kg"></span>
    											<span th:unless="${report.yearlyProduction} != ''" >थाहा छैन</span>
 										</td>
 										

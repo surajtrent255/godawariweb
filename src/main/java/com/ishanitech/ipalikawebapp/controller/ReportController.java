@@ -86,7 +86,7 @@ public class ReportController {
 	
 	@GetMapping("/agriculturalCrop")
 	public String getAgriculturalCropReportView(@AuthenticationPrincipal UserDTO user, Model model) {
-		model.addAttribute("agriculturalCropReport", reportService.getQuestionReport(user.getToken()));
+		model.addAttribute("agriculturalCropReport", reportService.getExtraReport(user.getToken()));
 		return "private/common/report-agricultural-crop";
 	}
 	
