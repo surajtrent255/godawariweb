@@ -188,6 +188,31 @@
 	var favPlaceList = /*[[${favouritePlaceList}]]*/'';
 	/*]]>*/
 	
+	
+		//Google transliteration
+		google.load("elements", "1", {
+		    packages: "transliteration"
+		});
+	
+	
+		function onLoad() {
+		    var options = {
+			        sourceLanguage: 'en',
+			        destinationLanguage: ['ne'],
+			        shortcutKey: 'ctrl+g',
+			        transliterationEnabled: true
+			    };
+			var control =new google.elements.transliteration.TransliterationControl(options);
+			var uniElement = $(".unicode input[type='text'], #grid_filter input");
+			control.makeTransliteratable(uniElement);
+			control.makeTransliteratable(['search']);
+		}; 
+			 
+		$(window).on("load", function(e) {
+			onLoad();
+		})
+	
+	
 		$(function() {
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
