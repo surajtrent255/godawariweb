@@ -52,8 +52,8 @@
 				</div>
 				
 				<div class="row">
-					<div class="col-12 col-lg-6">
-						<div class="card">
+					<div class="col-12 col-lg-8">
+						<div class="card" style="height: 92%;">
 							<div class="card-body">
 								<table th:if="${favouritePlaceInfo != null && #arrays.length(favouritePlaceInfo) > 0}" class="table table-striped table-hover" id="grid"> 
 								<h4 th:text="${favouritePlaceInfo.placeName}"></h4>
@@ -76,11 +76,13 @@
 					</div>
 
 
-					<div class="col-12 col-lg-6">
+					<div class="col-12 col-lg-4">
 						<div class="card">
 							<div class="card-body">
+							<a th:href="${favouritePlaceInfo.placeImage}"
+									style="display: block" target="_blank" class="no-pjax">
 									<img th:src="${favouritePlaceInfo.placeImage}"
-										class="media-object" style="width: 100%; height: 100%; object-fit: cover;">
+										class="media-object" style="width: 100%; height: 100%; object-fit: cover;"></a>
 							</div>
 						</div>
 					</div>	
