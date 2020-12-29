@@ -155,7 +155,7 @@
 								
 								<tbody id="resident-body">
 									<tr class="" th:each="resident,iteration : ${residentList}">
-										<td th:text="${resident.id}"></td>
+										<td th:text="${iteration.index + 1}"></td>
 										<td th:text="${resident.houseOwner}"></td>
 										<td th:text="${resident.houseNo}"></td>
 										<td th:text="${resident.tole}"></td>
@@ -388,7 +388,7 @@
 								if(data.length > 0) {
 									data.forEach(item => {
 										count += 1;
-										tablesData += `<tr><td>${item.id}</td>
+										tablesData += `<tr><td>${count}</td>
 														<td>${item.houseOwner}</td>
 														<td>${item.houseNo}</td>
 														<td>${item.tole}</td>
@@ -451,7 +451,7 @@
 							if(data.length > 0) {
 								data.forEach(item => {
 									count += 1;
-									tablesData += `<tr><td>${item.id}</td>
+									tablesData += `<tr><td>${count}</td>
 													<td>${item.houseOwner}</td>
 													<td>${item.houseNo}</td>
 													<td>${item.tole}</td>
@@ -521,7 +521,7 @@
 						if(data.length > 0) {
 							data.forEach(item => {
 								count += 1;
-								tablesData += `<tr><td>${item.id}</td>
+								tablesData += `<tr><td>${count}</td>
 												<td>${item.houseOwner}</td>
 												<td>${item.houseNo}</td>
 												<td>${item.tole}</td>
@@ -596,7 +596,7 @@
 							if(data.length > 0) {
 								data.forEach(item => {
 									count += 1;
-									tablesData += `<tr><td>${item.id}</td>
+									tablesData += `<tr><td>${count}</td>
 													<td>${item.houseOwner}</td>
 													<td>${item.houseNo}</td>
 													<td>${item.tole}</td>
@@ -676,7 +676,7 @@
 							if(data.length > 0) {
 								data.forEach(item => {
 									count += 1;
-									tablesData += `<tr><td>${item.id}</td>
+									tablesData += `<tr><td>${count}</td>
 													<td>${item.houseOwner}</td>
 													<td>${item.houseNo}</td>
 													<td>${item.tole}</td>
