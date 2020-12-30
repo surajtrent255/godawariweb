@@ -158,7 +158,7 @@ public class ResidentServiceImpl implements ResidentService {
 	
 	@Override
 	public Response<?> getMemberByMemberId(String token, String memberId) {
-		String template = String.format("%s/member-data/{memberId}", RESIDENT_BASE_URL);
+		String template = String.format("%s/member/{memberId}", RESIDENT_BASE_URL);
 		Map<String, Object> urlValues = new HashMap<>();
 		urlValues.put("memberId", memberId);
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, urlValues);
