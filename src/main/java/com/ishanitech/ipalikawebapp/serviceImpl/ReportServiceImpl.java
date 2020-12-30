@@ -14,6 +14,7 @@ import com.ishanitech.ipalikawebapp.configs.properties.RestApiProperties;
 import com.ishanitech.ipalikawebapp.dto.AgriculturalFarmDTO;
 import com.ishanitech.ipalikawebapp.dto.BeekeepingDTO;
 import com.ishanitech.ipalikawebapp.dto.ExtraReport;
+import com.ishanitech.ipalikawebapp.dto.FavouritePlaceReport;
 import com.ishanitech.ipalikawebapp.dto.PopulationReport;
 import com.ishanitech.ipalikawebapp.dto.QuestionReport;
 import com.ishanitech.ipalikawebapp.dto.Response;
@@ -85,6 +86,15 @@ public class ReportServiceImpl implements ReportService {
 		ParameterizedTypeReference<Response<List<AgriculturalFarmDTO>>> responseType = new ParameterizedTypeReference<Response<List<AgriculturalFarmDTO>>>() {};
 		Response<List<AgriculturalFarmDTO>> agriculturalFarmInfo = restTemplate.exchange(requestEntity, responseType).getBody();
 		return agriculturalFarmInfo;
+	}
+
+	@Override
+	public List<FavouritePlaceReport> getFavPlaceReport(String token) {
+		String template =  REPORT_BASE + "{favPlaceReport}";
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, Collections.singletonMap("favPlaceReport", "favouritePlace"));
+		RequestEntity request = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<List<FavouritePlaceReport>>> bean = new ParameterizedTypeReference<Response<List<FavouritePlaceReport>>>() {};
+		return restTemplate.exchange(request, bean).getBody().getData();
 	}
 	
 	

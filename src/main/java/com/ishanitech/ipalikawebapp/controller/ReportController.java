@@ -60,6 +60,7 @@ public class ReportController {
 		}
 		model.addAttribute("questionReport", reportService.getQuestionReport(user.getToken()));
 		model.addAttribute("extraReport", reportService.getExtraReport(user.getToken()));
+		model.addAttribute("favPlaceReport", reportService.getFavPlaceReport(user.getToken()));
 		return "private/common/dashboard";
 	}
 	
