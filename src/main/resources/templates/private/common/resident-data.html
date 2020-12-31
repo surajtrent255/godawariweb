@@ -213,6 +213,31 @@
 	var residentList = /*[[${residentList}]]*/'';
 	/*]]>*/
 	
+	
+	
+	//Google transliteration
+	google.load("elements", "1", {
+	    packages: "transliteration"
+	});
+			
+	function onLoad() {
+	    var options = {
+	        sourceLanguage: 'en',
+	        destinationLanguage: ['ne'],
+	        shortcutKey: 'ctrl+g',
+	        transliterationEnabled: true
+		    };
+		var control =new google.elements.transliteration.TransliterationControl(options);
+		var uniElement = $(".unicode input[type='text'], #grid_filter input");
+		control.makeTransliteratable(uniElement);
+		control.makeTransliteratable(['search']);
+	}; 
+	
+	
+	$(window).on("load", function(e) {
+			onLoad();
+	})
+	
 		// For deleting resident
 		function deleteResident(familyId) {
 			swal.fire({
@@ -357,9 +382,7 @@
 			 document.getElementById('sortedBySpan').innerHTML = 'None';
 			
 			 $("#IdNumberColumn").on("click", function(event){
-				
 				 location.reload();
-				 
 			 });
 			 
 			$("#search").on("keypress", function(event) {
