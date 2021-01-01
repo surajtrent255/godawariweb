@@ -205,6 +205,8 @@
 	
 		var sortBy = "";
 		var sortByOrder = 'DESC';
+		var count = 0;
+		var currentPageNo
 	
 		function sortByFunction(sortStr) {
 				console.log("OutputtedVal--->" + sortStr);
@@ -241,7 +243,7 @@
 							contentType: "application/json"
 						}).done(function(data) {
 							let tablesData = "";
-							let count = 0;
+							count = 0;
 							if(data.length > 0) {
 								data.forEach(item => {
 									count += 1;
@@ -327,7 +329,7 @@
 								contentType: "application/json"
 							}).done(function(data) {
 								let tablesData = "";
-								let count = 0;
+								count = 0;
 								if(data.length > 0) {
 									data.forEach(item => {
 										count += 1;
@@ -386,7 +388,7 @@
 							contentType: "application/json"
 						}).done(function(data) {
 							let tablesData = "";
-							let count = 0;
+							count = 0;
 							if(data.length > 0) {
 								data.forEach(item => {
 									count += 1;
@@ -441,7 +443,7 @@
 						contentType: "application/json"
 					}).done(function(data) {
 						let tablesData = "";
-						let count = 0;
+						count = 0;
 						if(data.length > 0) {
 							data.forEach(item => {
 								count += 1;
@@ -511,7 +513,7 @@
 							contentType: "application/json"
 						}).done(function(data) {
 							let tablesData = "";
-							let count = 0;
+							count = currentPageNo * pageLimit;
 							if(data.length > 0) {
 								data.forEach(item => {
 									count += 1;
@@ -587,7 +589,7 @@
 							contentType: "application/json"
 						}).done(function(data) {
 							let tablesData = "";
-							let count = 0;
+							count = currentPageNo * pageLimit;
 							if(data.length > 0) {
 								data.forEach(item => {
 									count += 1;
