@@ -118,12 +118,10 @@
 									<tr>
 										<th id="IdNumberColumn"><strong>ऋ.स</strong></th>
 										<th th:onclick="'sortByFunction(\'fullName\');'"><strong>पुरा नाम </strong></th>
-										<th><strong>उमेर</strong></th>
-										<th><strong>लिङ्ग</strong></th>
-										<th><strong>शिक्षा </strong></th>
-										<th><strong>वैवाहिक अवस्था</strong></th>
-<!-- 										<th><strong>फोटो</strong></th> -->
-<!-- 										<th th:onclick="'sortByFunction(\'familySize\');'"><strong>सदस्य संख्या</strong></th> -->
+										<th th:onclick="'sortByFunction(\'age\');'"><strong>उमेर</strong></th>
+										<th th:onclick="'sortByFunction(\'gender\');'"><strong>लिङ्ग</strong></th>
+										<th th:onclick="'sortByFunction(\'education\');'"><strong>शिक्षा </strong></th>
+										<th th:onclick="'sortByFunction(\'marital\');'"><strong>वैवाहिक अवस्था</strong></th>
 										<th><strong>कार्यहरू</strong></th>
 									</tr>
 								</thead>
@@ -137,10 +135,6 @@
 										<td th:text="${member.education}"></td>
 										<td th:text="${member.maritalStatus}"></td>
 										<td>
-<!-- 											<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" th:href="@{/survey-answer/household/edit/} + ${resident.filledId}" class="btn btn-xs btn-info">Edit</a> -->
-<!-- 											<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-warning" th:attr="onclick=|deleteResident('${resident.filledId}')|"> -->
-<!-- 												Delete -->
-<!-- 											</button> -->
 											<a href="#" th:href="@{/member/details/} + ${member.memberId}" class="btn btn-xs btn-danger">Show Member Details</a>
 											<a href="#" th:href="@{/resident/} + ${member.mainId}" class="btn btn-xs btn-success">Show Household Details</a>
 										</td>
@@ -208,51 +202,6 @@
 		$(window).on("load", function(e) {
 			onLoad();
 		})
-		 
-	
-	
-	
-// 		// For deleting resident
-// 		function deleteResident(familyId) {
-// 			swal.fire({
-// 				title : 'Are you sure you want to delete this household?',
-// 				text : "You won't be able to revert this!",
-// 				icon : 'warning',
-// 				showCancelButton : true,
-// 				confirmButtonColor : '#3085d6',
-// 				cancelButtonColor : '#d33',
-// 				confirmButtonText : 'Yes, delete it!'
-// 			}).then((btnClicked) => {
-// 				if(btnClicked.value) {
-// 					swal.fire({
-// 						title : 'Are you sure you want to delete this household?',
-// 						text : "This will delete all the family members too. Are you sure?",
-// 						icon : 'warning',
-// 						showCancelButton : true,
-// 						confirmButtonColor : '#3085d6',
-// 						cancelButtonColor : '#d33',
-// 						confirmButtonText : "Yes, I'm sure. Delete it!"
-// 					}).then((btnClicked) => {
-// 						if(btnClicked.value) {
-// 							$.ajax({
-// 								url : contextPath + "/resident/household/" + familyId,
-// 								method : "DELETE",
-// 								success : function(data) {
-// 									swal.fire({
-// 										icon : "success",
-// 										text : "The household has been removed!"
-// 									}).then((btnClick) => {
-// 										if(btnClick.value) {
-// 											location.reload(true);		
-// 										}
-// 									});
-// 								}
-// 							});
-// 						}
-// 					});
-// 				}
-// 			});
-// 		}
 	
 		var sortBy = "";
 		var sortByOrder = 'DESC';
