@@ -27,7 +27,8 @@
 	href="assets/css/sidebar-menu.css" rel="stylesheet" />
 <link th:href="@{/assets/css/app-style.css}"
 	href="assets/css/app-style.css" rel="stylesheet" />
-<link rel="stylesheet" th:href="@{/assets/plugins/datatable/datatables.min.css}"
+<link rel="stylesheet"
+	th:href="@{/assets/plugins/datatable/datatables.min.css}"
 	href="assets/plugins/datatable/datatables.min.css">
 <link rel="stylesheet"
 	th:href="@{/assets/plugins/jquery.steps/css/jquery.steps.css}"
@@ -39,120 +40,128 @@
 	<div id="wrapper">
 		<!-- Side bar and header -->
 		<div th:replace="~{fragments/private-sidebar :: private-sidebar}"></div>
-		<header th:replace="~{fragments/header :: header}" class="header1"> </header>
+		<header th:replace="~{fragments/header :: header}" class="header1">
+		</header>
 		<div class="clearfix"></div>
 		<div class="content-wrapper">
 			<div class="container-fluid" id="pjax-container">
 				<div class="row pt-2 pb-2">
 					<div class="col-sm-9">
-						<h4 class="page-title">नगरबासी बिवरण  कम्प्युटर प्रणाली</h4>
+						<h4 class="page-title">नगरबासी बिवरण कम्प्युटर प्रणाली</h4>
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="javaScript:void();">Home</a></li>
 							<li class="breadcrumb-item active" aria-current="page">नगरबासीहरु</li>
 						</ol>
 					</div>
 				</div>
-				
+
 				<div class="row">
 					<div class="col-lg-12 col-md-12">
 						<div class="row">
 							<div class="col-md-3">
 								<div class="ui">
-									<label >Show&nbsp;
-										<select id="page-limit-select" class="ui input">
+									<label>Show&nbsp; <select id="page-limit-select"
+										class="ui input">
 											<option value="10">10</option>
 											<option value="25">25</option>
 											<option value="50">50</option>
 											<option value="100">100</option>
 											<!-- 10 25 50 100 -->
-										</select>&nbsp;
-										 entries
+									</select>&nbsp; entries
 									</label>
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="ui" sec:authorize="hasAnyRole('CENTRAL_ADMIN')">
-									<label >Ward&nbsp;
-										<select id="ward-wise-select" class="ui input">
+									<label>Ward&nbsp; <select id="ward-wise-select"
+										class="ui input">
 											<option value=""></option>
-											<option th:value="${indx.index} + 1" th:each="option, indx : ${wards}" th:text="${option}"></option>
-										</select>
+											<option th:value="${indx.index} + 1"
+												th:each="option, indx : ${wards}" th:text="${option}"></option>
+									</select>
 									</label>
 								</div>
-								
-								<div class="ui" sec:authorize="hasAnyRole('WARD_ADMIN') && !hasAnyRole('CENTRAL_ADMIN', 'SURYEVOR')">
-									<label >Ward&nbsp;
-										<select id="ward-wise-select" class="ui input">
+
+								<div class="ui"
+									sec:authorize="hasAnyRole('WARD_ADMIN') && !hasAnyRole('CENTRAL_ADMIN', 'SURYEVOR')">
+									<label>Ward&nbsp; <select id="ward-wise-select"
+										class="ui input">
 											<!-- <option value=""></option> -->
-											<option th:value="${loggedInUserWard}" th:text="${loggedInUserWard}"></option>
-										</select>
+											<option th:value="${loggedInUserWard}"
+												th:text="${loggedInUserWard}"></option>
+									</select>
 									</label>
 								</div>
-								
-								<div class="ui" sec:authorize="hasAnyRole('SURVEYOR') && !hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN')" style="display: none;">
-									<label >Ward&nbsp;
-										<select id="ward-wise-select" class="ui input">
+
+								<div class="ui"
+									sec:authorize="hasAnyRole('SURVEYOR') && !hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN')"
+									style="display: none;">
+									<label>Ward&nbsp; <select id="ward-wise-select"
+										class="ui input">
 											<option value=""></option>
-											<option th:value="${indx.index} + 1" th:each="option, indx : ${wards}" th:text="${option}"></option>
-										</select>
+											<option th:value="${indx.index} + 1"
+												th:each="option, indx : ${wards}" th:text="${option}"></option>
+									</select>
 									</label>
 								</div>
-								
+
 							</div>
-							
+
 							<div class="col-md-3">
 								<div class="ui">
-									<label>
-										Sorted By:&nbsp;<span class="ui" id="sortedBySpan">
-											
-										</span>
+									<label> Sorted By:&nbsp;<span class="ui"
+										id="sortedBySpan"> </span>
 									</label>
 								</div>
 							</div>
-							
+
 							<div class="col-md-3">
 								<div class="ui pull-right">
-									<label>
-										Search:&nbsp;<span class="ui input">
-											<input type="text" id="search" placeholder="घरमुलीको नामबाट खोज्नुहोस" />
-										</span>
+									<label> Search:&nbsp;<span class="ui input"> <input
+											type="text" id="search"
+											placeholder="घरमुलीको नामबाट खोज्नुहोस" />
+									</span>
 									</label>
 								</div>
 							</div>
 						</div>
-						
-						
-						<div class="row">												
-							
+
+
+						<div class="row">
+
 							<div class="col-md-3">
 								<div class="ui">
-									<label>
-										Total House Count:&nbsp;<span class="ui" id="totalHouseCount">
-											
-										</span>
+									<label> Total House Count:&nbsp;<span class="ui"
+										id="totalHouseCount"> </span>
 									</label>
 								</div>
 							</div>
-							
-					
+
+
 						</div>
-						
+
 						<div class="table-responsive household-list padding-panel">
-							<table th:if="${residentList.size() > 0}" class="table table-striped table-hover" id="grid">
+							<table th:if="${residentList.size() > 0}"
+								class="table table-striped table-hover" id="grid">
 								<thead>
 									<tr>
 										<th id="IdNumberColumn"><strong>ऋ.स</strong></th>
-										<th th:onclick="'sortByFunction(\'ownerName\');'"><strong>घरमुलीको नाम</strong></th>
-										<th th:onclick="'sortByFunction(\'houseNumber\');'"><strong>घर नं</strong></th>
+										<th th:onclick="'sortByFunction(\'ownerName\');'"><strong>घरमुलीको
+												नाम</strong></th>
+										<th th:onclick="'sortByFunction(\'houseNumber\');'"><strong>घर
+												नं</strong></th>
 										<th th:onclick="'sortByFunction(\'tole\');'"><strong>टोल</strong></th>
-										<th th:onclick="'sortByFunction(\'phoneNumber\');'"><strong>फोन नं </strong></th>
-										<th th:onclick="'sortByFunction(\'kittaNumber\');'"><strong>कित्ता नं</strong></th>
+										<th th:onclick="'sortByFunction(\'phoneNumber\');'"><strong>फोन
+												नं </strong></th>
+										<th th:onclick="'sortByFunction(\'kittaNumber\');'"><strong>कित्ता
+												नं</strong></th>
 										<th><strong>फोटो</strong></th>
-										<th th:onclick="'sortByFunction(\'familySize\');'"><strong>सदस्य संख्या</strong></th>
+										<th th:onclick="'sortByFunction(\'familySize\');'"><strong>सदस्य
+												संख्या</strong></th>
 										<th><strong>कार्यहरू</strong></th>
 									</tr>
 								</thead>
-								
+
 								<tbody id="resident-body">
 									<tr class="" th:each="resident,iteration : ${residentList}">
 										<td th:text="${iteration.index + 1}"></td>
@@ -161,42 +170,55 @@
 										<td th:text="${resident.tole}"></td>
 										<td th:text="${resident.phoneNo}"></td>
 										<td th:text="${resident.kittaNo}"></td>
-										<td> <img th:src="${resident.imageUrl}" width="50px" height="50px"/></td>
+										<td><img th:src="${resident.imageUrl}" width="50px"
+											height="50px" /></td>
 										<td th:text="${resident.totalFamilyMembers}"></td>
-										<td>
-											<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" th:href="@{/survey-answer/household/edit/} + ${resident.filledId}" class="btn btn-xs btn-info">Edit</a>
-											<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-warning" th:attr="onclick=|deleteResident('${resident.filledId}')|">
-												Delete
-											</button>
-											<a href="#" th:href="@{/resident/} + ${resident.filledId} +'/member/'" class="btn btn-xs btn-danger">Add Member</a>
-											<a href="#" th:href="@{/resident/} + ${resident.filledId}" class="btn btn-xs btn-success">Show Details</a>
-										</td>
+										<td><a
+											sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')"
+											th:href="@{/survey-answer/household/edit/} + ${resident.filledId}"
+											class="btn btn-xs btn-info">Edit</a>
+											<button
+												sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')"
+												class="btn btn-xs btn-warning"
+												th:attr="onclick=|deleteResident('${resident.filledId}')|">
+												Delete</button> <a href="#"
+											th:href="@{/resident/} + ${resident.filledId} +'/member/'"
+											class="btn btn-xs btn-danger">Add Member</a> <a href="#"
+											th:href="@{/resident/} + ${resident.filledId}"
+											class="btn btn-xs btn-success">Show Details</a></td>
 									</tr>
 								</tbody>
-								
+
 							</table>
-							<table th:if="${residentList == null || #lists.isEmpty(residentList)}">
+							<table
+								th:if="${residentList == null || #lists.isEmpty(residentList)}">
 								<thead>
 									<tr>
-										<td><h2>माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण भेटीएन|</h2></td>
+										<td><h2>माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण
+												भेटीएन|</h2></td>
 									</tr>
 								</thead>
 							</table>
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="ui stackable pagination menu pull-right">
-				<div class="paginate_button item previous disabled" id="grid_previous" href="#" aria-controls="grid" data-dt-idx="0" tabindex="0">Previous</div>
-				<a class="paginate_button item active" aria-controls="grid" data-dt-idx="1" tabindex="0" id="pageNumberPagination">1</a>
-				<!-- <a class="paginate_button item active" href="#" aria-controls="grid" data-dt-idx="1" tabindex="0">1</a>
+					<div class="paginate_button item previous disabled"
+						id="grid_previous" href="#" aria-controls="grid" data-dt-idx="0"
+						tabindex="0">Previous</div>
+					<a class="paginate_button item active" aria-controls="grid"
+						data-dt-idx="1" tabindex="0" id="pageNumberPagination">1</a>
+					<!-- <a class="paginate_button item active" href="#" aria-controls="grid" data-dt-idx="1" tabindex="0">1</a>
 				<a class="paginate_button item " href="#" aria-controls="grid" data-dt-idx="2" tabindex="0">2</a>
 				<a class="paginate_button item " href="#" aria-controls="grid" data-dt-idx="3" tabindex="0">3</a>
 				<a class="paginate_button item " href="#" aria-controls="grid" data-dt-idx="4" tabindex="0">4</a>
 				<a class="paginate_button item " href="#" aria-controls="grid" data-dt-idx="5" tabindex="0">5</a>
 				<div class="paginate_button item disabled" id="grid_ellipsis" href="#" aria-controls="grid" data-dt-idx="6" tabindex="0">…</div>
 				<a class="paginate_button item " href="#" aria-controls="grid" data-dt-idx="7" tabindex="0">90</a> -->
-				<a class="paginate_button item next" id="grid_next" href="#" aria-controls="grid" data-dt-idx="8" tabindex="0">Next</a></div>
+					<a class="paginate_button item next" id="grid_next" href="#"
+						aria-controls="grid" data-dt-idx="8" tabindex="0">Next</a>
+				</div>
 
 			</div>
 		</div>
@@ -205,8 +227,7 @@
 		<!--Start footer-->
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
 	</div>
-	<div th:replace="~{fragments/scripts :: scripts}">
-	</div>
+	<div th:replace="~{fragments/scripts :: scripts}"></div>
 	<script th:inline="javascript">
 	
 	/*<![CDATA[*/
