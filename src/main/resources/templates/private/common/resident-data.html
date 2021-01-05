@@ -340,6 +340,7 @@
 							contentType: "application/json"
 						}).done(function(data) {
 							let tablesData = "";
+							count = 0;
 							if(data.length > 0) {
 								data.forEach(item => {
 									count += 1;
