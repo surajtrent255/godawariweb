@@ -1219,6 +1219,47 @@
 					</div>
 				</div>
 				
+				<!-- dkkdfdf -->
+				
+				
+				<div th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}" class="row">
+					<div class="col-12 col-lg-2" th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
+						<div class="card bg-primary">
+							<div class="card-body">
+								<p class="text-white">संघ/संस्था</p>
+								<h4 class="mb-0 text-white">
+									<span th:text="${favPlaceReport.get(6).data}">3998</span>
+								</h4>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12 col-lg-2" th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
+						<div class="card gradient-ibiza">
+							<div class="card-body">
+								<p class="text-white">गुँठी</p>
+								<h4 class="mb-0 text-white">
+								<span th:text="${favPlaceReport.get(7).data}">3998</span>
+								</h4>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12 col-lg-2" th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
+						<div class="card gradient-deepblue">
+							<div class="card-body">
+								<p class="text-white">अन्य</p>
+								<h4 class="mb-0 text-white">
+									<span th:text="${favPlaceReport.get(8).data}">3998</span>
+								</h4>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				
+				<!-- --dkfdjkfjdd -->
+				
 				<!--Added for Remarkable places Dashboard ends-->
 				
 				<!--Section for GIS map display -->
