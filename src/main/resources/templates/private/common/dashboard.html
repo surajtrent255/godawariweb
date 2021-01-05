@@ -1148,9 +1148,10 @@
 				
 				<!--Added for Remarkable Places Dashboard-->
 				<h4>महत्वपुर्ण स्थलहरुः </h4>
+<!-- 				First Row -->
 				<div th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}" class="row">
 					<div class="col-12 col-lg-2" th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card bg-warning">
+						<div class="card gradient-bloody">
 							<div class="card-body">
 								<p class="text-white">मन्दिर</p>
 								<h4 class="mb-0 text-white">
@@ -1159,9 +1160,8 @@
 							</div>
 						</div>
 					</div>
-
 					<div class="col-12 col-lg-2" th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card bg-success">
+						<div class="card gradient-scooter">
 							<div class="card-body">
 								<p class="text-white">पार्क</p>
 								<h4 class="mb-0 text-white">
@@ -1170,9 +1170,8 @@
 							</div>
 						</div>
 					</div>
-
 					<div class="col-12 col-lg-2" th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card gradient-orange">
+						<div class="card gradient-blooker">
 							<div class="card-body">
 								<p class="text-white">पोखरी</p>
 								<h4 class="mb-0 text-white">
@@ -1182,9 +1181,8 @@
 
 						</div>
 					</div>
-					
 					<div class="col-12 col-lg-2" th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card bg-primary">
+						<div class="card gradient-quepal">
 							<div class="card-body">
 								<p class="text-white">इनार/पँधेरी</p>
 								<h4 class="mb-0 text-white">
@@ -1196,7 +1194,7 @@
 					</div>
 					
 					<div class="col-12 col-lg-2" th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card gradient-violet">
+						<div class="card gradient-purpink">
 							<div class="card-body">
 								<p class="text-white">स्तुपा/मूर्ति</p>
 								<h4 class="mb-0 text-white">
@@ -1207,7 +1205,7 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg-2" th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card bg-success">
+						<div class="card gradient-ibiza">
 							<div class="card-body">
 								<p class="text-white">विद्यालय</p>
 								<h4 class="mb-0 text-white">
@@ -1219,12 +1217,10 @@
 					</div>
 				</div>
 				
-				<!-- dkkdfdf -->
-				
-				
+<!-- 				Second Row -->
 				<div th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}" class="row">
 					<div class="col-12 col-lg-2" th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card bg-primary">
+						<div class="card gradient-branding">
 							<div class="card-body">
 								<p class="text-white">संघ/संस्था</p>
 								<h4 class="mb-0 text-white">
@@ -1235,7 +1231,7 @@
 					</div>
 
 					<div class="col-12 col-lg-2" th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card gradient-ibiza">
+						<div class="card gradient-meridian">
 							<div class="card-body">
 								<p class="text-white">गुँठी</p>
 								<h4 class="mb-0 text-white">
@@ -1246,7 +1242,7 @@
 					</div>
 
 					<div class="col-12 col-lg-2" th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card gradient-deepblue">
+						<div class="card gradient-dusk">
 							<div class="card-body">
 								<p class="text-white">अन्य</p>
 								<h4 class="mb-0 text-white">
@@ -1257,9 +1253,6 @@
 						</div>
 					</div>
 				</div>
-				
-				<!-- --dkfdjkfjdd -->
-				
 				<!--Added for Remarkable places Dashboard ends-->
 				
 				<!--Section for GIS map display -->

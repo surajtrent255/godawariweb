@@ -22,6 +22,7 @@ import com.ishanitech.ipalikawebapp.service.MemberService;
 import com.ishanitech.ipalikawebapp.service.ResidentService;
 import com.ishanitech.ipalikawebapp.service.WardService;
 
+
 @Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SURVEYOR"})
 @RequestMapping("/member")
 @Controller
