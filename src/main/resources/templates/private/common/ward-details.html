@@ -107,7 +107,9 @@
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
-									<label for="mainPerson">Main Person: &nbsp;</label><span th:text="${wardInfo.mainPerson}"></span> 
+									<label for="mainPerson">Ward Members: &nbsp;</label>
+									<div th:each="item : ${wardInfo.mainPerson.split(',')}">
+									<span th:text="${item}"></span><br></div> 
 								</div>
 							</div>
 							<div class="form-group row">

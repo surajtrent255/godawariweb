@@ -67,6 +67,16 @@
 	font-size: 15px;
 	font-family: Helvetica;
 }
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.42;
+  border-radius: 15px;
+}
 </style>
 </head>
 <body>
@@ -116,16 +126,20 @@
 							<div class="form-group row">
 								<div class="col-md-4">
 									<label for="wardDescription">Ward Description</label>
-									<textarea name="wardDescription" id="wardDescription"  rows="20"
+									<textarea name="wardDescription" id="wardDescription"  rows="10"
 										class="form-control required">
 									</textarea>
 									<span class="error_form" id="wardDescription_error_message"></span>
 								</div>
 							</div>
 							<div class="form-group row">
-								<div class="col-md-4">
-									<label for="mainPerson">Main Person</label> 
-										<input type="text" id="mainPerson" name="mainPerson" class="form-control required" />
+								<div class="col-md-4" id="wardmembers">
+									<label for="mainPerson1">Ward Members</label> 
+										<div class="" style="display: flex; ">
+										<input type="text" id="mainPerson1" name="mainPerson1" data-val="1" class="form-control required col-md-12" />
+										<button class="btn-circle" style="margin-left:10px" id="addWardMembBtn"> + </button>
+										<button class="btn-circle" style="margin-left:10px" id="removeWardMembBtn"> - </button>
+										</div>
 									<span class="error_form" id="mainPerson_error_message"></span>										
 								</div>
 							</div>
@@ -136,6 +150,15 @@
 									<span class="error_form" id="contactNumber_error_message"></span>										
 								</div>
 							</div>
+							
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="buildingPhoto">Ward Building Photo</label> 
+										<input type="file" id="buildingPhoto" name="buildingPhoto" class="form-control required" />
+									<span class="error_form" id="buildingPhoto_error_message"></span>										
+								</div>
+							</div>
+							
 							<div class="form-group">
 								<button id="add-ward-btn" class="btn btn-primary px-5">
 									<i class="icon-lock"></i>  Add Ward
@@ -155,6 +178,11 @@
 	<!-- 	<!--Start footer-->
 	<script th:src="@{/assets/js/leaflet.js}"></script>
 	<script th:inline="javascript">
+	
+	let memberInputElements = [];
+	memberInputElements.push($("#mainPerson1")[0]);
+	console.log('Member Input Elements--->' , memberInputElements)
+	
 		$(function () {
 		    var token = $("meta[name='_csrf']").attr("content");
 		    var header = $("meta[name='_csrf_header']").attr("content");
@@ -217,7 +245,7 @@
 				check_wardDescription();
 			});
 			
-			$("#mainPerson").focusout(function(){
+			$("#mainPerson1").focusout(function(){
 				check_mainPerson();
 			});
 			
@@ -279,14 +307,14 @@
 			} 
 			
 			function check_mainPerson() {
-				let mainPerson = $("#mainPerson").val();
+				let mainPerson = $("#mainPerson1").val();
 				if(mainPerson !== '') {
 					$("#mainPerson_error_message").hide();
-					$("#mainPerson").css("border-bottom", "2px solid #34F458");
+					$("#mainPerson1").css("border-bottom", "2px solid #34F458");
 				} else {
 					$("#mainPerson_error_message").html("Could you provide name of main person?");
 					$("#mainPerson_error_message").show();
-					$("#mainPerson").css("border-bottom", "2px solid #F90A0A");
+					$("#mainPerson1").css("border-bottom", "2px solid #F90A0A");
 					error_mainPerson = true;
 				}
 			} 
@@ -333,15 +361,32 @@
 					let wardName = $("#wardName").val();
 					let wardLocation = $("#wardLocation").val();
 					let wardDescription = $("#wardDescription").val();
-					let mainPerson = $("#mainPerson").val();
+					let mainPerson = $("#mainPerson1").val();
 					let contactNumber = $("#contactNumber").val();
+					
+					let finalPersonList = '';
+					memberInputElements.forEach((elem, index)=>{
+						console.log(elem);
+						let dynVarName = `#mainPerson${index + 1}`;
+						console.log('Dyn Var Name--->', dynVarName)
+						const strngz = $(dynVarName).val();
+						console.log('Strngz' , strngz);
+						
+						if(strngz != '')
+						finalPersonList = finalPersonList + strngz + ',';
+						
+					})
+					
+					console.log("finalPersonList", finalPersonList)
+					
+					
 					
 					let wardInfo = {};
 					wardInfo.wardNumber = wardNumber;
 					wardInfo.wardName = wardName;
 					wardInfo.wardLocation = wardLocation;
 					wardInfo.wardDescription = wardDescription;
-					wardInfo.mainPerson = mainPerson;
+					wardInfo.mainPerson = finalPersonList;
 					wardInfo.contactNumber = contactNumber;
 					
 					// Now create an ajax request to send member details to the server
@@ -373,6 +418,43 @@
 			}) 
 		});
 	});
+		
+	$("#addWardMembBtn").click(function(event) {
+		event.preventDefault();
+		console.log("AddMembbbBB")
+		//chefck
+		const lastInp = $("#wardmembers").find("input:last");
+		console.log('last Input-->', lastInp);
+		//chfck ends
+		const lastInpInd = $("#wardmembers").find("input:last").data("val");
+		const html = `<input type="text" id="mainPerson${+lastInpInd + 1}" data-val="${+lastInpInd + 1}" name="mainPerson${+lastInpInd + 1}" class="form-control required""/>`;
+		$("#wardmembers").append(html);
+		
+		const idx = `#mainPerson${+lastInpInd + 1}`;
+		memberInputElements.push($(idx)[0]);
+		console.log('Member Input Elements--->' , memberInputElements)
+		
+	})
+	
+	$("#removeWardMembBtn").click(function(event) {
+		event.preventDefault();
+		console.log("RemoveMembbbBB")
+		
+		const lastInp = $("#wardmembers").find("input:last");
+		console.log('last Input-->', lastInp);
+		
+		const valz = lastInp.data("val");
+	
+		console.log("valz-->", valz);
+		const idz = `#mainPerson${valz}`;
+		if(valz > 1)
+		$(idz).remove();
+		//$("#wardmembers").remove(lastInp);
+		
+		memberInputElements.pop();
+		console.log('Member Input Elements--->' , memberInputElements)
+		
+	})
 	</script>
 </body>
 </html>
