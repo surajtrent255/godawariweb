@@ -422,6 +422,8 @@
 				options);
 		var uniElement = $(".unicode input[type='text'], #grid_filter input");
 		control.makeTransliteratable(uniElement);
+		var myElements = $("input[type='text']");
+		control.makeTransliteratable(myElements);
 	});
 
 	$(function() {
