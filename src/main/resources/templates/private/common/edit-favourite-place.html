@@ -138,7 +138,10 @@
 									<form th:id="favPlaceImg" th:name="favPlaceImg" enctype="multipart/form-data" useToken="true">
 
 									<input type="file" class="form-control" id="placeImage" name="placeImage" value="" data-event="change"
-										data-target="placeImgDisplay" accept="image/*" /> 
+										data-target="placeImgDisplay" accept="image/*" />
+										<a href="" style="display: block" target="_blank" class="no-pjax"> 
+										<img src="" style="display: block; height: 150px; width: 300px" th:class="placeImgDisplay" class="img-thumbnail photo" th:onerror="'this.src=\'' + @{/assets/images/no-image.png} + '\';'">
+									</a> 
 									</form>	
 <!-- 										<a href="" -->
 <!-- 										style="display: none" target="_blank" class="no-pjax"> <img -->
@@ -157,9 +160,7 @@
 <!-- 										data-target="favPhoto" accept="image/*" />  -->
 
 
-									<a href="" style="display: block" target="_blank" class="no-pjax"> 
-										<img src="" style="display: block" th:class="placeImgDisplay" class="img-thumbnail photo" th:onerror="'this.src=\'' + @{/assets/images/no-image.png} + '\';'">
-									</a>
+									
 <!-- 									<span class="error_form" id="placeImage_error_message"></span> -->
 								</div>
 							</div>

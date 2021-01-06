@@ -12,4 +12,6 @@ public class WardDTO {
 	private String wardDescription;
 	private String mainPerson;
 	private String contactNumber;
+	
+	private String buildingImage;
 }

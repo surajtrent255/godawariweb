@@ -7,11 +7,16 @@ package com.ishanitech.ipalikawebapp.serviceImpl;
 import java.util.List;
 
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ishanitech.ipalikawebapp.configs.properties.RestApiProperties;
 import com.ishanitech.ipalikawebapp.dto.Response;
@@ -85,6 +90,18 @@ public class WardServiceImpl implements WardService {
 		ParameterizedTypeReference<String> responseType = new ParameterizedTypeReference<String>() {
 		};
 		restTemplate.exchange(requestEntity, responseType);
+	}
+
+	@Override
+	public void addWardBuildingImage(MultipartFile file, String imageName, String token) {
+		String template = String.format("%s/image", BASE_WARD_ADDRESS);
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+		map.add("picture", file.getResource());
+		HttpHeaders headers = HttpUtils.createHeader(MediaType.MULTIPART_FORM_DATA, token);
+	    HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(map, headers);
+		restTemplate.postForLocation(url, requestEntity);
+		
 	}
 	
 	

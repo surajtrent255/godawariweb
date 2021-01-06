@@ -6,6 +6,8 @@ package com.ishanitech.ipalikawebapp.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.WardDTO;
 
@@ -21,4 +23,6 @@ public interface WardService {
 	void deleteWard(int wardNo, String token);
 
 	void editWard(WardDTO wardInfo, int wardNo, String token);
+
+	void addWardBuildingImage(MultipartFile multipartFile, String imageName, String token);
 }

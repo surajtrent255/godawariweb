@@ -101,8 +101,8 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="card-title">Edit the information about the ward.</div>
-						<form name="wardEditForm" id="wardEditForm" method="POST"
-							th:action="@{/ward}"	enctype="multipart/form-data" class="unicode">
+						<!-- <form name="wardEditForm" id="wardEditForm" method="POST"
+							th:action="@{/ward}"	enctype="multipart/form-data" class="unicode"> -->
 							<div class="form-group row">
 								<div class="col-md-4" sec:authorize="hasAnyRole('CENTRAL_ADMIN')">
 									<label for="wardNumber">Ward Number</label> <input type="text"
@@ -160,12 +160,28 @@
 									<span class="error_form" id="contactNumber_error_message"></span>										
 								</div>
 							</div>
+							
+							
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label for="buildingImg">Ward Building Photo</label>
+									<form th:id="wardBuildingImg" th:name="wardBuildingImg" enctype="multipart/form-data" useToken="true"> 
+										<input type="file" id="buildingImg" name="buildingImg" class="form-control" value="" data-event="change"
+										data-target="placeImgDisplay" accept="image/*" />
+										 <a href=""
+										style="display: block" target="_blank" class="no-pjax"> <img
+										src="" style="display: block; height: 150px; width: 300px" th:class="placeImgDisplay" class="img-thumbnail photo" th:onerror="'this.src=\'' + @{/assets/images/no-image.png} + '\';'" th:src="${wardInfo.buildingImage}"></a>
+										</form>
+									<span class="error_form" id="buildingPhoto_error_message"></span>										
+								</div>
+							</div>
+							
 							<div class="form-group">
 								<button id="update-ward-btn" class="btn btn-primary px-5">
 									<i class="icon-lock"></i>  Update Ward
 								</button>
 							</div>
-						</form>
+						<!-- </form> -->
 					</div>
 				</div>
 			</div>
@@ -203,6 +219,49 @@
 		        xhr.setRequestHeader(header, token);
 		    });
 		});	
+	
+	//For displaying the selected image for uploading
+	$(function() {
+		var _t, _n, _d, _v;
+		$("input[data-event='change']").on("change", function() {
+			_t = this;
+			_c = $(this).data("target");
+			if (_t.files && _t.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$('img.' + _c).attr('src', e.target.result).show();
+					$('img.' + _c).parent().show();
+				}
+				reader.readAsDataURL(_t.files[0]);
+			}
+		});
+		
+		$("#documents_copy").on("change", function() {
+			_v = $(this).val();
+			$(".documents_hide").hide();
+			$("div." + _v).show();
+
+		});
+		
+		$("[data-event='toggle']").on("change", function() {
+			_t = $(this);
+			_n = $(this).attr("name");
+			_d = $("[name='" + _n + "']").serializeArray();
+			_c = _t.data("target");
+			if (_d.length > 0 && _t.is(':checked')) {
+				$.each(_d, function(i, fd) {
+					if (fd.value == _t.data("value")) {
+						$("." + _c).show();
+					}
+				});
+			} else {
+				$("." + _c).hide();
+			}
+		});
+		
+	});
+	
+	//For displaying the selected image for uploading ends
 	
 	
 		$(window).on("load", function(e) {
@@ -357,6 +416,8 @@
 		$(function() {
 			$("#update-ward-btn").click(function(event) {
 				
+				var timestamp = new Date().getTime() + Math.floor(Math.random()*(999-100+1)+100);
+				
 			event.preventDefault();
 				
 			error_wardNumber = false;
@@ -407,6 +468,27 @@
 					wardInfo.wardDescription = wardDescription;
 					wardInfo.mainPerson = finalPersonList;
 					wardInfo.contactNumber = contactNumber;
+					wardInfo.buildingImage = wardInfoInitial.buildingImage.substring(wardInfoInitial.buildingImage.indexOf("JPEG"));
+					
+					let file = $("#buildingImg")[0].files[0];
+					let formData;
+					if(file != null){
+					let fileName = file.name;
+					let fileSize = file.size;
+					let fileExtension = fileName.split('.').pop();
+					
+					let buildingImageName = "JPEG_ward_" + timestamp + "." + fileExtension; 
+					
+					wardInfo.buildingImage = buildingImageName;
+					
+					let form = document.getElementById("wardBuildingImg");
+				
+					formData = new FormData(form);
+					
+					formData.append("imgIndex", "buildingImg");
+					formData.append("fileName", buildingImageName);
+					formData.append("filledId", timestamp);
+					}
 					
 					// Now create an ajax request to send member details to the server
 					$.ajax({
@@ -428,6 +510,29 @@
 						error : function(error) {
 						}
 					});
+					
+					
+					if(file != null){
+						$.ajax({
+							method: "POST",
+							url : contextPath + "/ward/image",
+							data: formData,
+							async: false,
+							contentType: false,
+							processData: false,
+							success: function(result) {
+								swal.fire(
+									{
+										text : "The ward has been added",
+										icon : "success",
+										closeOnClickOutside : false,
+										closeOnEsc : false
+								}).then(function() {
+									window.location.href =  contextPath + '/ward/';
+								});
+							}
+							
+						});}
 				} else {
 					swal.fire({
 		            	icon: "info",
