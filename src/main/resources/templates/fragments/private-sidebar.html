@@ -36,7 +36,7 @@
 			</div>
 			<ul class="sidebar-menu do-nicescrol">
 				<li class="sidebar-header">MAIN NAVIGATION</li>
-				<li>
+				<li sec:authorize="hasAnyRole('SUPER_ADMIN', 'CENTRAL_ADMIN', 'WARD_ADMIN')">
 					<a th:href="@{/report}" class="waves-effect"> <i
 							class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
 					</a>
