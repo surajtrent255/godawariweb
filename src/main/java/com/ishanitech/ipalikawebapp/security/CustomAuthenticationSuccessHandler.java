@@ -63,7 +63,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 				break;
 			} else {
 				isSurveyor = true;
-				break;
+				return "/resident";
 			}
 		}
 //		if (isSuperAdmin) {
