@@ -40,9 +40,12 @@
 <body>
 	<div id="wrapper">
 		<!-- Side bar and header -->
-		<div sec:authorize="isAuthenticated()" th:replace="~{fragments/private-sidebar :: private-sidebar}"></div>
-		<div sec:authorize="!isAuthenticated()" th:replace="~{fragments/public-sidebar :: public-sidebar}"></div>
-		<header th:replace="~{fragments/header :: header}" class="header1"> </header>
+		<div sec:authorize="isAuthenticated()"
+			th:replace="~{fragments/private-sidebar :: private-sidebar}"></div>
+		<div sec:authorize="!isAuthenticated()"
+			th:replace="~{fragments/public-sidebar :: public-sidebar}"></div>
+		<header th:replace="~{fragments/header :: header}" class="header1">
+		</header>
 		<div class="clearfix"></div>
 		<div class="content-wrapper">
 			<div class="container-fluid" id="pjax-container">
@@ -58,120 +61,128 @@
 				</div>
 
 				<div class="row">
-<!-- 					<div class="row"> -->
-							<div class="col-md-2">
-								<div class="ui">
-									<label >Show&nbsp;
-										<select id="page-limit-select" class="ui input">
-											<option value="10">10</option>
-											<option value="25">25</option>
-											<option value="50">50</option>
-											<option value="100">100</option>
-											<!-- 10 25 50 100 -->
-										</select>&nbsp;
-										 entries
-									</label>
-								</div>
-							</div>
-							
-							<div class="col-md-2">
-								<div class="ui">
-									<label >Ward&nbsp;
-										<select id="ward-wise-select" class="ui input">
-											<option value=""></option>
-											<option th:value="${indx.index} + 1" th:each="option, indx : ${wards}" th:text="${option}"></option>
-										</select>
-									</label>
-								</div>
-							</div>
-							
-							
-							<div class="col-md-2">
-								<div class="ui">
-									<label >Place Type&nbsp;
-										<select id="placeType-wise-select" class="ui input">
-											<option value=""></option>
-											<option th:value="${indx.index} + 1" th:each="option, indx : ${placeTypes}" th:text="${option}"></option>
-										</select>
-									</label>
-								</div>
-							</div>
-							
-							
-							<div class="col-md-2">
-								<div class="ui">
-									<label>
-										Sorted By:&nbsp;<span class="ui" id="sortedBySpan">
-										</span>
-									</label>
-								</div>
-							</div>
-
-							
-							<div class="col-md-2">
-								<div class="ui pull-right">
-									<label>
-										Search:&nbsp;<span class="ui input">
-											<input type="text" id="search" placeholder="स्थलको नामबाट खोज्नुहोस" />
-										</span>
-									</label>
-								</div>
-							</div>
-						</div>
-					<div class="col-lg-12 col-md-12">
-						<div class="table-responsive favourite-place-list padding-panel">
-							<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#" th:href="@{/favourite-place/add}"
-								class="btn btn-xs btn-danger">Add Favorite Place</a>
-							<table th:if="${favouritePlaceList.size() > 0}"
-								class="table table-striped table-hover" id="grid">
-								<thead>
-									<tr>
-										<th id="IdNumberColumn"><strong>No.</strong></th>
-										<th th:onclick="'sortByFunction(\'placeName\');'"><strong>Name of the Place</strong></th>
-										<th th:onclick="'sortByFunction(\'placeWard\');'"><strong>Ward Number</strong></th>
-										<th><strong>Actions</strong></th>
-									</tr>
-								</thead>
-
-								<tbody id="favourite-place-body">
-									<tr class=""
-										th:each="favPlace,iteration : ${favouritePlaceList}">
-										<td th:text="${iteration.index + 1}"></td>
-										<td th:text="${favPlace.placeName}"></td>
-										<td th:text="${favPlace.placeWard}"></td>
-										<td>
-											
-											<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#"
-											th:href="@{/favourite-place/edit/} + ${favPlace.filledId}"
-											class="btn btn-xs btn-warning">Edit Details</a>
-											
-											<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteFavouritePlace('${favPlace.filledId}')|">
-												Delete
-											</button>
-											<a href="#"
-											th:href="@{/favourite-place/} + ${favPlace.filledId}"
-											class="btn btn-xs btn-success">Show Details</a>
-										</td>
-									</tr>
-								</tbody>
-
-							</table>
-							<table
-								th:if="${favouritePlaceList == null || #lists.isEmpty(favouritePlaceList)}">
-								<thead>
-									<tr>
-										<td><h2>माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण भेटीएन|</h2></td>
-									</tr>
-								</thead>
-							</table>
+					<!-- 					<div class="row"> -->
+					<div class="col-md-2">
+						<div class="ui">
+							<label>Show&nbsp; <select id="page-limit-select"
+								class="ui input">
+									<option value="10">10</option>
+									<option value="25">25</option>
+									<option value="50">50</option>
+									<option value="100">100</option>
+									<!-- 10 25 50 100 -->
+							</select>&nbsp; entries
+							</label>
 						</div>
 					</div>
-<!-- 				</div> -->
 
-						<div class="ui stackable pagination menu pull-right">
-				<div class="paginate_button item previous disabled" id="grid_previous" href="#" aria-controls="grid" data-dt-idx="0" tabindex="0">Previous</div>
-				<a class="paginate_button item active" aria-controls="grid" data-dt-idx="1" tabindex="0" id="pageNumberPagination">1</a>
-				<a class="paginate_button item next" id="grid_next" href="#" aria-controls="grid" data-dt-idx="8" tabindex="0">Next</a></div>
+					<div class="col-md-2">
+						<div class="ui">
+							<label>Ward&nbsp; <select id="ward-wise-select"
+								class="ui input">
+									<option value=""></option>
+									<option th:value="${indx.index} + 1"
+										th:each="option, indx : ${wards}" th:text="${option}"></option>
+							</select>
+							</label>
+						</div>
+					</div>
+
+
+					<div class="col-md-2">
+						<div class="ui">
+							<label>Place Type&nbsp; <select
+								id="placeType-wise-select" class="ui input">
+									<option value=""></option>
+									<option th:value="${indx.index} + 1"
+										th:each="option, indx : ${placeTypes}" th:text="${option}"></option>
+							</select>
+							</label>
+						</div>
+					</div>
+
+
+					<div class="col-md-2">
+						<!-- 								<div class="ui"> -->
+						<!-- 									<label> -->
+						<!-- 										Sorted By:&nbsp;<span class="ui" id="sortedBySpan"> -->
+						<!-- 										</span> -->
+						<!-- 									</label> -->
+						<!-- 								</div> -->
+					</div>
+
+
+					<div class="col-md-2">
+						<div class="ui pull-right">
+							<label> Search:&nbsp;<span class="ui input"> <input
+									type="text" id="search" placeholder="स्थलको नामबाट खोज्नुहोस" />
+							</span>
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-12 col-md-12">
+					<div class="table-responsive favourite-place-list padding-panel">
+<!-- 						<a -->
+<!-- 							sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" -->
+<!-- 							href="#" th:href="@{/favourite-place/add}" -->
+<!-- 							class="btn btn-xs btn-danger">Add Favorite Place</a> -->
+						<table th:if="${favouritePlaceList.size() > 0}"
+							class="table table-striped table-hover" id="grid">
+							<thead>
+								<tr>
+									<th id="IdNumberColumn"><strong>No.</strong></th>
+									<th><strong>Name of the Place</strong></th>
+									<th><strong>Ward Number</strong></th>
+									<th><strong>Actions</strong></th>
+								</tr>
+							</thead>
+
+							<tbody id="favourite-place-body">
+								<tr class=""
+									th:each="favPlace,iteration : ${favouritePlaceList}">
+									<td th:text="${iteration.index + 1}"></td>
+									<td th:text="${favPlace.placeName}"></td>
+									<td th:text="${favPlace.placeWard}"></td>
+									<td><a
+										sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')"
+										href="#"
+										th:href="@{/favourite-place/edit/} + ${favPlace.filledId}"
+										class="btn btn-xs btn-warning">Edit Details</a>
+
+										<button
+											sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')"
+											class="btn btn-xs btn-danger deletePlace"
+											th:attr="onclick=|deleteFavouritePlace('${favPlace.filledId}')|">
+											Delete</button> <a href="#"
+										th:href="@{/favourite-place/} + ${favPlace.filledId}"
+										class="btn btn-xs btn-success">Show Details</a></td>
+								</tr>
+							</tbody>
+
+						</table>
+						<table
+							th:if="${favouritePlaceList == null || #lists.isEmpty(favouritePlaceList)}">
+							<thead>
+								<tr>
+									<td><h2>माफ गर्नुहोला | प्रणालीमा कुनैपनि बिवरण
+											भेटीएन|</h2></td>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+				<!-- 				</div> -->
+
+				<div class="ui stackable pagination menu pull-right">
+					<div class="paginate_button item previous disabled"
+						id="grid_previous" href="#" aria-controls="grid" data-dt-idx="0"
+						tabindex="0">Previous</div>
+					<a class="paginate_button item active" aria-controls="grid"
+						data-dt-idx="1" tabindex="0" id="pageNumberPagination">1</a> <a
+						class="paginate_button item next" id="grid_next" href="#"
+						aria-controls="grid" data-dt-idx="8" tabindex="0">Next</a>
+				</div>
 
 			</div>
 		</div>
@@ -180,8 +191,7 @@
 		<!--Start footer-->
 		<footer th:replace="~{fragments/footer :: footer}"></footer>
 	</div>
-	<div th:replace="~{fragments/scripts :: scripts}">
-	</div>
+	<div th:replace="~{fragments/scripts :: scripts}"></div>
 	<script th:inline="javascript">
 		
 	/*<![CDATA[*/
@@ -264,7 +274,7 @@
 			console.log("sortBy--->" + sortBy);
 			console.log("sortByORDER--->" + sortByOrder);
 			
-			document.getElementById('sortedBySpan').innerHTML = sortBy;
+		//	document.getElementById('sortedBySpan').innerHTML = sortBy;
 			
 			$("#grid_previous").addClass("disabled");
 			currentPageNo = 0;
@@ -303,9 +313,9 @@
 												<td>${item.placeName}</td>
 												<td>${item.placeWard}</td>
 												<td>
-													<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#" th:href="@{/favourite-place/edit/} + ${item.filledId}" class="btn btn-xs btn-warning">Edit Details</a>
+													<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href=\"/favourite-place/edit/${item.filledId}\" class="btn btn-xs btn-warning">Edit Details</a>
 													<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteFavouritePlace('${item.filledId}')|">Delete </button>
-													<a href="#" th:href="@{/favourite-place/} + ${item.filledId}" class="btn btn-xs btn-success">Show Details</a>
+													<a href=\"/favourite-place/${item.filledId}\" class="btn btn-xs btn-success">Show Details</a>
 												</td> </tr>`;
 							});
 							$("#favourite-place-body").empty();
@@ -342,7 +352,7 @@
 			  //});
 		}
 
-		 document.getElementById('sortedBySpan').innerHTML = 'None';
+		// document.getElementById('sortedBySpan').innerHTML = 'None';
 		
 		 $("#IdNumberColumn").on("click", function(event){
 			 location.reload();
@@ -379,9 +389,9 @@
 													<td>${item.placeName}</td>
 													<td>${item.placeWard}</td>
 													<td>
-													<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#" th:href="@{/favourite-place/edit/} + ${item.filledId}" class="btn btn-xs btn-warning">Edit Details</a>
-													<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteFavouritePlace('${item.filledId}')|">Delete </button>
-													<a href="#" th:href="@{/favourite-place/} + ${item.filledId}" class="btn btn-xs btn-success">Show Details</a>
+														<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href=\"/favourite-place/edit/${item.filledId}\" class="btn btn-xs btn-warning">Edit Details</a>
+														<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteFavouritePlace('${item.filledId}')|">Delete </button>
+														<a href=\"/favourite-place/${item.filledId}\" class="btn btn-xs btn-success">Show Details</a>
 													</td> </tr>`;
 								});
 								$("#favourite-place-body").empty();
@@ -436,9 +446,9 @@
 												<td>${item.placeName}</td>
 												<td>${item.placeWard}</td>
 												<td>
-													<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#" th:href="@{/favourite-place/edit/} + ${item.filledId}" class="btn btn-xs btn-warning">Edit Details</a>
+													<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href=\"/favourite-place/edit/${item.filledId}\" class="btn btn-xs btn-warning">Edit Details</a>
 													<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteFavouritePlace('${item.filledId}')|">Delete </button>
-													<a href="#" th:href="@{/favourite-place/} + ${item.filledId}" class="btn btn-xs btn-success">Show Details</a>
+													<a href=\"/favourite-place/${item.filledId}\" class="btn btn-xs btn-success">Show Details</a>
 												</td> </tr>`;
 							});
 							$("#favourite-place-body").empty();
@@ -489,9 +499,9 @@
 											<td>${item.placeName}</td>
 											<td>${item.placeWard}</td>
 											<td>
-												<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#" th:href="@{/favourite-place/edit/} + ${item.filledId}" class="btn btn-xs btn-warning">Edit Details</a>
+												<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href=\"/favourite-place/edit/${item.filledId}\" class="btn btn-xs btn-warning">Edit Details</a>
 												<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteFavouritePlace('${item.filledId}')|">Delete </button>
-												<a href="#" th:href="@{/favourite-place/} + ${item.filledId}" class="btn btn-xs btn-success">Show Details</a>
+												<a href=\"/favourite-place/${item.filledId}\" class="btn btn-xs btn-success">Show Details</a>
 											</td> </tr>`;
 					});
 					$("#favourite-place-body").empty();
@@ -550,9 +560,9 @@
 											<td>${item.placeName}</td>
 											<td>${item.placeWard}</td>
 											<td>
-												<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#" th:href="@{/favourite-place/edit/} + ${item.filledId}" class="btn btn-xs btn-warning">Edit Details</a>
+												<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href=\"/favourite-place/edit/${item.filledId}\" class="btn btn-xs btn-warning">Edit Details</a>
 												<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteFavouritePlace('${item.filledId}')|">Delete </button>
-												<a href="#" th:href="@{/favourite-place/} + ${item.filledId}" class="btn btn-xs btn-success">Show Details</a>
+												<a href=\"/favourite-place/${item.filledId}\" class="btn btn-xs btn-success">Show Details</a>
 											</td> </tr>`;
 						});
 						$("#favourite-place-body").empty();
@@ -614,9 +624,9 @@
 												<td>${item.placeName}</td>
 												<td>${item.placeWard}</td>
 												<td>
-													<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#" th:href="@{/favourite-place/edit/} + ${item.filledId}" class="btn btn-xs btn-warning">Edit Details</a>
+													<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href=\"/favourite-place/edit/${item.filledId}\" class="btn btn-xs btn-warning">Edit Details</a>
 													<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteFavouritePlace('${item.filledId}')|">Delete </button>
-													<a href="#" th:href="@{/favourite-place/} + ${item.filledId}" class="btn btn-xs btn-success">Show Details</a>
+													<a href=\"/favourite-place/${item.filledId}\" class="btn btn-xs btn-success">Show Details</a>
 												</td> </tr>`;
 							});
 							$("#favourite-place-body").empty();
@@ -690,9 +700,9 @@
 												<td>${item.placeName}</td>
 												<td>${item.placeWard}</td>
 												<td>
-													<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href="#" th:href="@{/favourite-place/edit/} + ${item.filledId}" class="btn btn-xs btn-warning">Edit Details</a>
+													<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href=\"/favourite-place/edit/${item.filledId}\" class="btn btn-xs btn-warning">Edit Details</a>
 													<button sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" class="btn btn-xs btn-danger" th:attr="onclick=|deleteFavouritePlace('${item.filledId}')|">Delete </button>
-													<a href="#" th:href="@{/favourite-place/} + ${item.filledId}" class="btn btn-xs btn-success">Show Details</a>
+													<a href=\"/favourite-place/${item.filledId}\" class="btn btn-xs btn-success">Show Details</a>
 												</td> </tr>`;
 							});
 							$("#favourite-place-body").empty();
