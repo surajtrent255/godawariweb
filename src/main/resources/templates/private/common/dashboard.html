@@ -1207,7 +1207,7 @@
 				<!--End Row-->
 
 				<!--Added for Krishi Dashboard-->
-				<h4>कृषि तथा पशुपालन</h4>
+				<h4 th:if="${!#lists.isEmpty(extraReport) && extraReport != null}">कृषि तथा पशुपालन</h4>
 				<div th:if="${!#lists.isEmpty(extraReport) && extraReport != null}"
 					class="row"
 					th:with="totalHousehold=${#numbers.formatInteger(extraReport.get(1).data,1)}">
@@ -1297,7 +1297,7 @@
 
 
 				<!--Added for Remarkable Places Dashboard-->
-				<h4>महत्वपुर्ण स्थलहरुः</h4>
+				<h4 th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">महत्वपुर्ण स्थलहरुः</h4>
 				<!-- 				First Row -->
 				<div
 					th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}"
