@@ -98,6 +98,21 @@
 	height: 70em;
 	width: 95em;
 }
+
+.float{
+	position:fixed;
+	width:40px;
+	height:40px;
+	background-color:#0C9;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.my-float{
+	margin-top:14px;
+}
 </style>
 </head>
 <body>
@@ -109,6 +124,10 @@
 		<div class="clearfix"></div>
 		<div class="content-wrapper"
 			th:if="${residentFullDetail != null && residentFullDetail.residentDetail != null}">
+			<!-- <button id="goBackButton1" class="btn btn-primary">Go Back</button> -->
+			<a href="#" class="float" id="goBackButton">
+			<i class="fa fa-arrow-left my-float"></i>
+			</a> 
 			<div class="container-fluid" id="pjax-container">
 				<div class="row pt-2 pb-2">
 					<div class="col-sm-6">
@@ -724,6 +743,7 @@
 			});
 		});
 		
+		try{
 		
 		//Splitting the location coordinates into latitude and longitude
 		var geoFields = geoCoordinates.split(', ');
@@ -749,6 +769,10 @@
 		}).addTo(mymap);
 
 		marker = L.marker([ geoLat, geoLong ]).addTo(mymap).bindPopup("Record ID = " + residentFullDetail.residentDetail.filledId);
+		}
+		catch(ex){
+			console.log(ex);
+		}
 		
 		//For showing the Map modal	
 		$("#view-location-btn").on("click", function(event) {
@@ -897,6 +921,94 @@
 				}
 			});
 		}
+		
+		function onGoBackButtonClick(event){
+			//event.preventDefault();
+			//event.stopPropagation();
+			console.log("Yes Back!!")
+			
+			var urlObj = getParams(window.location.href);
+			
+			var url = '';
+			
+			
+			if(urlObj.parentHTML === 'res-data'){
+				 url = contextPath + "/resident?" ;
+				console.log("Need to go back to Resident data")
+					if(urlObj.prevLastItemId){
+						url += "prevLastItemId=" + urlObj.prevLastItemId + "&";
+					}
+				
+				if(urlObj.searchKey){
+					url += "searchKey=" + urlObj.searchKey + "&";
+				}
+				if(urlObj.wardNo){
+					url += "wardNo=" + urlObj.wardNo + "&";
+				}
+				
+				if(urlObj.sortBy){
+					url += "sortBy=" + urlObj.sortBy + "&";
+					url += "sortByOrder=" + urlObj.sortByOrder + "&";
+				}
+				if(urlObj.currentPage)
+				url += "currentPage=" + urlObj.currentPage + "&";
+				
+				if(urlObj.pageLimit)
+				url += "pageLimit=" + urlObj.pageLimit + "&";
+				
+				url += "backFrom=" + "res-details" + "&";
+				
+				
+				window.location.href = url;
+			}else if(urlObj.parentHTML === 'member-data'){
+				 url = contextPath + "/member?" ;
+				console.log("Need to go back to Member data")
+				
+				if(urlObj.prevLastItemId){
+					url += "prevLastItemId=" + urlObj.prevLastItemId + "&";
+				}
+			
+			if(urlObj.searchKey){
+				url += "searchKey=" + urlObj.searchKey + "&";
+			}
+			if(urlObj.wardNo){
+				url += "wardNo=" + urlObj.wardNo + "&";
+			}
+			
+			if(urlObj.sortBy){
+				url += "sortBy=" + urlObj.sortBy + "&";
+				url += "sortByOrder=" + urlObj.sortByOrder + "&";
+			}
+			if(urlObj.currentPage)
+			url += "currentPage=" + urlObj.currentPage + "&";
+			
+			if(urlObj.pageLimit)
+			url += "pageLimit=" + urlObj.pageLimit + "&";
+			
+			url += "backFrom=" + "res-details" + "&";
+			
+			
+			window.location.href = url;
+			}
+			
+		}
+		
+		$("#goBackButton").on("click", (event)=>onGoBackButtonClick(event));
+		$("#goBackButton1").on("click", (event)=>onGoBackButtonClick(event));
+		
+		
+		var getParams = function (url) {
+			var params = {};
+			var parser = document.createElement('a');
+			parser.href = url;
+			var query = parser.search.substring(1);
+			var vars = query.split('&');
+			for (var i = 0; i < vars.length; i++) {
+				var pair = vars[i].split('=');
+				params[pair[0]] = decodeURIComponent(pair[1]);
+			}
+			return params;
+		};
 	</script>
 </body>
 </html>
