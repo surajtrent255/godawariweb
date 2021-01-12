@@ -1,6 +1,7 @@
 package com.ishanitech.ipalikawebapp.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,11 +48,28 @@ public class ResidentController {
 	}
 	
 	@GetMapping
-	public String getResidentDataListView(Model model, @AuthenticationPrincipal UserDTO user) {
-		Response<List<ResidentDTO>> residentResponse = (Response<List<ResidentDTO>>) residentService
+	public String getResidentDataListView(Model model, @AuthenticationPrincipal UserDTO user, @RequestParam(name = "backFrom", required= false) String backFrom) {
+		Response<List<ResidentDTO>> residentResponse;
+		
+		if(backFrom == null) {
+		residentResponse = (Response<List<ResidentDTO>>) residentService
 				.getResidentDataList(user.getToken(), user.getRoles(), user.getWardNo());
-		log.info("WardNo--->" + user.getWardNo());
 		model.addAttribute("residentList", residentResponse.getData());
+		System.out.println("Initial Call to remote done");
+		}else {
+			List<ResidentDTO> rsdentz = new ArrayList<ResidentDTO>();
+			ResidentDTO rDTO = new ResidentDTO();
+			rDTO.setHouseOwner("Loading");
+			rDTO.setTole("Data");
+			rsdentz.add(rDTO);
+			model.addAttribute("residentList", rsdentz);
+			System.out.println("Initial Call to remote not done");
+		}
+		log.info("WardNo--->" + user.getWardNo());
+		if(backFrom != null) {
+		System.out.println("BackFrom--->"+ backFrom);
+		}
+		
 		model.addAttribute("wards", formService.getListOfWards(user.getToken()).getData());
 		model.addAttribute("loggedInUserWard", user.getWardNo());
 		return "private/common/resident-data";
