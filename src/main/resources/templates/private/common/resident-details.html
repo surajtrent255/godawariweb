@@ -125,13 +125,13 @@
 		<div class="content-wrapper"
 			th:if="${residentFullDetail != null && residentFullDetail.residentDetail != null}">
 			<!-- <button id="goBackButton1" class="btn btn-primary">Go Back</button> -->
-			<a href="#" class="float" id="goBackButton">
+			<a href="#" class="float" id="goBackButton" style="z-index: 99;">
 			<i class="fa fa-arrow-left my-float"></i>
 			</a> 
 			<div class="container-fluid" id="pjax-container">
 				<div class="row pt-2 pb-2">
 					<div class="col-sm-6">
-						<h4 class="page-title"
+						<h4 class="page-title" style="padding-left:2em;"
 							th:text="${residentFullDetail.residentDetail.answer1} + ' को पूर्ण विवरण'">Godawari
 							Nagarpalika Full Detail</h4>
 						<ol class="breadcrumb">
