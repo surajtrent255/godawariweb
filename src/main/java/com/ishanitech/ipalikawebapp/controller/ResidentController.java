@@ -71,6 +71,7 @@ public class ResidentController {
 //		}
 		
 		model.addAttribute("wards", formService.getListOfWards(user.getToken()).getData());
+		model.addAttribute("toles", formService.getListOfToles(user.getToken()).getData());
 		model.addAttribute("loggedInUserWard", user.getWardNo());
 		return "private/common/resident-data";
 	}
@@ -103,6 +104,14 @@ public class ResidentController {
 		log.info("WardNo---->" + wardNo);
 		log.info("PagedLimited---->" + request.getParameter("pageSize"));
 		return residentService.searchResidentByWard(request, wardNo, user.getToken());
+	}
+	
+	
+	@PostMapping("/tole")
+	public @ResponseBody List<ResidentDTO> getResidentsByTole(@RequestParam("wardNo") String wardNo,HttpServletRequest request, @AuthenticationPrincipal UserDTO user) {
+		log.info("WardNo---->" + wardNo);
+		log.info("PagedLimited---->" + request.getParameter("pageSize"));
+		return residentService.searchResidentByTole(request, wardNo, user.getToken());
 	}
 	
 	@PostMapping("/pageLimit")

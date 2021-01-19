@@ -25,4 +25,6 @@ public interface ResidentService {
 	List<ResidentDTO> getSortedResidents(HttpServletRequest request, String token);
 
 	String getTotalHouseCountByWard(String wardNo, String token);
+
+	List<ResidentDTO> searchResidentByTole(HttpServletRequest request, String wardNo, String token);
 }

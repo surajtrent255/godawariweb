@@ -136,6 +136,16 @@
 									</label>
 								</div>
 							</div>
+							
+							<div class="col-md-3" hidden id="tole-div">
+								<div class="ui" sec:authorize="hasAnyRole('CENTRAL_ADMIN')">
+									<label>Tole&nbsp; <select id="tole-wise-select"
+										class="ui input">
+											<option value="" id="firstOptionTole"></option>
+									</select>
+									</label>
+								</div>
+								</div>
 
 
 						</div>
@@ -233,6 +243,7 @@
 	
 	/*<![CDATA[*/
 	var residentList = /*[[${residentList}]]*/'';
+	var toleList = /*[[${toles}]]*/'';
 	/*]]>*/
 	
 	let prevLastItemId = 0;
@@ -325,6 +336,7 @@
 				currentPageNo = 0;
 				let searchKey = $("#search").val();
 				let wardNumber = $("#ward-wise-select").val();
+				let toleName = $("#tole-wise-select").val();
 				let pageLimit = $("#page-limit-select").val();
 				console.log("ward-->" + wardNumber);
 				let url = contextPath + "/resident/sortBy?";
@@ -333,6 +345,10 @@
 				}
 				if(wardNumber != ""){
 					url += "wardNo=" + wardNumber + "&";
+				}
+				
+				if(toleName != ""){
+					url += "toleName=" + toleName + "&";
 				}
 				//url += "lastSeenId=" + lastItemId + "&";
 				//url += "action=next"+ "&";
@@ -418,10 +434,11 @@
 				if(event.which == 13 && event.keyCode == 13) {
 					let searchKey = $(this).val();
 					let wardNumber = $("#ward-wise-select").val();
+					let toleName = $("#tole-wise-select").val();
 					let pageLimit = $("#page-limit-select").val();
 					console.log("ward-->" + wardNumber);
 					currentPageNo = 0;
-					let finalUrl = encodeURI(contextPath + "/resident/search" + "?searchKey=" + encodeURIComponent(searchKey) + "&wardNo=" + wardNumber + "&pageSize=" + pageLimit);
+					let finalUrl = encodeURI(contextPath + "/resident/search" + "?searchKey=" + encodeURIComponent(searchKey) + "&wardNo=" + wardNumber+ "&toleName=" + toleName + "&pageSize=" + pageLimit);
 					if(searchKey === "") {
 						swal.fire({
 							  text: 'कृपया नाम दिन नभुल्नुहोला!',
@@ -481,10 +498,38 @@
 			});
 		});
 		
+		
 		$("#ward-wise-select").on("change", function(event) {
 				$("#search").val("");
 				let wardNumber = $(this).val();
 				let wardNumberz = $("#ward-wise-select").val();
+				if(wardNumber !== ''){
+				console.log("ward selected--->",wardNumber);
+				$("#tole-div").removeAttr("hidden");
+				
+				//console.log("toles--->",toleList );
+				let optionToAppend = '<option value="" id="firstOptionTole"></option>';
+				toleList.forEach( tole => {
+					if(tole.wardNumber == wardNumber){
+					console.log("wardMatch--->",tole.toleName);
+					optionToAppend += `<option value="${tole.toleName}" text="${tole.toleName}">${tole.toleName}</option>`;
+					}
+				}
+				);
+				
+				console.log("OptionToBeAppended",optionToAppend);
+				//$("#firstOptionTole").after(optionToAppend);
+				//toleOptionsDiv
+				$("#tole-wise-select").html(optionToAppend);
+				//<option th:if="${option.wardNumber == |wardNumber|}" th:value="${option.toleName}"
+					//							th:each="option, indx : ${toles}" th:text="${option.toleName}"></option>
+				}else{
+				console.log("ward empty selected--->",wardNumber);
+				$("#tole-div").attr("hidden","");
+					$("#tole-wise-select").val("");
+					console.log("New selectedTole--->",$("#tole-wise-select").val());
+				
+				}
 				let pageLimit = $("#page-limit-select").val();
 				console.log("ward-->" + wardNumber);
 				currentPageNo = 0;
@@ -549,14 +594,92 @@
 							}
 						});
 	});
+	
+	
+	<!--//Tole-wise Start -->
+	
+		$("#tole-wise-select").on("change", function(event) {
+				$("#search").val("");
+				let wardNumber = $("#ward-wise-select").val();
+				let toleName = $(this).val();
+				let pageLimit = $("#page-limit-select").val();
+				console.log("ward-->" + wardNumber);
+				console.log("toleName-->" + toleName);
+				currentPageNo = 0;
+				let appurl = "";
+				if(sortBy != ""){
+					appurl += "&sortBy=" + sortBy + "&";
+					appurl += "sortByOrder=" + sortByOrder;
+				}
+				let finalUrl = encodeURI(contextPath + "/resident/tole" + "?wardNo=" + wardNumber + "&toleName=" + toleName + "&pageSize=" + pageLimit + appurl);
+						$.ajax({
+							url : finalUrl,
+							method: "POST",
+							contentType: "application/json"
+						}).done(function(data) {
+							let tablesData = "";
+							count = 0;
+							if(data.length > 0) {
+								data.forEach(item => {
+									count += 1;
+									tablesData += `<tr><td>${count}</td>
+													<td>${item.houseOwner}</td>
+													<td>${item.houseNo}</td>
+													<td>${item.tole}</td>
+													<td>${item.phoneNo}</td>
+													<td>${item.kittaNo}</td>
+													<td> <img src="${item.imageUrl}" width="50px" height="50px"/></td>
+													<td>${item.totalFamilyMembers}</td>
+													<td>
+														<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href=\"/survey-answer/household/edit/${item.filledId}\" class="btn btn-xs btn-info">Edit</a>
+														<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href=\"#\" onclick=\"deleteResident(\'${item.filledId}\')\" class="btn btn-xs btn-warning">Delete </a>
+														<a href=\"/resident/${item.filledId}/member\" class="btn btn-xs btn-danger">Add Member</a>
+														<a href=\"#\" onclick=\"gotoResDetailsPage(\'${item.filledId}\')\" class="btn btn-xs btn-success">Show Details</a>
+													</td> </tr>`;
+								});
+								$("#resident-body").empty();
+								$("#resident-body").append(tablesData);
+								prevLastItemId = lastItemId;
+								lastItemId = data[data.length-1].id;
+								console.log("LastItemIdUpdated--->"+ lastItemId);
+								firstItemId = data[0].id;
+								$("#grid_previous").addClass("disabled");
+								$("#grid_next").removeClass("disabled");
+								document.getElementById("pageNumberPagination").innerHTML = currentPageNo + 1;
+								
+								let houseCountUrl = encodeURI(contextPath + "resident/getTotalHouseCount/" + wardNumber);
+								 $.ajax({url: houseCountUrl, success: function(result){
+								 	console.log("HouseCountUrl---->" + houseCountUrl);
+								 	console.log("Resutl---->" + result);
+     								document.getElementById("totalHouseCount").innerHTML = result.data;
+  								}});
+								
+								
+								
+							}else{
+								swal.fire({
+									  text: 'Sorry | No Data for this ward!',
+									  icon: 'warning',
+									  confirmButtonText: 'OK'
+								});
+								$("#resident-body").empty();
+								document.getElementById("totalHouseCount").innerHTML = 0;
+							}
+						});
+	});
+	
+<!--	//Tole-wise End -->
+	
 		
 		$("#page-limit-select").on("change", function(event) {
 			//$("#search").val("");
 			let pageLimit = $(this).val();
 			let wardNumber = $("#ward-wise-select").val();
+			let toleName = $("#tole-wise-select").val();
 			let searchKey = $("#search").val();
 			//let pageLimit = $("#page-limit-select").val();
 			console.log("ward-->" + wardNumber);
+			console.log("toleName-->" + toleName);
 			currentPageNo = 0;
 			let appurl = "";
 			if(sortBy != ""){
@@ -564,7 +687,7 @@
 				appurl += "sortByOrder=" + sortByOrder;
 			}
 			
-			let finalUrl = encodeURI(contextPath + "/resident/pageLimit" + "?wardNo=" + wardNumber + "&pageSize=" + pageLimit + "&searchKey=" + searchKey + "&lastSeenId=" + firstItemId + appurl);
+			let finalUrl = encodeURI(contextPath + "/resident/pageLimit" + "?wardNo=" + wardNumber+ "&toleName=" + toleName + "&pageSize=" + pageLimit + "&searchKey=" + searchKey + "&lastSeenId=" + firstItemId + appurl);
 					$.ajax({
 						url : finalUrl,
 						method: "POST",
@@ -617,6 +740,7 @@
 				let searchKey = $("#search").val();
 				//let wardNumber = $(this).val();
 				let wardNumber = $("#ward-wise-select").val();
+				let toleName = $("#tole-wise-select").val();
 				let pageLimit = $("#page-limit-select").val();
 				console.log("ward-->" + wardNumber);
 				currentPageNo ++;
@@ -630,6 +754,11 @@
 				if(wardNumber != ""){
 					url += "wardNo=" + wardNumber + "&";
 				}
+				
+				if(toleName != ""){
+					url += "toleName=" + toleName + "&";
+				}
+				
 				url += "lastSeenId=" + lastItemId + "&";
 				url += "action=next"+ "&";
 				
@@ -697,6 +826,7 @@
 				let searchKey = $("#search").val();
 				//let wardNumber = $(this).val();
 				let wardNumber = $("#ward-wise-select").val();
+				let toleName = $("#tole-wise-select").val();
 				let pageLimit = $("#page-limit-select").val();
 				console.log("myPageLimit--->" + pageLimit);
 				console.log("ward-->" + wardNumber);
@@ -710,6 +840,9 @@
 				}
 				if(wardNumber != ""){
 					url += "wardNo=" + wardNumber + "&";
+				}
+				if(toleName != ""){
+					url += "toleName=" + toleName + "&";
 				}
 				url += "lastSeenId=" + firstItemId + "&";
 				url += "action=prev"+ "&";

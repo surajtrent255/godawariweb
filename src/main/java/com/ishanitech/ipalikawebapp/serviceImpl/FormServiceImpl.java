@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import com.ishanitech.ipalikawebapp.configs.properties.RestApiProperties;
 import com.ishanitech.ipalikawebapp.dto.FormDetail;
 import com.ishanitech.ipalikawebapp.dto.Response;
+import com.ishanitech.ipalikawebapp.dto.ToleDTO;
 import com.ishanitech.ipalikawebapp.service.FormService;
 import com.ishanitech.ipalikawebapp.utilities.HttpUtils;
 
@@ -60,4 +61,13 @@ public class FormServiceImpl implements FormService {
 		return wards;
 	}
 
+	@Override
+	public Response<List<ToleDTO>> getListOfToles(String token) {
+		String template = "/ward/toles";
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<List<ToleDTO>>> responseType = new ParameterizedTypeReference<Response<List<ToleDTO>>>() {};
+		Response<List<ToleDTO>> toles = restTemplate.exchange(requestEntity, responseType).getBody();
+		return toles;
+	}
 }

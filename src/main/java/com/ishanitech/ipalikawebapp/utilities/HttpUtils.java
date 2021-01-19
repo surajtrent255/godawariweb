@@ -89,12 +89,18 @@ public class HttpUtils {
 	}
 	
 	public static String createRequestUrlWithQueryString(RestApiProperties restApiProperties, Map<String, Object> uriVariables) {
+		String tolezNamez = "";
+		if(uriVariables.get("toleName") == null) {
+			tolezNamez = "";
+		}else {
+			tolezNamez = "&toleName=" + uriVariables.get("toleName");
+		}
 		UriComponents uriComponent = UriComponentsBuilder.newInstance()
 				.scheme(restApiProperties.getProtocol())
 				.host(restApiProperties.getDomain())
 				.port(restApiProperties.getPort())
 				.path("/{rootAddress}")
-				.query("{queryParamName}={keyword}" + "&wardNo={wardNo}" + "&pageSize={pageSize}").buildAndExpand(uriVariables).encode();
+				.query("{queryParamName}={keyword}" + "&wardNo={wardNo}"+ tolezNamez  + "&pageSize={pageSize}").buildAndExpand(uriVariables).encode();
 		return uriComponent.toUriString();
 	}
 	
@@ -107,15 +113,32 @@ public class HttpUtils {
 				.query("wardNo={wardNo}" + "&pageSize={pageSize}" + "&sortBy={sortBy}" + "&sortByOrder={sortByOrder}").buildAndExpand(uriVariables).encode();
 		return uriComponent.toUriString();
 	}
-
-	public static String createRequestUrlWithPageLimit(RestApiProperties restApiProperties,
-			Map<String, Object> uriVariables) {
+	
+	public static String createRequestUrlWithToleString(RestApiProperties restApiProperties, Map<String, Object> uriVariables) {
 		UriComponents uriComponent = UriComponentsBuilder.newInstance()
 				.scheme(restApiProperties.getProtocol())
 				.host(restApiProperties.getDomain())
 				.port(restApiProperties.getPort())
 				.path("/{rootAddress}")
-				.query("wardNo={wardNo}" + "&pageSize={pageSize}" + "&searchKey={searchKey}" + "&lastSeenId={lastSeenId}" + "&sortBy={sortBy}" + "&sortByOrder={sortByOrder}").buildAndExpand(uriVariables).encode();
+				.query("wardNo={wardNo}" + "&toleName={toleName}" + "&pageSize={pageSize}" + "&sortBy={sortBy}" + "&sortByOrder={sortByOrder}").buildAndExpand(uriVariables).encode();
+		return uriComponent.toUriString();
+	}
+
+	public static String createRequestUrlWithPageLimit(RestApiProperties restApiProperties,
+			Map<String, Object> uriVariables) {
+		
+		String tolezNamez = "";
+		if(uriVariables.get("toleName") == null) {
+			tolezNamez = "";
+		}else {
+			tolezNamez = "&toleName=" + uriVariables.get("toleName");
+		}
+		UriComponents uriComponent = UriComponentsBuilder.newInstance()
+				.scheme(restApiProperties.getProtocol())
+				.host(restApiProperties.getDomain())
+				.port(restApiProperties.getPort())
+				.path("/{rootAddress}")
+				.query("wardNo={wardNo}" + tolezNamez + "&pageSize={pageSize}" + "&searchKey={searchKey}" + "&lastSeenId={lastSeenId}" + "&sortBy={sortBy}" + "&sortByOrder={sortByOrder}").buildAndExpand(uriVariables).encode();
 		return uriComponent.toUriString();
 	}
 	

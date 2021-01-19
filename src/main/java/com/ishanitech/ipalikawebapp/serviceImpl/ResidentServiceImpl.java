@@ -106,6 +106,7 @@ public class ResidentServiceImpl implements ResidentService {
 		uriVariables.put("queryParamName", "searchKey");
 		uriVariables.put("keyword", searchKey);
 		uriVariables.put("wardNo", wardNo);
+		uriVariables.put("toleName", request.getParameter("toleName"));
 		uriVariables.put("pageSize", request.getParameter("pageSize"));
 		String url = HttpUtils.createRequestUrlWithQueryString(restApiProperties, uriVariables);
 		log.info("URL--->" + url);
@@ -134,6 +135,27 @@ public class ResidentServiceImpl implements ResidentService {
 		return residents;
 	}
 
+	
+	@Override
+	public List<ResidentDTO> searchResidentByTole(HttpServletRequest request, String wardNo, String token) {
+		String template = String.format("%s/search/tole", RESIDENT_BASE_URL);
+		Map<String, Object> uriVariables = new HashMap<String, Object>();
+		uriVariables.put("rootAddress", template);
+		uriVariables.put("wardNo", wardNo);
+		uriVariables.put("toleName", request.getParameter("toleName"));
+		uriVariables.put("pageSize", request.getParameter("pageSize"));
+		uriVariables.put("sortBy", request.getParameter("sortBy"));
+		uriVariables.put("sortByOrder", request.getParameter("sortByOrder"));
+		
+		String url = HttpUtils.createRequestUrlWithToleString(restApiProperties, uriVariables);
+		System.out.println("seachByTole ---->" + request.getParameter("toleName"));
+		log.info("URL--->" + url);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.POST, MediaType.APPLICATION_JSON, token, url);
+		ParameterizedTypeReference<Response<List<ResidentDTO>>> responseType = new ParameterizedTypeReference<Response<List<ResidentDTO>>>() {
+		};
+		List<ResidentDTO> residents = restTemplate.exchange(requestEntity, responseType).getBody().getData();
+		return residents;
+	}
 
 	@Override
 	public List<ResidentDTO> getResidentByPageLimit(HttpServletRequest request, String wardNo, String token) {
@@ -141,6 +163,7 @@ public class ResidentServiceImpl implements ResidentService {
 		Map<String, Object> uriVariables = new HashMap<String, Object>();
 		uriVariables.put("rootAddress", template);
 		uriVariables.put("wardNo", wardNo);
+		uriVariables.put("toleName", request.getParameter("toleName"));
 		uriVariables.put("pageSize", request.getParameter("pageSize"));
 		uriVariables.put("searchKey", request.getParameter("searchKey"));
 		uriVariables.put("lastSeenId", request.getParameter("lastSeenId"));
@@ -215,6 +238,9 @@ public class ResidentServiceImpl implements ResidentService {
 		if(request.getParameter("wardNo") != null) {
 			endPoint += "wardNo=" + request.getParameter("wardNo") + "&";
 		}
+		if(request.getParameter("toleName") != null) {
+			endPoint += "toleName=" + request.getParameter("toleName") + "&";
+		}
 		if(request.getParameter("sortBy") != null) {
 			endPoint += "sortBy=" + request.getParameter("sortBy") + "&";
 			endPoint += "sortByOrder=" + request.getParameter("sortByOrder") + "&";
@@ -256,6 +282,9 @@ public class ResidentServiceImpl implements ResidentService {
 		if(request.getParameter("wardNo") != null) {
 			endPoint += "wardNo=" + request.getParameter("wardNo") + "&";
 		}
+		if(request.getParameter("toleName") != null) {
+			endPoint += "toleName=" + request.getParameter("toleName") + "&";
+		}
 		//endPoint += "last_seen=" + request.getParameter("lastSeenId") + "&";
 		//endPoint += "action=" + request.getParameter("action") + "&";
 		endPoint += "sortBy=" + request.getParameter("sortBy") + "&";
@@ -287,5 +316,6 @@ public class ResidentServiceImpl implements ResidentService {
 		Integer totalHouseCount = restTemplate.exchange(requestEntity, responseType).getBody().getData();
 		return totalHouseCount.toString();
 	}
+
 
 }
