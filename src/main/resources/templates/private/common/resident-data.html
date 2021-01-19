@@ -145,7 +145,15 @@
 									</select>
 									</label>
 								</div>
+						
+								<div class="ui" sec:authorize="hasAnyRole('WARD_ADMIN')">
+									<label>Tole&nbsp; <select id="tole-wise-select"
+										class="ui input">
+											<option value="" id="firstOptionTole"></option>
+									</select>
+									</label>
 								</div>
+								</div>	
 
 
 						</div>
@@ -264,7 +272,31 @@
 		var uniElement = $(".unicode input[type='text'], #grid_filter input");
 		control.makeTransliteratable(uniElement);
 		control.makeTransliteratable(['search']);
+		
+		onLoadForTole();
 	}; 
+	
+	
+	function onLoadForTole(){
+	
+	if($("#ward-wise-select").val() !== ''){
+				//console.log("ward selected--->",wardNumber);
+				$("#tole-div").removeAttr("hidden");
+				
+				//console.log("toles--->",toleList );
+				let optionToAppend = '<option value="" id="firstOptionTole"></option>';
+				toleList.forEach( tole => {
+					if(tole.wardNumber == $("#ward-wise-select").val()){
+					console.log("wardMatch--->",tole.toleName);
+					optionToAppend += `<option value="${tole.toleName}" text="${tole.toleName}">${tole.toleName}</option>`;
+					}
+				}
+				);
+				
+				console.log("OptionToBeAppended",optionToAppend);
+				$("#tole-wise-select").html(optionToAppend);
+				}
+	}
 	
 	
 	$(window).on("load", function(e) {
@@ -519,11 +551,7 @@
 				);
 				
 				console.log("OptionToBeAppended",optionToAppend);
-				//$("#firstOptionTole").after(optionToAppend);
-				//toleOptionsDiv
 				$("#tole-wise-select").html(optionToAppend);
-				//<option th:if="${option.wardNumber == |wardNumber|}" th:value="${option.toleName}"
-					//							th:each="option, indx : ${toles}" th:text="${option.toleName}"></option>
 				}else{
 				console.log("ward empty selected--->",wardNumber);
 				$("#tole-div").attr("hidden","");
@@ -906,6 +934,7 @@
 	
 				let searchKey = $("#search").val();
 				let wardNumber = $("#ward-wise-select").val();
+				let toleName = $("#tole-wise-select").val();
 				let pageLimit = $("#page-limit-select").val();
 				//currentPageNo;
 				
@@ -917,6 +946,10 @@
 				}
 				if(wardNumber != ""){
 					url += "wardNo=" + wardNumber + "&";
+				}
+				
+				if(toleName != ""){
+					url += "toleName=" + toleName + "&";
 				}
 				url += "prevLastItemId=" + prevLastItemId + "&";
 				
@@ -959,8 +992,9 @@
 		
 		
 				let searchKey = urlObj.searchKey;
-				let wardNumber = urlObj.wardNo
-				let pageLimit = urlObj.pageLimit
+				let wardNumber = urlObj.wardNo;
+				let toleName = urlObj.toleName;
+				let pageLimit = urlObj.pageLimit;
 				currentPageNo = +urlObj.currentPage ;
 				console.log("CurrentPageNo--->" + currentPageNo);
 				
@@ -974,6 +1008,29 @@
 				$("#ward-wise-select").val(wardNumber);
 					url += "wardNo=" + wardNumber + "&";
 				}
+				
+				if(toleName){
+				
+				$("#tole-div").removeAttr("hidden");
+				
+				//console.log("toles--->",toleList );
+				let optionToAppend = '<option value="" id="firstOptionTole"></option>';
+				toleList.forEach( tole => {
+					if(tole.wardNumber == wardNumber){
+					console.log("wardMatch--->",tole.toleName);
+					optionToAppend += `<option value="${tole.toleName}" text="${tole.toleName}">${tole.toleName}</option>`;
+					}
+				}
+				);
+				
+				console.log("OptionToBeAppended",optionToAppend);
+				$("#tole-wise-select").html(optionToAppend);
+				
+				
+				$("#tole-wise-select").val(toleName);
+					url += "toleName=" + toleName + "&";
+				}
+				
 				$("#page-limit-select").val(pageLimit);
 				url += "lastSeenId=" + urlObj.prevLastItemId + "&";
 				url += "action=next"+ "&";

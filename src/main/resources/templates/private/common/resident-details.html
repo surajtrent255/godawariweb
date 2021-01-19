@@ -946,6 +946,10 @@
 					url += "wardNo=" + urlObj.wardNo + "&";
 				}
 				
+				if(urlObj.toleName){
+					url += "toleName=" + urlObj.toleName + "&";
+				}
+				
 				if(urlObj.sortBy){
 					url += "sortBy=" + urlObj.sortBy + "&";
 					url += "sortByOrder=" + urlObj.sortByOrder + "&";
@@ -994,7 +998,7 @@
 		}
 		
 		$("#goBackButton").on("click", (event)=>onGoBackButtonClick(event));
-		$("#goBackButton1").on("click", (event)=>onGoBackButtonClick(event));
+		//$("#goBackButton1").on("click", (event)=>onGoBackButtonClick(event));
 		
 		
 		var getParams = function (url) {
