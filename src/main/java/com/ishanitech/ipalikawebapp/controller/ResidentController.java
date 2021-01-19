@@ -168,9 +168,10 @@ public class ResidentController {
 	
 	
 	@GetMapping("getTotalHouseCount/{wardNo}")
-	public @ResponseBody Response<String> getTotalHouseCountByWard(@PathVariable("wardNo") String wardNo, Model model, @AuthenticationPrincipal UserDTO user) {
+	public @ResponseBody Response<String> getTotalHouseCountByWard(@PathVariable("wardNo") String wardNo, Model model, @AuthenticationPrincipal UserDTO user, @RequestParam(name="toleName", required=false) String toleName) {
 		//Response<ResidentDetailDTO> residentResponse = (Response<ResidentDetailDTO>) residentService.getResidentFullDetail(filledId, user.getToken());
-		
-		return new Response<String>(residentService.getTotalHouseCountByWard(wardNo, user.getToken()));
+		if(toleName != null)
+		System.out.println("ToleName Req Parm--->"+ toleName);
+		return new Response<String>(residentService.getTotalHouseCountByWard(wardNo, toleName ,user.getToken()));
 	}
 }

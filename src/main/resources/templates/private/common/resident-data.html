@@ -437,6 +437,7 @@
 					let toleName = $("#tole-wise-select").val();
 					let pageLimit = $("#page-limit-select").val();
 					console.log("ward-->" + wardNumber);
+					$("#totalHouseCount").html('');
 					currentPageNo = 0;
 					let finalUrl = encodeURI(contextPath + "/resident/search" + "?searchKey=" + encodeURIComponent(searchKey) + "&wardNo=" + wardNumber+ "&toleName=" + toleName + "&pageSize=" + pageLimit);
 					if(searchKey === "") {
@@ -528,7 +529,7 @@
 				$("#tole-div").attr("hidden","");
 					$("#tole-wise-select").val("");
 					console.log("New selectedTole--->",$("#tole-wise-select").val());
-				
+					$("#totalHouseCount").html('');				
 				}
 				let pageLimit = $("#page-limit-select").val();
 				console.log("ward-->" + wardNumber);
@@ -647,7 +648,7 @@
 								$("#grid_next").removeClass("disabled");
 								document.getElementById("pageNumberPagination").innerHTML = currentPageNo + 1;
 								
-								let houseCountUrl = encodeURI(contextPath + "resident/getTotalHouseCount/" + wardNumber);
+								let houseCountUrl = encodeURI(contextPath + "resident/getTotalHouseCount/" + wardNumber + "?toleName=" + toleName);
 								 $.ajax({url: houseCountUrl, success: function(result){
 								 	console.log("HouseCountUrl---->" + houseCountUrl);
 								 	console.log("Resutl---->" + result);

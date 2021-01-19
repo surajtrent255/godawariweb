@@ -305,11 +305,12 @@ public class ResidentServiceImpl implements ResidentService {
 	}
 
 	@Override
-	public String getTotalHouseCountByWard(String wardNo, String token) {
-		String template = String.format("ward/totalHouseCount/" + wardNo);
+	public String getTotalHouseCountByWard(String wardNo, String toleName, String token) {
+		String template = String.format("ward/totalHouseCount/" + wardNo + "?toleName=" + toleName);
 		Map<String, Object> uriVariables = new HashMap<String, Object>();
 		uriVariables.put("rootAddress", template);
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, uriVariables);
+		System.out.println("HouseCountURl--->" + url);
 		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
 		ParameterizedTypeReference<Response<Integer>> responseType = new ParameterizedTypeReference<Response<Integer>>() {
 		};
