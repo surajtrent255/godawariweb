@@ -41,17 +41,17 @@ public class MemberController {
 	
 	@GetMapping
 	public String getMemberDataListView(Model model, @AuthenticationPrincipal UserDTO user, @RequestParam(name = "backFrom", required= false) String backFrom) {
-		if(backFrom == null) {
+		//if(backFrom == null) {
 		Response<List<FamilyMemberDTO>> memberResponse = (Response<List<FamilyMemberDTO>>) memberService.getMemberDataList(user.getToken(), user.getRoles(), user.getWardNo());
 		model.addAttribute("memberList", memberResponse.getData());
-		}else {
-			List<FamilyMemberDTO> famMembs = new ArrayList<FamilyMemberDTO>();
-			FamilyMemberDTO fmDTO = new FamilyMemberDTO();
-			fmDTO.setName("Loading");
-			fmDTO.setGender("Data");
-			famMembs.add(fmDTO);
-			model.addAttribute("memberList", famMembs);
-		}
+//		}else {
+//			List<FamilyMemberDTO> famMembs = new ArrayList<FamilyMemberDTO>();
+//			FamilyMemberDTO fmDTO = new FamilyMemberDTO();
+//			fmDTO.setName("Loading");
+//			fmDTO.setGender("Data");
+//			famMembs.add(fmDTO);
+//			model.addAttribute("memberList", famMembs);
+//		}
 		model.addAttribute("wards", wardService.getAllWards());
 		model.addAttribute("loggedInUserWard", user.getWardNo());
 		return "private/common/family-member-data";
