@@ -29,6 +29,7 @@ public class HttpUtils {
 	public static <T> RequestEntity<T> createRequestEntity(HttpMethod method,
 			T entity, MediaType mediaType,
 			@Nullable String token, String url) {
+			url = url.replace(" ", "spacex");
 			RequestEntity<T> requestEntity = null;
 			try {
 				requestEntity =  RequestEntity

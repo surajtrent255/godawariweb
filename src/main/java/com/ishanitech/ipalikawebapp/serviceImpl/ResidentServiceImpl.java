@@ -306,6 +306,13 @@ public class ResidentServiceImpl implements ResidentService {
 
 	@Override
 	public String getTotalHouseCountByWard(String wardNo, String toleName, String token) {
+		
+		if(toleName != null) {
+			System.out.println("tolex name before--->" + toleName);
+			toleName = toleName.replace(" ", "spacex");
+			System.out.println("tolex name after--->" + toleName);
+		}
+		
 		String template = String.format("ward/totalHouseCount/" + wardNo + "?toleName=" + toleName);
 		Map<String, Object> uriVariables = new HashMap<String, Object>();
 		uriVariables.put("rootAddress", template);
