@@ -346,6 +346,124 @@
 					</div>
 				</div>
 
+				<!--Added for permanent address -->
+				<h4	th:if="${!#lists.isEmpty(questionReport) && questionReport != null && questionReport.get(0) != null}">स्थायी ठेगाना</h4>
+				<div class="row mt-3" th:if="${!#lists.isEmpty(questionReport) && questionReport != null && questionReport.get(0) != null}">
+					<div class="col-12 col-lg-6 col-xl-3">
+						<div class="card">
+							<div class="card-body">
+								<p class="mb-0 text-primary">स्थायी जन्म</p>
+								<div class="">
+									<h4 class="mb-0 py-3 text-primary">
+										<span th:text="${questionReport.get(8).option1}">203 </span>
+									</h4>
+								</div>
+								<div class="progress-wrapper">
+									<div class="progress" style="height: 5px;">
+										<div class="progress-bar bg-primary"
+											th:style="${'width:' + (questionReport.get(8).option1/questionReport.get(8).total)*100 +'%'}"
+											style="width: 18.71%"></div>
+									</div>
+								</div>
+								<p class="mb-0 mt-2 small-font">
+									<span class="float-right"> <span
+										th:if="${questionReport.get(8).option1} == 0"
+										th:text="${(questionReport.get(8).option1/questionReport.get(8).total)*100 + '%'}"></span>
+										<span th:unless="${questionReport.get(8).option1} == 0"
+										th:text="${#numbers.formatDecimal((questionReport.get(8).option1/(questionReport.get(8).total))*100, 1, 2 ) + '%'}"></span>
+										<i class="fa fa-long-arrow-up"></i>
+									</span>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-6 col-xl-3">
+						<div class="card">
+							<div class="card-body">
+								<p class="mb-0 text-success">बसाईसराई</p>
+								<div class="">
+									<h4 class="mb-0 py-3 text-success">
+										<span th:text="${questionReport.get(8).option2}">203 </span>
+									</h4>
+								</div>
+								<div class="progress-wrapper">
+									<div class="progress" style="height: 5px;">
+										<div class="progress-bar bg-success"
+											th:style="${'width:' + (questionReport.get(8).option2/questionReport.get(8).total)*100 +'%'}"
+											style="width: 55.12%"></div>
+									</div>
+								</div>
+								<p class="mb-0 mt-2 small-font">
+									<span class="float-right"> <span
+										th:if="${questionReport.get(8).option2} == 0"
+										th:text="${(questionReport.get(8).option2/questionReport.get(8).total)*100 + '%'}"></span>
+										<span th:unless="${questionReport.get(8).option2} == 0"
+										th:text="${#numbers.formatDecimal((questionReport.get(8).option2/(questionReport.get(8).total))*100, 1, 2 ) + '%'}"></span>
+										<i class="fa fa-long-arrow-up"></i>
+									</span>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-6 col-xl-3">
+						<div class="card">
+							<div class="card-body">
+								<p class="mb-0 text-danger">अस्थायी</p>
+								<div class="">
+									<h4 class="mb-0 py-3 text-danger">
+										<span th:text="${questionReport.get(8).option3}">203 </span> 
+									</h4>
+								</div>
+								<div class="progress-wrapper">
+									<div class="progress" style="height: 5px;">
+										<div class="progress-bar bg-danger"
+											th:style="${'width:' + (questionReport.get(8).option3/questionReport.get(8).total)*100 +'%'}"
+											style="width: 7.28%"></div>
+									</div>
+								</div>
+								<p class="mb-0 mt-2 small-font">
+									<span class="float-right"> <span
+										th:if="${questionReport.get(8).option3} == 0"
+										th:text="${(questionReport.get(8).option3/questionReport.get(8).total)*100 + '%'}"></span>
+										<span th:unless="${questionReport.get(8).option3} == 0"
+										th:text="${#numbers.formatDecimal((questionReport.get(8).option3/(questionReport.get(8).total))*100, 1, 2 ) + '%'}"></span>
+										<i class="fa fa-long-arrow-up"></i>
+									</span>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-6 col-xl-3">
+						<div class="card">
+							<div class="card-body">
+								<p class="mb-0 text-warning">बसाइसराइ नभएको</p>
+								<div class="">
+									<h4 class="mb-0 py-3 text-warning">
+										<span th:text="${questionReport.get(8).option4}">203 </span>
+									</h4>
+								</div>
+								<div class="progress-wrapper">
+									<div class="progress" style="height: 5px;">
+										<div class="progress-bar bg-warning"
+											th:style="${'width:' + (questionReport.get(8).option4/questionReport.get(8).total)*100 +'%'}"
+											style="width: 18.89%"></div>
+									</div>
+								</div>
+								<p class="mb-0 mt-2 small-font">
+									<span class="float-right"> <span
+										th:if="${questionReport.get(8).option4} == 0"
+										th:text="${(questionReport.get(8).option4/questionReport.get(8).total)*100 + '%'}"></span>
+										<span th:unless="${questionReport.get(8).option4} == 0"
+										th:text="${#numbers.formatDecimal((questionReport.get(8).option4/(questionReport.get(8).total))*100, 1, 2 ) + '%'}"></span>
+										<i class="fa fa-long-arrow-up"></i>
+									</span>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--Added for permanent address ends-->
+
 				<!-- Start Row -->
 				<div class="row"
 					th:if="${!#lists.isEmpty(populationReport) && populationReport != null}">
@@ -1207,7 +1325,8 @@
 				<!--End Row-->
 
 				<!--Added for Krishi Dashboard-->
-				<h4 th:if="${!#lists.isEmpty(extraReport) && extraReport != null}">कृषि तथा पशुपालन</h4>
+				<h4 th:if="${!#lists.isEmpty(extraReport) && extraReport != null}">कृषि
+					तथा पशुपालन</h4>
 				<div th:if="${!#lists.isEmpty(extraReport) && extraReport != null}"
 					class="row"
 					th:with="totalHousehold=${#numbers.formatInteger(extraReport.get(1).data,1)}">
@@ -1297,7 +1416,9 @@
 
 
 				<!--Added for Remarkable Places Dashboard-->
-				<h4 th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">महत्वपुर्ण स्थलहरुः</h4>
+				<h4
+					th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">महत्वपुर्ण
+					स्थलहरुः</h4>
 				<!-- 				First Row -->
 				<div
 					th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}"
@@ -1419,55 +1540,85 @@
 				<!--Added for Remarkable places Dashboard ends-->
 
 				<!--Section for GIS map display -->
-<!-- 				<iframe -->
-<!-- 					src="https://www.google.com/maps/d/u/0/embed?mid=1OEhgn6qwXwI6RninEuRHIL9HJLRUURzt" -->
-<!-- 					width="100%" height="600"></iframe> -->
-					
-<!-- 				Whole Map -->
-				<iframe th:if="${selectedWard} == 0" src="https://www.google.com/maps/d/u/1/embed?mid=1B85zoVg4QKsOVD-gU3HCxiLhg8kKVtW1" width="100%" height="600"></iframe>	
-				
-				
-<!-- 				Ward No 1 -->
-				<iframe th:if="${selectedWard} == 1" src="https://www.google.com/maps/d/u/1/embed?mid=10WAWu4g_aPtAGcWTptfvcv5so_8AQCrH" width="100%" height="600"></iframe>
-				
-<!-- 				Ward No 2  -->
-				<iframe th:if="${selectedWard} == 2" src="https://www.google.com/maps/d/u/1/embed?mid=187vpc_hUETH0eEPrgHY93zqfsGVtCZo5" width="100%" height="600"></iframe>
-				
-<!-- 				Ward No 3 -->
-				<iframe th:if="${selectedWard} == 3" src="https://www.google.com/maps/d/u/1/embed?mid=1zJ-Fc_PEli_dmghxUoprILEHY19oGzv1" width="100%" height="600"></iframe>
-				
-<!-- 				Ward No 4 -->
-				<iframe th:if="${selectedWard} == 4" src="https://www.google.com/maps/d/u/1/embed?mid=1M4ygdod3A-zt-dyMSCmUJY__7RNQ3rp1" width="100%" height="600"></iframe>
-				
-<!-- 				Ward No 5 -->
-				<iframe th:if="${selectedWard} == 5" src="https://www.google.com/maps/d/u/1/embed?mid=1btjfNs9ncbef9vFvSSU7Z7PXDpaQdwFY" width="100%" height="600"></iframe>
-				
-<!-- 				Ward No 6 -->
-				<iframe th:if="${selectedWard} == 6" src="https://www.google.com/maps/d/u/1/embed?mid=1JIj1b207Uce3kFIHswy5W5jpYr0P3jkf" width="100%" height="600"></iframe>
-				
-<!-- 				Ward No 7 -->
-				<iframe th:if="${selectedWard} == 7" src="https://www.google.com/maps/d/u/1/embed?mid=1nww8CtRuovxbm-FhjPafeF-VFNNrsWca" width="100%" height="600"></iframe>
-				
-<!-- 				Ward No 8 -->
-				<iframe th:if="${selectedWard} == 8" src="https://www.google.com/maps/d/u/1/embed?mid=1uihabCoas3h3aKC9I7U2ySHS3L_7NN88" width="100%" height="600"></iframe>
-				
-<!-- 				Ward No 9 -->
-				<iframe th:if="${selectedWard} == 9" src="https://www.google.com/maps/d/u/1/embed?mid=1XEGsXnj-QRLQoYCRdiMNi7_1qu-zQZci" width="100%" height="600"></iframe>
-				
-<!-- 				Ward No 10 -->
-				<iframe th:if="${selectedWard} == 10" src="https://www.google.com/maps/d/u/1/embed?mid=1-C9ZpEhWJD2IpRoPMWbovCEIqgGsdCq_" width="100%" height="600"></iframe>
-				
-<!-- 				Ward No 11 -->
-				<iframe th:if="${selectedWard} == 11" src="https://www.google.com/maps/d/u/1/embed?mid=1bRcWVbOP4bzxgclLyTUW3qo3cTPrx6C_" width="100%" height="600"></iframe>
-				
-<!-- 				Ward No 12 -->
-				<iframe th:if="${selectedWard} == 12" src="https://www.google.com/maps/d/u/1/embed?mid=1ezr2YpBmTpqaF1ZhWlMHf6G69f07RkxQ" width="100%" height="600"></iframe>
-				
-<!-- 				Ward No 13 -->
-				<iframe th:if="${selectedWard} == 13" src="https://www.google.com/maps/d/u/1/embed?mid=17qYRqkZ7ae8N--AX5KY3YWxNDr4Vx8Ww" width="100%" height="600"></iframe>
-				
-<!-- 				Ward No 14 -->
-				<iframe th:if="${selectedWard} == 14" src="https://www.google.com/maps/d/u/1/embed?mid=1thfWr-aNjn1CdS0JowF1gTMP9RwiPdNu" width="100%" height="600"></iframe>
+				<!-- 				<iframe -->
+				<!-- 					src="https://www.google.com/maps/d/u/0/embed?mid=1OEhgn6qwXwI6RninEuRHIL9HJLRUURzt" -->
+				<!-- 					width="100%" height="600"></iframe> -->
+
+				<!-- 				Whole Map -->
+				<iframe th:if="${selectedWard} == 0"
+					src="https://www.google.com/maps/d/u/1/embed?mid=1B85zoVg4QKsOVD-gU3HCxiLhg8kKVtW1"
+					width="100%" height="600"></iframe>
+
+
+				<!-- 				Ward No 1 -->
+				<iframe th:if="${selectedWard} == 1"
+					src="https://www.google.com/maps/d/u/1/embed?mid=10WAWu4g_aPtAGcWTptfvcv5so_8AQCrH"
+					width="100%" height="600"></iframe>
+
+				<!-- 				Ward No 2  -->
+				<iframe th:if="${selectedWard} == 2"
+					src="https://www.google.com/maps/d/u/1/embed?mid=187vpc_hUETH0eEPrgHY93zqfsGVtCZo5"
+					width="100%" height="600"></iframe>
+
+				<!-- 				Ward No 3 -->
+				<iframe th:if="${selectedWard} == 3"
+					src="https://www.google.com/maps/d/u/1/embed?mid=1zJ-Fc_PEli_dmghxUoprILEHY19oGzv1"
+					width="100%" height="600"></iframe>
+
+				<!-- 				Ward No 4 -->
+				<iframe th:if="${selectedWard} == 4"
+					src="https://www.google.com/maps/d/u/1/embed?mid=1M4ygdod3A-zt-dyMSCmUJY__7RNQ3rp1"
+					width="100%" height="600"></iframe>
+
+				<!-- 				Ward No 5 -->
+				<iframe th:if="${selectedWard} == 5"
+					src="https://www.google.com/maps/d/u/1/embed?mid=1btjfNs9ncbef9vFvSSU7Z7PXDpaQdwFY"
+					width="100%" height="600"></iframe>
+
+				<!-- 				Ward No 6 -->
+				<iframe th:if="${selectedWard} == 6"
+					src="https://www.google.com/maps/d/u/1/embed?mid=1JIj1b207Uce3kFIHswy5W5jpYr0P3jkf"
+					width="100%" height="600"></iframe>
+
+				<!-- 				Ward No 7 -->
+				<iframe th:if="${selectedWard} == 7"
+					src="https://www.google.com/maps/d/u/1/embed?mid=1nww8CtRuovxbm-FhjPafeF-VFNNrsWca"
+					width="100%" height="600"></iframe>
+
+				<!-- 				Ward No 8 -->
+				<iframe th:if="${selectedWard} == 8"
+					src="https://www.google.com/maps/d/u/1/embed?mid=1uihabCoas3h3aKC9I7U2ySHS3L_7NN88"
+					width="100%" height="600"></iframe>
+
+				<!-- 				Ward No 9 -->
+				<iframe th:if="${selectedWard} == 9"
+					src="https://www.google.com/maps/d/u/1/embed?mid=1XEGsXnj-QRLQoYCRdiMNi7_1qu-zQZci"
+					width="100%" height="600"></iframe>
+
+				<!-- 				Ward No 10 -->
+				<iframe th:if="${selectedWard} == 10"
+					src="https://www.google.com/maps/d/u/1/embed?mid=1-C9ZpEhWJD2IpRoPMWbovCEIqgGsdCq_"
+					width="100%" height="600"></iframe>
+
+				<!-- 				Ward No 11 -->
+				<iframe th:if="${selectedWard} == 11"
+					src="https://www.google.com/maps/d/u/1/embed?mid=1bRcWVbOP4bzxgclLyTUW3qo3cTPrx6C_"
+					width="100%" height="600"></iframe>
+
+				<!-- 				Ward No 12 -->
+				<iframe th:if="${selectedWard} == 12"
+					src="https://www.google.com/maps/d/u/1/embed?mid=1ezr2YpBmTpqaF1ZhWlMHf6G69f07RkxQ"
+					width="100%" height="600"></iframe>
+
+				<!-- 				Ward No 13 -->
+				<iframe th:if="${selectedWard} == 13"
+					src="https://www.google.com/maps/d/u/1/embed?mid=17qYRqkZ7ae8N--AX5KY3YWxNDr4Vx8Ww"
+					width="100%" height="600"></iframe>
+
+				<!-- 				Ward No 14 -->
+				<iframe th:if="${selectedWard} == 14"
+					src="https://www.google.com/maps/d/u/1/embed?mid=1thfWr-aNjn1CdS0JowF1gTMP9RwiPdNu"
+					width="100%" height="600"></iframe>
 				<!--End Dashboard Content-->
 			</div>
 			<!-- End container-fluid-->
