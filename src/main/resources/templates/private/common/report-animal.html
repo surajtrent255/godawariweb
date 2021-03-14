@@ -55,69 +55,6 @@
 						</ol>
 					</div>
 				</div>
-
-<!-- 				<div class="row"> -->
- <!-- 					<div class="row"> -->
-<!-- 							<div class="col-md-2"> -->
-<!-- 								<div class="ui"> -->
-<!-- 									<label >Show&nbsp; -->
-<!-- 										<select id="page-limit-select" class="ui input"> -->
-<!-- 											<option value="10">10</option> -->
-<!-- 											<option value="25">25</option> -->
-<!-- 											<option value="50">50</option> -->
-<!-- 											<option value="100">100</option> -->
-<!-- 											10 25 50 100 -->
-<!-- 										</select>&nbsp; -->
-<!-- 										 entries -->
-<!-- 									</label> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-							
-<!-- 							<div class="col-md-2"> -->
-<!-- 								<div class="ui"> -->
-<!-- 									<label >Ward&nbsp; -->
-<!-- 										<select id="ward-wise-select" class="ui input"> -->
-<!-- 											<option value=""></option> -->
-<!-- 											<option th:value="${indx.index} + 1" th:each="option, indx : ${wards}" th:text="${option}"></option> -->
-<!-- 										</select> -->
-<!-- 									</label> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-							
-							
-<!-- 							<div class="col-md-2"> -->
-<!-- 								<div class="ui"> -->
-<!-- 									<label >Place Type&nbsp; -->
-<!-- 										<select id="placeType-wise-select" class="ui input"> -->
-<!-- 											<option value=""></option> -->
-<!-- 											<option th:value="${indx.index} + 1" th:each="option, indx : ${placeTypes}" th:text="${option}"></option> -->
-<!-- 										</select> -->
-<!-- 									</label> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-							
-							
-<!-- 							<div class="col-md-2"> -->
-<!-- 								<div class="ui"> -->
-<!-- 									<label> -->
-<!-- 										Sorted By:&nbsp;<span class="ui" id="sortedBySpan"> -->
-<!-- 										</span> -->
-<!-- 									</label> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-
-							
-<!-- 							<div class="col-md-2"> -->
-<!-- 								<div class="ui pull-right"> -->
-<!-- 									<label> -->
-<!-- 										Search:&nbsp;<span class="ui input"> -->
-<!-- 											<input type="text" id="search" placeholder="स्थलको नामबाट खोज्नुहोस" /> -->
-<!-- 										</span> -->
-<!-- 									</label> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-
 					<div class="col-lg-12 col-md-12">
 						<div class="table-responsive animals-list padding-panel">
 							<table th:if="${animalsReport.size() > 0}"
@@ -134,73 +71,73 @@
 									<tr>
 										<td>१</td>
 										<td>गाई</td>
-										<td th:text="${#numbers.formatDecimal(animalsReport.get(7).option1, 0, 0)}"></td>
+										<td th:text="${#numbers.formatDecimal(animalsReport.get(10).option1, 0, 0)}"></td>
 									</tr>
 									
 									<tr>
 										<td>२</td>
 										<td>भैँसी</td>
-										<td th:text="${#numbers.formatDecimal(animalsReport.get(7).option2, 0, 0)}"></td>
+										<td th:text="${#numbers.formatDecimal(animalsReport.get(10).option2, 0, 0)}"></td>
 									</tr>
 									
 									<tr>
 										<td>३</td>
 										<td>गोरु</td>
-										<td th:text="${#numbers.formatDecimal(animalsReport.get(7).option3, 0, 0)}"></td>
+										<td th:text="${#numbers.formatDecimal(animalsReport.get(10).option3, 0, 0)}"></td>
 									</tr>
 									
 									<tr>
 										<td>४</td>
 										<td>बाख्रा</td>
-										<td th:text="${#numbers.formatDecimal(animalsReport.get(7).option4, 0, 0)}"></td>
+										<td th:text="${#numbers.formatDecimal(animalsReport.get(10).option4, 0, 0)}"></td>
 									</tr>
 									
 									<tr>
 										<td>५</td>
 										<td>बोका</td>
-										<td th:text="${#numbers.formatDecimal(animalsReport.get(7).option5, 0, 0)}"></td>
+										<td th:text="${#numbers.formatDecimal(animalsReport.get(10).option5, 0, 0)}"></td>
 									</tr>
 									
 									<tr>
 										<td>६</td>
 										<td>भेडा</td>
-										<td th:text="${#numbers.formatDecimal(animalsReport.get(7).option6, 0, 0)}"></td>
+										<td th:text="${#numbers.formatDecimal(animalsReport.get(10).option6, 0, 0)}"></td>
 									</tr>
 									
 									<tr>
 										<td>७</td>
 										<td>च्याङग्रा</td>
-										<td th:text="${#numbers.formatDecimal(animalsReport.get(7).option7, 0, 0)}"></td>
+										<td th:text="${#numbers.formatDecimal(animalsReport.get(10).option7, 0, 0)}"></td>
 									</tr>
 									
 									<tr>
 										<td>८</td>
 										<td>कुकुर</td>
-										<td th:text="${#numbers.formatDecimal(animalsReport.get(7).option8, 0, 0)}"></td>
+										<td th:text="${#numbers.formatDecimal(animalsReport.get(10).option8, 0, 0)}"></td>
 									</tr>
 									
 									<tr>
 										<td>९</td>
 										<td>हाँस</td>
-										<td th:text="${#numbers.formatDecimal(animalsReport.get(7).option9, 0, 0)}"></td>
+										<td th:text="${#numbers.formatDecimal(animalsReport.get(10).option9, 0, 0)}"></td>
 									</tr>
 									
 									<tr>
 										<td>१०</td>
 										<td>कुखुरा</td>
-										<td th:text="${#numbers.formatDecimal(animalsReport.get(7).option10, 0, 0)}"></td>
+										<td th:text="${#numbers.formatDecimal(animalsReport.get(10).option10, 0, 0)}"></td>
 									</tr>
 									
 									<tr>
 										<td>११</td>
 										<td>अन्य</td>
-										<td th:text="${#numbers.formatDecimal(animalsReport.get(7).option11, 0, 0)}"></td>
+										<td th:text="${#numbers.formatDecimal(animalsReport.get(10).option11, 0, 0)}"></td>
 									</tr>
 									
 <!-- 									<tr> -->
 <!-- 										<td>१२</td> -->
 <!-- 										<td>छैन</td> -->
-<!-- 										<td th:text="${#numbers.formatDecimal(animalsReport.get(7).option12, 0, 0)}"></td> -->
+<!-- 										<td th:text="${#numbers.formatDecimal(animalsReport.get(10).option12, 0, 0)}"></td> -->
 <!-- 									</tr> -->
 								</tbody>
 
