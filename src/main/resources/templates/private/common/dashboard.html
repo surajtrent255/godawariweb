@@ -42,7 +42,6 @@
 					sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')"
 					class="btn btn-xs btn-primary" th:attr="onclick=|generateReport()|">Generate
 					Latest Report</button>
-
 				<div class="col-md-3">
 					<div class="ui" sec:authorize="hasAnyRole('CENTRAL_ADMIN')">
 						<label>Ward&nbsp; <select id="ward-wise-select"
@@ -53,7 +52,6 @@
 						</select>
 						</label>
 					</div>
-
 					<div class="ui"
 						sec:authorize="hasAnyRole('WARD_ADMIN', 'SURVEYOR') && !hasAnyRole('CENTRAL_ADMIN')">
 						<label>Ward&nbsp; <select id="ward-wise-select"
@@ -64,12 +62,13 @@
 						</select>
 						</label>
 					</div>
-
 				</div>
 
 
+
 				<!--Start Dashboard Content-->
-				<!-- 				<button class="add-member btn btn-primary mb-2" style="margin-left: 8px;" id="generateReport">Generate Latest Report</button> -->
+				
+				<!--Age wise population starts-->
 				<div th:if="${populationReport != null}" class="row mt-3">
 					<div class="col-12 col-lg-6 col-xl-2">
 						<div class="card gradient-deepblue">
@@ -218,8 +217,10 @@
 						</div>
 					</div>
 				</div>
-				<!--End Row-->
+				<!--Age wise population ends-->
 
+
+				<!--Sex wise population and total starts -->
 				<div class="row" th:if="${populationReport != null}">
 					<div class="col-12 col-lg-4">
 						<div class="card">
@@ -238,7 +239,6 @@
 									</small>
 								</h4>
 							</div>
-
 						</div>
 					</div>
 					<div class="col-12 col-lg-4">
@@ -261,7 +261,6 @@
 
 						</div>
 					</div>
-
 					<div class="col-12 col-lg-4">
 						<div class="card">
 							<div class="card-body">
@@ -282,7 +281,6 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="row">
 					<div class="col-12 col-lg-4"
 						th:if="${populationReport != null && populationReport.get(0) != null}">
@@ -298,7 +296,6 @@
 
 						</div>
 					</div>
-
 					<div class="col-12 col-lg-4"
 						th:if="${!#lists.isEmpty(extraReport) && extraReport != null}">
 						<div class="card gradient-violet">
@@ -315,7 +312,6 @@
 
 						</div>
 					</div>
-
 					<div class="col-12 col-lg-4"
 						th:if="${!#lists.isEmpty(extraReport) && extraReport != null}">
 						<div class="card gradient-orange">
@@ -333,7 +329,9 @@
 						</div>
 					</div>
 				</div>
-
+				<!--Sex wise population and total ends -->
+				
+				<!--Piechart and bargraph starts-->
 				<div class="row"
 					th:if="${!#lists.isEmpty(populationReport) && populationReport != null && populationReport.get(1) != null}">
 					<div class="col-12 col-lg-6 col-xl-6">
@@ -345,11 +343,11 @@
 						</canvas>
 					</div>
 				</div>
-
-				<!--Added for permanent address -->
-				<h4
-					th:if="${!#lists.isEmpty(questionReport) && questionReport != null && questionReport.get(17) != null}">स्थायी
-					ठेगाना</h4>
+				<!--Piechart and bargraph ends-->
+	
+				
+				<!--Added for permanent address starts-->
+				<h4	th:if="${!#lists.isEmpty(questionReport) && questionReport != null && questionReport.get(17) != null}">स्थायी ठेगाना</h4>
 				<div class="row mt-3"
 					th:if="${!#lists.isEmpty(questionReport) && questionReport != null && questionReport.get(17) != null}">
 					<div class="col-12 col-lg-6 col-xl-3">
@@ -468,16 +466,12 @@
 				<!--Added for permanent address ends-->
 
 
-
 				<!-- Added for caste mother tongue and religion -->
-				
-				<div class="row"
-					th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
+				<div class="row" th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
 					<div class="col-12 col-lg-6 col-xl-6"
 						th:if="${questionReport.get(0) != null}">
 						<div class="card">
 							<div class="card-header">मातृभाषा</div>
-
 							<div class="table-responsive">
 								<table class="table align-items-center">
 									<tbody>
@@ -491,8 +485,8 @@
 												th:text="${#numbers.formatDecimal((questionReport.get(0).option1/questionReport.get(0).total)*100, 1, 2) + '%'}">1.13%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-success mr-2"></i> मैथिली
-											</td>
+											<td><i class="fa fa-circle text-success mr-2"></i>
+												मैथिली</td>
 											<td th:text="${questionReport.get(0).option2}">45</td>
 											<td th:if="${questionReport.get(0).option2} == 0"
 												th:text="${(questionReport.get(0).option2/questionReport.get(0).total)*100 + '%'}">1.13%</td>
@@ -509,8 +503,7 @@
 												th:text="${#numbers.formatDecimal((questionReport.get(0).option3/questionReport.get(0).total)*100, 1, 2) + '%'}">1.13%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-warning mr-2"></i>
-												थारु</td>
+											<td><i class="fa fa-circle text-warning mr-2"></i> थारु</td>
 											<td th:text="${questionReport.get(0).option4}">45</td>
 											<td th:if="${questionReport.get(0).option4} == 0"
 												th:text="${(questionReport.get(0).option4/questionReport.get(0).total)*100 + '%'}">1.13%</td>
@@ -526,8 +519,7 @@
 												th:text="${#numbers.formatDecimal((questionReport.get(0).option5/questionReport.get(0).total)*100, 1, 2) + '%'}">1.13%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-primary mr-2"></i>
-												नेवार</td>
+											<td><i class="fa fa-circle text-info mr-2"></i> नेवार</td>
 											<td th:text="${questionReport.get(0).option6}">45</td>
 											<td th:if="${questionReport.get(0).option6} == 0"
 												th:text="${(questionReport.get(0).option6/questionReport.get(0).total)*100 + '%'}">1.13%</td>
@@ -535,8 +527,7 @@
 												th:text="${#numbers.formatDecimal((questionReport.get(0).option6/questionReport.get(0).total)*100, 1, 2) + '%'}">1.13%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-secondary mr-2"></i>
-												मगर</td>
+											<td><i class="fa fa-circle text-secondary mr-2"></i> मगर</td>
 											<td th:text="${questionReport.get(0).option7}">45</td>
 											<td th:if="${questionReport.get(0).option7} == 0"
 												th:text="${(questionReport.get(0).option7/questionReport.get(0).total)*100 + '%'}">1.13%</td>
@@ -553,8 +544,7 @@
 												th:text="${#numbers.formatDecimal((questionReport.get(2).option8/questionReport.get(2).total)*100, 1, 2) + '%'}">1.13%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-dark mr-2"></i>
-											उर्दु</td>
+											<td><i class="fa fa-circle text-dark mr-2"></i> उर्दु</td>
 											<td th:text="${questionReport.get(0).option9}">45</td>
 											<td th:if="${questionReport.get(0).option9} == 0"
 												th:text="${(questionReport.get(0).option9/questionReport.get(0).total)*100 + '%'}">1.13%</td>
@@ -562,15 +552,14 @@
 												th:text="${#numbers.formatDecimal((questionReport.get(0).option9/questionReport.get(0).total)*100, 1, 2) + '%'}">1.13%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-warning mr-2"></i>
-												अवाधी</td>
+											<td><i class="fa fa-circle text-warning mr-2"></i> अवाधी</td>
 											<td th:text="${questionReport.get(0).option10}">45</td>
 											<td th:if="${questionReport.get(0).option10} == 0"
 												th:text="${(questionReport.get(0).option10/questionReport.get(0).total)*100 + '%'}">1.13%</td>
 											<td th:unless="${questionReport.get(0).option10} == 0"
 												th:text="${#numbers.formatDecimal((questionReport.get(0).option10/questionReport.get(0).total)*100, 1, 2) + '%'}">1.13%</td>
 										</tr>
-																				<tr>
+										<tr>
 											<td><i class="fa fa-circle text-success mr-2"></i>
 												लिम्बु</td>
 											<td th:text="${questionReport.get(0).option11}">45</td>
@@ -580,8 +569,7 @@
 												th:text="${#numbers.formatDecimal((questionReport.get(0).option11/questionReport.get(0).total)*100, 1, 2) + '%'}">1.13%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-dark mr-2"></i>
-											गुरुङ</td>
+											<td><i class="fa fa-circle text-dark mr-2"></i> गुरुङ</td>
 											<td th:text="${questionReport.get(0).option12}">45</td>
 											<td th:if="${questionReport.get(0).option12} == 0"
 												th:text="${(questionReport.get(0).option12/questionReport.get(0).total)*100 + '%'}">1.13%</td>
@@ -589,8 +577,7 @@
 												th:text="${#numbers.formatDecimal((questionReport.get(0).option12/questionReport.get(0).total)*100, 1, 2) + '%'}">1.13%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-warning mr-2"></i>
-												अन्य</td>
+											<td><i class="fa fa-circle text-danger mr-2"></i> अन्य</td>
 											<td th:text="${questionReport.get(0).option13}">45</td>
 											<td th:if="${questionReport.get(0).option13} == 0"
 												th:text="${(questionReport.get(0).option13/questionReport.get(0).total)*100 + '%'}">1.13%</td>
@@ -598,10 +585,7 @@
 												th:text="${#numbers.formatDecimal((questionReport.get(0).option13/questionReport.get(0).total)*100, 1, 2) + '%'}">1.13%</td>
 										</tr>
 										<tr>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td>
+											<td bgcolor="#FFFFFF" style="line-height: 50px;" colspan=3>&nbsp;</td>
 										</tr>
 								</table>
 							</div>
@@ -625,12 +609,12 @@
 												th:text="${#numbers.formatDecimal((questionReport.get(1).option1/(questionReport.get(1).total))*100, 1, 2 ) + '%'}">20.49%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-success mr-2"></i> ब्राह्मण
-											</td>
+											<td><i class="fa fa-circle text-success mr-2"></i>
+												ब्राह्मण</td>
 											<td th:text="${questionReport.get(1).option2}">25</td>
 											<td th:if="${questionReport.get(1).option2} == 0"
 												th:text="${(questionReport.get(1).option2/questionReport.get(2).total)*100 + '%'}">20.49%</td>
-												<td th:unless="${questionReport.get(1).option1} == 0"
+											<td th:unless="${questionReport.get(1).option1} == 0"
 												th:text="${#numbers.formatDecimal((questionReport.get(1).option2/(questionReport.get(1).total))*100, 1, 2 ) + '%'}">20.49%</td>
 										</tr>
 										<tr>
@@ -651,8 +635,8 @@
 											<td th:unless="${questionReport.get(1).option1} == 0"
 												th:text="${#numbers.formatDecimal((questionReport.get(1).option4/(questionReport.get(1).total))*100, 1, 2 ) + '%'}">20.49%</td>
 										</tr>
-																				<tr>
-											<td><i class="fa fa-circle text-success mr-2"></i> मधेशी
+										<tr>
+											<td><i class="fa fa-circle text-danger mr-2"></i> मधेशी
 											</td>
 											<td th:text="${questionReport.get(1).option5}">25</td>
 											<td th:if="${questionReport.get(1).option5} == 0"
@@ -661,17 +645,15 @@
 												th:text="${#numbers.formatDecimal((questionReport.get(1).option5/(questionReport.get(1).total))*100, 1, 2 ) + '%'}">20.49%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-secondary mr-2"></i>
-												मुस्लिम</td>
+											<td><i class="fa fa-circle text-info mr-2"></i> मुस्लिम</td>
 											<td th:text="${questionReport.get(1).option6}">25</td>
 											<td th:if="${questionReport.get(1).option6} == 0"
 												th:text="${(questionReport.get(1).option6/questionReport.get(1).total)*100 + '%'}">20.49%</td>
-												<td th:unless="${questionReport.get(1).option6} == 0"
+											<td th:unless="${questionReport.get(1).option6} == 0"
 												th:text="${#numbers.formatDecimal((questionReport.get(1).option6/(questionReport.get(1).total))*100, 1, 2 ) + '%'}">20.49%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-warning mr-2"></i> अन्य
-											</td>
+											<td><i class="fa fa-circle text-dark mr-2"></i> अन्य</td>
 											<td th:text="${questionReport.get(1).option7}">25</td>
 											<td th:if="${questionReport.get(1).option7} == 0"
 												th:text="${(questionReport.get(1).option7/questionReport.get(1).total)*100 + '%'}">20.49%</td>
@@ -689,8 +671,8 @@
 								<table class="table align-items-center">
 									<tbody>
 										<tr>
-											<td><i class="fa fa-circle text-primary mr-2"></i> हिन्दु
-											</td>
+											<td><i class="fa fa-circle text-primary mr-2"></i>
+												हिन्दु</td>
 											<td th:text="${questionReport.get(2).option1}">25</td>
 											<td th:if="${questionReport.get(2).option1} == 0"
 												th:text="${(questionReport.get(2).option1/questionReport.get(2).total)*100 + '%'}">20.49%</td>
@@ -716,15 +698,15 @@
 												th:text="${#numbers.formatDecimal((questionReport.get(2).option3/(questionReport.get(2).total))*100, 1, 2 ) + '%'}">20.49%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-warning mr-2"></i> किँरात
-											</td>
+											<td><i class="fa fa-circle text-warning mr-2"></i>
+												किँरात</td>
 											<td th:text="${questionReport.get(2).option4}">25</td>
 											<td th:if="${questionReport.get(2).option4} == 0"
 												th:text="${(questionReport.get(2).option4/questionReport.get(2).total)*100 + '%'}">20.49%</td>
 											<td th:unless="${questionReport.get(2).option4} == 0"
 												th:text="${#numbers.formatDecimal((questionReport.get(2).option4/(questionReport.get(2).total))*100, 1, 2 ) + '%'}">20.49%</td>
 										</tr>
-																				<tr>
+										<tr>
 											<td><i class="fa fa-circle text-secondary mr-2"></i>
 												ईसाई</td>
 											<td th:text="${questionReport.get(2).option5}">25</td>
@@ -734,8 +716,8 @@
 												th:text="${#numbers.formatDecimal((questionReport.get(2).option5/(questionReport.get(2).total))*100, 1, 2 ) + '%'}">20.49%</td>
 										</tr>
 										<tr>
-											<td><i class="fa fa-circle text-warning mr-2"></i> निर्दिष्ट / अन्य
-											</td>
+											<td><i class="fa fa-circle text-warning mr-2"></i>
+												निर्दिष्ट / अन्य</td>
 											<td th:text="${questionReport.get(2).option6}">25</td>
 											<td th:if="${questionReport.get(2).option6} == 0"
 												th:text="${(questionReport.get(2).option6/questionReport.get(2).total)*100 + '%'}">20.49%</td>
@@ -751,14 +733,12 @@
 
 				<!-- added for caste mother tongue and religion ends -->
 
-				<!-- Start Row -->
-				<div class="row"
-					th:if="${!#lists.isEmpty(populationReport) && populationReport != null}">
+				<!-- added for education and foreign employment starts -->
+				<div class="row" th:if="${!#lists.isEmpty(populationReport) && populationReport != null}">
 					<div class="col-12 col-lg-6 col-xl-6"
 						th:if="${populationReport.get(2) != null}">
 						<div class="card">
 							<div class="card-header">शिक्षाको अवस्था</div>
-
 							<div class="table-responsive">
 								<table class="table align-items-center">
 									<tbody>
@@ -953,8 +933,9 @@
 						</div>
 					</div>
 				</div>
-				<!--End Row-->
+				<!-- added for education and foreign employment ends-->
 
+				<!-- fuel and waste management starts -->
 				<div class="row"
 					th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
 					<div class="col-12 col-lg-6 col-xl-6"
@@ -1119,9 +1100,11 @@
 						</div>
 					</div>
 				</div>
+				
+				<!-- fuel and waste management ends -->
 
-				<h4
-					th:if="${!#lists.isEmpty(questionReport) && questionReport != null && questionReport.get(3) != null}">सवारी
+				<!-- Vehicle information starts -->
+				<h4	th:if="${!#lists.isEmpty(questionReport) && questionReport != null && questionReport.get(3) != null}">सवारी
 					साधन</h4>
 				<div class="row mt-3"
 					th:if="${!#lists.isEmpty(questionReport) && questionReport != null && questionReport.get(3) != null}">
@@ -1242,7 +1225,9 @@
 						</div>
 					</div>
 				</div>
-
+				<!-- Vehicle information ends -->
+				
+				<!-- income section starts -->
 				<div class="row income-panel"
 					th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
 					<div class="col-12 col-lg-6 col-xl-6"
@@ -1604,16 +1589,13 @@
 									</div>
 								</div>
 							</div>
-
 						</div>
 					</div>
-
 				</div>
-				<!--End Row-->
+				<!-- income section starts -->
 
 				<!--Added for Krishi Dashboard-->
-				<h4 th:if="${!#lists.isEmpty(extraReport) && extraReport != null}">कृषि
-					तथा पशुपालन</h4>
+				<h4 th:if="${!#lists.isEmpty(extraReport) && extraReport != null}">कृषि तथा पशुपालन</h4>
 				<div th:if="${!#lists.isEmpty(extraReport) && extraReport != null}"
 					class="row"
 					th:with="totalHousehold=${#numbers.formatInteger(extraReport.get(1).data,1)}">
@@ -1635,7 +1617,6 @@
 							</div>
 						</div>
 					</div>
-
 					<div class="col-12 col-lg-3"
 						th:if="${!#lists.isEmpty(extraReport) && extraReport != null}"
 						th:attr="onclick=|getBeekeepingReport()|">
@@ -1655,7 +1636,6 @@
 							</div>
 						</div>
 					</div>
-
 					<div class="col-12 col-lg-3"
 						th:if="${!#lists.isEmpty(extraReport) && extraReport != null}"
 						th:attr="onclick=|getAgriculturalCropReport()|">
@@ -1673,10 +1653,8 @@
 									</small>
 								</h4>
 							</div>
-
 						</div>
 					</div>
-
 					<div class="col-12 col-lg-3"
 						th:if="${!#lists.isEmpty(extraReport) && extraReport != null}"
 						th:attr="onclick=|getAnimalsReport()|">
@@ -1693,25 +1671,20 @@
 									</small>
 								</h4>
 							</div>
-
 						</div>
 					</div>
 				</div>
-
 				<!--Added for Krishi Dashboard ends-->
 
 
 
 				<!--Added for Remarkable Places Dashboard-->
-				<h4	th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">महत्वपुर्ण
-					स्थलहरुः</h4>
-				<!-- 				First Row -->
-				<div
-					th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}"
-					class="row">
+				<h4 th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">महत्वपुर्ण स्थलहरुः</h4>
+				<!-- First Row -->
+				<div th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}" class="row">
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card gradient-bloody">
+						<div class="card bg-success">
 							<div class="card-body">
 								<p class="text-white">मन्दिर</p>
 								<h4 class="mb-0 text-white">
@@ -1722,7 +1695,7 @@
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card gradient-scooter">
+						<div class="card bg-success">
 							<div class="card-body">
 								<p class="text-white">पार्क</p>
 								<h4 class="mb-0 text-white">
@@ -1733,7 +1706,7 @@
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card gradient-blooker">
+						<div class="card bg-success">
 							<div class="card-body">
 								<p class="text-white">पोखरी</p>
 								<h4 class="mb-0 text-white">
@@ -1745,7 +1718,7 @@
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card gradient-quepal">
+						<div class="card bg-success">
 							<div class="card-body">
 								<p class="text-white">इनार/पँधेरी</p>
 								<h4 class="mb-0 text-white">
@@ -1755,40 +1728,35 @@
 
 						</div>
 					</div>
-
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card gradient-purpink">
+						<div class="card bg-success">
 							<div class="card-body">
 								<p class="text-white">स्तुपा/मूर्ति</p>
 								<h4 class="mb-0 text-white">
 									<span th:text="${favPlaceReport.get(4).data}">3998</span>
 								</h4>
 							</div>
-
 						</div>
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card gradient-ibiza">
+						<div class="card bg-success">
 							<div class="card-body">
 								<p class="text-white">विद्यालय</p>
 								<h4 class="mb-0 text-white">
 									<span th:text="${favPlaceReport.get(5).data}">3998</span>
 								</h4>
 							</div>
-
 						</div>
 					</div>
 				</div>
 
-				<!-- 				Second Row -->
-				<div
-					th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}"
-					class="row">
+				<!--Second Row -->
+				<div th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}" class="row">
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card gradient-branding">
+						<div class="card bg-success">
 							<div class="card-body">
 								<p class="text-white">संघ/संस्था</p>
 								<h4 class="mb-0 text-white">
@@ -1797,10 +1765,9 @@
 							</div>
 						</div>
 					</div>
-
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card gradient-meridian">
+						<div class="card bg-success">
 							<div class="card-body">
 								<p class="text-white">गुँठी</p>
 								<h4 class="mb-0 text-white">
@@ -1809,10 +1776,9 @@
 							</div>
 						</div>
 					</div>
-
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(favPlaceReport) && favPlaceReport != null}">
-						<div class="card gradient-dusk">
+						<div class="card bg-success">
 							<div class="card-body">
 								<p class="text-white">अन्य</p>
 								<h4 class="mb-0 text-white">
@@ -1826,10 +1792,9 @@
 				<!--Added for Remarkable places Dashboard ends-->
 
 
-				<!-- 				Added for child section start -->
+				<!--Added for child section start -->
 				<h4>बालबालिका खण्ड</h4>
-				<div class="row"
-					th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
+				<div class="row" th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
 					<div class="col-12 col-lg-6 col-xl-6"
 						th:if="${questionReport.get(11) != null}">
 						<h4>१८ वर्षभन्दा कम उमेरका भिन्न शारिरीक तथा मानसिक क्षमता भएका बालक</h4>
@@ -1839,8 +1804,8 @@
 									<div class="card-body">
 										<p class="text-white">शारीरिक अपाङ्गता</p>
 										<h4 class="mb-0 text-white">
-											<span th:text="${questionReport.get(11).option1}">848</span> <small
-												class="small-font text-white pull-right"> <span
+											<span th:text="${questionReport.get(11).option1}">848</span>
+											<small class="small-font text-white pull-right"> <span
 												th:if="${questionReport.get(11).option1} == 0"
 												th:text="${(questionReport.get(11).option1/questionReport.get(11).total) * 100 + '%'}">94.12%</span>
 
@@ -1850,7 +1815,6 @@
 											</small>
 										</h4>
 									</div>
-
 								</div>
 							</div>
 							<div class="col-12 col-lg-6">
@@ -1858,8 +1822,8 @@
 									<div class="card-body">
 										<p class="text-white">दृष्टिविहिन र न्युन दृष्टिविहिन</p>
 										<h4 class="mb-0 text-white">
-											<span th:text="${questionReport.get(11).option2}">848</span> <small
-												class="small-font text-white pull-right"> <span
+											<span th:text="${questionReport.get(11).option2}">848</span>
+											<small class="small-font text-white pull-right"> <span
 												th:if="${questionReport.get(11).option2} == 0"
 												th:text="${(questionReport.get(11).option2/questionReport.get(11).total) * 100 + '%'}">94.12%</span>
 
@@ -1869,7 +1833,6 @@
 											</small>
 										</h4>
 									</div>
-
 								</div>
 							</div>
 							<div class="col-12 col-lg-6">
@@ -1877,8 +1840,8 @@
 									<div class="card-body">
 										<p class="text-white">बोल्न नसक्ने</p>
 										<h4 class="mb-0 text-white">
-											<span th:text="${questionReport.get(11).option3}">848</span> <small
-												class="small-font text-white pull-right"> <span
+											<span th:text="${questionReport.get(11).option3}">848</span>
+											<small class="small-font text-white pull-right"> <span
 												th:if="${questionReport.get(11).option3} == 0"
 												th:text="${(questionReport.get(11).option3/questionReport.get(11).total) * 100 + '%'}">94.12%</span>
 
@@ -1888,7 +1851,6 @@
 											</small>
 										</h4>
 									</div>
-
 								</div>
 							</div>
 							<div class="col-12 col-lg-6">
@@ -1896,8 +1858,8 @@
 									<div class="card-body">
 										<p class="text-white">सुस्त श्रवण</p>
 										<h4 class="mb-0 text-white">
-											<span th:text="${questionReport.get(11).option4}">848</span> <small
-												class="small-font text-white pull-right"> <span
+											<span th:text="${questionReport.get(11).option4}">848</span>
+											<small class="small-font text-white pull-right"> <span
 												th:if="${questionReport.get(11).option4} == 0"
 												th:text="${(questionReport.get(11).option4/questionReport.get(11).total) * 100 + '%'}">94.12%</span>
 
@@ -1908,14 +1870,14 @@
 										</h4>
 									</div>
 								</div>
-							</div>	
+							</div>
 							<div class="col-12 col-lg-6">
 								<div class="card bg-danger">
 									<div class="card-body">
 										<p class="text-white">मानसिक अपाङ्गता</p>
 										<h4 class="mb-0 text-white">
-											<span th:text="${questionReport.get(11).option5}">848</span> <small
-												class="small-font text-white pull-right"> <span
+											<span th:text="${questionReport.get(11).option5}">848</span>
+											<small class="small-font text-white pull-right"> <span
 												th:if="${questionReport.get(11).option5} == 0"
 												th:text="${(questionReport.get(11).option5/questionReport.get(11).total) * 100 + '%'}">94.12%</span>
 
@@ -1933,8 +1895,8 @@
 									<div class="card-body">
 										<p class="text-white">श्रवण र दृष्टिविहिन (दुवै)</p>
 										<h4 class="mb-0 text-white">
-											<span th:text="${questionReport.get(11).option6}">848</span> <small
-												class="small-font text-white pull-right"> <span
+											<span th:text="${questionReport.get(11).option6}">848</span>
+											<small class="small-font text-white pull-right"> <span
 												th:if="${questionReport.get(11).option6} == 0"
 												th:text="${(questionReport.get(11).option6/questionReport.get(11).total) * 100 + '%'}">94.12%</span>
 
@@ -1944,7 +1906,6 @@
 											</small>
 										</h4>
 									</div>
-
 								</div>
 							</div>
 							<div class="col-12 col-lg-6">
@@ -1952,8 +1913,8 @@
 									<div class="card-body">
 										<p class="text-white">अन्य</p>
 										<h4 class="mb-0 text-white">
-											<span th:text="${questionReport.get(11).option7}">848</span> <small
-												class="small-font text-white pull-right"> <span
+											<span th:text="${questionReport.get(11).option7}">848</span>
+											<small class="small-font text-white pull-right"> <span
 												th:if="${questionReport.get(11).option7} == 0"
 												th:text="${(questionReport.get(11).option7/questionReport.get(11).total) * 100 + '%'}">94.12%</span>
 
@@ -1963,7 +1924,6 @@
 											</small>
 										</h4>
 									</div>
-
 								</div>
 							</div>
 							<div class="col-12 col-lg-6">
@@ -1971,8 +1931,8 @@
 									<div class="card-body">
 										<p class="text-white">छैन</p>
 										<h4 class="mb-0 text-white">
-											<span th:text="${questionReport.get(11).option8}">848</span> <small
-												class="small-font text-white pull-right"> <span
+											<span th:text="${questionReport.get(11).option8}">848</span>
+											<small class="small-font text-white pull-right"> <span
 												th:if="${questionReport.get(11).option8} == 0"
 												th:text="${(questionReport.get(11).option8/questionReport.get(11).total) * 100 + '%'}">94.12%</span>
 
@@ -1982,7 +1942,6 @@
 											</small>
 										</h4>
 									</div>
-
 								</div>
 							</div>
 						</div>
@@ -1990,15 +1949,16 @@
 
 					<div class="col-12 col-lg-6 col-xl-6"
 						th:if="${questionReport.get(6) != null}">
-						<h4>१८ वर्षभन्दा कम उमेरका भिन्न शारिरीक तथा मानसिक क्षमता भएका बालिका</h4>
+						<h4>१८ वर्षभन्दा कम उमेरका भिन्न शारिरीक तथा मानसिक क्षमता
+							भएका बालिका</h4>
 						<div class="row">
 							<div class="col-12 col-lg-6">
 								<div class="card bg-success">
 									<div class="card-body">
 										<p class="text-white">शारीरिक अपाङ्गता</p>
 										<h4 class="mb-0 text-white">
-											<span th:text="${questionReport.get(12).option1}">848</span> <small
-												class="small-font text-white pull-right"> <span
+											<span th:text="${questionReport.get(12).option1}">848</span>
+											<small class="small-font text-white pull-right"> <span
 												th:if="${questionReport.get(12).option1} == 0"
 												th:text="${(questionReport.get(12).option1/questionReport.get(12).total) * 100 + '%'}">94.12%</span>
 
@@ -2015,8 +1975,8 @@
 									<div class="card-body">
 										<p class="text-white">दृष्टिविहिन र न्युन दृष्टिविहिन</p>
 										<h4 class="mb-0 text-white">
-											<span th:text="${questionReport.get(12).option2}">848</span> <small
-												class="small-font text-white pull-right"> <span
+											<span th:text="${questionReport.get(12).option2}">848</span>
+											<small class="small-font text-white pull-right"> <span
 												th:if="${questionReport.get(12).option2} == 0"
 												th:text="${(questionReport.get(12).option2/questionReport.get(12).total) * 100 + '%'}">94.12%</span>
 
@@ -2033,8 +1993,8 @@
 									<div class="card-body">
 										<p class="text-white">बोल्न नसक्ने</p>
 										<h4 class="mb-0 text-white">
-											<span th:text="${questionReport.get(12).option3}">848</span> <small
-												class="small-font text-white pull-right"> <span
+											<span th:text="${questionReport.get(12).option3}">848</span>
+											<small class="small-font text-white pull-right"> <span
 												th:if="${questionReport.get(12).option3} == 0"
 												th:text="${(questionReport.get(12).option3/questionReport.get(12).total) * 100 + '%'}">94.12%</span>
 
@@ -2051,8 +2011,8 @@
 									<div class="card-body">
 										<p class="text-white">सुस्त श्रवण</p>
 										<h4 class="mb-0 text-white">
-											<span th:text="${questionReport.get(12).option4}">848</span> <small
-												class="small-font text-white pull-right"> <span
+											<span th:text="${questionReport.get(12).option4}">848</span>
+											<small class="small-font text-white pull-right"> <span
 												th:if="${questionReport.get(12).option4} == 0"
 												th:text="${(questionReport.get(12).option4/questionReport.get(12).total) * 100 + '%'}">94.12%</span>
 
@@ -2069,8 +2029,8 @@
 									<div class="card-body">
 										<p class="text-white">मानसिक अपाङ्गता</p>
 										<h4 class="mb-0 text-white">
-											<span th:text="${questionReport.get(12).option5}">848</span> <small
-												class="small-font text-white pull-right"> <span
+											<span th:text="${questionReport.get(12).option5}">848</span>
+											<small class="small-font text-white pull-right"> <span
 												th:if="${questionReport.get(12).option5} == 0"
 												th:text="${(questionReport.get(12).option5/questionReport.get(12).total) * 100 + '%'}">94.12%</span>
 
@@ -2087,8 +2047,8 @@
 									<div class="card-body">
 										<p class="text-white">श्रवण र दृष्टिविहिन (दुवै)</p>
 										<h4 class="mb-0 text-white">
-											<span th:text="${questionReport.get(12).option6}">848</span> <small
-												class="small-font text-white pull-right"> <span
+											<span th:text="${questionReport.get(12).option6}">848</span>
+											<small class="small-font text-white pull-right"> <span
 												th:if="${questionReport.get(12).option6} == 0"
 												th:text="${(questionReport.get(12).option6/questionReport.get(12).total) * 100 + '%'}">94.12%</span>
 
@@ -2105,8 +2065,8 @@
 									<div class="card-body">
 										<p class="text-white">अन्य</p>
 										<h4 class="mb-0 text-white">
-											<span th:text="${questionReport.get(12).option7}">848</span> <small
-												class="small-font text-white pull-right"> <span
+											<span th:text="${questionReport.get(12).option7}">848</span>
+											<small class="small-font text-white pull-right"> <span
 												th:if="${questionReport.get(12).option7} == 0"
 												th:text="${(questionReport.get(12).option7/questionReport.get(12).total) * 100 + '%'}">94.12%</span>
 
@@ -2123,8 +2083,8 @@
 									<div class="card-body">
 										<p class="text-white">छैन</p>
 										<h4 class="mb-0 text-white">
-											<span th:text="${questionReport.get(12).option8}">848</span> <small
-												class="small-font text-white pull-right"> <span
+											<span th:text="${questionReport.get(12).option8}">848</span>
+											<small class="small-font text-white pull-right"> <span
 												th:if="${questionReport.get(12).option8} == 0"
 												th:text="${(questionReport.get(12).option8/questionReport.get(12).total) * 100 + '%'}">94.12%</span>
 
@@ -2141,18 +2101,15 @@
 				</div>
 
 
-
-
-
-
-				<h4	th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">उपचार प्राथमिकता</h4>
-				<!-- 				First Row -->
+				<!--Health services started -->
+				<h4	th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">उपचार
+					प्राथमिकता</h4>
 				<div
 					th:if="${!#lists.isEmpty(questionReport) && questionReport != null}"
 					class="row">
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-bloody">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">लामा, धामी, झाँऋी</p>
 								<h4 class="mb-0 text-white">
@@ -2163,7 +2120,7 @@
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-scooter">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">परंपरागत वैद्य</p>
 								<h4 class="mb-0 text-white">
@@ -2174,7 +2131,7 @@
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-blooker">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">स्वास्थ्य चौकी</p>
 								<h4 class="mb-0 text-white">
@@ -2186,7 +2143,7 @@
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-quepal">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">अस्पताल (निजी, सरकारी)</p>
 								<h4 class="mb-0 text-white">
@@ -2196,10 +2153,9 @@
 
 						</div>
 					</div>
-
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-purpink">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">अन्य</p>
 								<h4 class="mb-0 text-white">
@@ -2210,16 +2166,16 @@
 						</div>
 					</div>
 				</div>
+				<!--Health services ends -->
 
-
-				<h4	th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">बिचैमा विद्यालय जान छोडेका बालबालिकाहरु</h4>
-				<!-- 				First Row -->
-				<div
-					th:if="${!#lists.isEmpty(questionReport) && questionReport != null}"
+				<!--School leaving children starts-->
+				<h4	th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">बिचैमा
+					विद्यालय जान छोडेका बालबालिकाहरु</h4>
+				<div th:if="${!#lists.isEmpty(questionReport) && questionReport != null}"
 					class="row">
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-bloody">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">बालक</p>
 								<h4 class="mb-0 text-white">
@@ -2230,7 +2186,7 @@
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-scooter">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">बालिका</p>
 								<h4 class="mb-0 text-white">
@@ -2241,7 +2197,7 @@
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-blooker">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">छैन</p>
 								<h4 class="mb-0 text-white">
@@ -2252,16 +2208,16 @@
 						</div>
 					</div>
 				</div>
-
-
-				<h4	th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">बाल बिकास केन्द्र वा पुर्व प्रा. वि तहमा जाने बालबालिकाहरु</h4>
-				<!-- 				First Row -->
+				<!--School leaving children ends-->
+			
+				<!--Child care center section starts -->
+				<h4	th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">बाल	बिकास केन्द्र वा पुर्व प्रा. वि तहमा जाने बालबालिकाहरु</h4>
 				<div
 					th:if="${!#lists.isEmpty(questionReport) && questionReport != null}"
 					class="row">
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-bloody">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">बालक</p>
 								<h4 class="mb-0 text-white">
@@ -2272,7 +2228,7 @@
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-scooter">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">बालिका</p>
 								<h4 class="mb-0 text-white">
@@ -2283,28 +2239,27 @@
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-blooker">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">छैन</p>
 								<h4 class="mb-0 text-white">
 									<span th:text="${questionReport.get(15).option3}">3998</span>
 								</h4>
 							</div>
-
 						</div>
 					</div>
 				</div>
-				
-				
+				<!--Child care center section ends -->
 
-				<h4	th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">बालबालिकाहरुले गल्ती गरेमा</h4>
-				<!-- 				First Row -->
+				<!--Children mistake section starts -->
+				<h4	th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">बालबालिकाहरुले
+					गल्ती गरेमा</h4>
 				<div
 					th:if="${!#lists.isEmpty(questionReport) && questionReport != null}"
 					class="row">
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-bloody">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">गाली</p>
 								<h4 class="mb-0 text-white">
@@ -2315,7 +2270,7 @@
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-scooter">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">कुटपीट</p>
 								<h4 class="mb-0 text-white">
@@ -2326,64 +2281,58 @@
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-blooker">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">खानामा बन्देज</p>
 								<h4 class="mb-0 text-white">
 									<span th:text="${questionReport.get(16).option3}">3998</span>
 								</h4>
 							</div>
-
 						</div>
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-quepal">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">कोठामा थुन्ने</p>
 								<h4 class="mb-0 text-white">
 									<span th:text="${questionReport.get(16).option4}">3998</span>
 								</h4>
 							</div>
-
 						</div>
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-purpink">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">सम्झाउने</p>
 								<h4 class="mb-0 text-white">
 									<span th:text="${questionReport.get(16).option5}">3998</span>
 								</h4>
 							</div>
-
 						</div>
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-purpink">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">अन्य</p>
 								<h4 class="mb-0 text-white">
 									<span th:text="${questionReport.get(16).option6}">3998</span>
 								</h4>
 							</div>
-
 						</div>
 					</div>
 				</div>
+				<!--Children mistake section ends -->
 
-
-
-				<h4	th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">महिला वा बालबालिका उपर हिंसा</h4>
-				<!-- 				First Row -->
-				<div
-					th:if="${!#lists.isEmpty(questionReport) && questionReport != null}"
+				<!--Women and children violence section starts -->
+				<h4 th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">महिला वा बालबालिका उपर हिंसा</h4>
+				<div th:if="${!#lists.isEmpty(questionReport) && questionReport != null}"
 					class="row">
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-bloody">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">दाईजोसम्बन्धी</p>
 								<h4 class="mb-0 text-white">
@@ -2394,7 +2343,7 @@
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-scooter">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">वहुविवाह</p>
 								<h4 class="mb-0 text-white">
@@ -2405,55 +2354,51 @@
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-blooker">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">घरायसी हिंसा</p>
 								<h4 class="mb-0 text-white">
 									<span th:text="${questionReport.get(17).option3}">3998</span>
 								</h4>
 							</div>
-
 						</div>
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-quepal">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">बालविवाह</p>
 								<h4 class="mb-0 text-white">
 									<span th:text="${questionReport.get(17).option4}">3998</span>
 								</h4>
 							</div>
-
 						</div>
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-purpink">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">बलात्कार</p>
 								<h4 class="mb-0 text-white">
 									<span th:text="${questionReport.get(17).option5}">3998</span>
 								</h4>
 							</div>
-
 						</div>
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-purpink">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">महिला/बालबालिका बेचबिखन</p>
 								<h4 class="mb-0 text-white">
 									<span th:text="${questionReport.get(17).option6}">3998</span>
 								</h4>
 							</div>
-
 						</div>
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-purpink">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">कुनै पनि घटना नघटेको</p>
 								<h4 class="mb-0 text-white">
@@ -2463,16 +2408,15 @@
 						</div>
 					</div>
 				</div>
-				
+				<!--Women and children violence section ends -->
 
-				<h4	th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">बितेको १ वर्षभित्र ५ वर्षमुनिका बालबालिकाको मृत्यु</h4>
-				<!-- 				First Row -->
-				<div
-					th:if="${!#lists.isEmpty(questionReport) && questionReport != null}"
+				<!--Child mortality section starts -->
+				<h4 th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">बितेको १ वर्षभित्र ५ वर्षमुनिका बालबालिकाको मृत्यु</h4>
+				<div th:if="${!#lists.isEmpty(questionReport) && questionReport != null}"
 					class="row">
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-bloody">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">छ</p>
 								<h4 class="mb-0 text-white">
@@ -2483,7 +2427,7 @@
 					</div>
 					<div class="col-12 col-lg-2"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
-						<div class="card gradient-scooter">
+						<div class="card bg-primary">
 							<div class="card-body">
 								<p class="text-white">छैन</p>
 								<h4 class="mb-0 text-white">
@@ -2493,105 +2437,88 @@
 						</div>
 					</div>
 				</div>
-				
+				<!--Child mortality section ends -->
+				<!-- Added for child section ends -->
 
-				<!-- 					Added for child section ends -->
-
-
-
-
-
-
-
-
-
-
-
-
-				<!--Section for GIS map display -->
-				<!-- 				<iframe -->
-				<!-- 					src="https://www.google.com/maps/d/u/0/embed?mid=1OEhgn6qwXwI6RninEuRHIL9HJLRUURzt" -->
-				<!-- 					width="100%" height="600"></iframe> -->
-
-				<!-- 				Whole Map -->
+				<!--Section for GIS map display starts -->
+				<!-- Whole Map -->
 				<iframe th:if="${selectedWard} == 0"
 					src="https://www.google.com/maps/d/u/1/embed?mid=1B85zoVg4QKsOVD-gU3HCxiLhg8kKVtW1"
 					width="100%" height="600"></iframe>
 
-
-				<!-- 				Ward No 1 -->
+				<!-- Ward No 1 -->
 				<iframe th:if="${selectedWard} == 1"
 					src="https://www.google.com/maps/d/u/1/embed?mid=10WAWu4g_aPtAGcWTptfvcv5so_8AQCrH"
 					width="100%" height="600"></iframe>
 
-				<!-- 				Ward No 2  -->
+				<!-- Ward No 2  -->
 				<iframe th:if="${selectedWard} == 2"
 					src="https://www.google.com/maps/d/u/1/embed?mid=187vpc_hUETH0eEPrgHY93zqfsGVtCZo5"
 					width="100%" height="600"></iframe>
 
-				<!-- 				Ward No 3 -->
+				<!-- Ward No 3 -->
 				<iframe th:if="${selectedWard} == 3"
 					src="https://www.google.com/maps/d/u/1/embed?mid=1zJ-Fc_PEli_dmghxUoprILEHY19oGzv1"
 					width="100%" height="600"></iframe>
 
-				<!-- 				Ward No 4 -->
+				<!-- Ward No 4 -->
 				<iframe th:if="${selectedWard} == 4"
 					src="https://www.google.com/maps/d/u/1/embed?mid=1M4ygdod3A-zt-dyMSCmUJY__7RNQ3rp1"
 					width="100%" height="600"></iframe>
 
-				<!-- 				Ward No 5 -->
+				<!-- Ward No 5 -->
 				<iframe th:if="${selectedWard} == 5"
 					src="https://www.google.com/maps/d/u/1/embed?mid=1btjfNs9ncbef9vFvSSU7Z7PXDpaQdwFY"
 					width="100%" height="600"></iframe>
 
-				<!-- 				Ward No 6 -->
+				<!-- Ward No 6 -->
 				<iframe th:if="${selectedWard} == 6"
 					src="https://www.google.com/maps/d/u/1/embed?mid=1JIj1b207Uce3kFIHswy5W5jpYr0P3jkf"
 					width="100%" height="600"></iframe>
 
-				<!-- 				Ward No 7 -->
+				<!-- Ward No 7 -->
 				<iframe th:if="${selectedWard} == 7"
 					src="https://www.google.com/maps/d/u/1/embed?mid=1nww8CtRuovxbm-FhjPafeF-VFNNrsWca"
 					width="100%" height="600"></iframe>
 
-				<!-- 				Ward No 8 -->
+				<!-- Ward No 8 -->
 				<iframe th:if="${selectedWard} == 8"
 					src="https://www.google.com/maps/d/u/1/embed?mid=1uihabCoas3h3aKC9I7U2ySHS3L_7NN88"
 					width="100%" height="600"></iframe>
 
-				<!-- 				Ward No 9 -->
+				<!-- Ward No 9 -->
 				<iframe th:if="${selectedWard} == 9"
 					src="https://www.google.com/maps/d/u/1/embed?mid=1XEGsXnj-QRLQoYCRdiMNi7_1qu-zQZci"
 					width="100%" height="600"></iframe>
 
-				<!-- 				Ward No 10 -->
+				<!-- Ward No 10 -->
 				<iframe th:if="${selectedWard} == 10"
 					src="https://www.google.com/maps/d/u/1/embed?mid=1-C9ZpEhWJD2IpRoPMWbovCEIqgGsdCq_"
 					width="100%" height="600"></iframe>
 
-				<!-- 				Ward No 11 -->
+				<!-- Ward No 11 -->
 				<iframe th:if="${selectedWard} == 11"
 					src="https://www.google.com/maps/d/u/1/embed?mid=1bRcWVbOP4bzxgclLyTUW3qo3cTPrx6C_"
 					width="100%" height="600"></iframe>
 
-				<!-- 				Ward No 12 -->
+				<!-- Ward No 12 -->
 				<iframe th:if="${selectedWard} == 12"
 					src="https://www.google.com/maps/d/u/1/embed?mid=1ezr2YpBmTpqaF1ZhWlMHf6G69f07RkxQ"
 					width="100%" height="600"></iframe>
 
-				<!-- 				Ward No 13 -->
+				<!-- Ward No 13 -->
 				<iframe th:if="${selectedWard} == 13"
 					src="https://www.google.com/maps/d/u/1/embed?mid=17qYRqkZ7ae8N--AX5KY3YWxNDr4Vx8Ww"
 					width="100%" height="600"></iframe>
 
-				<!-- 				Ward No 14 -->
+				<!-- Ward No 14 -->
 				<iframe th:if="${selectedWard} == 14"
 					src="https://www.google.com/maps/d/u/1/embed?mid=1thfWr-aNjn1CdS0JowF1gTMP9RwiPdNu"
 					width="100%" height="600"></iframe>
+				<!--Section for GIS map display ends -->	
 				<!--End Dashboard Content-->
 			</div>
 			<!-- End container-fluid-->
-
 		</div>
 		<!--End content-wrapper-->
 
@@ -2606,9 +2533,6 @@
 	<!--End wrapper-->
 	<div th:replace="~{fragments/scripts :: scripts}"></div>
 	<!-- loader scripts -->
-	<!-- <script th:src="@{/assets/js/jquery.loading-indicator.html}"
-		src="assets/js/jquery.loading-indicator.html"></script> -->
-	<!-- Chart js -->
 	<script th:src="@{/assets/plugins/Chart.js/Chart.min.js}"
 		src="assets/plugins/Chart.js/Chart.min.js"></script>
 	<!-- Index js -->
