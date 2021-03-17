@@ -81,7 +81,7 @@
 										style="width: 55%"></div>
 								</div>
 								<p class="mb-0 text-white small-font">
-									शिशु <span th:if="${populationReport.get(0).option1} == 0"
+									शिशु (०-५)<span th:if="${populationReport.get(0).option1} == 0"
 										class="float-right"
 										th:text="${(populationReport.get(0).option1/populationReport.get(0).total)*100 + '%'}">
 										<i class="zmdi zmdi-long-arrow-up"></i>
@@ -105,7 +105,7 @@
 										style="width: 55%"></div>
 								</div>
 								<p class="mb-0 text-white small-font">
-									बालबालिका <span th:if="${populationReport.get(0).option2} == 0"
+									बालबालिका(५-१८) <span th:if="${populationReport.get(0).option2} == 0"
 										class="float-right"
 										th:text="${((populationReport.get(0).option2/populationReport.get(0).total)*100) +'%'}">
 										<i class="zmdi zmdi-long-arrow-up"></i>
@@ -130,7 +130,7 @@
 										style="width: 55%"></div>
 								</div>
 								<p class="mb-0 text-white small-font">
-									युवा <span th:if="${populationReport.get(0).option3} == 0"
+									युवा(१८-४०)<span th:if="${populationReport.get(0).option3} == 0"
 										class="float-right"
 										th:text="${((populationReport.get(0).option3/populationReport.get(0).total)*100) +'%'}">
 										<i class="zmdi zmdi-long-arrow-up"></i>
@@ -154,7 +154,7 @@
 										style="width: 55%"></div>
 								</div>
 								<p class="mb-0 text-white small-font">
-									अधबैँसे <span th:if="${populationReport.get(0).option4} == 0"
+									अधबैँसे(४०-६०) <span th:if="${populationReport.get(0).option4} == 0"
 										class="float-right"
 										th:text="${((populationReport.get(0).option4/populationReport.get(0).total)*100) +'%'}">
 										<i class="zmdi zmdi-long-arrow-up"></i>
@@ -178,7 +178,7 @@
 										style="width: 55%"></div>
 								</div>
 								<p class="mb-0 text-white small-font">
-									बृद्ध <span th:if="${populationReport.get(0).option5} == 0"
+									बृद्ध(६०-७०) <span th:if="${populationReport.get(0).option5} == 0"
 										class="float-right"
 										th:text="${((populationReport.get(0).option5/populationReport.get(0).total)*100) +'%'}">
 										<i class="zmdi zmdi-long-arrow-up"></i>
@@ -202,7 +202,7 @@
 										style="width: 55%"></div>
 								</div>
 								<p class="mb-0 text-white small-font">
-									जेष्ठ नागरिक <span
+									जेष्ठ नागरिक(७० - माथि) <span
 										th:if="${populationReport.get(0).option6} == 0"
 										class="float-right"
 										th:text="${((populationReport.get(0).option6/populationReport.get(0).total)*100) +'%'}">
@@ -1793,7 +1793,7 @@
 
 
 				<!--Added for child section start -->
-				<h4>बालबालिका खण्ड</h4>
+<!-- 				<h4>बालबालिका खण्ड</h4> -->
 				<div class="row" th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
 					<div class="col-12 col-lg-6 col-xl-6"
 						th:if="${questionReport.get(11) != null}">
@@ -2169,11 +2169,15 @@
 				<!--Health services ends -->
 
 				<!--School leaving children starts-->
+				
+				<div class="row" th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
+				<div class="col-12 col-lg-2 col-xl-6"
+						th:if="${questionReport.get(14) != null}">
 				<h4	th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">बिचैमा
 					विद्यालय जान छोडेका बालबालिकाहरु</h4>
 				<div th:if="${!#lists.isEmpty(questionReport) && questionReport != null}"
 					class="row">
-					<div class="col-12 col-lg-2"
+					<div class="col-12 col-lg-3"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
 						<div class="card bg-primary">
 							<div class="card-body">
@@ -2184,7 +2188,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-2"
+					<div class="col-12 col-lg-3"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
 						<div class="card bg-primary">
 							<div class="card-body">
@@ -2195,7 +2199,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-2"
+					<div class="col-12 col-lg-3"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
 						<div class="card bg-primary">
 							<div class="card-body">
@@ -2208,14 +2212,17 @@
 						</div>
 					</div>
 				</div>
+				</div>
 				<!--School leaving children ends-->
 			
 				<!--Child care center section starts -->
+				<div class="col-12 col-lg-2 col-xl-6"
+						th:if="${questionReport.get(15) != null}">
 				<h4	th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">बाल	बिकास केन्द्र वा पुर्व प्रा. वि तहमा जाने बालबालिकाहरु</h4>
 				<div
 					th:if="${!#lists.isEmpty(questionReport) && questionReport != null}"
 					class="row">
-					<div class="col-12 col-lg-2"
+					<div class="col-12 col-lg-3"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
 						<div class="card bg-primary">
 							<div class="card-body">
@@ -2226,7 +2233,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-2"
+					<div class="col-12 col-lg-3"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
 						<div class="card bg-primary">
 							<div class="card-body">
@@ -2237,7 +2244,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-2"
+					<div class="col-12 col-lg-3"
 						th:if="${!#lists.isEmpty(questionReport) && questionReport != null}">
 						<div class="card bg-primary">
 							<div class="card-body">
@@ -2249,6 +2256,9 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			</div>	
+				
 				<!--Child care center section ends -->
 
 				<!--Children mistake section starts -->
