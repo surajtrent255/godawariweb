@@ -160,7 +160,7 @@ public class FavouritePlacesController {
 	
 	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SURVEYOR"})
 	@RequestMapping(value = "/editImage", method = RequestMethod.POST)
-	public @ResponseBody String addEditedImage(MultipartHttpServletRequest request, @AuthenticationPrincipal	UserDTO user) {
+	public @ResponseBody String addEditedImage(MultipartHttpServletRequest request, @AuthenticationPrincipal UserDTO user) {
 		String inputTagName = request.getParameter("imgIndex");
 		String fileName = request.getParameter("fileName");
 		Path rootLocation = Paths.get(uploadDirectoryProperties.getTempFileUploadingDirectory());
