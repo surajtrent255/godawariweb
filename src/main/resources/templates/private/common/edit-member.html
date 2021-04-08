@@ -113,7 +113,7 @@
 												id="relation" name="relation" class="form-control required">
 												<option
 													th:each="relation, iteration : ${memberFormDetails.relation}"
-													th:value="${iteration.index + 1}" th:text="${relation}"></option>
+													th:value="${iteration.index + 1}" th:text="${relation}" th:selected ="${relation} == ${member.relation}"></option>
 											</select>
 											<span class="error_form" id="relation_error_message"></span>
 										</div>
@@ -124,7 +124,7 @@
 												id="gender" name="gender" class="form-control required">
 												<option
 													th:each="gender, iteration : ${memberFormDetails.gender}"
-													th:value="${iteration.index + 1}" th:text="${gender}"></option>
+													th:value="${iteration.index + 1}" th:text="${gender}" th:selected ="${gender} == ${member.gender}"></option>
 											</select>
 											<span class="error_form" id="gender_error_message"></span>
 										</div>
@@ -160,7 +160,7 @@
 												<option
 													th:each="maritalStatus, iteration : ${memberFormDetails.maritalStatus}"
 													th:value="${iteration.index + 1}"
-													th:text="${maritalStatus}" th:selected="${member.maritalStatus}" ></option>
+													th:text="${maritalStatus}" th:selected ="${maritalStatus} == ${member.maritalStatus}"></option>
 											</select>
 											<span class="error_form" id="maritalStatus_error_message"></span>
 										</div>
@@ -172,7 +172,7 @@
 												class="form-control required">
 												<option
 													th:each="education, iteration : ${memberFormDetails.education}"
-													th:value="${iteration.index + 1}" th:text="${education}"></option>
+													th:value="${iteration.index + 1}" th:text="${education}" th:selected ="${education} == ${member.education}"></option>
 											</select>
 											<span class="error_form" id="education_error_message"></span>
 										</div>
@@ -275,11 +275,11 @@
 		})
 		
 		function evaluateAnswers() {
-			$("#relation").val(eval(memberInfo.relation));
-			$("#gender").val(eval(memberInfo.gender));
-			$("#marital_status").val(eval(memberInfo.maritalStatus));
-			$("#education").val(eval(memberInfo.education));
-// 			$("#migration").val(eval(memberInfo.address));
+		//	$("#relation").val(eval(memberInfo.relation));
+		//	$("#gender").val(eval(memberInfo.gender));
+		//	$("#marital_status").val(eval(memberInfo.maritalStatus));
+		//	$("#education").val(eval(memberInfo.education));
+		//	$("#migration").val(eval(memberInfo.address));
 			if(memberInfo.voterCard == "true") {
 				$("#voter_card").val(1);
 			}
