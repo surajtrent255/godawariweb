@@ -33,6 +33,8 @@
 			src="assets/js/transliteration.js"></script>
 		<script th:inline="javascript">
 				var contextPath = /*[[${#request.contextPath}]]*/;
+				
+				document.getElementById("current-year").innerHTML = new Date().getFullYear();
 	</script>
 	</div>
 </body>
