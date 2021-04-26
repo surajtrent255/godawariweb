@@ -614,7 +614,7 @@
 											<td th:text="${questionReport.get(1).option2}">25</td>
 											<td th:if="${questionReport.get(1).option2} == 0"
 												th:text="${(questionReport.get(1).option2/questionReport.get(2).total)*100 + '%'}">20.49%</td>
-											<td th:unless="${questionReport.get(1).option1} == 0"
+											<td th:unless="${questionReport.get(1).option2} == 0"
 												th:text="${#numbers.formatDecimal((questionReport.get(1).option2/(questionReport.get(1).total))*100, 1, 2 ) + '%'}">20.49%</td>
 										</tr>
 										<tr>
@@ -623,7 +623,7 @@
 											<td th:text="${questionReport.get(1).option3}">25</td>
 											<td th:if="${questionReport.get(1).option3} == 0"
 												th:text="${(questionReport.get(1).option3/questionReport.get(1).total)*100 + '%'}">20.49%</td>
-											<td th:unless="${questionReport.get(1).option1} == 0"
+											<td th:unless="${questionReport.get(1).option3} == 0"
 												th:text="${#numbers.formatDecimal((questionReport.get(1).option3/(questionReport.get(1).total))*100, 1, 2 ) + '%'}">20.49%</td>
 										</tr>
 										<tr>
@@ -632,7 +632,7 @@
 											<td th:text="${questionReport.get(1).option4}">25</td>
 											<td th:if="${questionReport.get(1).option4} == 0"
 												th:text="${(questionReport.get(1).option4/questionReport.get(1).total)*100 + '%'}">20.49%</td>
-											<td th:unless="${questionReport.get(1).option1} == 0"
+											<td th:unless="${questionReport.get(1).option4} == 0"
 												th:text="${#numbers.formatDecimal((questionReport.get(1).option4/(questionReport.get(1).total))*100, 1, 2 ) + '%'}">20.49%</td>
 										</tr>
 										<tr>
