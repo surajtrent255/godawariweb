@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.ishanitech.ipalikawebapp.dto.FamilyMemberDTO;
+import com.ishanitech.ipalikawebapp.dto.FormDetail;
 import com.ishanitech.ipalikawebapp.dto.ResidentDTO;
 import com.ishanitech.ipalikawebapp.dto.ResidentDetailDTO;
 import com.ishanitech.ipalikawebapp.dto.Response;
@@ -90,6 +91,20 @@ public class ResidentController {
 	public String getResidentMemberList(@PathVariable("filledFormId") String filledId, Model model, @AuthenticationPrincipal UserDTO user) {
 		Response<ResidentDetailDTO> residentResponse = (Response<ResidentDetailDTO>) residentService.getResidentFullDetail(filledId, user.getToken());
 		model.addAttribute("residentFullDetail", residentResponse.getData());
+		
+		//Added for tabbed layout
+		List<FormDetail> questionAndOptions = formService.getFullFormDetailById(1, user.getToken());
+		model.addAttribute("questionAndOptions", questionAndOptions);
+		List<String> questionTypeTabs = new ArrayList<String>();
+		for(int i = 13; i < questionAndOptions.size(); i++) {
+			if(!questionTypeTabs.contains(questionAndOptions.get(i).getGrouping())) {
+				questionTypeTabs.add(questionAndOptions.get(i).getGrouping());
+			}
+		}
+		
+		model.addAttribute("qustionTypeTabs", questionTypeTabs);
+		
+		//Added for tabbed layout ends	
 		return "private/common/resident-details";
 	}
 	
