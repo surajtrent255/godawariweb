@@ -93,16 +93,19 @@ public class ResidentController {
 		model.addAttribute("residentFullDetail", residentResponse.getData());
 		
 		//Added for tabbed layout
-		List<FormDetail> questionAndOptions = formService.getFullFormDetailById(1, user.getToken());
-		model.addAttribute("questionAndOptions", questionAndOptions);
+		List<FormDetail> formDetails = formService.getFullFormDetailById(1, user.getToken());
+		List<String> questionTypeTabsWithSpacing = new ArrayList<String>();
+		model.addAttribute("questionAndOptions", formDetails);
 		List<String> questionTypeTabs = new ArrayList<String>();
-		for(int i = 13; i < questionAndOptions.size(); i++) {
-			if(!questionTypeTabs.contains(questionAndOptions.get(i).getGrouping())) {
-				questionTypeTabs.add(questionAndOptions.get(i).getGrouping());
+		for(int i = 13; i < formDetails.size(); i++) {
+			if(!questionTypeTabs.contains(formDetails.get(i).getGrouping().replaceAll("\\s+", ""))) {
+				questionTypeTabs.add(formDetails.get(i).getGrouping().replaceAll("\\s+", ""));
+				questionTypeTabsWithSpacing.add(formDetails.get(i).getGrouping());
 			}
 		}
 		
 		model.addAttribute("qustionTypeTabs", questionTypeTabs);
+		model.addAttribute("qustionTypeTabsWithSpacing", questionTypeTabsWithSpacing);
 		
 		//Added for tabbed layout ends	
 		return "private/common/resident-details";
