@@ -82,18 +82,40 @@
 					</div>
 				</div>
 									<div class="card" th:if="${questionAndOptions != null && #lists.size(questionAndOptions) > 0}">
+					<!-- Try1 -->
+						<!--Panel-->
+						<div class="card col-12 col-lg-12">
+							<div class="card-header">
+							<!-- <div class="card-title">Fill up information about house.</div> -->
+								<!--Tabs-->
+								<ul id="bctabs" class="nav nav-pills card-header-pills"
+									role="tablist">
+									<li th:each="questonTypeTab, i : ${qustionTypeTabs}" class="nav-item"><a th:id="'tab-' + ${qustionTypeTabs[i.index]}"
+										th:class="'nav-link ' + ${i.index == 0 ? 'active' : ''}" data-toggle="tab" role="tab"
+										th:href="'#' + ${qustionTypeTabs[i.index]} + '-tab-content'"> <span
+											th:text="${qustionTypeTabsWithSpacing[i.index]}"></span>
+									</a></li>
+
+								</ul>
+								<!--/.Tabs-->
+							</div>
+					
 					<div class="card-body">
-						<div class="card-title">Fill up information about house.</div>
+						
 						<!-- <form name="surveyAnswerForm" id="surveyAnswerForm" method="POST" action="" th:action="@{/survey-answer}" th:object="${answerObj}" data-ajax="true"
 							data-action=""							
 							enctype="multipart/form-data" class="unicode householdForm"> -->
 							<input type="hidden" name="_token"
 								value="8c82ziy1cyPf0NeyqhEeRv0dAIMt2CyuvpgsRMOu"> <input
 								type="hidden" name="_method" value="post">
+							
+							<div class="tab-content bc-card-tabs" id="bctabs-content">
+							<div th:class="'tab-pane fade show ' + ${indx.index == 0 ? 'active' : ''}" th:each="tabName,indx : ${qustionTypeTabs}"
+										th:id="${qustionTypeTabs[indx.index]} + '-tab-content'" role="tabpanel">
 							<div class="row">
 							<!-- dynamic code begins -->
 							
-							<div class="col-lg-3 col-md-4" th:each="questionAndOption : ${questionAndOptions}">
+							<div class="col-lg-3 col-md-4" th:each="questionAndOption : ${questionAndOptions}" th:if="${qustionTypeTabs[indx.index] == questionAndOption.grouping}">
 									<div class="form-group form-label" th:if="${questionAndOption.type == 'TEXT' || questionAndOption.type == 'MULTI_TEXT'}">
 										<label th:for="${questionAndOption.id}">
 											<h5 th:if="${questionAndOption.isRequired} == 2" th:text="${questionAndOption.desc} + ' *'" th:id="'question' + ${questionAndOption.questionId}"></h5>
@@ -235,6 +257,8 @@
 							<!--Dynamic code ends  -->
 							
 							</div>
+							</div>
+							</div>
 <!-- 							<div class="row">
 								<div class="col-lg-4 col-md-4">
 									<div class="form-group form-label">
@@ -262,6 +286,7 @@
 								name="category-submit-name" value="Add House"
 								style="margin-top: 10px" id="household_submit_btn">
 						<!-- </form> -->
+					</div>
 					</div>
 				</div>
 								<!-- Modal For GPS  -->

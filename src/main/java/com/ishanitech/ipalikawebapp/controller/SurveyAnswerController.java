@@ -11,6 +11,8 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,6 +35,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.ishanitech.ipalikawebapp.configs.properties.UploadDirectoryProperties;
 import com.ishanitech.ipalikawebapp.dto.AnswerDTO;
+import com.ishanitech.ipalikawebapp.dto.FormDetail;
 import com.ishanitech.ipalikawebapp.dto.Response;
 import com.ishanitech.ipalikawebapp.dto.UserDTO;
 import com.ishanitech.ipalikawebapp.service.FormService;
@@ -62,16 +65,55 @@ public class SurveyAnswerController {
 	@GetMapping("/household")
 	public String getHouseholdEntryForm(Model model, @AuthenticationPrincipal UserDTO user) {
 		model.addAttribute("answerObj", new AnswerDTO());
-		model.addAttribute("questionAndOptions", formService.getFullFormDetailById(1, user.getToken()));
+		
+		//Added
+				List<FormDetail> formDetails = formService.getFullFormDetailById(1, user.getToken());
+				List<FormDetail> newFormDetails = new ArrayList<FormDetail>();
+				for(FormDetail formDetail: formDetails) {
+					formDetail.setGrouping(formDetail.getGrouping().replaceAll("\\s+", ""));
+					newFormDetails.add(formDetail);
+				}
+				
+		model.addAttribute("questionAndOptions", newFormDetails);
 		model.addAttribute("districts", formService.getListofDistricts(user.getToken()).getData());
 		model.addAttribute("wards", formService.getListOfWards(user.getToken()).getData());
+		
+		// Added for tabbed layout
+		List<FormDetail> questionAndOptions = formService.getFullFormDetailById(1, user.getToken());
+		List<String> questionTypeTabs = new ArrayList<String>();
+		List<String> questionTypeTabsWithSpacing = new ArrayList<String>();
+		for (int i = 13; i < questionAndOptions.size(); i++) {
+			String tabName = questionAndOptions.get(i).getGrouping().replaceAll("\\s+", "");
+			if (!questionTypeTabs.contains(tabName)) {
+				questionTypeTabs.add(tabName);
+				questionTypeTabsWithSpacing.add(questionAndOptions.get(i).getGrouping());
+			}
+		}
+
+		model.addAttribute("qustionTypeTabs", questionTypeTabs);
+		model.addAttribute("qustionTypeTabsWithSpacing", questionTypeTabsWithSpacing);
+
+		// Added for tabbed layout ends
+
+		
 		return "private/common/add-household";
 	}
 	
 	@GetMapping("/household/edit/{filledFormId}")
 	public String getHouseholdEditForm(Model model, @AuthenticationPrincipal UserDTO user, @PathVariable("filledFormId") String filledId) {
+		//Added for tabbed layout
+		List<FormDetail> formDetails = formService.getFullFormDetailById(1, user.getToken());
+		List<FormDetail> newFormDetails = new ArrayList<FormDetail>();
+		for(FormDetail formDetail: formDetails) {
+			formDetail.setGrouping(formDetail.getGrouping().replaceAll("\\s+", ""));
+			newFormDetails.add(formDetail);
+		}
+		
+		model.addAttribute("questionAndOptions", newFormDetails);
+		//Added for tabbbed layout ends
+		
 		model.addAttribute("answerObj", new AnswerDTO());
-		model.addAttribute("questionAndOptions", formService.getFullFormDetailById(1, user.getToken()));
+		//model.addAttribute("questionAndOptions", formService.getFullFormDetailById(1, user.getToken()));
 		model.addAttribute("districts", formService.getListofDistricts(user.getToken()).getData());
 		model.addAttribute("wards", formService.getListOfWards(user.getToken()).getData());
 		
@@ -80,6 +122,24 @@ public class SurveyAnswerController {
 		model.addAttribute("residentFullDetail", residentResponse.getData());
 		
 		//ends
+		
+		// Added for tabbed layout
+		List<FormDetail> questionAndOptions = formService.getFullFormDetailById(1, user.getToken());
+		List<String> questionTypeTabs = new ArrayList<String>();
+		List<String> questionTypeTabsWithSpacing = new ArrayList<String>();
+		for (int i = 13; i < questionAndOptions.size(); i++) {
+			String tabName = questionAndOptions.get(i).getGrouping().replaceAll("\\s+", "");
+			if (!questionTypeTabs.contains(tabName)) {
+				questionTypeTabs.add(tabName);
+				questionTypeTabsWithSpacing.add(questionAndOptions.get(i).getGrouping());
+			}
+		}
+
+		model.addAttribute("qustionTypeTabs", questionTypeTabs);
+		model.addAttribute("qustionTypeTabsWithSpacing", questionTypeTabsWithSpacing);
+
+		// Added for tabbed layout ends
+		
 		return "private/common/edit-household";
 	}
 	
