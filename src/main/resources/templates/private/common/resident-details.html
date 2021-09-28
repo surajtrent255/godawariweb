@@ -42,9 +42,6 @@
 	th:href="@{/assets/plugins/jquery.steps/css/jquery.steps.css}"
 	href="assets/plugins/jquery.steps/css/jquery.steps.css">
 
-<link rel="stylesheet" type="text/css"
-	href="https://www.lalitpur15.org/datasys/public/css/print.css"
-	media="print">
 <link rel="stylesheet" th:href="@{/assets/css/leaflet.css}" />
 
 
@@ -96,7 +93,7 @@
 
 #surveyMap {
 	height: 70em;
-	width: 95em;
+	width: 70em;
 }
 
 .float{
@@ -1554,13 +1551,23 @@
 			});
 		});
 		
-		try{
+		
 		
 		//Splitting the location coordinates into latitude and longitude
 		var geoFields = geoCoordinates.split(', ');
 
 		var geoLat = geoFields[0]; //Gets the latitude
 		var geoLong = geoFields[1]; //Gets the longitude
+
+		if(geoLong === undefined) {
+			$("#view-location-btn").prop("disabled",true);
+			$("#view-location-btn").removeClass("btn-success").addClass("btn-danger");
+			geoLat = 0;
+			geoLong = 0;
+		} else {
+			$("#view-location-btn").prop("disabled",false);
+			$("#view-location-btn").removeClass("btn-danger").addClass("btn-success");
+		}
 
 		//JS function for displaying the location of the household using leafletjs
 		const mymap = L.map('surveyMap').setView([ geoLat, geoLong ], 20);
@@ -1580,10 +1587,7 @@
 		}).addTo(mymap);
 
 		marker = L.marker([ geoLat, geoLong ]).addTo(mymap).bindPopup("Record ID = " + residentFullDetail.residentDetail.filledId);
-		}
-		catch(ex){
-			console.log(ex);
-		}
+
 		
 		//For showing the Map modal	
 		$("#view-location-btn").on("click", function(event) {
