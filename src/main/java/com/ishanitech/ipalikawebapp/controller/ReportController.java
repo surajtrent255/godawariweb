@@ -40,23 +40,29 @@ public class ReportController {
 	}
 
 	
-	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SUPER_ADMIN"})
+//	@Secured({"ROLE_CENTRAL_ADMIN", "ROLE_WARD_ADMIN", "ROLE_SUPER_ADMIN"})
 	@GetMapping
 	public String getDashboardView(HttpServletRequest request, Model model, @AuthenticationPrincipal UserDTO user) {
 		int wardNo = 0;
 		String selectedWard = request.getParameter("selectedWard");
+		log.info("selectedWard#########" + selectedWard);
 		
-		if(user.getRoles().contains("WARD_ADMIN")) {
-				selectedWard = String.valueOf(user.getWardNo()); 
+		if(user == null) {
+			if(selectedWard == null) {
+				wardNo = 0;
+				selectedWard = "0";
+			} else {
 				wardNo = Integer.parseInt(selectedWard);
-		}
-		
-		if(user.getRoles().contains("CENTRAL_ADMIN") || user.getRoles().contains("SUPER_ADMIN")) {
-				if(selectedWard == null) {
-					wardNo = 0;
-					selectedWard = "0";
-				} else {
-					wardNo = Integer.parseInt(selectedWard);
+			}
+		} else if(user.getRoles().contains("WARD_ADMIN")) {
+			selectedWard = String.valueOf(user.getWardNo()); 
+			wardNo = Integer.parseInt(selectedWard);
+		} else if(user.getRoles().contains("CENTRAL_ADMIN") || user.getRoles().contains("SUPER_ADMIN")) {
+			if(selectedWard == null) {
+				wardNo = 0;
+				selectedWard = "0";
+			} else {
+				wardNo = Integer.parseInt(selectedWard);
 			}
 		}
 		
@@ -75,10 +81,12 @@ public class ReportController {
 
 		
 		model.addAttribute("wards", wardService.getAllWards());
-		model.addAttribute("loggedInUserWard", user.getWardNo());
+		if(user != null ) {
+			model.addAttribute("loggedInUserWard", user.getWardNo());
+		}
 		model.addAttribute("selectedWard", selectedWard);
 		
-		List<PopulationReport> populationReport = reportService.getPopulationReport(wardNo, user.getToken());
+		List<PopulationReport> populationReport = reportService.getPopulationReport(wardNo);
 		
 		if(!populationReport.isEmpty() && populationReport.size() > 0) {
 			// get(0) point to infants, totalChildrens, totalYouths, totalMidage, totalOldAge, and totalSeniorCitizens
@@ -105,10 +113,10 @@ public class ReportController {
 			model.addAttribute("totalFemale", totalFemale);
 			model.addAttribute("totalOthers", totalOthers);
 		}
-		model.addAttribute("questionReport", reportService.getQuestionReport(wardNo, user.getToken()));
-		model.addAttribute("extraReport", reportService.getExtraReport(wardNo, user.getToken()));
-		model.addAttribute("favPlaceReport", reportService.getFavPlaceReport(wardNo, user.getToken()));
-		return "private/common/dashboard";
+		model.addAttribute("questionReport", reportService.getQuestionReport(wardNo));
+		model.addAttribute("extraReport", reportService.getExtraReport(wardNo));
+		model.addAttribute("favPlaceReport", reportService.getFavPlaceReport(wardNo));
+		return "dashboard";
 	}
 	
 	@PostMapping("/{wardNo}")
@@ -120,28 +128,28 @@ public class ReportController {
 	
 	
 	@GetMapping("/beekeeping/{wardNo}")
-	public String getBeekeepingReportView(@PathVariable("wardNo") int wardNo, @AuthenticationPrincipal UserDTO user, Model model) {
-		Response<List<BeekeepingDTO>> reportResponse = reportService.getBeekeepingInfo(wardNo, user.getToken());
+	public String getBeekeepingReportView(@PathVariable("wardNo") int wardNo, Model model) {
+		Response<List<BeekeepingDTO>> reportResponse = reportService.getBeekeepingInfo(wardNo);
 		model.addAttribute("beekeepingList", reportResponse.getData());
 		return "private/common/report-beekeeping";
 	}
 	
 	@GetMapping("/agriculturalFarm/{wardNo}")
-	public String getAgriculturalFarmReportView(@PathVariable("wardNo") int wardNo, @AuthenticationPrincipal UserDTO user, Model model) {
-		Response<List<AgriculturalFarmDTO>> reportResponse = reportService.getAgriculturalFarmInfo(wardNo, user.getToken());
+	public String getAgriculturalFarmReportView(@PathVariable("wardNo") int wardNo, Model model) {
+		Response<List<AgriculturalFarmDTO>> reportResponse = reportService.getAgriculturalFarmInfo(wardNo);
 		model.addAttribute("agriculturalFarmList", reportResponse.getData());
 		return "private/common/report-agricultural-farm";
 	}
 	
 	@GetMapping("/agriculturalCrop/{wardNo}")
-	public String getAgriculturalCropReportView(@PathVariable("wardNo") int wardNo, @AuthenticationPrincipal UserDTO user, Model model) {
-		model.addAttribute("agriculturalCropReport", reportService.getExtraReport(wardNo, user.getToken()));
+	public String getAgriculturalCropReportView(@PathVariable("wardNo") int wardNo, Model model) {
+		model.addAttribute("agriculturalCropReport", reportService.getExtraReport(wardNo));
 		return "private/common/report-agricultural-crop";
 	}
 	
 	@GetMapping("/animals/{wardNo}")
-	public String getAnimalsReportView(@PathVariable("wardNo") int wardNo, @AuthenticationPrincipal UserDTO user, Model model) {
-		model.addAttribute("animalsReport", reportService.getQuestionReport(wardNo, user.getToken()));
+	public String getAnimalsReportView(@PathVariable("wardNo") int wardNo, Model model) {
+		model.addAttribute("animalsReport", reportService.getQuestionReport(wardNo));
 		return "private/common/report-animal";
 	}
 	

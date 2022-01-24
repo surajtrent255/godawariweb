@@ -40,8 +40,8 @@ public class IpalikaWebSecurityConfiguration extends WebSecurityConfigurerAdapte
 		http
 		.authorizeRequests()
 		.antMatchers("/assets/**").permitAll()
-		.antMatchers("/home", "/", "/index").permitAll()
-		.antMatchers(HttpMethod.GET, "/favourite-place/**").permitAll()
+		.antMatchers("/home", "/", "/index", "/login").permitAll()
+		.antMatchers(HttpMethod.GET, "/favourite-place/**", "/report", "/resident").permitAll()
 		.antMatchers("/super-admin/**").hasRole("SUPER_ADMIN")
 		.antMatchers("/central-admin/**").hasRole("CENTRAL_ADMIN")
 		.antMatchers("/ward-admin/**").hasRole("WARD_ADMIN")
