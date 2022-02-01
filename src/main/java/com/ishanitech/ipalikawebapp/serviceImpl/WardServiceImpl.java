@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ishanitech.ipalikawebapp.configs.properties.RestApiProperties;
 import com.ishanitech.ipalikawebapp.dto.Response;
+import com.ishanitech.ipalikawebapp.dto.ToleDTO;
 import com.ishanitech.ipalikawebapp.dto.WardDTO;
 import com.ishanitech.ipalikawebapp.service.WardService;
 import com.ishanitech.ipalikawebapp.utilities.HttpUtils;
@@ -101,8 +102,17 @@ public class WardServiceImpl implements WardService {
 		HttpHeaders headers = HttpUtils.createHeader(MediaType.MULTIPART_FORM_DATA, token);
 	    HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(map, headers);
 		restTemplate.postForLocation(url, requestEntity);
-		
 	}
+
 	
+	@Override
+	public Response<List<ToleDTO>> getListOfToles() {
+		String template = "/ward/toles";
+		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
+		RequestEntity requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
+		ParameterizedTypeReference<Response<List<ToleDTO>>> responseType = new ParameterizedTypeReference<Response<List<ToleDTO>>>() {};
+		Response<List<ToleDTO>> toles = restTemplate.exchange(requestEntity, responseType).getBody();
+		return toles;
+	}
 	
 }

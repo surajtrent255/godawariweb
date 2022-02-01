@@ -45,7 +45,6 @@ public class ReportController {
 	public String getDashboardView(HttpServletRequest request, Model model, @AuthenticationPrincipal UserDTO user) {
 		int wardNo = 0;
 		String selectedWard = request.getParameter("selectedWard");
-		log.info("selectedWard#########" + selectedWard);
 		
 		if(user == null) {
 			if(selectedWard == null) {

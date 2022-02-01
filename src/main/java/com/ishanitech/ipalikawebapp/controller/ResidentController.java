@@ -73,7 +73,6 @@ public class ResidentController {
 		
 		model.addAttribute("wards", formService.getListOfWards(user.getToken()).getData());
 		model.addAttribute("toles", formService.getListOfToles(user.getToken()).getData());
-		model.addAttribute("loggedInUserWard", user.getWardNo());
 		return "private/common/resident-data";
 	}
 	
