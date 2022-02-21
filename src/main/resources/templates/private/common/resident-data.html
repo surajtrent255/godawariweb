@@ -189,7 +189,7 @@
 										<td th:text="${resident.phoneNo}"></td>
 										<td th:text="${resident.kittaNo}"></td>
 										<td><img th:src="${resident.imageUrl}" width="50px"
-											height="50px" /></td>
+											height="50px" th:onerror="'this.src=\'' + @{/assets/images/no-image.png} + '\';'"/></td>
 										<td th:text="${resident.totalFamilyMembers}"></td>
 										<td><a
 											sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')"
@@ -276,6 +276,11 @@
 		onLoadForTole();
 	}; 
 	
+	function imgError(image) {
+	    image.onerror = "";
+	    image.src = "/assets/images/no-image.png";
+	    return true;
+	}
 	
 	function onLoadForTole(){
 	
@@ -405,7 +410,7 @@
 													<td>${item.tole}</td>
 													<td>${item.phoneNo}</td>
 													<td>${item.kittaNo}</td>
-													<td> <img src="${item.imageUrl}" width="50px" height="50px"/></td>
+													<td> <img src="${item.imageUrl}" width="50px" height="50px" onerror="imgError(this);"/></td>
 													<td>${item.totalFamilyMembers}</td>
 													<td>
 														<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href=\"/survey-answer/household/edit/${item.filledId}\" class="btn btn-xs btn-info">Edit</a>
@@ -496,7 +501,7 @@
 														<td>${item.tole}</td>
 														<td>${item.phoneNo}</td>
 														<td>${item.kittaNo}</td>
-														<td> <img src="${item.imageUrl}" width="50px" height="50px"/></td>
+														<td> <img src="${item.imageUrl}" width="50px" height="50px" onerror="imgError(this);"/></td>
 														<td>${item.totalFamilyMembers}</td>
 														<td>
 															<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href=\"/survey-answer/household/edit/${item.filledId}\" class="btn btn-xs btn-info">Edit</a>
@@ -584,7 +589,7 @@
 													<td>${item.tole}</td>
 													<td>${item.phoneNo}</td>
 													<td>${item.kittaNo}</td>
-													<td> <img src="${item.imageUrl}" width="50px" height="50px"/></td>
+													<td> <img src="${item.imageUrl}" width="50px" height="50px" onerror="imgError(this);"/></td>
 													<td>${item.totalFamilyMembers}</td>
 													<td>
 														<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href=\"/survey-answer/household/edit/${item.filledId}\" class="btn btn-xs btn-info">Edit</a>
@@ -657,7 +662,7 @@
 													<td>${item.tole}</td>
 													<td>${item.phoneNo}</td>
 													<td>${item.kittaNo}</td>
-													<td> <img src="${item.imageUrl}" width="50px" height="50px"/></td>
+													<td> <img src="${item.imageUrl}" width="50px" height="50px" onerror="imgError(this);"/></td>
 													<td>${item.totalFamilyMembers}</td>
 													<td>
 														<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href=\"/survey-answer/household/edit/${item.filledId}\" class="btn btn-xs btn-info">Edit</a>
@@ -733,7 +738,7 @@
 												<td>${item.tole}</td>
 												<td>${item.phoneNo}</td>
 												<td>${item.kittaNo}</td>
-												<td> <img src="${item.imageUrl}" width="50px" height="50px"/></td>
+												<td> <img src="${item.imageUrl}" width="50px" height="50px" onerror="imgError(this);"/></td>
 												<td>${item.totalFamilyMembers}</td>
 												<td>
 													<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href=\"/survey-answer/household/edit/${item.filledId}\" class="btn btn-xs btn-info">Edit</a>
@@ -815,7 +820,7 @@
 													<td>${item.tole}</td>
 													<td>${item.phoneNo}</td>
 													<td>${item.kittaNo}</td>
-													<td> <img src="${item.imageUrl}" width="50px" height="50px"/></td>
+													<td> <img src="${item.imageUrl}" width="50px" height="50px" onerror="imgError(this);"/></td>
 													<td>${item.totalFamilyMembers}</td>
 													<td>
 														<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href=\"/survey-answer/household/edit/${item.filledId}\" class="btn btn-xs btn-info">Edit</a>
@@ -901,7 +906,7 @@
 													<td>${item.tole}</td>
 													<td>${item.phoneNo}</td>
 													<td>${item.kittaNo}</td>
-													<td> <img src="${item.imageUrl}" width="50px" height="50px"/></td>
+													<td> <img src="${item.imageUrl}" width="50px" height="50px" onerror="imgError(this);"/></td>
 													<td>${item.totalFamilyMembers}</td>
 													<td>
 														<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href=\"/survey-answer/household/edit/${item.filledId}\" class="btn btn-xs btn-info">Edit</a>
@@ -1059,7 +1064,7 @@
 													<td>${item.tole}</td>
 													<td>${item.phoneNo}</td>
 													<td>${item.kittaNo}</td>
-													<td> <img src="${item.imageUrl}" width="50px" height="50px"/></td>
+													<td> <img src="${item.imageUrl}" width="50px" height="50px" onerror="imgError(this);"/></td>
 													<td>${item.totalFamilyMembers}</td>
 													<td>
 														<a sec:authorize="hasAnyRole('CENTRAL_ADMIN', 'WARD_ADMIN', 'SURVEYOR')" href=\"/survey-answer/household/edit/${item.filledId}\" class="btn btn-xs btn-info">Edit</a>
