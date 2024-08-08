@@ -46,7 +46,7 @@ server:
 rest-api:
   protocol: http
   domain: localhost
-  port: 8888
+  port: 8889
   
 com:
   tempFileUploadingDirectory: C:/upload-dir/
@@ -60,24 +60,30 @@ logging:
 
 ####### ishani Production Config Properties ########
 spring:
-  profiles: prod
+  profiles: proddy
 server:
-  port: 443
-  ssl:
-    key-store-type: PKCS12
-    key-store: /home/ishani/keystore/ipasal.p12
-    key-store-password: ENC(bq4tjhncoATdejotP81VbWgaGMpRouOZ)
-    key-alias: ipasal
-#### Rest api base address #####   
+  port: 9199
+#  ssl:
+#    key-store-type: PKCS12
+#    key-store: /home/ishani/keystore/ipasal.p12
+#    key-store-password: ENC(bq4tjhncoATdejotP81VbWgaGMpRouOZ)
+#    key-alias: ipasal
+#### Rest api base address #####
 rest-api:
   protocol: http
-  domain: 103.233.58.121
-  port: 8888
-  
-  
+  domain: 103.233.58.127
+  port: 8889
+
+
 com:
   ipalika:
-    tempFileUploadingDirectory: /archiesoft/ipalika/
+    tempFileUploadingDirectory: /home/archiesoft/godawari/
+
+logging:
+  loggin:
+    level:
+      root: ERROR
+  file: /archiesoft/ipalika/webservice/logs/godawari-web.log
     
 ---
 
