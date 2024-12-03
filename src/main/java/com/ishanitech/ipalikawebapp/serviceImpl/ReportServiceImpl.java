@@ -33,19 +33,19 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public List<PopulationReport> getPopulationReport(int wardNo, String token) {
+	public List<PopulationReport> getPopulationReport(int wardNo) {
 		String template =  REPORT_BASE + "{populationReport}/" + wardNo;
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, Collections.singletonMap("populationReport", "population"));
-		RequestEntity request = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		RequestEntity request = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
 		ParameterizedTypeReference<Response<List<PopulationReport>>> bean = new ParameterizedTypeReference<Response<List<PopulationReport>>>() {};
 		return restTemplate.exchange(request, bean).getBody().getData();
 	}
 
 	@Override
-	public List<QuestionReport> getQuestionReport(int wardNo, String token) {
+	public List<QuestionReport> getQuestionReport(int wardNo) {
 		String template =  REPORT_BASE + "{questionReport}/" + wardNo;
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, Collections.singletonMap("questionReport", "question"));
-		RequestEntity request = HttpUtils.createRequestEntity(HttpMethod.GET, null, MediaType.APPLICATION_JSON, token, url);
+		RequestEntity request = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
 		ParameterizedTypeReference<Response<List<QuestionReport>>> bean = new ParameterizedTypeReference<Response<List<QuestionReport>>>() {};
 		return restTemplate.exchange(request, bean).getBody().getData();
 	}
@@ -60,39 +60,39 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public List<ExtraReport> getExtraReport(int wardNo, String token) {
+	public List<ExtraReport> getExtraReport(int wardNo) {
 		String template =  REPORT_BASE + "{extraReport}/" + wardNo;
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, Collections.singletonMap("extraReport", "extra"));
-		RequestEntity request = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		RequestEntity request = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
 		ParameterizedTypeReference<Response<List<ExtraReport>>> bean = new ParameterizedTypeReference<Response<List<ExtraReport>>>() {};
 		return restTemplate.exchange(request, bean).getBody().getData();
 	}
 
 	@Override
-	public Response<List<BeekeepingDTO>> getBeekeepingInfo(int wardNo, String token) {
+	public Response<List<BeekeepingDTO>> getBeekeepingInfo(int wardNo) {
 		String template = String.format("%s/%s", REPORT_BASE, "beekeeping/" + wardNo);
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
-		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
 		ParameterizedTypeReference<Response<List<BeekeepingDTO>>> responseType = new ParameterizedTypeReference<Response<List<BeekeepingDTO>>>() {};
 		Response<List<BeekeepingDTO>> beekeepingInfo = restTemplate.exchange(requestEntity, responseType).getBody();
 		return beekeepingInfo;
 	}
 
 	@Override
-	public Response<List<AgriculturalFarmDTO>> getAgriculturalFarmInfo(int wardNo, String token) {
+	public Response<List<AgriculturalFarmDTO>> getAgriculturalFarmInfo(int wardNo) {
 		String template = String.format("%s/%s", REPORT_BASE, "agriculturalFarm/" +  wardNo);
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, null);
-		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		RequestEntity<?> requestEntity = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
 		ParameterizedTypeReference<Response<List<AgriculturalFarmDTO>>> responseType = new ParameterizedTypeReference<Response<List<AgriculturalFarmDTO>>>() {};
 		Response<List<AgriculturalFarmDTO>> agriculturalFarmInfo = restTemplate.exchange(requestEntity, responseType).getBody();
 		return agriculturalFarmInfo;
 	}
 
 	@Override
-	public List<FavouritePlaceReport> getFavPlaceReport(int wardNo, String token) {
+	public List<FavouritePlaceReport> getFavPlaceReport(int wardNo) {
 		String template =  REPORT_BASE + "{favPlaceReport}/" + wardNo;
 		String url = HttpUtils.createRequestUrl(restApiProperties, template, Collections.singletonMap("favPlaceReport", "favouritePlace"));
-		RequestEntity request = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, token, url);
+		RequestEntity request = HttpUtils.createRequestEntity(HttpMethod.GET, MediaType.APPLICATION_JSON, url);
 		ParameterizedTypeReference<Response<List<FavouritePlaceReport>>> bean = new ParameterizedTypeReference<Response<List<FavouritePlaceReport>>>() {};
 		return restTemplate.exchange(request, bean).getBody().getData();
 	}

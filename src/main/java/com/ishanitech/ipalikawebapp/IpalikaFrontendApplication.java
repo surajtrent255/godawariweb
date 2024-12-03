@@ -64,8 +64,8 @@ public class IpalikaFrontendApplication {
 	 */
 	private ClientHttpRequestFactory clientHttpRequestFactory() {
     	HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-    	factory.setConnectTimeout(30000);
-    	factory.setReadTimeout(5000);
+    	factory.setConnectTimeout(300000000);
+    	factory.setReadTimeout(50000000);
     	return factory;
     }
 	

@@ -44,7 +44,7 @@ public class RestClientServiceImpl implements RestClientService {
     private final String loginUrl = "/login";
 
     
-    private final String baseUrl = "http://localhost:8888";
+    private final String baseUrl = "http://localhost:8889";
     
     //@Autowired is optional. Even when @Autowired is not specified
     //Spring boot automatically gets the bean for constructor injection

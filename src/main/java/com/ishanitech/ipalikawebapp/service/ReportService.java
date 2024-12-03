@@ -11,11 +11,11 @@ import com.ishanitech.ipalikawebapp.dto.QuestionReport;
 import com.ishanitech.ipalikawebapp.dto.Response;
 
 public interface ReportService {
-	List<PopulationReport> getPopulationReport(int wardNo, String token);
-	List<QuestionReport> getQuestionReport(int wardNo, String token);
-	List<FavouritePlaceReport> getFavPlaceReport(int wardNo, String token);
+	List<PopulationReport> getPopulationReport(int wardNo);
+	List<QuestionReport> getQuestionReport(int wardNo);
+	List<FavouritePlaceReport> getFavPlaceReport(int wardNo);
 	void generateReport(int wardNo, String token);
-	List<ExtraReport> getExtraReport(int wardNo, String token);
-	Response<List<BeekeepingDTO>> getBeekeepingInfo(int wardNo, String token);
-	Response<List<AgriculturalFarmDTO>> getAgriculturalFarmInfo(int wardNo, String token);
+	List<ExtraReport> getExtraReport(int wardNo);
+	Response<List<BeekeepingDTO>> getBeekeepingInfo(int wardNo);
+	Response<List<AgriculturalFarmDTO>> getAgriculturalFarmInfo(int wardNo);
 }
