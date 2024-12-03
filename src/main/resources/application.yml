@@ -41,12 +41,12 @@ server:
 spring:
   profiles: dev
 server:
-  port: 9191
+  port: 9200
   
 rest-api:
   protocol: http
   domain: localhost
-  port: 8889
+  port: 8890
   
 com:
   tempFileUploadingDirectory: C:/upload-dir/
@@ -62,7 +62,7 @@ logging:
 spring:
   profiles: proddy
 server:
-  port: 9199
+  port: 9200
 #  ssl:
 #    key-store-type: PKCS12
 #    key-store: /home/ishani/keystore/ipasal.p12
@@ -72,18 +72,18 @@ server:
 rest-api:
   protocol: http
   domain: 103.233.58.127
-  port: 8889
+  port: 8890
 
 
 com:
   ipalika:
-    tempFileUploadingDirectory: /home/archiesoft/godawari/
+    tempFileUploadingDirectory: /home/archiesoft/panauti/
 
 logging:
   loggin:
     level:
       root: ERROR
-  file: /archiesoft/ipalika/webservice/logs/godawari-web.log
+  file: /archiesoft/ipalika/webservice/logs/panauti-web.log
     
 ---
 
